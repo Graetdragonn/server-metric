@@ -1,0 +1,60 @@
+﻿Team 5 - Server Metric Tracker
+Project Description
+There are four components. Component 1 is a database. Component 2 is a data generator - that updates the database with some “server traffic data” in a random manner. Component 3 is a backend server that talks to the database (and potentially some cloud APIs). Component 4 is a frontend server that talks to the backend server.
+
+
+There needs to be authentication using JWT. There needs to be a dashboard that provides different ways (graphical, tabular) of viewing different servers traffic (for example, 3 day average, 7 day average etc). There needs to be an alerting system – including email/mobile/web alerts. There needs to be different types of users with permissions to view or to set up alerting or to perform admin tasks.
+
+
+Use Cases
+* Sign-in - each user should be signed in according to their privilege level.
+* A user should be able to create an account 
+* A user can change/update their password 
+* A user can change the data seen on the dashboard
+* A user can monitor servers that are assigned to them 
+* A user can add a server to monitor
+* A user should be able to remove a server (warning about server removal and privilege)
+* A user can subscribe to server alerts
+* A user should be able to compare statistics between servers
+
+
+Types of Users
+* Admin user
+* Client (owns the servers and needs to know what is happening with them)
+* Service manager: 
+* Service provider: analyze traffic and monitor servers down
+
+
+Functional Requirements
+* When a user signs into the system, the software shall authenticate their credentials using JWT
+* The software shall be able to accept data from outside sources, such as:
+   * Google forms or sheets
+   * Web API
+   * File upload
+   * Custom connection
+* The software shall display server traffic in different ways (graphical, tabular)
+* The software shall have a ticketing system for reporting issues 
+* When a server is down, the software shall notify the appropriate users in real time
+* The software shall allow new client servers to be connected at any time
+* (Maybe) The software shall generate data for testing purposes
+* The software shall allow users to change passwords and emails addresses
+* The software shall send real-time notifications to users that the user subscribes to
+
+
+Non-Functional requirements and Constraints
+* Backend: Springboot
+* Frontend: React and TypeScript
+* IDE: Visual Studio Code
+* Code must be modular
+* CI/CD is required
+* The system shall respond in real time
+Questions to Ask the Client
+* What are the different responsibilities of the different users? (what access should they have? What should they see?)
+   * Admin user: 
+   * Client: 
+   * Service manager: 
+   * Service provider: 
+* What server data is necessary to display? (In general, and for each user)
+* How to verify and approve user privileges upon account creation?
+* How is the data imported to the dashboard? (brought in by user?)
+* Any new requirements, updates, or concerns about the project?
