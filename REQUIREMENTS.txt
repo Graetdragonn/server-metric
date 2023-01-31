@@ -1,4 +1,4 @@
-﻿Team 5 - Server Metric Tracker
+Team 5 - Server Metric Tracker
 Project Description
 There are four components. Component 1 is a database. Component 2 is a data generator - that updates the database with some “server traffic data” in a random manner. Component 3 is a backend server that talks to the database (and potentially some cloud APIs). Component 4 is a frontend server that talks to the backend server.
 
