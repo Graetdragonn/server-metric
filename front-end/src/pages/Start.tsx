@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import logo from './logo.svg';
-import './Start.css';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  BrowserRouter,
-  useNavigate
-} from "react-router-dom";
+import logo from './style/logo.svg';
+import './style/Start.css';
+import {useNavigate} from "react-router-dom";
 
-const HomePage = (): JSX.Element => {
+const StartPage = (): JSX.Element => {
   const [clickedButton, setClickedButton] = useState('');
   const navigate = useNavigate();
   const buttonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -24,17 +17,23 @@ const HomePage = (): JSX.Element => {
   return (
     <div className="App">
       <header className="App-header">
-       <p>
+       <p className="name">
         Integrated Server Utility
         </p>
+        <div>
         <img src={logo} className="App-logo" alt="logo" />
-        <button type="button" className="signin" onClick={() => navigate('/login')}> Sign In</button>
-        <button>Create Account</button>
+        </div>
+        <div>
+        <button type="button" className="startbuttons" onClick={() => navigate('/login')}> Sign In</button>
+        </div>
+        <div>
+        <button type="button" className="startbuttons" onClick={() => navigate('/createaccount')}>Create Account</button>
+        </div>
       </header>
       
     </div>
   );
 }
 
-export default HomePage;
+export default StartPage;
 

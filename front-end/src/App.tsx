@@ -8,16 +8,18 @@ import {
   Route,
   BrowserRouter
 } from "react-router-dom";
-import HomePage from './pages/Home';
+import StartPage from './pages/Start';
 import LoginPage from './pages/LogIn';
+import CreatePage from './pages/CreateAccount';
 
 function App() {
   return (
     <div>
       <BrowserRouter>
       <Routes>
-        <Route path = "/" element={<HomePage />} />
+        <Route path = "/" element={<StartPage />} />
         <Route path = "/login" element={<LoginPage />} />
+        <Route path = "/createaccount" element={<CreatePage />} />
       </Routes>
       </BrowserRouter>
       </div>
