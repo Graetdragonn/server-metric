@@ -10,7 +10,7 @@ const StartPage = () => {
     <div className="App">
       <header className="App-header">
         <p>
-          Integrated Server Utility
+          Server Metric Tracker
         </p>
         <div>
           <img src={logo} className="App-logo" alt="logo" />

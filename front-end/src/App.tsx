@@ -9,7 +9,7 @@ import {
   BrowserRouter
 } from "react-router-dom";
 import StartPage from './pages/Start';
-import LoginPage from './pages/Login';
+import LoginPage from './pages/LogIn';
 import CreatePage from './pages/CreateAccount';
 import HomePage from './pages/Home';
 
