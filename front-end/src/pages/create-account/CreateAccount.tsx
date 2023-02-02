@@ -1,9 +1,9 @@
 import React from 'react';
 
-export interface ICreatePageProps {};
+export interface ICreateAccountProps {};
 
-const CreatePage: React.FunctionComponent<ICreatePageProps> = props => {
+const CreateAccount: React.FunctionComponent<ICreateAccountProps> = props => {
     return <div><p>this is the create account page page</p></div>;
 };
 
-export default CreatePage;
+export default CreateAccount;
