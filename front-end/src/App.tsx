@@ -8,10 +8,10 @@ import {
   Route,
   BrowserRouter
 } from "react-router-dom";
-import StartPage from './pages/Start';
-import LoginPage from './pages/Login';
-import CreatePage from './pages/CreateAccount';
-import HomePage from './pages/Home';
+import StartPage from './pages/start/Start';
+import LoginPage from './pages/login/Login';
+import CreatePage from './pages/create-account/CreateAccount';
+import HomePage from './pages/dashboard/Dashboard';
 
 
 const App = () => {
