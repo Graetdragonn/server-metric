@@ -1,7 +1,7 @@
 import React from 'react';
 
-import logo from './style/logo.svg';
-import './style/Start.css';
+import logo from '../../images/logo.svg';
+import './Start.css';
 import { useNavigate } from "react-router-dom";
 
 const StartPage = () => {
