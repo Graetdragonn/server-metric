@@ -11,6 +11,8 @@ import {
 import StartPage from './pages/Start';
 import LoginPage from './pages/Login';
 import CreatePage from './pages/CreateAccount';
+
+
 const App = () => {
   return (
     <div>

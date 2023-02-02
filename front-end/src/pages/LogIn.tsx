@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './style/Login.css';
 import { useNavigate } from "react-router-dom";
+import { submit } from './LoginLogic';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const LoginPage = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert("User: " + state.user + ", Password: " + state.pass);
+    submit(state.user, state.pass);
   };
 
 

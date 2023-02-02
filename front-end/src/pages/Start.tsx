@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 const StartPage = () => {
   const navigate = useNavigate();
-
   return (
     <div className="App">
       <header className="App-header">
@@ -17,7 +16,7 @@ const StartPage = () => {
           <img src={logo} className="App-logo" alt="logo" />
         </div>
         <div>
-          <button type="button" className="startbuttons" onClick={() => navigate('/login')}> Sign In</button>
+          <button type="button" className="startbuttons" onClick={() => navigate('/login')}>Sign In</button>
         </div>
         <div>
           <button type="button" className="startbuttons" onClick={() => navigate('/createaccount')}>Create Account</button>
