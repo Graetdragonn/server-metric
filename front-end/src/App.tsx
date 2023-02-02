@@ -11,6 +11,7 @@ import {
 import StartPage from './pages/Start';
 import LoginPage from './pages/Login';
 import CreatePage from './pages/CreateAccount';
+import HomePage from './pages/Home';
 
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/" element={<StartPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/createaccount" element={<CreatePage />} />
+          <Route path="/home" element={<HomePage />} />
         </Routes>
       </BrowserRouter>
     </div>

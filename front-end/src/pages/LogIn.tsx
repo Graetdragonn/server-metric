@@ -21,6 +21,7 @@ const LoginPage = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     submit(state.user, state.pass);
+    navigate('/home');
   };
 
 
