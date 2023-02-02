@@ -1,8 +1,8 @@
 package com.example.demo.User;
 
 import jakarta.persistence.*;
-
 import java.util.Objects;
+
 enum UserType {
     CLIENT, SERVICE_PROVIDER, ADMIN, SERVER_MANAGER
 }
