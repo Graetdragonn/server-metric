@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+
 import logo from './style/logo.svg';
 import './style/Start.css';
 import { useNavigate } from "react-router-dom";
