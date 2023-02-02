@@ -10,8 +10,8 @@ import {
 } from "react-router-dom";
 import StartPage from './pages/start/Start';
 import LoginPage from './pages/login/Login';
-import CreatePage from './pages/create-account/CreateAccount';
-import HomePage from './pages/dashboard/Dashboard';
+import CreateAccountPage from './pages/create-account/CreateAccount';
+import DashboardPage from './pages/dashboard/Dashboard';
 
 
 const App = () => {
@@ -21,8 +21,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<StartPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/createaccount" element={<CreatePage />} />
-          <Route path="/home" element={<HomePage />} />
+          <Route path="/createaccount" element={<CreateAccountPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
         </Routes>
       </BrowserRouter>
     </div>
