@@ -1,9 +1,9 @@
 package com.example.demo.User;
 
 import jakarta.persistence.*;
-
 import java.util.Objects;
-enum UserTypes {
+
+enum UserType {
     CLIENT, SERVICE_PROVIDER, ADMIN, SERVER_MANAGER
 }
 @Entity
@@ -11,15 +11,16 @@ public class User {
     @Id
     @SequenceGenerator(name = "user_id_sequence", sequenceName = "user_id_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_sequence")
+
     private Integer id;
     private String userEmail;
     private String userPassword;
-    private UserTypes userType;
+    private UserType userType;
 
     public User() {
     }
 
-    public User(Integer id, String userEmail, String userPassword, UserTypes userType) {
+    public User(Integer id, String userEmail, String userPassword, UserType userType) {
         this.id = id;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
@@ -50,11 +51,11 @@ public class User {
         this.userPassword = userPassword;
     }
 
-    public UserTypes getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(UserTypes userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 
