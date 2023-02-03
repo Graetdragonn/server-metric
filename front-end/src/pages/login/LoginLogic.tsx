@@ -1,8 +1,15 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { isEmpty, checkEmail } from "../create-account/CreateAccountLogic";
 
-export function submit (user: string, pass: string) {
+export function submit (email: string, pass: string) {
     
-    alert("User: " + user + ", Password: " + pass );
+    alert("Email: " + email + ", Password: " + pass );
 
+}
+
+export function checkEmpty(s: string): boolean {
+    return isEmpty(s);
+}
+
+export function emailCheck(email: string): boolean {
+    return checkEmail(email);
 }
