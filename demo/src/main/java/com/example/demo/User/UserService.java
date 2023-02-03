@@ -37,6 +37,7 @@ public class UserService {
     @Transactional
     public void updateUser(Integer userID, User user) {
         User userUpdate = userRepository.findUserById(userID).orElseThrow(()-> new IllegalStateException("user with id" + userID + "does not exist"));
+        userUpdate.setServers(user.getServers());
         userUpdate.setUserEmail(user.getUserEmail());
         userUpdate.setUserPassword(user.getUserPassword());
         userUpdate.setUserType(user.getUserType());
