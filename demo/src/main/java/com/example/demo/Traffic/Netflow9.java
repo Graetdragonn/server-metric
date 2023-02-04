@@ -1,10 +1,9 @@
 package com.example.demo.Traffic;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public record Netflow9(ArrayList<Object> client,
+public record Netflow9(List<Object> client,
                         Header header,
                         List<Map<String, Object>> flows) {
 
