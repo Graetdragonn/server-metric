@@ -8,10 +8,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/users")
 public class UserController {
-
-
     private final UserService userService;
-
     @Autowired
     public UserController (UserService userService){
         this.userService = userService;
@@ -21,13 +18,17 @@ public class UserController {
        return userService.getUsers();
     }
 
-
     @PostMapping
     public void addUser(@RequestBody User user){
         userService.addUser(user);
     }
-    @DeleteMapping("deleteuser/{userID}")
+    @DeleteMapping("delete/{userID}")
     public void deleteUser(@PathVariable("userID") Integer userID){
         userService.deleteUser(userID);
+    }
+
+    @PutMapping("update/{userID}")
+    public void updateUser(@PathVariable("userID") Integer userID, @RequestBody User user){
+        userService.updateUser(userID, user);
     }
 }

@@ -1,27 +1,31 @@
-import React from 'react';
-import axios from 'axios';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
+import logo from './logo.svg';
+
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  BrowserRouter
+} from "react-router-dom";
+import StartPage from './pages/start/Start';
+import LoginPage from './pages/login/Login';
+import CreateAccountPage from './pages/create-account/CreateAccount';
+import DashboardPage from './pages/dashboard/Dashboard';
+
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<StartPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/createaccount" element={<CreateAccountPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
-
 export default App;
