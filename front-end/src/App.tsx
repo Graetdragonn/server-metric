@@ -5,8 +5,9 @@ import {
 } from "react-router-dom";
 import StartPage from './pages/start/Start';
 import LoginPage from './pages/login/Login';
-import CreateAccountPage from './pages/create-account/CreateAccount';
-import DashboardPage from './pages/dashboard/Dashboard';
+import CreatePage from './pages/create-account/CreateAccount';
+import HomePage from './pages/dashboard/Dashboard';
+import SettingsPage from './pages/settings/Settings';
 import ForgotPasswordPage from "./pages/forgot-password/ForgotPassword";
 
 
@@ -17,8 +18,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<StartPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/createaccount" element={<CreateAccountPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/createaccount" element={<CreatePage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/settings" element={<SettingsPage/>}/>
           <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
         </Routes>
       </BrowserRouter>
