@@ -1,12 +1,17 @@
 package com.example.demo.Traffic;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 
 @Entity
 public class Traffic {
 
     @Id
+    @SequenceGenerator(name = "traffic_id_sequence", sequenceName = "traffic_id_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "traffic_id_sequence")
     private Long id;
     private Long time;
     private String srcIP, dstIP;

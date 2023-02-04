@@ -1,6 +1,7 @@
 package com.example.demo.Traffic;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,7 @@ public class TrafficController {
     }
 
     @PostMapping
-    public void addTraffic(@RequestBody Netflow9 flows) {
-        trafficService.addTraffic(flows);
+    public void addTraffic(@RequestBody Map<String, Netflow9> traffic) {
+        trafficService.addTraffic(traffic);
     }
 }
