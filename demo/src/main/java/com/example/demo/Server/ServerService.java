@@ -21,6 +21,10 @@ public class ServerService {
         return serverRepository.findAll();
     }
 
+    public Optional<Server> getServer(Integer serverID){
+        return serverRepository.findServerById(serverID);
+    }
+
     public void addServer(Server server){
         Optional<Server> serverOptional = serverRepository.findUserByAddress(server.getAddress());
         if(serverOptional.isPresent()){
@@ -38,9 +42,14 @@ public class ServerService {
     }
     @Transactional
     public void updateUser(Integer serverID, Server server) {
-        Server serverUpdate = serverRepository.findServerById(serverID).orElseThrow(()-> new IllegalStateException("user with id" + serverID + "does not exist"));
+        Server serverUpdate = serverRepository.findServerById(serverID).orElseThrow(()-> new IllegalStateException("Server with id " + serverID + " does not exist"));
+        if(server.getAddress() == null){
+            throw new IllegalStateException("address field is null");
+        }
         serverUpdate.setAddress(server.getAddress());
         serverRepository.save(server);
 
     }
+
+
 }
