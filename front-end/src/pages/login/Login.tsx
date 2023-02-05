@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import './Login.css';
 import { useNavigate } from "react-router-dom";
-import { submit } from './LoginLogic';
+import { checkEmpty, submit } from './LoginLogic';
+import { checkEmail } from '../create-account/CreateAccountLogic';
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
   const [state, setState] = useState({
-    user: "",
+    email: "",
     pass: ""
   });
 
@@ -20,10 +21,11 @@ const LoginPage = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    submit(state.user, state.pass);
-    navigate('/dashboard');
+    if (checkEmail(state.email) && !checkEmpty(state.email) && !checkEmpty(state.pass)) {
+      submit(state.email, state.pass);
+      navigate('/dashboard');
+    }
   };
-
 
   return (
     <div>
@@ -33,16 +35,20 @@ const LoginPage = () => {
       <p className='title'> Login</p>
       <form onSubmit={handleSubmit} className='form'>
         <div>
-          <label htmlFor="username" className='label'>Username </label>
-          <input type="text" name="user" value={state.user} onChange={handleChange} className="input"></input>
-        </div>
-        <div>
-          <label htmlFor="password" className='label'>Password </label>
-          <input type="password" name="pass" value={state.pass} onChange={handleChange} className='input'></input>
+          <div className="row">
+            <label>Email </label>
+            <input type="text" name="email" value={state.email} onChange={handleChange}>
+            </input>
+          </div>
+          <div className="row">
+            <label>Password </label>
+            <input type="text" name="pass" value={state.pass} onChange={handleChange}>
+            </input>
+          </div>
         </div>
         <div>
           <button type="submit" className="submitbutton"> Submit</button>
-         </div>
+        </div>
       </form>
     </div>
   );
