@@ -1,13 +1,16 @@
+import './CreateAccount.css'
+
 export function submit(email: string, first: string, last: string, pass: string, user: string) {
     alert("Email: " + email + ", Name: " + first + " " + last + ", Pass: " + pass + ", User Type: " + user);
 }
 
 export function checkPassword(pass: string, confirmPass: string): boolean {
-    if (pass !== confirmPass) {
-        alert("Passwords do not match");
-        return false;
+    if (pass === confirmPass) {
+    
+        return true;
     }
-    return true;
+    // alert("Passwords do not match");
+    return false;
 }
 
 export function isEmpty(s: string): boolean {
@@ -19,8 +22,8 @@ export function isEmpty(s: string): boolean {
 }
 
 export function isTypeDefault(s: string): boolean {
-    if (s === "default") {
-        alert("Pleas select a user type");
+    if (s === "default" || s === "") {
+       // alert("Please select a user type");
         return true;
     }
     return false;
@@ -34,3 +37,4 @@ export function checkEmail(email: string): boolean {
     alert("Please enter a valid email address");
     return false;
 }
+
