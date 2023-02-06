@@ -44,7 +44,7 @@ const CreateAccountPage = () => {
                     <div className="row"><label>First Name</label><input type="text" name="first" value={state.first} onChange={handleChange}></input></div>
                     <div className="row"><label>Last Name</label><input type="text" name="last" value={state.last} onChange={handleChange}></input></div>
                     <div className="row"><label>Password</label><input type="password" name="pass" value={state.pass} onChange={handleChange}></input></div>
-                    <div className="row"><label>Confirm Password</label><input type="password" name="confirmPass" value={state.confirmPass} onChange={handleChange}></input></div>
+                    <div className="row"><label>Confirm Password&nbsp;&nbsp;</label><input type="password" name="confirmPass" value={state.confirmPass} onChange={handleChange}></input></div>
                     <div className="row"><label>User Type</label>
                         <select onChange={(e) => setState({ ...state, userType: e.target.value })}>
                             <option value="default">- select user type -</option>

@@ -41,7 +41,7 @@ const LoginPage = () => {
             </input>
           </div>
           <div className="row">
-            <label>Password </label>
+            <label>Password&nbsp;&nbsp;</label>
             <input type="text" name="pass" value={state.pass} onChange={handleChange}>
             </input>
           </div>
