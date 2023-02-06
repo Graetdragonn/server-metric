@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from 'react';
 import './Settings.css';
 import { useNavigate } from "react-router-dom";
+import BackButton from '../../components/back-button/BackButton';
+
 
 
 const Settings = () => {
   const navigate = useNavigate();
-
 
   return (
     <div>
@@ -22,7 +23,7 @@ const Settings = () => {
         <p className='header2'>Phone Number: 123-456-7890</p>
       </div>
       <div>
-         <button type="submit" className="editbutton"> Edit</button>
+         <button type="submit" className="editbutton" onClick={()=> navigate('/editsettings')}> Edit</button>
       </div>
     </div>
 
