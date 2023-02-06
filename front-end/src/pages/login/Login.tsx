@@ -3,6 +3,7 @@ import './Login.css';
 import { useNavigate } from "react-router-dom";
 import { checkEmpty, submit } from './LoginLogic';
 import { checkEmail } from '../create-account/CreateAccountLogic';
+import BackButton from '../../components/back-button/BackButton';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -29,9 +30,7 @@ const LoginPage = () => {
 
   return (
     <div>
-      <div className="backbutton" onClick={() => navigate('/')}>
-        back
-      </div>
+      <BackButton></BackButton>
       <p className='title'> Login</p>
       <form onSubmit={handleSubmit} className='form'>
         <div>

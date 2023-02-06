@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './CreateAccount.css';
 import { useNavigate } from "react-router-dom";
 import { checkEmail, checkPassword, isEmpty, isTypeDefault, submit } from './CreateAccountLogic';
+import BackButton from '../../components/back-button/BackButton';
 
 const CreateAccountPage = () => {
     const navigate = useNavigate();
@@ -43,12 +44,8 @@ const CreateAccountPage = () => {
 
     return (
         <div>
-            <div className="backbutton" onClick={() => navigate('/')}>
-                back
-            </div>
-           
+            <BackButton></BackButton>
             <form onSubmit={handleSubmit} className='form'>
-            
                 <div>
                 <h1 className='title'> Create Account</h1>
                     <div className="row"><label>Email </label><input type="email" name="email" required={true} value={state.email} onChange={handleChange}></input></div>
