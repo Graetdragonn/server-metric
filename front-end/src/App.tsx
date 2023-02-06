@@ -6,7 +6,8 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  BrowserRouter
+  BrowserRouter,
+  useNavigate
 } from "react-router-dom";
 import StartPage from './pages/start/Start';
 import LoginPage from './pages/login/Login';
@@ -15,6 +16,7 @@ import DashboardPage from './pages/dashboard/Dashboard';
 
 
 const App = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <BrowserRouter>
