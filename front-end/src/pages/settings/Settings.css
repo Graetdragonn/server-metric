@@ -10,8 +10,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-top: 3px;
+    margin-bottom: 3px;
 }
 
 .header{
@@ -44,3 +44,22 @@
     border-radius: 12px;
     display: inline-block;
   }
+  .editbutton {
+    background-color: white;
+    border-radius: 9px;
+    padding: 14px 60px;
+    font-size: 15px;
+    margin: auto;
+    display: flex;
+  }
+
+.switchButton{
+    position: center;
+    display:block;
+    width: 35px;
+    height: 20px;
+}
+
+.toggle{
+    border-radius: 25px;
+}
