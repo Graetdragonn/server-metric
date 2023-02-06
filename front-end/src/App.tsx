@@ -16,7 +16,6 @@ import DashboardPage from './pages/dashboard/Dashboard';
 
 
 const App = () => {
-  const navigate = useNavigate();
   return (
     <div>
       <BrowserRouter>
