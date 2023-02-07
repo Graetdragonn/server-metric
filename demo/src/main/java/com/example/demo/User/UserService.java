@@ -22,8 +22,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUser(Integer userID){
-        return userRepository.findUserById(userID);
+    public Optional<User> getUser(String userEmail){
+        return userRepository.findUserByUserEmail(userEmail);
     }
 
     public void addUser(User user){
@@ -34,16 +34,16 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void deleteUser(Integer userID){
-        Optional<User> userOptional = userRepository.findById(userID);
+    public void deleteUser(String userEmail){
+        Optional<User> userOptional = userRepository.findUserByUserEmail(userEmail);
         if(userOptional.isEmpty()){
-            throw new IllegalStateException("No Such User Id");
+            throw new IllegalStateException("No Such User");
         }
-        userRepository.deleteById(userID);
+        userRepository.deleteUserByUserEmail(userEmail);
     }
     @Transactional
-    public void updateUser(Integer userID, User user) {
-        User userUpdate = userRepository.findUserById(userID).orElseThrow(()-> new IllegalStateException("user with id" + userID + "does not exist"));
+    public void updateUser(String userEmail, User user) {
+        User userUpdate = userRepository.findUserByUserEmail(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
         if(user.getUserEmail() == null){
             throw new IllegalStateException("userEmail field is null");
         }else if(user.getUserPassword() == null ){
@@ -59,25 +59,25 @@ public class UserService {
 
     }
 
-    public void addServer(Integer userID, Server server){
-        User userUpdate = userRepository.findUserById(userID).orElseThrow(()-> new IllegalStateException("user with id" + userID + "does not exist"));
+    public void addServer(String userEmail, Server server){
+        User userUpdate = userRepository.findUserByUserEmail(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
         userUpdate.addServer(server);
         userRepository.save(userUpdate);
     }
 
-    public void removeServer(Integer userID, Server server){
-        User userUpdate = userRepository.findUserById(userID).orElseThrow(()-> new IllegalStateException("user with id" + userID + "does not exist"));
+    public void removeServer(String userEmail, Server server){
+        User userUpdate = userRepository.findUserByUserEmail(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + "does not exist"));
         userUpdate.removeServer(server);
         userRepository.save(userUpdate);
     }
 
-    public List<User> getAllUsersConnectedToServer(int serverID) {
+    public List<User> getAllUsersConnectedToServer(String serverAddress) {
         List<User> allUsers = userRepository.findAll();
         List<User> allUsersConnectedToServer = new ArrayList<>();
         for (User currentUser : allUsers) {
             for (int j = 0; j < currentUser.servers.size(); j++) {
                 Server currentServer = currentUser.servers.get(j);
-                if (currentServer.getId() == serverID) {
+                if (currentServer.getAddress().equals(serverAddress)) {
                     allUsersConnectedToServer.add(currentUser);
                 }
             }
