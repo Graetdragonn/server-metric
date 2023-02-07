@@ -11,6 +11,7 @@ class UserService {
     async createUser(email: string, first: string, last: string, pass: string, user: string){
         const response = await axios.post(USER_API_BASE_URL, { email: email, first: first, last: last, pass: pass, user: user });
         console.log(response);
+        return response;
     }
 
     // getEmployeeById(employeeId){

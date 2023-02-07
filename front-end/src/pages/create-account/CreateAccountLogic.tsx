@@ -1,7 +1,11 @@
 import './CreateAccount.css'
+import UserService from '../../components/user/UserService';
+
 
 export function submit(email: string, first: string, last: string, pass: string, user: string) {
-    alert("Email: " + email + ", Name: " + first + " " + last + ", Pass: " + pass + ", User Type: " + user);
+    //alert("Email: " + email + ", Name: " + first + " " + last + ", Pass: " + pass + ", User Type: " + user);
+    let response = UserService.createUser(email, first, last, pass, user);
+    alert(response);
 }
 
 export function checkPassword(pass: string, confirmPass: string): boolean {
