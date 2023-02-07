@@ -47,6 +47,6 @@ autoDeploy:
     - sudo systemctl start front-end
   only:
     refs:
-    - master
+    - main
     changes:
     - back-end/*
