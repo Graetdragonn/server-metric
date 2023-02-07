@@ -1,4 +1,3 @@
-import React from 'react';
 import logo from '../../images/logo.svg';
 import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";

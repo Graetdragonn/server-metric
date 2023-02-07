@@ -4,9 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { checkEmail, checkPassword, isEmpty, isTypeDefault, submit } from './CreateAccountLogic';
 import BackButton from '../../components/back-button/BackButton';
 
+/**
+ * Create Account Screen
+ */
 const CreateAccountPage = () => {
+    // for screen navigation
     const navigate = useNavigate();
 
+    // user input for account creation
     const [state, setState] = useState({
         email: "",
         first: "",
@@ -15,10 +20,14 @@ const CreateAccountPage = () => {
         confirmPass: "",
         userType: ""
     });
-    
+
+    // tracks if user confirms password correctly
     const [passMatch, setPassMatch] = useState(true);
+
+    // tracks if user has selcted a user type
     const [roleSelected, setRoleSelected] = useState(true);
 
+    // to update user information when user inputs data
     const handleChange = (e: { target: { name: string; value: any; }; }) => {
         setState({
             ...state,
@@ -26,14 +35,21 @@ const CreateAccountPage = () => {
         });
     };
 
+    // submits form
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        // check that password is confirmed, show error if not
         if(!checkPassword(state.pass, state.confirmPass)){
             setPassMatch(false);
         }
+
+        // check that user type is selected, show error if not
         if(isTypeDefault(state.userType)){
             setRoleSelected(false);
         }
+
+        // verify fields and create account
         else if (checkEmail(state.email) && checkPassword(state.pass, state.confirmPass) && !isEmpty(state.email) &&
             !isEmpty(state.first) && !isEmpty(state.last) && !isEmpty(state.pass) &&
             !isEmpty(state.confirmPass) && !isTypeDefault(state.userType)) {
