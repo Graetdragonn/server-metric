@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './CreateAccount.css';
+import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
 import { checkEmail, checkPassword, isEmpty, isTypeDefault, submit } from './CreateAccountLogic';
 import BackButton from '../../components/back-button/BackButton';

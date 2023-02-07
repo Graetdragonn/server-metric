@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Login.css';
+import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
 import { checkEmpty, submit } from './LoginLogic';
 import { checkEmail } from '../create-account/CreateAccountLogic';
