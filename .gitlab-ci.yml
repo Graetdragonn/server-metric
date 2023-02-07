@@ -1,0 +1,52 @@
+stages:
+  - reactbuild
+  - mavenbuild
+  - maventest
+  - autodeploy
+
+react-build:
+    stage: reactbuild
+    tags:
+        - front_tag
+    script:
+        - echo "build front-end"
+    only:
+        changes:
+        - front-end/*
+
+maven-build:
+  stage: mavenbuild
+  tags:
+    - back_tag
+  script:
+    - cd back-end
+    - mvn package -B
+  only:
+    changes:
+    - back-end/*
+  
+maven-test:
+  stage: maventest
+  tags:
+    - back_tag
+  script:
+    - echo "back-end tests"
+  only:
+    changes:
+    - back-end/*
+      
+autoDeploy:
+  stage: autodeploy
+  tags:
+   - back_tag
+  script:
+    - cd back-end
+    - mvn package
+    - sudo mv target/*.jar /srv/back-end.jar
+    - sudo systemctl stop back-end
+    - sudo systemctl start front-end
+  only:
+    refs:
+    - master
+    changes:
+    - back-end/*
