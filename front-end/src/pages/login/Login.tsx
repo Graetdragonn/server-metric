@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
-import './Login.css';
+import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
 import { checkEmpty, submit } from './LoginLogic';
 import { checkEmail } from '../create-account/CreateAccountLogic';
 import BackButton from '../../components/back-button/BackButton';
 
+/**
+ * Login screen
+ */
 const LoginPage = () => {
+  // for screen navigation
   const navigate = useNavigate();
 
+  // user input for login
   const [state, setState] = useState({
     email: "",
     pass: ""
   });
 
+  // to update user information when user inputs data
   const handleChange = (e: { target: { name: string; value: any; }; }) => {
     setState({
       ...state,
@@ -20,8 +26,11 @@ const LoginPage = () => {
     });
   };
 
+  // submits form
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // verifies fields and logs user in
     if (checkEmail(state.email) && !checkEmpty(state.email) && !checkEmpty(state.pass)) {
       submit(state.email, state.pass);
       navigate('/dashboard');
@@ -36,12 +45,12 @@ const LoginPage = () => {
         <div>
           <div className="row">
             <label>Email </label>
-            <input type="text" name="email" value={state.email} onChange={handleChange}>
+            <input type="text" required={true} name="email" value={state.email} onChange={handleChange}>
             </input>
           </div>
           <div className="row">
             <label>Password&nbsp;&nbsp;</label>
-            <input type="text" name="pass" value={state.pass} onChange={handleChange}>
+            <input type="text" name="pass" required={true} value={state.pass} onChange={handleChange}>
             </input>
           </div>
         </div>
