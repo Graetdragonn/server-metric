@@ -21,9 +21,9 @@ public class ServerController {
     }
 
     //this mapping gets a specific server by the servers id
-    @GetMapping("getServerByID/{serverID}")
-    public Optional<Server> getServer(@PathVariable("serverID") int serverID){
-       return serverService.getServer(serverID);
+    @GetMapping("getServerByAddress/{serverAddress}")
+    public Optional<Server> getServer(@PathVariable("serverAddress") String serverAddress){
+       return serverService.getServer(serverAddress);
     }
 
     //this mapping adds a server to the database
@@ -33,14 +33,14 @@ public class ServerController {
     }
 
     //this mapping deletes a server from the database using the servers id
-    @DeleteMapping("delete/{serverID}")
-    public void deleteServer(@PathVariable("serverID") Integer serverID){
-        serverService.deleteServer(serverID);
+    @DeleteMapping("delete/{serverAddress}")
+    public void deleteServer(@PathVariable("serverAddress") String serverAddress){
+        serverService.deleteServer(serverAddress);
     }
 
     //this mapping updates a specific server using a servers id
-    @PutMapping("update/{serverID}")
-    public void updateServer(@PathVariable("serverID") Integer serverID, @RequestBody Server server){
-        serverService.updateUser(serverID, server);
+    @PutMapping("update/{serverAddress}")
+    public void updateServer(@PathVariable("serverAddress") String serverAddress, @RequestBody Server server){
+        serverService.updateUser(serverAddress, server);
     }
 }

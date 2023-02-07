@@ -21,28 +21,28 @@ public class ServerService {
         return serverRepository.findAll();
     }
 
-    public Optional<Server> getServer(Integer serverID){
-        return serverRepository.findServerById(serverID);
+    public Optional<Server> getServer(String serverAddress){
+        return serverRepository.findServerByAddress(serverAddress);
     }
 
     public void addServer(Server server){
-        Optional<Server> serverOptional = serverRepository.findUserByAddress(server.getAddress());
+        Optional<Server> serverOptional = serverRepository.findServerByAddress(server.getAddress());
         if(serverOptional.isPresent()){
             throw new IllegalStateException("Server is already added");
         }
         serverRepository.save(server);
     }
 
-    public void deleteServer(Integer serverID){
-        Optional<Server> serverOptional = serverRepository.findById(serverID);
+    public void deleteServer(String serverAddress){
+        Optional<Server> serverOptional = serverRepository.findServerByAddress(serverAddress);
         if(serverOptional.isEmpty()){
             throw new IllegalStateException("No Such Server ID");
         }
-        serverRepository.deleteById(serverID);
+        serverRepository.deleteServerByAddress(serverAddress);
     }
     @Transactional
-    public void updateUser(Integer serverID, Server server) {
-        Server serverUpdate = serverRepository.findServerById(serverID).orElseThrow(()-> new IllegalStateException("Server with id " + serverID + " does not exist"));
+    public void updateUser(String serverAddress, Server server) {
+        Server serverUpdate = serverRepository.findServerByAddress(serverAddress).orElseThrow(()-> new IllegalStateException("Server with address " + serverAddress + " does not exist"));
         if(server.getAddress() == null){
             throw new IllegalStateException("address field is null");
         }
