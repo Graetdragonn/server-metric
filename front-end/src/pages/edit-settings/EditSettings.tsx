@@ -1,11 +1,8 @@
 import React, {useState} from "react";
-import './Settings.css';
+import './EditSettings.css';
 import { useNavigate } from "react-router-dom";
-import { checkEmpty, submit } from './SettingsLogic';
+import { checkEmpty, submit } from '../settings/SettingsLogic';
 import { checkEmail } from '../create-account/CreateAccountLogic';
-
-
-
 
 const EditSettings = () => {
   const navigate = useNavigate();
@@ -24,21 +21,24 @@ const EditSettings = () => {
   return (
     <div>
       <div className="backbutton" onClick={() => navigate('/settings')}>
-      back
+        back
       </div>
+      <p className='title'> Edit Account Settings</p>
+
       <div>
       <form onSubmit={submitChange} className='form'>
-        <p className='title'> Account Settings</p>
-        <p className='header'>General Information:</p>
-        <p className='header2'>Username: dummyuser@gmail.com</p>
-        <p className='header2'>Password: ********</p>
-        <p className='header'>Notification Settings:</p>
-        <p className='header2'>Email: dummyuser@gmail.com</p>
-        <p className='header2'>Phone Number: 123-456-7890</p>
-        </form>
+        <div>
+        <p className='eheader'>General Information:</p>
+        <p className='eheader2'>Username: dummyuser@gmail.com</p>
+        <p className='eheader2'>Password: ********</p>
+        <p className='eheader'>Notification Settings:</p>
+        <p className='eheader2'>Email: dummyuser@gmail.com</p>
+        <p className='eheader2'>Phone Number: 123-456-7890</p>
+        </div>
+      </form>
       </div>
       <div>
-         <button type="submit" className="editbutton" onClick={()=> navigate('/editSettings')}> Edit</button>
+         <button type="submit" className="submitbutton" onClick={()=> navigate('/editSettings')}> Submit</button>
       </div>
     </div>
 
