@@ -1,4 +1,4 @@
-import './CreateAccount.css'
+import '../../style/Master.css'
 import UserService from '../../components/user/UserService';
 
 /**

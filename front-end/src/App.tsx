@@ -1,13 +1,7 @@
-import React, { useState } from 'react';
-
-import logo from './logo.svg';
-
 import {
-  BrowserRouter as Router,
   Routes,
   Route,
-  BrowserRouter,
-  useNavigate
+  BrowserRouter
 } from "react-router-dom";
 import StartPage from './pages/start/Start';
 import LoginPage from './pages/login/Login';
