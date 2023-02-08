@@ -51,4 +51,4 @@ autoDeploy:
     changes:
     - back-end/*
     variables:
-      - $MAN_DEPLOY = "manual"
+    - $MAN_DEPLOY = "manual"
