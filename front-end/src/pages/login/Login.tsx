@@ -27,13 +27,17 @@ const LoginPage = () => {
   };
 
   // submits form
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // verifies fields and logs user in
     if (checkEmail(state.email) && !checkEmpty(state.email) && !checkEmpty(state.pass)) {
-      submit(state.email, state.pass);
-      navigate('/dashboard');
+      if(await submit(state.email, state.pass)){
+        navigate('/dashboard');
+      }
+      else{
+        alert("error");
+      }
     }
   };
 
@@ -56,7 +60,7 @@ const LoginPage = () => {
           </div>
           <div className="row">
             <label>Password&nbsp;&nbsp;</label>
-            <input type="text" name="pass" required={true} value={state.pass} onChange={handleChange}>
+            <input type="password" name="pass" required={true} value={state.pass} onChange={handleChange}>
             </input>
           </div>
         </div>

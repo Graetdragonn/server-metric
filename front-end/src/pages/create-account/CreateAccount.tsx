@@ -53,9 +53,13 @@ const CreateAccountPage = () => {
         else if (checkEmail(state.email) && checkPassword(state.pass, state.confirmPass) && !isEmpty(state.email) &&
             !isEmpty(state.first) && !isEmpty(state.last) && !isEmpty(state.pass) &&
             !isEmpty(state.confirmPass) && !isTypeDefault(state.userType)) {
-
-            submit(state.email, state.first, state.last, state.pass, state.userType);
-            //navigate('/dashboard');
+                submit(state.email, state.first, state.last, state.pass, state.userType)
+            // if(submit(state.email, state.first, state.last, state.pass, state.userType)){
+            //     navigate('/dashboard');
+            // }
+            // else{
+                
+            // }
         }
     };
 
