@@ -1,9 +1,13 @@
 package com.example.demo.Traffic;
 
+import com.example.demo.Server.Server;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity
@@ -14,12 +18,16 @@ public class Traffic {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "traffic_id_sequence")
     private Long id;
     private Long time;
-    private String srcIP, dstIP;
+    private String dstIP;
     private int srcPort, dstPort;
+
+    @ManyToOne
+    @JoinColumn(name = "srcIP")
+    Server srcIP;
 
     public Traffic() {}
 
-    public Traffic(Long id, Long time, String srcIP, String dstIP, int srcPort, int dstPort) {
+    public Traffic(Long id, Long time, Server srcIP, String dstIP, int srcPort, int dstPort) {
         this.id = id;
         this.time = time;
         this.srcIP = srcIP;
@@ -40,11 +48,11 @@ public class Traffic {
         this.time = time;
     }
 
-    public String getSrcIP() {
+    public Server getSrcIP() {
         return srcIP;
     }
 
-    public void setSrcIP(String srcIP) {
+    public void setSrcIP(Server srcIP) {
         this.srcIP = srcIP;
     }
 

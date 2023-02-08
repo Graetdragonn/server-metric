@@ -1,11 +1,16 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Login from './Login';
+import LoginPage from './Login';
+import { BrowserRouter } from 'react-router-dom';
 
-test('renders learn react link', () => {
-  render(<Login />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('test email input render', () => {
+  const { container } = render(<BrowserRouter><LoginPage /></BrowserRouter>);
+  const inputEl = container.querySelector(`input[name="email"]`);
+  expect(inputEl).toBeInTheDocument();
 });
 
-// code above modified from App.test.tsx
+test('test password input render', () => {
+  const { container } = render(<BrowserRouter><LoginPage /></BrowserRouter>);
+  const inputEl = container.querySelector(`input[name="pass"]`);
+  expect(inputEl).toBeInTheDocument();
+});

@@ -1,4 +1,5 @@
 package com.example.demo.Server;
+import com.example.demo.Traffic.Traffic;
 import com.example.demo.User.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -6,6 +7,7 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 //Servers stores 2 variables:
 //Integer id: is used as the primary key so a server can be uniquely identified.
@@ -15,36 +17,25 @@ import java.util.Objects;
 public class Server {
 
     @Id
-    @GeneratedValue
-    private Integer id;
-
+    @Column(name = "address")
     private String address;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "servers", cascade = CascadeType.ALL)
     List<User> users = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL)
+    Set<Traffic> traffic;
+
     //basic Server constructor
     public Server() {
     }
 
     //Server constructor with all private variables being assigned
-    public Server(Integer id, String address, List<User> users) {
-        this.id = id;
+    public Server(String address, List<User> users){
         this.address = address;
         this.users = users;
     }
-
-    //getId() returns a users id
-    public Integer getId() {
-        return id;
-    }
-
-    //setId() sets a users id
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     //getAddress() returns a servers address
     public String getAddress() {
         return address;
@@ -75,25 +66,23 @@ public class Server {
         this.users.remove(user);
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Server server = (Server) o;
-        return Objects.equals(id, server.id) && Objects.equals(address, server.address) && Objects.equals(users, server.users);
+        return Objects.equals(address, server.address) && Objects.equals(users, server.users);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, address, users);
+        return Objects.hash(address, users);
     }
 
     @Override
     public String toString() {
         return "Server{" +
-                "id=" + id +
-                ", address='" + address + '\'' +
+                "address='" + address + '\'' +
                 ", users=" + users +
                 '}';
     }
