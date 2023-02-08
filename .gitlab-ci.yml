@@ -48,7 +48,3 @@ autoDeploy:
   only:
     refs:
     - main
-    changes:
-    - back-end/*
-    variables:
-    - $MAN_DEPLOY = "manual"
