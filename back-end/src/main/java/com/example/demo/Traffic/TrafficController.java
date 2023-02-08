@@ -23,6 +23,7 @@ public class TrafficController {
     }
 
     @GetMapping
+    @CrossOrigin
     public List<Traffic> getTrafficList(@RequestParam Optional<String> srcIP,
                                         @RequestParam Optional<String> dstIP,
                                         @RequestParam Optional<Integer> srcPort,
@@ -31,6 +32,7 @@ public class TrafficController {
     }
 
     @PostMapping
+    @CrossOrigin
     public void addTraffic(@RequestBody Map<String, Netflow9> traffic) {
         trafficService.addTraffic(traffic);
     }
