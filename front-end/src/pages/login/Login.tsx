@@ -40,7 +40,7 @@ const LoginPage = () => {
   // handles forgot password
   const forgotPass = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
-    alert("forgot pass");
+    navigate('/forgotpassword');
   };
 
   return (

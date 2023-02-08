@@ -132,6 +132,10 @@ select {
 
 div.row {
   display: table-row;
-  border-collapse: collapse
+  border-collapse: collapse;
 }
 
+.center {
+  margin: auto;
+  width: 50%;
+}

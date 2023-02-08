@@ -1,18 +1,15 @@
 import axios from "axios";
 
-const USER_API_BASE_URL = "coms-402-sd-05.class.las.iastate.edu:8080/";
+const USER_API_BASE_URL = "http://coms-402-sd-05.class.las.iastate.edu:8080/";
 
 class UserService {
 
     getUsers() {
-        // const url = USER_API_BASE_URL + "api/v1/users/getAllUsers"
-        // return axios.get(url);
         alert("here");
-        var axios = require('axios');
 
         var config = {
             method: 'get',
-            url: 'coms-402-sd-05.class.las.iastate.edu:8080/api/v1/users/getAllUsers',
+            url: 'http://localhost:8080/api/v1/users/getAllUsers',
             headers: {}
         };
 
@@ -23,29 +20,44 @@ class UserService {
             .catch(function (error: any) {
                 alert(error);
             });
-        
-            alert(res);
 
+            alert(res);
     }
 
     createUser(email: string, first: string, last: string, pass: string, user: string) {
-        const url = USER_API_BASE_URL + "api/v1/users/addUser";
-        // const response =  axios.post(url, { userEmail: email, userPassword: pass, userType: "CLIENT" });
-
-        // return response;
-        var axios = require('axios');
+        //     const url = USER_API_BASE_URL + "api/v1/users/addUser";
+        //     let headers = {
+        //         'Content-Type': 'application/json',
+        //         "Access-Control-Allow-Origin": "*",
+        //     };
+        //     const response =  axios.post(url, { userEmail: email, userPassword: pass, userType: "CLIENT" }, {'Content-Type', 'application/json',
+        //     "Access-Control-Allow-Origin": "*"}).then((response) => {
+        //         alert(response.data);}).catch((error) => {alert(error);});
+        //   //  alert(response);
+        //     // return response;
+        //var axios = require('axios');
         var data = '{\n    "userEmail": "miboer@iastate.edu",\n    "userPassword": "password",\n    "userType": "CLIENT"\n}';
 
         var config = {
             method: 'post',
-            url: 'coms-402-sd-05.class.las.iastate.edu:8080/api/v1/users/addUser',
-            headers: {},
+            url: 'http://coms-402-sd-05.class.las.iastate.edu:8080/api/v1/users/addUser',
+            headers: {'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": 'http://localhost:3000'},
             data: data
         };
 
-        axios.post(url, { userEmail: email, userPassword: pass, userType: "CLIENT" });
+        axios(config)
+            .then(function (response: { data: any; }) {
+                alert(JSON.stringify(response.data));
+            })
+            .catch(function (error: any) {
+                alert(error);
+            });
+
 
     }
+
+
 
     // getEmployeeById(employeeId){
     //     return axios.get(USER_API_BASE_URL + '/' + employeeId);
