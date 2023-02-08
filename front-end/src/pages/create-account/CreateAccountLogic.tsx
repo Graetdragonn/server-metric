@@ -11,8 +11,9 @@ import UserService from '../../components/user/UserService';
  */
 export function submit(email: string, first: string, last: string, pass: string, user: string) {
     //alert("Email: " + email + ", Name: " + first + " " + last + ", Pass: " + pass + ", User Type: " + user);
-    let response = UserService.createUser(email, first, last, pass, user);
-    alert(response);
+//     let response = UserService.createUser(email, first, last, pass, user);
+//     alert(response);
+    UserService.getUsers();
 }
 
 /**

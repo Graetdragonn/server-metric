@@ -38,7 +38,7 @@ const CreateAccountPage = () => {
     // submits form
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
+        
         // check that password is confirmed, show error if not
         if(!checkPassword(state.pass, state.confirmPass)){
             setPassMatch(false);
