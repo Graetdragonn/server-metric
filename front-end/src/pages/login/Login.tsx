@@ -18,6 +18,9 @@ const LoginPage = () => {
     pass: ""
   });
 
+  // checks for errors on login
+  const [error, setError] = useState(false);
+
   // to update user information when user inputs data
   const handleChange = (e: { target: { name: string; value: any; }; }) => {
     setState({
@@ -36,7 +39,7 @@ const LoginPage = () => {
         navigate('/dashboard');
       }
       else{
-        alert("error");
+        setError(true);
       }
     }
   };
@@ -64,8 +67,11 @@ const LoginPage = () => {
             </input>
           </div>
         </div>
+        <p style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email or password are incorrect</p>
         <div>
+          
           <p className='forgotPass' onClick={forgotPass}>Forgot password?</p>
+          
           <button type="submit" className="submitbutton"> Submit</button>
         </div>
       </form>
