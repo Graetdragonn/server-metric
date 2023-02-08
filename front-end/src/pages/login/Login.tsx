@@ -37,12 +37,17 @@ const LoginPage = () => {
     }
   };
 
+  const forgotPass = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault();
+    alert("forgot pass");
+  };
+
   return (
     <div>
       <BackButton></BackButton>
-      <p className='title'> Login</p>
       <form onSubmit={handleSubmit} className='form'>
         <div>
+        <p className='title'>Login</p>
           <div className="row">
             <label>Email </label>
             <input type="text" required={true} name="email" value={state.email} onChange={handleChange}>
@@ -55,6 +60,7 @@ const LoginPage = () => {
           </div>
         </div>
         <div>
+          <p className='forgotPass' onClick={forgotPass}>Forgot password?</p>
           <button type="submit" className="submitbutton"> Submit</button>
         </div>
       </form>
