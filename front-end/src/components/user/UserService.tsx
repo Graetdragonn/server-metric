@@ -8,8 +8,14 @@ class UserService {
         return axios.get(USER_API_BASE_URL);
     }
 
+<<<<<<< HEAD
     createUser(email: string, first: string, last: string, pass: string, user: string){
         const response =  axios.post(USER_API_BASE_URL, { email: email, first: first, last: last, pass: pass, user: user });
+=======
+    async createUser(email: string, first: string, last: string, pass: string, user: string){
+        const response = await axios.post(USER_API_BASE_URL, { email: email, first: first, last: last, pass: pass, user: user });
+        console.log(response);
+>>>>>>> 75fc64ca67caac80666886305ffc8b3b8e16f6a2
         return response;
     }
 
