@@ -44,9 +44,7 @@ autoDeploy:
     - mvn package
     - sudo mv target/*.jar /srv/back-end.jar
     - sudo systemctl stop back-end
-    - sudo systemctl start front-end
+    - sudo systemctl start back-end
   only:
     refs:
-    - master
-    changes:
-    - back-end/*
+    - main
