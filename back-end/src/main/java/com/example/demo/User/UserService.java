@@ -45,19 +45,22 @@ public class UserService {
     @Transactional
     public void updateUser(String userEmail, User user) {
         User userUpdate = userRepository.findUserByUserEmail(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
-        if(user.getUserEmail() == null){
-            throw new IllegalStateException("userEmail field is null");
-        }else if(user.getUserPassword() == null ){
-            throw new IllegalStateException("userPassword field is null");
-        } else if (user.getUserType() == null) {
-            throw new IllegalStateException("userType field is null");
+        if(user.getUserPassword() != null ){
+            userUpdate.setUserPassword(user.getUserPassword());
         }
-        userUpdate.setUserEmail(user.getUserEmail());
-        userUpdate.setUserPassword(user.getUserPassword());
-        userUpdate.setUserType(user.getUserType());
-        userUpdate.setServers(user.getServers());
-        userRepository.save(user);
-
+        if (user.getUserType() != null) {
+            userUpdate.setUserType(user.getUserType());
+        }
+        if(user.getUserFirstName() != null){
+            userUpdate.setUserFirstName(user.getUserFirstName());
+        }
+        if(user.getUserLastName() != null){
+            userUpdate.setUserLastName(user.getUserLastName());
+        }
+        if(user.getServers() != null){
+            userUpdate.setServers(user.getServers());
+        }
+        userRepository.save(userUpdate);
     }
 
     public void addServer(String userEmail, Server server){
