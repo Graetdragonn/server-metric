@@ -36,7 +36,7 @@ class UserService {
             method: 'post',
             url: USER_API_BASE_URL + 'api/v1/users/addUser',
             headers: {},
-            data: { userEmail: email, userPassword: pass, userType: "CLIENT" }
+            data: { userEmail: email, userPassword: pass, userType: "CLIENT", userFirstName: first, userLastName: last }
         };
 
         await axios(config)
