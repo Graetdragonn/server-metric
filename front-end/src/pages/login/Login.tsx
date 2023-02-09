@@ -18,6 +18,9 @@ const LoginPage = () => {
     pass: ""
   });
 
+  // checks for errors on login
+  const [error, setError] = useState(false);
+
   // to update user information when user inputs data
   const handleChange = (e: { target: { name: string; value: any; }; }) => {
     setState({
@@ -27,22 +30,32 @@ const LoginPage = () => {
   };
 
   // submits form
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // verifies fields and logs user in
     if (checkEmail(state.email) && !checkEmpty(state.email) && !checkEmpty(state.pass)) {
-      submit(state.email, state.pass);
-      navigate('/dashboard');
+      if(await submit(state.email, state.pass)){
+        navigate('/dashboard');
+      }
+      else{
+        setError(true);
+      }
     }
+  };
+
+  // handles forgot password
+  const forgotPass = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault();
+    navigate('/forgotpassword');
   };
 
   return (
     <div>
       <BackButton></BackButton>
-      <p className='title'> Login</p>
       <form onSubmit={handleSubmit} className='form'>
         <div>
+        <p className='title'>Login</p>
           <div className="row">
             <label>Email </label>
             <input type="text" required={true} name="email" value={state.email} onChange={handleChange}>
@@ -50,11 +63,15 @@ const LoginPage = () => {
           </div>
           <div className="row">
             <label>Password&nbsp;&nbsp;</label>
-            <input type="text" name="pass" required={true} value={state.pass} onChange={handleChange}>
+            <input type="password" name="pass" required={true} value={state.pass} onChange={handleChange}>
             </input>
           </div>
         </div>
+        <p style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email or password are incorrect</p>
         <div>
+          
+          <p className='forgotPass' onClick={forgotPass}>Forgot password?</p>
+          
           <button type="submit" className="submitbutton"> Submit</button>
         </div>
       </form>

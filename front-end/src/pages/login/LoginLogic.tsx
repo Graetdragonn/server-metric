@@ -1,3 +1,4 @@
+import UserService from "../../components/user/UserService";
 import { isEmpty, checkEmail } from "../create-account/CreateAccountLogic";
 
 /**
@@ -5,10 +6,26 @@ import { isEmpty, checkEmail } from "../create-account/CreateAccountLogic";
  * @param email User email
  * @param pass  User password
  */
-export function submit (email: string, pass: string) {
-    
-    alert("Email: " + email + ", Password: " + pass );
+export async function submit(email: string, pass: string) {
+    try {
+        const res = await UserService.getUserByEmail(email);
+        var password = JSON.parse(res);
+        password = password['userPassword'];
+        return checkPass(pass, password);
+    }
+    catch {
+        return false;
+    }
+}
 
+/**
+ * Checks that the user's input password is correct
+ * @param userInputPass the password the user input
+ * @param actualPass the password in database
+ * @returns true if passwords match, false otherwise
+ */
+function checkPass(userInputPass: string, actualPass: string): boolean {
+    return userInputPass === actualPass;
 }
 
 /**
