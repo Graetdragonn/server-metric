@@ -19,6 +19,9 @@ public class User {
     private String userEmail;
     private String userPassword;
     private UserType userType;
+    private String userFirstName;
+    private String userLastName;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_servers", joinColumns = @JoinColumn(name = "userEmail"), inverseJoinColumns = @JoinColumn(name = "address"))
     List<Server> servers = new ArrayList<>();
@@ -28,10 +31,12 @@ public class User {
     }
 
     //User constructor with all private variables being assigned
-    public User(String userEmail, String userPassword, UserType userType, List<Server> servers) {
+    public User(String userEmail, String userPassword, UserType userType, String userFirstName, String userLastName, List<Server> servers) {
         this.userEmail = userEmail;
         this.userPassword = userPassword;
         this.userType = userType;
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
         this.servers = servers;
     }
 
@@ -85,25 +90,42 @@ public class User {
         this.servers.remove(server);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(userEmail, user.userEmail) && Objects.equals(userPassword, user.userPassword) && userType == user.userType && Objects.equals(servers, user.servers);
+    public String getUserFirstName() {
+        return userFirstName;
     }
 
-    @Override
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
+    }
+
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
+    }
+
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        if (!super.equals(object)) return false;
+        User user = (User) object;
+        return java.util.Objects.equals(userEmail, user.userEmail) && java.util.Objects.equals(userPassword, user.userPassword) && java.util.Objects.equals(userType, user.userType) && java.util.Objects.equals(userFirstName, user.userFirstName) && java.util.Objects.equals(userLastName, user.userLastName) && java.util.Objects.equals(servers, user.servers);
+    }
+
     public int hashCode() {
-        return Objects.hash(userEmail, userPassword, userType, servers);
+        return Objects.hash(super.hashCode(), userEmail, userPassword, userType, userFirstName, userLastName, servers);
     }
 
-    @Override
-    public String toString() {
+    @java.lang.Override
+    public java.lang.String toString() {
         return "User{" +
                 "userEmail='" + userEmail + '\'' +
                 ", userPassword='" + userPassword + '\'' +
                 ", userType=" + userType +
+                ", userFirstName='" + userFirstName + '\'' +
+                ", userLastName='" + userLastName + '\'' +
                 ", servers=" + servers +
                 '}';
     }
