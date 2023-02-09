@@ -2,6 +2,7 @@ stages:
   - reactbuild
   - mavenbuild
   - deploybackend
+  - deployfrontend
 
 react-build:
     stage: reactbuild
