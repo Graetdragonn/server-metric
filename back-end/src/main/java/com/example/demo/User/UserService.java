@@ -34,6 +34,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
     public void deleteUser(String userEmail){
         Optional<User> userOptional = userRepository.findUserByUserEmail(userEmail);
         if(userOptional.isEmpty()){

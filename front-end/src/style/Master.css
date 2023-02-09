@@ -1,5 +1,5 @@
 * {
-  background-color: black;
+  background-color: rgb(1, 45, 17);
   font-family: 'Quicksand', sans-serif;
 }
 .App {
@@ -7,19 +7,11 @@
 }
 
 .App-logo {
-  height: 19vmin;
-  pointer-events: none;
+  height: 25vmin;
   padding: 0px 0px;
 }
 
-/* @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-} */
-
 .App-header {
-  background-color: black;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -39,16 +31,6 @@
   display: inline-block;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .title {
   color: white;
   font-size: 40px;
@@ -60,16 +42,31 @@
 }
 
 .backbutton {
-  background-color: black;
+  
   color: white;
   font-size: 20px;
   padding: 14px 40px;
   border-radius: 12px;
   display: inline-block;
 }
+.backbutton:hover {
+  cursor: pointer;
+ }
+
+.forgotPass {
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: underline;
+  user-select: none;
+}
+.forgotPass:hover {
+  cursor: pointer;
+ }
 
 .form {
-  background-color: black;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -107,7 +104,6 @@ input {
   background-color: white;
   font-size: 15px;
   padding: 2px 2px;
-  color: black;
 }
 
 select {
@@ -115,11 +111,14 @@ select {
   background-color: white;
   font-size: 15px;
   padding: 2px 2px;
-  color: black;
 }
 
 div.row {
   display: table-row;
-  border-collapse: collapse
+  border-collapse: collapse;
 }
 
+.center {
+  margin: auto;
+  width: 50%;
+}

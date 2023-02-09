@@ -1,3 +1,6 @@
+import '../../style/Master.css'
+import UserService from '../../components/user/UserService';
+
 /**
  * Sends post request to server to create account
  * @param email User email
@@ -6,8 +9,15 @@
  * @param pass  User password
  * @param user  User type
  */
-export function submit(email: string, first: string, last: string, pass: string, user: string) {
-    alert("Email: " + email + ", Name: " + first + " " + last + ", Pass: " + pass + ", User Type: " + user);
+export async function submit(email: string, first: string, last: string, pass: string, user: string) {
+
+    const res = await UserService.createUser(email, first, last, pass, user);
+    if (res === "") {
+        return false;
+    }
+    return true;
+
+
 }
 
 /**
@@ -18,7 +28,7 @@ export function submit(email: string, first: string, last: string, pass: string,
  */
 export function checkPassword(pass: string, confirmPass: string): boolean {
     if (pass === confirmPass) {
-    
+
         return true;
     }
     return false;
