@@ -19,7 +19,7 @@ public class Traffic {
     private Long id;
     private Long time;
     private String dstIP;
-    private int srcPort, dstPort;
+    private Integer srcPort, dstPort;
 
     @ManyToOne
     @JoinColumn(name = "srcIP")

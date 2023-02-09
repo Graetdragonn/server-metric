@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.demo.Server.Server;
+
 @RestController
 @RequestMapping("api/v1/traffic")
 public class TrafficController {
@@ -19,11 +21,19 @@ public class TrafficController {
 
     @GetMapping
     @CrossOrigin
-    public List<Traffic> getTrafficList(@RequestParam Optional<String> srcIP,
+    public List<Traffic> getTrafficList(@RequestParam Optional<Long> timestamp,
+                                        @RequestParam Optional<String> srcIP,
                                         @RequestParam Optional<String> dstIP,
                                         @RequestParam Optional<Integer> srcPort,
                                         @RequestParam Optional<Integer> dstPort){
-       return trafficService.getTrafficList();
+        Traffic t = new Traffic();
+        timestamp.ifPresent(time -> t.setTime(time));
+        srcIP.ifPresent(src -> t.setSrcIP(new Server(src, null)));
+        srcPort.ifPresent(src -> t.setSrcPort(src));
+        dstIP.ifPresent(dst -> t.setDstIP(dst));
+        dstPort.ifPresent(dst -> t.setDstPort(dst));
+
+        return trafficService.getTrafficList(t);
     }
 
     @PostMapping

@@ -43,7 +43,13 @@ public class TrafficService {
       }
    }
 
-   public List<Traffic> getTrafficList() {
-      return trafficRepository.findAll();
+   public List<Traffic> getTrafficList(Traffic criteria) {
+      try {
+         return trafficRepository.findTraffic(criteria);
+      } catch (IllegalArgumentException | IllegalAccessException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
+      return null;
    }
 }
