@@ -7,15 +7,8 @@
 }
 
 .App-logo {
-  height: 19vmin;
-  pointer-events: none;
+  height: 25vmin;
   padding: 0px 0px;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
 }
 
 .App-header {
@@ -36,16 +29,6 @@
   border-radius: 12px;
   width: 250px;
   display: inline-block;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 .title {
