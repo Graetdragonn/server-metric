@@ -27,6 +27,9 @@ const CreateAccountPage = () => {
     // tracks if user has selcted a user type
     const [roleSelected, setRoleSelected] = useState(true);
 
+    // checks for errors on login
+    const [error, setError] = useState(false);
+
     // to update user information when user inputs data
     const handleChange = (e: { target: { name: string; value: any; }; }) => {
         setState({
@@ -36,9 +39,9 @@ const CreateAccountPage = () => {
     };
 
     // submits form
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-    
+
         // check that password is confirmed, show error if not
         if (!checkPassword(state.pass, state.confirmPass)) {
             setPassMatch(false);
@@ -53,13 +56,13 @@ const CreateAccountPage = () => {
         else if (checkEmail(state.email) && checkPassword(state.pass, state.confirmPass) && !isEmpty(state.email) &&
             !isEmpty(state.first) && !isEmpty(state.last) && !isEmpty(state.pass) &&
             !isEmpty(state.confirmPass) && !isTypeDefault(state.userType)) {
-                submit(state.email, state.first, state.last, state.pass, state.userType)
-            // if(submit(state.email, state.first, state.last, state.pass, state.userType)){
-            //     navigate('/dashboard');
-            // }
-            // else{
-                
-            // }
+
+            if (await submit(state.email, state.first, state.last, state.pass, state.userType)) {
+                navigate('/dashboard');
+            }
+            else {
+                setError(true);
+            }
         }
     };
 
@@ -85,7 +88,9 @@ const CreateAccountPage = () => {
                         </select>
                     </div>
                     <p style={{ visibility: roleSelected ? 'hidden' : 'visible' }} className='error'>&nbsp; No user type selected </p>
+                    <p style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email is already in use</p>
                 </div>
+
                 <div>
                     <button type="submit" className="submitbutton"> Submit</button>
                 </div>

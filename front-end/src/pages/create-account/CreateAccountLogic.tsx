@@ -9,9 +9,15 @@ import UserService from '../../components/user/UserService';
  * @param pass  User password
  * @param user  User type
  */
-export function submit(email: string, first: string, last: string, pass: string, user: string) {
-    const res = UserService.createUser(email, first, last, pass, user);
-    alert(res);
+export async function submit(email: string, first: string, last: string, pass: string, user: string) {
+
+    const res = await UserService.createUser(email, first, last, pass, user);
+    if (res === "") {
+        return false;
+    }
+    return true;
+
+
 }
 
 /**
@@ -22,7 +28,7 @@ export function submit(email: string, first: string, last: string, pass: string,
  */
 export function checkPassword(pass: string, confirmPass: string): boolean {
     if (pass === confirmPass) {
-    
+
         return true;
     }
     return false;
