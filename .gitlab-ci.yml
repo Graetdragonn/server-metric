@@ -46,6 +46,7 @@ deployFrontend:
    - front_tag
   script:
     - cd front-end
+    - npm install
     - npm run build
     - sudo mv build /srv/front-end/
     - sudo systemctl stop front-end
