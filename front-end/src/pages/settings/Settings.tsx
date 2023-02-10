@@ -11,9 +11,7 @@ const Settings = () => {
 
   return (
     <div>
-      <div className="backbutton" onClick={() => navigate('/dashboard')}>
-      back
-      </div>
+      <BackButton></BackButton>
       <div>
         <p className='title'> Account Settings</p>
         <p className='header'>General Information:</p>
