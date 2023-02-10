@@ -8,7 +8,7 @@ const Settings = () => {
 
 
   return (
-<div>
+  <div>
     <Header />
       <p className='title'> Account Settings</p>
 
@@ -17,7 +17,7 @@ const Settings = () => {
       <p className='header2'>Password: ********</p>
       <p className='header'>Notification Settings:</p>
       <p className='header2'>Email: dummyuser@gmail.com</p>
-      <p className='header2'>Phone Number: 123-456-7890</p>
+      <p className='header2'>Phone Number: 123-456-7890</p>    
       <div>
          <button type="submit" className="submitbutton" onClick={()=> navigate('/editsettings')}> Edit</button>
       </div>

@@ -150,6 +150,20 @@ button:disabled {
   cursor: pointer;
 }
 
+ .settingsbutton {
+  
+  color: white;
+  font-size: 20px;
+  padding: 14px 40px;
+  border-radius: 12px;
+  display: inline-block;
+  float: right;
+}
+.settingsbutton:hover {
+  cursor: pointer;
+ }
+
+
 .forgotPass {
   font-size: 12px;
   display: flex;
