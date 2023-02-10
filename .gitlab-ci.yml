@@ -48,7 +48,8 @@ deployFrontend:
     - cd front-end
     - npm install
     - npm run build
-    - sudo mv build /srv/front-end/
+    - sudo rm -r /srv/front-end
+    - sudo mv build /srv/front-end
     - sudo systemctl stop front-end
     - sudo systemctl start front-end
   only:
