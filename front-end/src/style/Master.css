@@ -431,6 +431,28 @@ button:hover {
   background-color: #24272C;
   color: #fefefe;
 }
-button:disabled {
-  opacity: 0.2;
+
+.active-navbar-item {
+  font-weight: bold;
+}
+.header{
+  color: white;
+  font-size: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: right;
+  justify-content: right;
+  text-indent: 350px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.header2{
+  color: white;
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  text-indent: 450px;
 }

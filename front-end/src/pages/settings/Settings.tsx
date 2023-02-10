@@ -1,7 +1,10 @@
+import React, {useState } from 'react';
 import '../../style/Master.css';
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/navigation-bar/Header";
 
 const Settings = () => {
+  const navigate = useNavigate();
 
 
   return (
@@ -16,7 +19,7 @@ const Settings = () => {
       <p className='header2'>Email: dummyuser@gmail.com</p>
       <p className='header2'>Phone Number: 123-456-7890</p>
       <div>
-         <button type="submit" className="editbutton" onClick={()=> navigate('/editsettings')}> Edit</button>
+         <button type="submit" className="submitbutton" onClick={()=> navigate('/editsettings')}> Edit</button>
       </div>
     </div>
 
