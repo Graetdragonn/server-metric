@@ -1,5 +1,5 @@
 import '../../style/Master.css'
-import UserService from '../../components/user/UserService';
+import UserService from '../../requests/UserService';
 
 /**
  * Sends post request to server to create account
