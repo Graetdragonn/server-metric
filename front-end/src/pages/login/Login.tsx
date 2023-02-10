@@ -5,6 +5,11 @@ import { checkEmpty, submit } from './LoginLogic';
 import { checkEmail } from '../create-account/CreateAccountLogic';
 import BackButton from '../../components/back-button/BackButton';
 
+// Global variable to carry username accross screens
+declare global{
+  var username: string
+}
+
 /**
  * Login screen
  */
@@ -36,6 +41,7 @@ const LoginPage = () => {
     // verifies fields and logs user in
     if (checkEmail(state.email) && !checkEmpty(state.email) && !checkEmpty(state.pass)) {
       if(await submit(state.email, state.pass)){
+        globalThis.username = state.email;
         navigate('/dashboard');
       }
       else{

@@ -7,6 +7,9 @@ import { checkEmail, checkPassword, isEmpty, isTypeDefault, submit } from '../cr
 
 const EditSettings = () => {
   const navigate = useNavigate();
+
+  const user = globalThis.username;
+
    // user input for account creation
    const [state, setState] = useState({
     email: "dummyuser@gmail.com",
@@ -15,7 +18,7 @@ const EditSettings = () => {
     pass: "********",
     confirmPass: "********",
     userType: "Admin"
-});
+  });
 
 // tracks if user confirms password correctly
 const [passMatch, setPassMatch] = useState(true);
