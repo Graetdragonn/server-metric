@@ -1,10 +1,12 @@
 import React from "react";
-import '../../style/Master.css'
+import '../../style/Master.css';
+import NavBar from "../../components/navigation-bar/NavBar";
 
 const SingleServer = () => {
   return (
     <div >
-      <p className="title">Page for individual server analysis!</p>
+      <NavBar />
+      <p className="title">Individual server page!</p>
     </div>
   );
 }
