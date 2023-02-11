@@ -1,16 +1,17 @@
 import { isEmpty, checkEmail } from "../create-account/CreateAccountLogic";
+import UserService from '../../components/user/UserService';
 
 
-export function submit (email: string, pass: string) {
-    
-    alert("Email: " + email + ", Password: " + pass );
-
-}
-
-export function checkEmpty(s: string): boolean {
-    return isEmpty(s);
-}
-
-export function emailCheck(email: string): boolean {
-    return checkEmail(email);
+export async function getUserInfo(email: string) {
+    const userInfo = await UserService.getUserByEmail(email);
+    var userData = JSON.parse(userInfo);
+    var password = userData['userPassword'];
+    var userType = userData['userType'];
+    var firstName = userData['userFirstName'];
+    var lastName = userData['userLastName'];
+    alert(email);
+    alert(password);
+    alert(userType);
+    alert(firstName);
+    alert(lastName);
 }

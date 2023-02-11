@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 //import './Settings.css';
 import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
+import { getUserInfo } from './SettingsLogic';
 import BackButton from '../../components/back-button/BackButton';
 
 
 
 const Settings = () => {
   const navigate = useNavigate();
+  const user = globalThis.username;
+  getUserInfo(user);
 
   return (
     <div>
