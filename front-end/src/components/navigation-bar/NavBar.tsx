@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../style/Master.css';
 import { useNavigate, NavLink} from "react-router-dom";
 import { listAllServers } from './NavBarLogic';
@@ -6,6 +6,23 @@ import MenuItems from './MenuItems';
 
 const NavBar = () => {
 
+  const [serverListObj, setServerListObj] = useState([] as ({ title: string; url: string;}[]));
+
+  useEffect(() => {
+    // var serverList = listAllServers();
+    const testList = ['123', '456', '789'];
+    testList.forEach((item) => {
+      handleAddNewServer(item);
+    });
+  }, []);
+
+  const handleAddNewServer = (address: string) => {
+    setServerListObj(previousList => ([...previousList, {title: address, url: '/single-server'}]));
+  };
+
+
+
+  // ideally, put this somewhere else like in a global file then import
   const menuItems = [
     {
       title: 'Dashboard',
@@ -14,16 +31,7 @@ const NavBar = () => {
     {
       title: 'Servers',
       url: '/single-server',
-      submenu: [
-        {
-          title: '1234',
-          url: '/single-server',
-        },
-        {
-          title: '5678',
-          url: '/single-server',
-        }
-      ],
+      submenu: true,
     },
     {
       title: 'Settings',
@@ -39,7 +47,7 @@ const NavBar = () => {
     <nav>
       <ul className="menus">
         {menuItems.map((menu, index) => {
-          return <MenuItems items={menu} key={index} />
+          return <MenuItems items={menu} key={index} serverList={serverListObj}/>
         })}
       </ul>
     </nav>

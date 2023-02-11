@@ -3,7 +3,13 @@ import '../../style/Master.css';
 import { NavLink} from "react-router-dom";
 import Dropdown from './Dropdown';
 
-const MenuItems: React.FunctionComponent<any> = ({ items }) => {
+
+interface Props {
+    items: any;
+    serverList: {title: string, url: string}[];
+}
+
+const MenuItems: React.FunctionComponent<Props> = ({ items, serverList }) => {
 
     const [dropdown, setDropdown] = useState(false);
     return (
@@ -18,7 +24,7 @@ const MenuItems: React.FunctionComponent<any> = ({ items }) => {
                     className="arrow">
                         {items.title}{' '}
                     </button>
-                    <Dropdown submenus={items.submenu} dropdown={dropdown}/>
+                    <Dropdown submenu={items.submenu} dropdown={dropdown} serverList={serverList}/>
                 </>
             ) : (
                 <NavLink to={items.url}>{items.title}</NavLink>
