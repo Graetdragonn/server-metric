@@ -10,7 +10,7 @@ const SingleServer = () => {
   return (
     <div className="Single-Server-Page">
       <Header />
-      <p className="title">Individual server page!</p>
+      <p className="title">Page for server {state}!</p>
     </div>
   );
 }
