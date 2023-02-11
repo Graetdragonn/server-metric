@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../../style/Master.css';
 import { useNavigate, NavLink} from "react-router-dom";
-import { listAllServers } from './NavBarLogic';
+import { getListOfServers } from './NavBarLogic';
 import MenuItems from './MenuItems';
 
 const NavBar = () => {
@@ -9,18 +9,19 @@ const NavBar = () => {
   const [serverListObj, setServerListObj] = useState([] as ({ title: string; url: string;}[]));
 
   useEffect(() => {
-    // var serverList = listAllServers();
-    const testList = ['123', '456', '789'];
-    testList.forEach((item) => {
-      handleAddNewServer(item);
-    });
+    var serverList = [] as string[];
+    const getServerList = async () => {
+      serverList = await getListOfServers();
+      serverList.forEach((item) => {
+        handleAddNewServer(item);
+      });
+    };
+    getServerList();    
   }, []);
 
   const handleAddNewServer = (address: string) => {
     setServerListObj(previousList => ([...previousList, {title: address, url: '/single-server'}]));
   };
-
-
 
   // ideally, put this somewhere else like in a global file then import
   const menuItems = [

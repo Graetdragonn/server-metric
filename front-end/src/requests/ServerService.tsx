@@ -12,7 +12,7 @@ class ServerService {
         var res = "";
         var config = {
             method: 'get',
-            url: USER_API_BASE_URL + 'api/v1/users/getAllServers/',
+            url: USER_API_BASE_URL + 'api/v1/servers/getAllServers',
             headers: {}
         };
 
