@@ -1,17 +1,15 @@
-import React from "react";
 import { useLocation } from "react-router-dom";
 import '../../style/Master.css';
-import NavBar from "../../components/navigation-bar/NavBar";
+import Header from "../../components/navigation-bar/Header";
 
 const SingleServer = () => {
 
   const location = useLocation();
   const { state } = location;
-  console.log(state.address);
 
   return (
     <div className="Single-Server-Page">
-      <NavBar />
+      <Header />
       <p className="title">Individual server page!</p>
     </div>
   );
