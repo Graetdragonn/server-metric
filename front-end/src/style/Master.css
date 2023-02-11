@@ -222,13 +222,13 @@ div.row {
 }
 
 .navbar-item {
-  display: inline;
+  display: inline-block;
   font-size: 24px;
   background-color: white;
-  margin: 10px;
   padding: 10px;
   text-decoration: none;
   border-radius: 10px;
+  margin-right: 30px;
 }
 
 .navbar-wrapper {
@@ -241,12 +241,45 @@ div.row {
 }
 
 .navbar-item:hover {
-  background-color: #EEEEEE;
+  font-weight: bold;
   cursor: pointer;
 }
 
 .active-navbar-item {
-  font-weight: bold;
+  background-color: #EEEEEE;
+}
+
+.dropdown {
+  position: relative;
+  display: inline;
+}
+
+.dropdown-items {
+  display: none;
+  position: flex;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 10;
+}
+
+.dropdown-items a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-items {
+  position: relative;
+  margin-right: 10px;
+  border: transparent;
+  display: none;
+}
+
+.show {
+  display: block;
 }
 
 /* Stuff below is for forms */
