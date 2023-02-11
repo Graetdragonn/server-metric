@@ -1,11 +1,13 @@
 import React, {useState } from 'react';
 import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
+import { getUserInfo } from './SettingsLogic';
 import Header from "../../components/navigation-bar/Header";
 
 const Settings = () => {
   const navigate = useNavigate();
-
+  const user = globalThis.username;
+  getUserInfo(user);
 
   return (
   <div>
