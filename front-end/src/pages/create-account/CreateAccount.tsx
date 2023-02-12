@@ -67,7 +67,7 @@ const CreateAccountPage = () => {
     };
 
     return (
-        <div>
+        <div className='Create-Account-Page'>
             <BackButton></BackButton>
             <form onSubmit={handleSubmit} className='form'>
                 <div>

@@ -51,11 +51,12 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
+    <div className='Sign-In-Page'>
       <BackButton></BackButton>
+      <p className='title'>Login</p>
       <form onSubmit={handleSubmit} className='form'>
         <div>
-        <p className='title'>Login</p>
+       
           <div className="row">
             <label>Email </label>
             <input type="text" required={true} name="email" value={state.email} onChange={handleChange}>
