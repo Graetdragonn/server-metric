@@ -5,19 +5,19 @@ import { useNavigate } from "react-router-dom";
 const StartPage = () => {
   const navigate = useNavigate();
   return (
-    <div className="App">
+    <div className="Start-Page">
       <header className="App-header">
-        <p>
+        <h1 className='Gradient-Text'>
           Server Metric Tracker
-        </p>
+        </h1>
         <div>
           <img src={logo} className="App-logo" alt="logo" />
         </div>
         <div>
-          <button type="button" className="startbuttons" onClick={() => navigate('/login')}>Sign In</button>
+          <button type="button" onClick={() => navigate('/login')}>Sign In</button>
         </div>
         <div>
-          <button type="button" className="startbuttons" onClick={() => navigate('/createaccount')}>Create Account</button>
+          <button type="button" onClick={() => navigate('/createaccount')}>Create Account</button>
         </div>
       </header>
 

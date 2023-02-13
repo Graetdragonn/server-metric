@@ -51,33 +51,27 @@ const LoginPage = () => {
   };
 
   return (
+    <body className='Form-Body'>
     <div>
-      <BackButton></BackButton>
-      <form onSubmit={handleSubmit} className='form'>
-        <div>
-        <p className='title'>Login</p>
-          <div className="row">
-            <label>Email </label>
-            <input type="text" required={true} name="email" value={state.email} onChange={handleChange}>
-            </input>
-          </div>
-          <div className="row">
-            <label>Password&nbsp;&nbsp;</label>
-            <input type="password" name="pass" required={true} value={state.pass} onChange={handleChange}>
-            </input>
-          </div>
-        </div>
-        <p style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email or password are incorrect</p>
-        <div>
-          
-          <p className='forgotPass' onClick={forgotPass}>Forgot password?</p>
-          
-          <button type="submit" className="submitbutton"> Submit</button>
-        </div>
-      </form>
+    <form onSubmit={handleSubmit}>
+    <BackButton></BackButton>
+      <h1>Login</h1>
+
+      <input placeholder='Email' type="text" required={true} name="email" value={state.email} onChange={handleChange}></input>
+
+      <br></br>
+
+      <input placeholder='Password' type="password" name="pass" required={true} value={state.pass} onChange={handleChange}>
+      </input>
+      <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email or password are incorrect</span>
+      <br></br>
+      <p className='forgotPass' onClick={forgotPass}>Forgot password?</p>
+      <button>Submit</button>
+    </form>
     </div>
+    </body>
+    
   );
 }
-
 
 export default LoginPage;

@@ -4,7 +4,7 @@ import NavBar from "../../components/navigation-bar/NavBar";
 
 const Settings = () => {
   return (
-    <div >
+    <div className="Settings-Page" >
       <NavBar />
       <p className="title">Settings!</p>
     </div>

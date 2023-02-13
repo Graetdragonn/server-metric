@@ -4,7 +4,7 @@ import NavBar from "../../components/navigation-bar/NavBar";
 
 const SingleServer = () => {
   return (
-    <div >
+    <div className="Single-Server-Page">
       <NavBar />
       <p className="title">Individual server page!</p>
     </div>

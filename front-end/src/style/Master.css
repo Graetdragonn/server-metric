@@ -1,7 +1,103 @@
 * {
-  background-color: rgb(1, 45, 17);
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Lato', sans-serif;
 }
+
+/* Page styling*/
+.Start-Page {
+  background-color: #f8f8ff;
+
+}
+
+.Sign-In-Page{
+  background-color: #619E57;
+  position:absolute;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+
+}
+
+.Create-Account-Page{
+  background-color: #619E57;
+  position:absolute;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+}
+
+.Dashboard-Page{
+  background-color: #619E57;
+  position:absolute;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+}
+
+.Settings-Page{
+  background-color: #619E57;
+  position:absolute;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+}
+
+.Single-Server-Page{
+  background-color: #619E57;
+  position:absolute;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+}
+
+.Forgot-Password-Page{
+  background-color: #619E57;
+  position:absolute;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+}
+
+/* Gradient text for start page */
+
+.Gradient-Text{
+  background-image: linear-gradient(60deg, #619E57, #94579E);
+  font-family: 'Lato', sans-serif;
+  background-clip: text;
+  font-weight: 800;
+  color: transparent;
+}
+
+/* Green to Grey button*/
+button {
+  min-width: 100%;
+  cursor: pointer;
+  margin-right: 0.25em;
+  margin-top: 1em;
+  padding: 	0.938em;
+  border: none;
+  border-radius: 4px;
+  background-color: #619E57;
+  color: #fefefe;
+  font-size: 16px;
+  padding: 14px 40px;
+  border-radius: 12px;
+  width: 250px;
+  display: inline-block;
+}
+button:hover {
+  background-color: #24272C;
+  color: #fefefe;
+}
+button:disabled {
+  opacity: 0.2;
+}
+
 .App {
   text-align: center;
 }
@@ -33,7 +129,7 @@
 
 .title {
   color: white;
-  font-size: 40px;
+  font-size: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -42,12 +138,13 @@
 }
 
 .backbutton {
-  color: white;
+  color: #24272C;
   font-size: 20px;
-  padding: 14px 40px;
+  padding: 10px 10px;
   border-radius: 12px;
   display: inline-block;
 }
+
 
 .backbutton:hover {
   cursor: pointer;
@@ -74,6 +171,7 @@
   font-size: 55px;
   color: white;
   padding: 0px 0px;
+ 
 }
 
 .submitbutton {
@@ -149,4 +247,116 @@ div.row {
 
 .active-navbar-item {
   font-weight: bold;
+}
+
+/* Stuff below is for forms */
+
+
+.Form-Body{
+  font-family: Lato;
+  height: 97vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #619E57;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  min-width: 100px;
+  min-height: 400px;
+  padding: 20px 40px 40px 40px;
+  border-radius: 6px;
+  box-shadow: 0px 8px 36px ;
+  background-color: #fefefe;
+}
+
+form > h1 {
+  display: flex;
+  justify-content: center;
+  font-family: Lato, sans-serif;
+  font-size: 2em;
+  margin-top: 0.25em;
+  color: #24272C;
+  letter-spacing: 2px;
+}
+
+form > div {
+  margin: 0.5em 0;
+}
+
+.info {
+  padding-bottom: 1em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+label {
+  color: #444;
+  font-weight: lighter;
+}
+
+input {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+form > .invalid {
+  border: 1px solid #db2269;
+  box-shadow: none;
+}
+input[type="checkbox"].invalid {
+  box-shadow: 0px 0px 0px 1px #db2269;
+}
+input, select {
+  padding: 10px 10px;
+  border-radius: 5px;
+  border: 1px solid #d6d1d5;
+  display: block;
+}
+form > select {
+  width: 100%;
+  height: 35px;
+}
+form > input[type="checkbox"] {
+  margin-right: 0.4em;
+  margin-top: 0.2em;
+}
+
+form > .required {
+  color:#db2269;
+  font-size: 0.8em;
+  margin-top: 0.5em;
+}
+
+form > .k-textbox-container, .k-floating-label-container {
+  width: 100%;
+}
+
+button {
+  min-width: 100%;
+  cursor: pointer;
+  margin-right: 0.25em;
+  margin-top: 1em;
+  padding: 	0.938em;
+  border: none;
+  border-radius: 4px;
+  background-color: #619E57;
+  color: #fefefe;
+  font-size: 16px;
+  padding: 14px 40px;
+  border-radius: 12px;
+  width: 250px;
+  display: inline-block;
+}
+button:hover {
+  background-color: #24272C;
+  color: #fefefe;
+}
+button:disabled {
+  opacity: 0.2;
 }
