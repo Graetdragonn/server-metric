@@ -1,4 +1,4 @@
-import UserService from '../../components/user/UserService';
+import UserService from '../../requests/UserService';
 import { isEmpty, checkEmail } from "../create-account/CreateAccountLogic";
 
 

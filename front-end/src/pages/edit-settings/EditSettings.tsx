@@ -1,24 +1,53 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import './EditSettings.css';
 import BackButton from '../../components/back-button/BackButton';
 import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
+import UserService from '../../requests/UserService';
 import { checkEmail, checkPassword, isEmpty, isTypeDefault, submit } from '../create-account/CreateAccountLogic';
 
 const EditSettings = () => {
   const navigate = useNavigate();
 
-  const user = globalThis.username;
-
    // user input for account creation
+   
    const [state, setState] = useState({
-    email: "dummyuser@gmail.com",
-    first: "John",
-    last: "Smith",
-    pass: "********",
-    confirmPass: "********",
-    userType: "Admin"
+    email: "",
+    first: "",
+    last: "",
+    pass: "",
+    confirmPass: "",
+    userType: ""
   });
+  const user = globalThis.username;
+  /*
+  var [first, setfName] = useState();
+  var [lastName, setlastName] = useState();
+  var [password, setpassword] = useState();
+  var [confirmPass, setconfirmPass] = useState();
+  var [userType, setuserType] = useState();
+  */
+
+
+  useEffect(() => {
+    async function getUserInfo(email: string) {
+      const userInfo = await UserService.getUserByEmail(email);
+      var userData = JSON.parse(userInfo);
+      setState({...state, ["email"]: user});
+      setState({...state, ["pass"]: userData['userPassword'],});
+      setState({...state, ["confirmPass"]: userData['userPassword'],});
+      setState({...state, ["userType"]: userData['userType'],});
+      setState({...state, ["first"]: userData['userFirstName'],});
+      setState({...state, ["last"]: userData['userLastName'],});
+      console.log("Email: " + state.email);
+      console.log("Pass: " + state.pass);
+      console.log("First: " + state.first);
+      console.log("Last: " + state.last);
+      console.log("UT: " + state.userType);
+    }
+    getUserInfo(user);
+  }, []);
+
 
 // tracks if user confirms password correctly
 const [passMatch, setPassMatch] = useState(true);
@@ -82,7 +111,7 @@ const submitChange = async (e: React.FormEvent<HTMLFormElement>) => {
           <p style={{ visibility: passMatch ? 'hidden' : 'visible' }} className='error'>&nbsp; Passwords do not match </p>
           <div className="row"><label>User Type</label>
             <select onChange={(e) => setState({ ...state, userType: e.target.value })}>
-              <option value="default">- select user type -</option>
+              <option value="default">{state.userType}</option>
               <option value="admin">Admin</option>
               <option value="servicemanager">Service Manager</option>
               <option value="serviceprovider">Service Provider</option>
