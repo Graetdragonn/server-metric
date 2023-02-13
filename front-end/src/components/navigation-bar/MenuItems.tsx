@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../../style/Master.css';
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Dropdown from './Dropdown';
 
 
@@ -12,7 +12,6 @@ interface Props {
 const MenuItems: React.FunctionComponent<Props> = ({ items, serverList }) => {
 
     const [dropdown, setDropdown] = useState(false);
-    const loc = useLocation();
 
     return (
         <li className="menu-items">
