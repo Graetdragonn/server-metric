@@ -9,6 +9,8 @@ export async function getUserInfo(email: string) {
     var userType = userData['userType'];
     var firstName = userData['userFirstName'];
     var lastName = userData['userLastName'];
+
+    //test alerts
     alert(email);
     alert(password);
     alert(userType);
