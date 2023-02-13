@@ -1,11 +1,10 @@
-import React from "react";
 import '../../style/Master.css'
-import NavBar from "../../components/navigation-bar/NavBar";
+import Header from "../../components/navigation-bar/Header";
 
 const DashboardPage = () => {
   return (
     <div className="Dashboard-Page">
-      <NavBar />
+      <Header />
       <p className="title">Dashboard page!</p>
     </div>
   );
