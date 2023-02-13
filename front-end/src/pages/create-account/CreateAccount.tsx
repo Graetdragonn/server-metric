@@ -67,35 +67,39 @@ const CreateAccountPage = () => {
     };
 
     return (
-        <div className='Create-Account-Page'>
-            <BackButton></BackButton>
-            <form onSubmit={handleSubmit} className='form'>
-                <div>
-                    <h1 className='title'> Create Account</h1>
-                    <div className="row"><label>Email </label><input type="email" name="email" required={true} value={state.email} onChange={handleChange}></input></div>
-                    <div className="row"><label>First Name</label><input type="text" name="first" required={true} value={state.first} onChange={handleChange}></input></div>
-                    <div className="row"><label>Last Name</label><input type="text" name="last" required={true} value={state.last} onChange={handleChange}></input></div>
-                    <div className="row"><label>Password</label><input type="password" name="pass" required={true} value={state.pass} onChange={handleChange}></input></div>
-                    <div className="row"><label>Confirm Password&nbsp;&nbsp;</label><input type="password" name="confirmPass" required={true} value={state.confirmPass} onChange={handleChange}></input></div>
-                    <p style={{ visibility: passMatch ? 'hidden' : 'visible' }} className='error'>&nbsp; Passwords do not match </p>
-                    <div className="row"><label>User Type</label>
-                        <select onChange={(e) => setState({ ...state, userType: e.target.value })}>
-                            <option value="default">- select user type -</option>
-                            <option value="admin">Admin</option>
-                            <option value="servicemanager">Service Manager</option>
-                            <option value="serviceprovider">Service Provider</option>
-                            <option value="client">Client</option>
-                        </select>
-                    </div>
-                    <p style={{ visibility: roleSelected ? 'hidden' : 'visible' }} className='error'>&nbsp; No user type selected </p>
-                    <p style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email is already in use</p>
-                </div>
+      <body className='Form-Body'>
+    <div>
+    <form onSubmit={handleSubmit}>
+    <BackButton></BackButton>
+      <h1>Create Account</h1>
+      
 
-                <div>
-                    <button type="submit" className="submitbutton"> Submit</button>
-                </div>
-            </form>
+      <input placeholder='Email' type="email" name="email" required={true} value={state.email} onChange={handleChange}></input>
+      <br></br>
+      <input placeholder='First Name' type="text" name="first" required={true} value={state.first} onChange={handleChange}></input>
+      <br></br>
+      <input placeholder='Last Name' type="text" name="last" required={true} value={state.last} onChange={handleChange}></input>
+      <br></br>
+      <input placeholder='Password' type="password" name="pass" required={true} value={state.pass} onChange={handleChange}></input>
+      <br></br>
+      <input placeholder='Confirm password' type="password" name="confirmPass" required={true} value={state.confirmPass} onChange={handleChange}></input>
+      <div className="row">
+        <select onChange={(e) => setState({ ...state, userType: e.target.value })}>
+        <option value="default">- Select User Type -</option>
+        <option value="admin">Admin</option>
+        <option value="servicemanager">Service Manager</option>
+        <option value="serviceprovider">Service Provider</option>
+        <option value="client">Client</option>
+        </select>
         </div>
+      <button>Submit</button>
+        <span style={{ visibility: passMatch ? 'hidden' : 'visible' }} className='error'>&nbsp; Passwords do not match </span>
+        <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email or password are incorrect</span>
+        <span style={{ visibility: roleSelected ? 'hidden' : 'visible' }} className='error'>&nbsp; No user type selected </span >
+        <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email is already in use</span >
+    </form>
+    </div>
+    </body>
     );
 }
 

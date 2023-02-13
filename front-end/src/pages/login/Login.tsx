@@ -66,7 +66,7 @@ const LoginPage = () => {
       <label>Password&nbsp;&nbsp;</label>
       <input type="password" name="pass" required={true} value={state.pass} onChange={handleChange}>
       </input>
-      <p style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email or password are incorrect</p>
+      <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email or password are incorrect</span>
       <br></br>
       <p className='forgotPass' onClick={forgotPass}>Forgot password?</p>
       <button>Submit</button>
