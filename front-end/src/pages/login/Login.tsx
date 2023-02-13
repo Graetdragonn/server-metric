@@ -51,34 +51,30 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='Sign-In-Page'>
-      <BackButton></BackButton>
-      <p className='title'>Login</p>
-      <form onSubmit={handleSubmit} className='form'>
-        <div>
-       
-          <div className="row">
-            <label>Email </label>
-            <input type="text" required={true} name="email" value={state.email} onChange={handleChange}>
-            </input>
-          </div>
-          <div className="row">
-            <label>Password&nbsp;&nbsp;</label>
-            <input type="password" name="pass" required={true} value={state.pass} onChange={handleChange}>
-            </input>
-          </div>
-        </div>
-        <p style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email or password are incorrect</p>
-        <div>
-          
-          <p className='forgotPass' onClick={forgotPass}>Forgot password?</p>
-          
-          <button type="submit" className="submitbutton"> Submit</button>
-        </div>
-      </form>
+    <body className='Form-Body'>
+    <div>
+    <form onSubmit={handleSubmit}>
+    <BackButton></BackButton>
+      <h1>Login</h1>
+
+      <label>
+        Email
+        <input type="text" required={true} name="email" value={state.email} onChange={handleChange}></input>
+      </label>
+      <br></br>
+
+      <label>Password&nbsp;&nbsp;</label>
+      <input type="password" name="pass" required={true} value={state.pass} onChange={handleChange}>
+      </input>
+      <p style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email or password are incorrect</p>
+      <br></br>
+      <p className='forgotPass' onClick={forgotPass}>Forgot password?</p>
+      <button>Submit</button>
+    </form>
     </div>
+    </body>
+    
   );
 }
-
 
 export default LoginPage;

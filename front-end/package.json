@@ -46,6 +46,8 @@
     "moduleNameMapper": {
       "axios": "axios/dist/node/axios.cjs"
     }
+  },
+  "devDependencies": {
+    "lato-font": "^3.0.0"
   }
-  
 }

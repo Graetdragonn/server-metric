@@ -14,10 +14,10 @@ const StartPage = () => {
           <img src={logo} className="App-logo" alt="logo" />
         </div>
         <div>
-          <button type="button" className="startbuttons" onClick={() => navigate('/login')}>Sign In</button>
+          <button type="button" onClick={() => navigate('/login')}>Sign In</button>
         </div>
         <div>
-          <button type="button" className="startbuttons" onClick={() => navigate('/createaccount')}>Create Account</button>
+          <button type="button" onClick={() => navigate('/createaccount')}>Create Account</button>
         </div>
       </header>
 

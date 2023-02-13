@@ -4,7 +4,7 @@ import NavBar from "../../components/navigation-bar/NavBar";
 
 const DashboardPage = () => {
   return (
-    <div>
+    <div className="Dashboard-Page">
       <NavBar />
       <p className="title">Dashboard page!</p>
     </div>
