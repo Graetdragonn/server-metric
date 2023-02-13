@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../../style/Master.css';
-import { NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Dropdown from './Dropdown';
 
 
