@@ -54,6 +54,15 @@
   left:0px;
 }
 
+.Forgot-Password-Page{
+  background-color: #619E57;
+  position:absolute;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+}
+
 /* Gradient text for start page */
 
 .Gradient-Text{
@@ -131,7 +140,7 @@ button:disabled {
 .backbutton {
   color: #24272C;
   font-size: 20px;
-  padding: 0px px;
+  padding: 10px 10px;
   border-radius: 12px;
   display: inline-block;
 }

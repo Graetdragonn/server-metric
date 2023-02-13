@@ -57,14 +57,11 @@ const LoginPage = () => {
     <BackButton></BackButton>
       <h1>Login</h1>
 
-      <label>
-        Email
-        <input type="text" required={true} name="email" value={state.email} onChange={handleChange}></input>
-      </label>
+      <input placeholder='Email' type="text" required={true} name="email" value={state.email} onChange={handleChange}></input>
+
       <br></br>
 
-      <label>Password&nbsp;&nbsp;</label>
-      <input type="password" name="pass" required={true} value={state.pass} onChange={handleChange}>
+      <input placeholder='Password' type="password" name="pass" required={true} value={state.pass} onChange={handleChange}>
       </input>
       <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email or password are incorrect</span>
       <br></br>
