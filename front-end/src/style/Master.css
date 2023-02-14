@@ -45,6 +45,15 @@
   left:0px;
 }
 
+.Edit-Settings-Page{
+  background-color: #619E57;
+  position:absolute;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+}
+
 .Single-Server-Page{
   background-color: #619E57;
   position:absolute;
@@ -149,6 +158,20 @@ button:disabled {
 .backbutton:hover {
   cursor: pointer;
 }
+
+ .settingsbutton {
+  
+  color: white;
+  font-size: 20px;
+  padding: 14px 40px;
+  border-radius: 12px;
+  display: inline-block;
+  float: right;
+}
+.settingsbutton:hover {
+  cursor: pointer;
+ }
+
 
 .forgotPass {
   font-size: 12px;
@@ -431,6 +454,59 @@ button:hover {
   background-color: #24272C;
   color: #fefefe;
 }
-button:disabled {
+
+.active-navbar-item {
+  font-weight: bold;
+}
+
+/* CSS for Settings and Edit-Settings pages*/
+.header{
+  color: white;
+  font-size: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: right;
+  justify-content: right;
+  text-indent: 350px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.header2{
+  color: white;
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  text-indent: 450px;
+}
+
+.editbutton {
+  min-width: 0%;
+  cursor: pointer;
+  margin-right: .25em;
+  margin-top: 1em;
+  padding: 	0.938em; 
+  border: none;
+  border-radius: 4px;
+  background-color: #619E57;
+  color: #fefefe;
+  border-radius: 24px;
+  width: 250px;
+  text-align: center;
+  padding: 14px 60px;
+  font-size: 15px;
+  margin: auto;
+  display: flex;
+
+}
+
+
+.editbutton:hover {
+  background-color: #24272C;
+  color: #fefefe;
+}
+.editbutton:disabled {
   opacity: 0.2;
 }

@@ -49,6 +49,36 @@ class UserService {
 
         return res;
     }
+
+        /**
+     * Update user Info
+     * @param email user email
+     * @param first user first name
+     * @param last  user last name
+     * @param pass  user password
+     * @param user  user type
+     * @returns user information
+     */
+        async updateUser(email: string, first: string, last: string, pass: string, user: string) {
+            var res = "";
+            console.log("Email in UserService: " + email);
+            var config = {
+                method: 'put',
+                url: USER_API_BASE_URL + 'api/v1/users/updateUser/' + email,
+                headers: {},
+                data: {userPassword: pass, userType: "CLIENT", userFirstName: first, userLastName: last }
+            };
+    
+            await axios(config)
+                .then(function (response: { data: any; }) {
+                    res = JSON.stringify(response.data);
+                })
+                .catch(function (error: any) {
+                    
+                });
+    
+            return res;
+        }
     
     /**
      * Get user by email
