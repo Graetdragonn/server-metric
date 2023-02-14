@@ -8,7 +8,6 @@ import Header from "../../components/navigation-bar/Header";
 const Settings = () => {
   const navigate = useNavigate();
   const user = globalThis.username;
-  console.log(user);
 
   var [fName, setfName] = useState();
   var [password, setpassword] = useState();
@@ -18,7 +17,6 @@ const Settings = () => {
 
   useEffect(() => {
     async function getUserInfo(email: string) {
-      console.log(email);
       const userInfo = await UserService.getUserByEmail(email);
       var userData = JSON.parse(userInfo);
       setpassword(userData['userPassword']);
@@ -31,9 +29,8 @@ const Settings = () => {
 
 
   return (
-    <div>
-      <Header />
-      <div>
+    <div className="Settings-Page">
+        <Header />
         <p className='title'> Account Settings</p>
         <p className='header'>General Information:</p>
         <p className='header2'>Username: {user} </p>
@@ -42,10 +39,9 @@ const Settings = () => {
         <p className='header2'>Password: {password}</p>
         <p className='header'>Notification Settings:</p>
         <p className='header2'>Email: {user}</p>
-      </div>
-      <div>
-         <button type="submit" className="submitbutton" onClick={()=> navigate('/editsettings')}> Edit</button>
-      </div>
+        <div>
+          <button className="editbutton" onClick={()=> navigate('/editsettings')}> Edit</button>
+        </div>
     </div>
 
 

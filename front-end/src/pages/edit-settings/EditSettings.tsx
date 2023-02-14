@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from "react";
-import './EditSettings.css';
-import BackButton from '../../components/back-button/BackButton';
 import '../../style/Master.css';
+import Header from "../../components/navigation-bar/Header";
 import { useNavigate } from "react-router-dom";
+import BackButton from '../../components/back-button/BackButton';
 import UserService from '../../requests/UserService';
 import { checkEmail, checkPassword, isEmpty, isTypeDefault, submit } from '../create-account/CreateAccountLogic';
 
 const EditSettings = () => {
   const navigate = useNavigate();
+    // Global variable for username (email)
+    const user = globalThis.username; 
 
-   // user input for account creation
-   
    const [state, setState] = useState({
     email: "",
     first: "",
@@ -19,7 +19,8 @@ const EditSettings = () => {
     confirmPass: "",
     userType: ""
   });
-  const user = globalThis.username;
+
+
   /*
   var [first, setfName] = useState();
   var [lastName, setlastName] = useState();
@@ -86,7 +87,7 @@ const submitChange = async (e: React.FormEvent<HTMLFormElement>) => {
         !isEmpty(state.confirmPass) && !isTypeDefault(state.userType)) {
 
         if (await submit(state.email, state.first, state.last, state.pass, state.userType)) {
-            navigate('/dashboard');
+            navigate('/settings');
         }
         else {
             setError(true);
@@ -95,10 +96,47 @@ const submitChange = async (e: React.FormEvent<HTMLFormElement>) => {
 };
   
 
-  
+
+return (
+  <body className='Form-Body'>
+<div>
+<form onSubmit={submitChange}>
+<BackButton></BackButton>
+  <h1>Edit Account</h1>
+
+  <input placeholder='Email' type="email" name="email" required={true} value={state.email} onChange={handleChange}></input>
+  <br></br>
+  <input placeholder='First Name' type="text" name="first" required={true} value={state.first} onChange={handleChange}></input>
+  <br></br>
+  <input placeholder='Last Name' type="text" name="last" required={true} value={state.last} onChange={handleChange}></input>
+  <br></br>
+  <input placeholder='Password' type="password" name="pass" required={true} value={state.pass} onChange={handleChange}></input>
+  <br></br>
+  <input placeholder='Confirm password' type="password" name="confirmPass" required={true} value={state.confirmPass} onChange={handleChange}></input>
+  <div className="row">
+    <select onChange={(e) => setState({ ...state, userType: e.target.value })}>
+    <option value="default">- Select User Type -</option>
+    <option value="admin">Admin</option>
+    <option value="servicemanager">Service Manager</option>
+    <option value="serviceprovider">Service Provider</option>
+    <option value="client">Client</option>
+    </select>
+    </div>
+  <button>Submit</button>
+    <span style={{ visibility: passMatch ? 'hidden' : 'visible' }} className='error'>&nbsp; Passwords do not match </span>
+    <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email or password are incorrect</span>
+    <span style={{ visibility: roleSelected ? 'hidden' : 'visible' }} className='error'>&nbsp; No user type selected </span >
+    <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email is already in use</span >
+</form>
+</div>
+</body>
+);
+
+
+ /* 
   return (
-    <div>
-      <BackButton></BackButton>
+    <div className="Edit-Settings-Page">
+      <Header />
       <div>
       <form onSubmit={submitChange} className='form'>
         <div>
@@ -127,9 +165,10 @@ const submitChange = async (e: React.FormEvent<HTMLFormElement>) => {
       </form>
       </div>
     </div>
-
-
   );
+  */
+
+
 }
   
 export default EditSettings;

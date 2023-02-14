@@ -45,6 +45,15 @@
   left:0px;
 }
 
+.Edit-Settings-Page{
+  background-color: #619E57;
+  position:absolute;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+}
+
 .Single-Server-Page{
   background-color: #619E57;
   position:absolute;
@@ -449,6 +458,8 @@ button:hover {
 .active-navbar-item {
   font-weight: bold;
 }
+
+/* CSS for Settings and Edit-Settings pages*/
 .header{
   color: white;
   font-size: 25px;
@@ -469,4 +480,33 @@ button:hover {
   align-items: left;
   justify-content: left;
   text-indent: 450px;
+}
+
+.editbutton {
+  min-width: 0%;
+  cursor: pointer;
+  margin-right: .25em;
+  margin-top: 1em;
+  padding: 	0.938em; 
+  border: none;
+  border-radius: 4px;
+  background-color: #619E57;
+  color: #fefefe;
+  border-radius: 24px;
+  width: 250px;
+  text-align: center;
+  padding: 14px 60px;
+  font-size: 15px;
+  margin: auto;
+  display: flex;
+
+}
+
+
+.editbutton:hover {
+  background-color: #24272C;
+  color: #fefefe;
+}
+.editbutton:disabled {
+  opacity: 0.2;
 }
