@@ -41,7 +41,6 @@ const CreateAccountPage = () => {
     // submits form
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
         // check that password is confirmed, show error if not
         if (!checkPassword(state.pass, state.confirmPass)) {
             setPassMatch(false);
@@ -87,15 +86,14 @@ const CreateAccountPage = () => {
       <div className="row">
         <select onChange={(e) => setState({ ...state, userType: e.target.value })}>
         <option value="default">- Select User Type -</option>
-        <option value="admin">Admin</option>
-        <option value="servicemanager">Service Manager</option>
-        <option value="serviceprovider">Service Provider</option>
-        <option value="client">Client</option>
+        <option value="ADMIN">Admin</option>
+        <option value="SERVICE_MANAGER">Service Manager</option>
+        <option value="SERVICE_PROVIDER">Service Provider</option>
+        <option value="CLIENT">Client</option>
         </select>
         </div>
       <button>Submit</button>
         <span style={{ visibility: passMatch ? 'hidden' : 'visible' }} className='error'>&nbsp; Passwords do not match </span>
-        <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email or password are incorrect</span>
         <span style={{ visibility: roleSelected ? 'hidden' : 'visible' }} className='error'>&nbsp; No user type selected </span >
         <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email is already in use</span >
     </form>
