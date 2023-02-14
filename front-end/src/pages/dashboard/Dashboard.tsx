@@ -25,11 +25,25 @@ const DashboardPage = () => {
     getPacketsPerIp();    
   }, []);
 
+  const renderPacketsPerAddress = () => {
+    if (packetsPerIp.size) {
+      packetsPerIp.forEach((address, numPackets) => {
+        console.log(address + ' ' + numPackets);
+        return <p>Address {address} has sent {numPackets} packets.</p>
+      });
+    } else {
+      console.log("No addresses found.");
+      return <p>No addresses found.</p>
+    }
+  };
+
   return (
     <div className="Dashboard-Page">
       <Header />
-
       <button className='addServer' onClick={() => navigate('/addserver')}>Add Server</button>
+      <div>
+        {renderPacketsPerAddress()}
+      </div>
     </div>
   );
 };
