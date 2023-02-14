@@ -102,6 +102,25 @@ class UserService {
             });
         return res;
     }
+
+    async addServerToUser(email: string, address: string){
+        var res = "";
+        var config = {
+            method: 'post',
+            url: USER_API_BASE_URL + 'api/v1/users/' + email + '/addServer',
+            headers: {},
+            data: {address: address}
+        };
+
+        await axios(config)
+            .then(function (response: { data: any; }) {
+                res = JSON.stringify(response.data);
+            })
+            .catch(function (error: any) {
+                alert(error);
+            });
+        return res;
+    }
 }
 
 export default new UserService()
