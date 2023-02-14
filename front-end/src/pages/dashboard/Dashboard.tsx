@@ -15,9 +15,11 @@ const DashboardPage = () => {
   // get data to render on screen immediately
   useEffect(() => {
     const getUserAddresses = async () => {
-      setUserAddresses(await getServersByUser(username));
+      setUserAddresses(await getServersByUser(globalThis.username));
     };
     getUserAddresses();
+    console.log(userAddresses);
+    console.log();
 
     const getPacketsPerIp = async () => {
       setPacketsPerIp(await getNumPacketsSentPerAddresses(userAddresses));
@@ -27,7 +29,8 @@ const DashboardPage = () => {
 
   const renderPacketsPerAddress = () => {
     if (packetsPerIp.size) {
-      packetsPerIp.forEach((address, numPackets) => {
+      // forEach(value, key)
+      packetsPerIp.forEach((numPackets, address) => {
         console.log(address + ' ' + numPackets);
         return <p>Address {address} has sent {numPackets} packets.</p>
       });
