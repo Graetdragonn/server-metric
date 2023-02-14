@@ -34,12 +34,12 @@ const EditSettings = () => {
     async function getUserInfo(email: string) {
       const userInfo = await UserService.getUserByEmail(email);
       var userData = JSON.parse(userInfo);
-      setState({...state, ["email"]: user});
-      setState({...state, ["pass"]: userData['userPassword'],});
-      setState({...state, ["confirmPass"]: userData['userPassword'],});
-      setState({...state, ["userType"]: userData['userType'],});
-      setState({...state, ["first"]: userData['userFirstName'],});
-      setState({...state, ["last"]: userData['userLastName'],});
+      setState({...state, "email": user});
+      setState({...state, "pass": userData['userPassword'],});
+      setState({...state, "confirmPass": userData['userPassword'],});
+      setState({...state, "userType": userData['userType'],});
+      setState({...state, "first": userData['userFirstName'],});
+      setState({...state, "last": userData['userLastName'],});
       console.log("Email: " + state.email);
       console.log("Pass: " + state.pass);
       console.log("First: " + state.first);
@@ -131,44 +131,6 @@ return (
 </div>
 </body>
 );
-
-
- /* 
-  return (
-    <div className="Edit-Settings-Page">
-      <Header />
-      <div>
-      <form onSubmit={submitChange} className='form'>
-        <div>
-          <h1 className='title'> Edit Account Settings</h1>
-          <div className="row"><label>Email/Username </label><input type="email" name="email" required={true} value={state.email} onChange={handleChange}></input></div>
-          <div className="row"><label>First Name</label><input type="text" name="first" required={true} value={state.first} onChange={handleChange}></input></div>
-          <div className="row"><label>Last Name</label><input type="text" name="last" required={true} value={state.last} onChange={handleChange}></input></div>
-          <div className="row"><label>Password</label><input type="password" name="pass" required={true} value={state.pass} onChange={handleChange}></input></div>
-          <div className="row"><label>Confirm Password&nbsp;&nbsp;</label><input type="password" name="confirmPass" required={true} value={state.confirmPass} onChange={handleChange}></input></div>
-          <p style={{ visibility: passMatch ? 'hidden' : 'visible' }} className='error'>&nbsp; Passwords do not match </p>
-          <div className="row"><label>User Type</label>
-            <select onChange={(e) => setState({ ...state, userType: e.target.value })}>
-              <option value="default">{state.userType}</option>
-              <option value="admin">Admin</option>
-              <option value="servicemanager">Service Manager</option>
-              <option value="serviceprovider">Service Provider</option>
-              <option value="client">Client</option>
-            </select>
-          </div>
-          <p style={{ visibility: roleSelected ? 'hidden' : 'visible' }} className='error'>&nbsp; No user type selected </p>
-          <p style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email is already in use</p>
-        </div>
-        <div>
-          <button type="submit" className="submitbutton"> Submit</button>
-        </div>
-      </form>
-      </div>
-    </div>
-  );
-  */
-
-
 }
   
 export default EditSettings;
