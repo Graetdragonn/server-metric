@@ -4,7 +4,7 @@ import Header from "../../components/navigation-bar/Header";
 import { useNavigate } from "react-router-dom";
 import BackButton from '../../components/back-button/BackButton';
 import UserService from '../../requests/UserService';
-import { checkEmail, checkPassword, isEmpty, isTypeDefault, submit } from '../create-account/CreateAccountLogic';
+import { checkEmail, checkPassword, isEmpty, isTypeDefault, submitEdits } from '../edit-settings/EditSettingsLogic';
 
 const EditSettings = () => {
   const navigate = useNavigate();
@@ -20,14 +20,6 @@ const EditSettings = () => {
     userType: ""
   });
 
-
-  /*
-  var [first, setfName] = useState();
-  var [lastName, setlastName] = useState();
-  var [password, setpassword] = useState();
-  var [confirmPass, setconfirmPass] = useState();
-  var [userType, setuserType] = useState();
-  */
 
 
   useEffect(() => {
@@ -86,7 +78,7 @@ const submitChange = async (e: React.FormEvent<HTMLFormElement>) => {
         !isEmpty(state.first) && !isEmpty(state.last) && !isEmpty(state.pass) &&
         !isEmpty(state.confirmPass) && !isTypeDefault(state.userType)) {
 
-        if (await submit(state.email, state.first, state.last, state.pass, state.userType)) {
+        if (await submitEdits(state.email, state.first, state.last, state.pass, state.userType)) {
             navigate('/settings');
         }
         else {
@@ -126,7 +118,6 @@ return (
     <span style={{ visibility: passMatch ? 'hidden' : 'visible' }} className='error'>&nbsp; Passwords do not match </span>
     <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email or password are incorrect</span>
     <span style={{ visibility: roleSelected ? 'hidden' : 'visible' }} className='error'>&nbsp; No user type selected </span >
-    <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email is already in use</span >
 </form>
 </div>
 </body>
