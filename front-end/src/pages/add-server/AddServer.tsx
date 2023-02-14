@@ -3,6 +3,7 @@ import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
 import BackButton from '../../components/back-button/BackButton';
 import { checkServerFormat, checkIfExists, addServerToList, addServerToUser } from './AddServerLogic';
+import Header from '../../components/navigation-bar/Header';
 
 // Global variable to carry username accross screens
 declare global{
@@ -66,34 +67,35 @@ const AddServerPage = () => {
       };
 
   return (
+    <><Header />
     <body className='Form-Body'>
-    <div>
-    <form onSubmit={handleSubmit} style={{display: serverAdded ? 'none' : ''}}>
-    <BackButton></BackButton>
-      <h1>Add Server</h1>
+      <div>
+        <form onSubmit={handleSubmit} style={{ display: serverAdded ? 'none' : '' }}>
+          <BackButton></BackButton>
+          <h1>Add Server</h1>
 
-      <input placeholder='Server Address' type="text" required={true} name="server" onChange={handleChange}></input>
+          <input placeholder='Server Address' type="text" required={true} name="server" onChange={handleChange}></input>
 
-      <br></br>
-     
-      <button>Submit</button>
-      <br></br>
-      <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>&nbsp; Not valid address format </span>
-      <span style={{ visibility: serverError ? 'visible' : 'hidden' }} className='error'>&nbsp; Server already added to user  </span>
-    </form>
-    <form style={{display: serverAdded ? '' : 'none'}}>
-    <BackButton></BackButton>
-      <h1>Add Server</h1>
+          <br></br>
 
-      <p style={{fontSize:40, textAlign:'center'}}>Server successfully added</p>
+          <button>Submit</button>
+          <br></br>
+          <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>&nbsp; Not valid address format </span>
+          <span style={{ visibility: serverError ? 'visible' : 'hidden' }} className='error'>&nbsp; Server already added to user  </span>
+        </form>
+        <form style={{ display: serverAdded ? '' : 'none' }}>
+          <BackButton></BackButton>
+          <h1>Add Server</h1>
 
-      <br></br>
-     
-      <button onClick={()=> navigate('/dashboard')}>Back to dashboard</button>
-      <br></br>
-      </form>
-    </div>
-    </body>
+          <p style={{ fontSize: 40, textAlign: 'center' }}>Server successfully added</p>
+
+          <br></br>
+
+          <button onClick={() => navigate('/dashboard')}>Back to dashboard</button>
+          <br></br>
+        </form>
+      </div>
+    </body></>
     
   );
 }

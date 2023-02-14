@@ -5,6 +5,7 @@ import { checkEmail, checkPassword, isEmpty, isTypeDefault, submitEdits} from '.
 import UserService from '../../requests/UserService';
 import { checkEmpty, emailCheck } from '../login/LoginLogic';
 import BackButton from '../../components/back-button/BackButton';
+import Header from '../../components/navigation-bar/Header';
 const Settings = () => {
   const navigate = useNavigate();
   const user = globalThis.username; 
@@ -107,31 +108,32 @@ const Settings = () => {
 
 
   return (
+    <><Header />
     <body className='Form-Body'>
-    <div>
-    <form onSubmit={submitChange} style={{display: isValidEmail ? 'none' : ''}}>
-    <BackButton></BackButton>
-      <h1>Settings</h1>
-      <label>First Name</label>
-      <input type="text" name="first" required={true} value={state.first} onChange={handleChange}></input>
-      <br></br>
-      <label>Last Name</label>
-      <input type="text" name="last" required={true} value={state.last} onChange={handleChange}></input>
-      <br></br>
-      <label>Password</label>
-      <input name="pass" required={true} value={state.pass} onChange={handleChange}></input>
-      <br></br>
-      <label>Confirm Password</label>
-      <input name="confirmPass" required={true} value={state.confirmPass} onChange={handleChange}></input>
-      <br></br>
-      <button >Submit</button>
-    </form>
-    <form style={{display: isValidEmail ? '' : 'none'}}>
-    <p style={{fontSize:50, textAlign:'center'}}>Updated settings were saved to account</p>
-    <button onClick={() => navigate('/Dashboard')}>Dashboard</button>
-    </form>
-    </div>
-    </body>
+      <div>
+        <form onSubmit={submitChange} style={{ display: isValidEmail ? 'none' : '' }}>
+          <BackButton></BackButton>
+          <h1>Settings</h1>
+          <label>First Name</label>
+          <input type="text" name="first" required={true} value={state.first} onChange={handleChange}></input>
+          <br></br>
+          <label>Last Name</label>
+          <input type="text" name="last" required={true} value={state.last} onChange={handleChange}></input>
+          <br></br>
+          <label>Password</label>
+          <input name="pass" required={true} value={state.pass} onChange={handleChange}></input>
+          <br></br>
+          <label>Confirm Password</label>
+          <input name="confirmPass" required={true} value={state.confirmPass} onChange={handleChange}></input>
+          <br></br>
+          <button>Submit</button>
+        </form>
+        <form style={{ display: isValidEmail ? '' : 'none' }}>
+          <p style={{ fontSize: 50, textAlign: 'center' }}>Updated settings were saved to account</p>
+          <button onClick={() => navigate('/Dashboard')}>Dashboard</button>
+        </form>
+      </div>
+    </body></>
   );
 }
   
