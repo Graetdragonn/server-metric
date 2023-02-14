@@ -31,7 +31,6 @@ class UserService {
      * @returns user information
      */
     async createUser(email: string, first: string, last: string, pass: string, user: string) {
-        alert(email);
         var res = "";
         var config = {
             method: 'post',
