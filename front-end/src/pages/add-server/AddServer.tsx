@@ -48,19 +48,16 @@ const AddServerPage = () => {
        }
     }
     // server added to list and to user
-   
-     
+    else {
+        if (await addServerToList(server)){
             if (await addServerToUser(globalThis.username, server)){
-                alert("here1");
                 setServerAdded(true);
             }
             else {
-                alert("here2");
                 setServerError(true);
            }
-        
-        
-    
+        }
+    }
   };
 
     // to update user information when user inputs data
@@ -92,8 +89,7 @@ const AddServerPage = () => {
 
       <br></br>
      
-      <button onClick={()=>navigate('/addserver')}>Add another server</button>
-      <button>Back to dashboard</button>
+      <button onClick={()=> navigate('/dashboard')}>Back to dashboard</button>
       <br></br>
       </form>
     </div>
