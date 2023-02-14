@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import '../../style/Master.css';
-import { getListOfServers } from './NavBarLogic';
+import { getServersByUser } from './NavBarLogic';
 import MenuItems from './MenuItems';
 
 const NavBar = () => {
@@ -12,7 +12,7 @@ const NavBar = () => {
   useEffect(() => {
     var serverList = [] as string[];
     const getServerList = async () => {
-      serverList = await getListOfServers();
+      serverList = await getServersByUser(globalThis.username);
       serverList.forEach((item) => {
         handleAddNewServer(item);
       });
