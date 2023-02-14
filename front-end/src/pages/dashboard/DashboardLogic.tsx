@@ -18,6 +18,7 @@ interface getAllTrafficType {
  */
 export async function getNumPacketsSentPerAddresses(userAddresses: string[]) {
     try {
+        
         const res = await TrafficService.getAllTraffic();
         var trafficList = JSON.parse(res);
         
@@ -32,6 +33,7 @@ export async function getNumPacketsSentPerAddresses(userAddresses: string[]) {
                 packetsPerIp.set(item["srcIP"]["address"], num + 1); 
             }
         });
+        console.log(packetsPerIp);
         return packetsPerIp;
     }
     catch {
