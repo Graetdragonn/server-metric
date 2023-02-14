@@ -44,11 +44,16 @@ class ServerService {
                 res = JSON.stringify(response.data);
             })
             .catch(function (error: any) {
-                alert(error);
+                //alert(error);
             });
         return res;
     }
 
+    /**
+     * Add server to server list
+     * @param address server address
+     * @returns error if fail
+     */
     async addToServerList(address: string) {
         var res = "";
         var config = {

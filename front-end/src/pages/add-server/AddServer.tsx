@@ -23,23 +23,44 @@ const AddServerPage = () => {
   // checks for errors
   const [error, setError] = useState(false);
 
+  // checks for errors
+  const [serverError, setServerError] = useState(false);
+
+  // check if server is successfully added
+  const [serverAdded, setServerAdded] = useState(false);
+
   // submits form
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // checks address format
-    if(!checkServerFormat(server)){
+    if (!checkServerFormat(server)){
         setError(true);
     }
 
     // checks if server already exists
-    else if(await checkIfExists(server)){
-       await addServerToUser(globalThis.username, server);
+    else if (await checkIfExists(server)) {
+       if (await addServerToUser(globalThis.username, server)) {
+           setServerAdded(true);
+       }
+       else {
+            setServerError(true);
+       }
     }
-    else {
-        await addServerToList(server);
-        await addServerToUser(globalThis.username, server);
-    }
+    // server added to list and to user
+   
+     
+            if (await addServerToUser(globalThis.username, server)){
+                alert("here1");
+                setServerAdded(true);
+            }
+            else {
+                alert("here2");
+                setServerError(true);
+           }
+        
+        
+    
   };
 
     // to update user information when user inputs data
@@ -50,7 +71,7 @@ const AddServerPage = () => {
   return (
     <body className='Form-Body'>
     <div>
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={{display: serverAdded ? 'none' : ''}}>
     <BackButton></BackButton>
       <h1>Add Server</h1>
 
@@ -61,7 +82,20 @@ const AddServerPage = () => {
       <button>Submit</button>
       <br></br>
       <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>&nbsp; Not valid address format </span>
+      <span style={{ visibility: serverError ? 'visible' : 'hidden' }} className='error'>&nbsp; Server already added to user  </span>
     </form>
+    <form style={{display: serverAdded ? '' : 'none'}}>
+    <BackButton></BackButton>
+      <h1>Add Server</h1>
+
+      <p style={{fontSize:40, textAlign:'center'}}>Server successfully added</p>
+
+      <br></br>
+     
+      <button onClick={()=>navigate('/addserver')}>Add another server</button>
+      <button>Back to dashboard</button>
+      <br></br>
+      </form>
     </div>
     </body>
     

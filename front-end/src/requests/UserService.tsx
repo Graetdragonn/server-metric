@@ -103,6 +103,12 @@ class UserService {
         return res;
     }
 
+    /**
+     * Add server to user's list
+     * @param email user email
+     * @param address server address
+     * @returns error if fail
+     */
     async addServerToUser(email: string, address: string){
         var res = "";
         var config = {
@@ -117,7 +123,7 @@ class UserService {
                 res = JSON.stringify(response.data);
             })
             .catch(function (error: any) {
-                alert(error);
+                //alert(error);
             });
         return res;
     }
