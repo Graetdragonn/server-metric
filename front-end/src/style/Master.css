@@ -502,11 +502,16 @@ button:hover {
 
 }
 
-
 .editbutton:hover {
   background-color: #24272C;
   color: #fefefe;
 }
 .editbutton:disabled {
   opacity: 0.2;
+}
+
+.addServer {
+  background-color: white; /* Green */
+  border: none;
+  color: black;
 }

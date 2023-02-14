@@ -31,12 +31,13 @@ class UserService {
      * @returns user information
      */
     async createUser(email: string, first: string, last: string, pass: string, user: string) {
+        alert(email);
         var res = "";
         var config = {
             method: 'post',
             url: USER_API_BASE_URL + 'api/v1/users/addUser',
             headers: {},
-            data: { userEmail: email, userPassword: pass, userType: "CLIENT", userFirstName: first, userLastName: last }
+            data: { userEmail: email, userPassword: pass, userType: user, userFirstName: first, userLastName: last }
         };
 
         await axios(config)
@@ -66,7 +67,7 @@ class UserService {
                 method: 'put',
                 url: USER_API_BASE_URL + 'api/v1/users/updateUser/' + email,
                 headers: {},
-                data: {userPassword: pass, userType: "CLIENT", userFirstName: first, userLastName: last }
+                data: {userPassword: pass, userType: user, userFirstName: first, userLastName: last }
             };
     
             await axios(config)
@@ -99,6 +100,31 @@ class UserService {
             })
             .catch(function (error: any) {
                 alert(error);
+            });
+        return res;
+    }
+
+    /**
+     * Add server to user's list
+     * @param email user email
+     * @param address server address
+     * @returns error if fail
+     */
+    async addServerToUser(email: string, address: string){
+        var res = "";
+        var config = {
+            method: 'post',
+            url: USER_API_BASE_URL + 'api/v1/users/' + email + '/addServer',
+            headers: {},
+            data: {address: address}
+        };
+
+        await axios(config)
+            .then(function (response: { data: any; }) {
+                res = JSON.stringify(response.data);
+            })
+            .catch(function (error: any) {
+                //alert(error);
             });
         return res;
     }

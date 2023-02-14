@@ -64,7 +64,7 @@ const ForgotPasswordPage = () => {
     </form>
     <form onSubmit={handleSubmit} style={{display: isValidEmail ? '' : 'none'}}>
     <p style={{fontSize:50, textAlign:'center'}}>An email was sent to reset your password</p>
-    <button onClick={() => navigate('/login')}>Sign</button>
+    <button onClick={() => navigate('/login')}>Go to login</button>
     </form>
     
     </div>
