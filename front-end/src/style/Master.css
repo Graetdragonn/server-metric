@@ -82,6 +82,23 @@
   color: transparent;
 }
 
+.div-for-single-address{
+  max-width: fit-content;
+  max-height: fit-content;
+  cursor: pointer;
+  margin-right: 0.25em;
+  margin-top: 1em;
+  padding: 	0.938em;
+  border: none;
+  border-radius: 4px;
+  background-color: #619E57;
+  color: #fefefe;
+  font-size: 16px;
+  padding: 14px 40px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
 /* Green to Grey button*/
 button {
   min-width: 100%;
@@ -370,6 +387,18 @@ form {
   border-radius: 6px;
   box-shadow: 0px 8px 36px ;
   background-color: #fefefe;
+}
+
+.div-for-addresses {
+
+background-color: #f8f8ff;
+max-width: fit-content;
+max-height: fit-content;
+position: relative;
+left: 20px;
+border-radius: 6px;
+box-shadow: 0px 8px 24px ;
+padding: 10px;
 }
 
 form > h1 {
