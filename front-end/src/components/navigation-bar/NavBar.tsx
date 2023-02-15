@@ -12,7 +12,8 @@ const NavBar = () => {
   useEffect(() => {
     var serverList = [] as string[];
     const getServerList = async () => {
-      serverList = await getServersByUser(globalThis.username);
+      const email = JSON.parse(localStorage.getItem('email') || '');
+      serverList = await getServersByUser(email);
       serverList.forEach((item) => {
         handleAddNewServer(item);
       });

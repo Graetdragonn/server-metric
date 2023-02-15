@@ -13,7 +13,7 @@ import UserService from '../../requests/UserService';
  */
 export async function submitEdits(email: string, first: string, last: string, pass: string, user: string) {
 
-    const res = await UserService.updateUser(email, first, last, pass, user);
+    const res = await UserService.updateUser(email, first, last, pass, user, []);
     if (res === "") {
         return false;
     }

@@ -57,7 +57,8 @@ const CreateAccountPage = () => {
             !isEmpty(state.confirmPass) && !isTypeDefault(state.userType)) {
 
             if (await submit(state.email, state.first, state.last, state.pass, state.userType)) {
-                globalThis.username = state.email;
+                //globalThis.username = state.email;
+                localStorage.setItem("email", JSON.stringify(state.email));
                 navigate('/dashboard');
             }
             else {

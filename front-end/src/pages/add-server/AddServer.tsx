@@ -30,6 +30,9 @@ const AddServerPage = () => {
   // check if server is successfully added
   const [serverAdded, setServerAdded] = useState(false);
 
+  // get user email
+  const email = JSON.parse(localStorage.getItem('email') || '');
+
   // submits form
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,7 +44,8 @@ const AddServerPage = () => {
 
     // checks if server already exists
     else if (await checkIfExists(server)) {
-       if (await addServerToUser(globalThis.username, server)) {
+      
+       if (await addServerToUser(email, server)) {
            setServerAdded(true);
        }
        else {
@@ -51,7 +55,7 @@ const AddServerPage = () => {
     // server added to list and to user
     else {
         if (await addServerToList(server)){
-            if (await addServerToUser(globalThis.username, server)){
+            if (await addServerToUser(email, server)){
                 setServerAdded(true);
             }
             else {

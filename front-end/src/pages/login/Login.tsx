@@ -41,7 +41,8 @@ const LoginPage = () => {
     // verifies fields and logs user in
     if (checkEmail(state.email) && !checkEmpty(state.email) && !checkEmpty(state.pass)) {
       if(await submit(state.email, state.pass)){
-        globalThis.username = state.email;
+        //globalThis.username = state.email;
+        localStorage.setItem("email", JSON.stringify(state.email));
         navigate('/dashboard');
       }
       else{

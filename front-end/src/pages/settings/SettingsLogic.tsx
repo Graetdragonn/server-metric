@@ -1,3 +1,4 @@
+import { getServersByUser } from '../../components/navigation-bar/NavBarLogic';
 import UserService from '../../requests/UserService';
 var password;
 
@@ -63,9 +64,8 @@ export function checkEmail(email: string): boolean {
     return false;
 }
 
-export async function submitEdits(email: string, first: string, last: string, pass: string, user: string) {
-
-    const res = await UserService.updateUser(email, first, last, pass, user);
+export async function submitEdits(email: string, first: string, last: string, pass: string, user: string, servers: string[]) {
+    const res = await UserService.updateUser(email, first, last, pass, user, servers);
     if (res === "") {
         return false;
     }

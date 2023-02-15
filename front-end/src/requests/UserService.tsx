@@ -59,14 +59,14 @@ class UserService {
      * @param user  user type
      * @returns user information
      */
-        async updateUser(email: string, first: string, last: string, pass: string, user: string) {
+        async updateUser(email: string, first: string, last: string, pass: string, user: string, servers: string[]) {
             var res = "";
             console.log("Email in UserService: " + email);
             var config = {
                 method: 'put',
                 url: USER_API_BASE_URL + 'api/v1/users/updateUser/' + email,
                 headers: {},
-                data: {userPassword: pass, userType: user, userFirstName: first, userLastName: last }
+                data: {userPassword: pass, userType: user, userFirstName: first, userLastName: last, servers: servers}
             };
     
             await axios(config)
