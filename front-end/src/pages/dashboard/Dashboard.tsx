@@ -18,7 +18,8 @@ const DashboardPage = () => {
   useEffect(() => {
   
     async function getUserAddresses() {
-      userInfo = await getServersByUser(globalThis.username);
+      const email = JSON.parse(localStorage.getItem('email') || '');
+      userInfo = await getServersByUser(email);
       setUserAddresses(userInfo);
       packetsPer = await getNumPacketsSentPerAddresses(userAddresses);
       setPacketsPerIp(packetsPer);
