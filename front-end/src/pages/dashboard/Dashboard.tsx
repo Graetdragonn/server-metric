@@ -27,21 +27,6 @@ const DashboardPage = () => {
   }, [packetsPerIp]);
 
   const renderPacketsPerAddress = () => {
-    // if (packetsPerIp.size) {
-    //   // forEach(value, key)
-      
-    //   packetsPer.forEach((numPackets, address) => {
-    //    // console.log(address + ' ' + numPackets);
-    //     //alert("Address "+ address +" has sent " + numPackets + " packets.");
-    //     alert(numPackets + " " + address);
-    //     return <p>Address {address} has sent {numPackets} packets.</p>
-
-    //   });
-      
-    // } else {
-    //   console.log("No addresses found.");
-    //   return <p>No addresses found.</p>
-    // }
     return packetsPerIp.map((addr) => <div className='div-for-single-address'>Address {addr.address} has sent {addr.numPackets} packet(s)</div>);
   };
 
@@ -55,7 +40,7 @@ const DashboardPage = () => {
      
       <div>
         <br></br>
-          <div className='div-for-addresses '>
+          <div className='div-for-addresses'>
             <h1>Server Packet Traffic</h1>
             {packetsPerIp.length > 0 && renderPacketsPerAddress()}
             {packetsPerIp.length < 1 && renderNoAddresses()}
