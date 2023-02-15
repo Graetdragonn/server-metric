@@ -3,9 +3,9 @@ import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
 import { checkEmail, checkPassword, isEmpty, isTypeDefault, submitEdits} from './SettingsLogic';
 import UserService from '../../requests/UserService';
-import { checkEmpty, emailCheck } from '../login/LoginLogic';
 import BackButton from '../../components/back-button/BackButton';
 import Header from '../../components/navigation-bar/Header';
+
 const Settings = () => {
   const navigate = useNavigate();
   //const user = globalThis.username; 
@@ -21,7 +21,6 @@ const Settings = () => {
         servers: []
     });
 
-    const [isValidEmail, setIsValidEmail] = useState(false);
 
     useEffect(() => {
       async function getUserInfo(email: string) {
@@ -34,9 +33,6 @@ const Settings = () => {
 
     // tracks if user confirms password correctly
     const [passMatch, setPassMatch] = useState(true);
-
-    // tracks if user has selcted a user type
-    const [roleSelected, setRoleSelected] = useState(true);
 
     // checks for errors on login
     const [error, setError] = useState(true);
@@ -58,20 +54,13 @@ const Settings = () => {
           setPassMatch(false);
           setError(true);
       }
-  
-      // check that user type is selected, show error if not
-      // if (isTypeDefault(state.userType)) {
-      //     setRoleSelected(false);
-      // }
 
-     
       // verify fields and create account
       else if (checkEmail(state.email) && checkPassword(state.pass, state.confirmPass) && !isEmpty(state.email) &&
           !isEmpty(state.first) && !isEmpty(state.last) && !isEmpty(state.pass) &&
           !isEmpty(state.confirmPass) && !isTypeDefault(state.userType)) {
   
           if (await submitEdits(state.email, state.first, state.last, state.pass, state.userType, state.servers)) {
-              navigate('/settings');
               setError(false);
           }
           else {

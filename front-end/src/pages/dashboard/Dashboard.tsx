@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../../style/Master.css'
 import Header from "../../components/navigation-bar/Header";
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +16,6 @@ const DashboardPage = () => {
 
   // get data to render on screen immediately
   useEffect(() => {
-  
     async function getUserAddresses() {
       const email = JSON.parse(localStorage.getItem('email') || '');
       userInfo = await getServersByUser(email);
@@ -26,9 +25,6 @@ const DashboardPage = () => {
     }
     getUserAddresses();
   }, [packetsPerIp]);
-
-
-  
 
   const renderPacketsPerAddress = () => {
     // if (packetsPerIp.size) {
