@@ -66,7 +66,7 @@ class UserService {
                 method: 'put',
                 url: USER_API_BASE_URL + 'api/v1/users/updateUser/' + email,
                 headers: {},
-                data: {userPassword: pass, userType: user, userFirstName: first, userLastName: last, servers: servers }
+                data: {userPassword: pass, userType: user, userFirstName: first, userLastName: last, servers: servers}
             };
     
             await axios(config)

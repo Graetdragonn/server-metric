@@ -64,8 +64,7 @@ export function checkEmail(email: string): boolean {
     return false;
 }
 
-export async function submitEdits(email: string, first: string, last: string, pass: string, user: string) {
-    const servers = await getServersByUser(email);
+export async function submitEdits(email: string, first: string, last: string, pass: string, user: string, servers: string[]) {
     const res = await UserService.updateUser(email, first, last, pass, user, servers);
     if (res === "") {
         return false;
