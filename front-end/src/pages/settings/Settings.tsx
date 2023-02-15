@@ -27,11 +27,6 @@ const Settings = () => {
         const userInfo = await UserService.getUserByEmail(email);
         var userData = JSON.parse(userInfo);
         setState({...state, "email": user, "pass": userData['userPassword'],"confirmPass": userData['userPassword'], "first": userData['userFirstName'], "last": userData['userLastName'], "userType": userData['userType']});
-        console.log("Email: " + state.email);
-        console.log("Pass: " + state.pass);
-        console.log("First: " + state.first);
-        console.log("Last: " + state.last);
-        console.log("UT: " + state.userType);
       }
       getUserInfo(user);
     }, []);
@@ -54,26 +49,6 @@ const Settings = () => {
     };
 
     // submits form
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        // check that password is confirmed, show error if not
-        if (!checkPassword(state.pass, state.confirmPass)) {
-            setPassMatch(false);
-        }
-
-        // check that user type is selected, show error if not
-        if (isTypeDefault(state.userType)) {
-            setRoleSelected(false);
-        }
-
-        // verify fields and create account
-        else if (checkEmail(state.email) && checkPassword(state.pass, state.confirmPass) && !isEmpty(state.email) &&
-            !isEmpty(state.first) && !isEmpty(state.last) && !isEmpty(state.pass) &&
-            !isEmpty(state.confirmPass) && !isTypeDefault(state.userType)) {
-        }
-    };
-
     const submitChange = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
   
