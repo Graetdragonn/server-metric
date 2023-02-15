@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import '../../style/Master.css'
 import Header from "../../components/navigation-bar/Header";
 import { useNavigate } from 'react-router-dom';
@@ -9,35 +9,47 @@ const DashboardPage = () => {
   const navigate = useNavigate();
 
   // dictionary of packets sent per each address
-  const [packetsPerIp, setPacketsPerIp] = useState(new Map<string, number>());
+  const [packetsPerIp, setPacketsPerIp] = useState([] as any[]);
   const [userAddresses, setUserAddresses] = useState([] as string[]);
+  var userInfo: string[];
+  var packetsPer: any[];
 
   // get data to render on screen immediately
   useEffect(() => {
-    const getUserAddresses = async () => {
-      setUserAddresses(await getServersByUser(globalThis.username));
-    };
+  
+    async function getUserAddresses() {
+      userInfo = await getServersByUser(globalThis.username);
+      setUserAddresses(userInfo);
+      packetsPer = await getNumPacketsSentPerAddresses(userAddresses);
+      setPacketsPerIp(packetsPer);
+    }
     getUserAddresses();
-    console.log(userAddresses);
-    console.log();
+  }, [packetsPerIp]);
 
-    const getPacketsPerIp = async () => {
-      setPacketsPerIp(await getNumPacketsSentPerAddresses(userAddresses));
-    };
-    getPacketsPerIp();    
-  }, []);
+
+  
 
   const renderPacketsPerAddress = () => {
-    if (packetsPerIp.size) {
-      // forEach(value, key)
-      packetsPerIp.forEach((numPackets, address) => {
-        console.log(address + ' ' + numPackets);
-        return <p>Address {address} has sent {numPackets} packets.</p>
-      });
-    } else {
-      console.log("No addresses found.");
-      return <p>No addresses found.</p>
-    }
+    // if (packetsPerIp.size) {
+    //   // forEach(value, key)
+      
+    //   packetsPer.forEach((numPackets, address) => {
+    //    // console.log(address + ' ' + numPackets);
+    //     //alert("Address "+ address +" has sent " + numPackets + " packets.");
+    //     alert(numPackets + " " + address);
+    //     return <p>Address {address} has sent {numPackets} packets.</p>
+
+    //   });
+      
+    // } else {
+    //   console.log("No addresses found.");
+    //   return <p>No addresses found.</p>
+    // }
+    return packetsPerIp.map((addr) => <p>Address {addr.address} has sent {addr.numPackets} packet(s)</p>);
+  };
+
+  const renderNoAddresses = () => {
+    return <p>No addresses found.</p>
   };
 
   return (
@@ -45,7 +57,8 @@ const DashboardPage = () => {
       <Header />
       <button className='addServer' onClick={() => navigate('/addserver')}>Add Server</button>
       <div>
-        {renderPacketsPerAddress()}
+        {packetsPerIp.length > 0 && renderPacketsPerAddress()}
+        {packetsPerIp.length < 1 && renderNoAddresses()}
       </div>
     </div>
   );

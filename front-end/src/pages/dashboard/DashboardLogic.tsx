@@ -18,25 +18,35 @@ interface getAllTrafficType {
  */
 export async function getNumPacketsSentPerAddresses(userAddresses: string[]) {
     try {
-        
+       
         const res = await TrafficService.getAllTraffic();
         var trafficList = JSON.parse(res);
-        
-        var packetsPerIp = new Map<string, number>();
+        //alert(JSON.stringify(trafficList));
+        var packetsPerIp = new Array();
+        //alert(userAddresses);
         userAddresses.forEach((address: string) => {
-            packetsPerIp.set(address, 0);
+            packetsPerIp.push({address: address, numPackets: 0});
         });
 
-        trafficList.forEach((item: getAllTrafficType) => { 
-            if (packetsPerIp.has(item["srcIP"]["address"])) {
-                var num = packetsPerIp.get(item["srcIP"]["address"]) as number;
-                packetsPerIp.set(item["srcIP"]["address"], num + 1); 
+        //trafficList.forEach((item: getAllTrafficType) => { 
+            //console.log(item["srcIP"]["address"]);
+            // if (packetsPerIp.has(item["srcIP"]["address"])) {
+            //     var num = packetsPerIp.get(item["srcIP"]["address"]) as number;
+            //     packetsPerIp.set(item["srcIP"]["address"], num + 1); 
+            // }
+        //});
+        for (let i = 0; i < trafficList.length; i++){
+            var addr = trafficList[i]["srcIP"]["address"];
+            let idx = packetsPerIp.findIndex(obj => obj.address == addr);
+            if (idx != -1){
+                packetsPerIp[idx].numPackets += 1;
             }
-        });
-        console.log(packetsPerIp);
+            //console.log(idx);
+        }
+        //console.log(packetsPerIp);
         return packetsPerIp;
     }
     catch {
-        return new Map<string, number>();
+        return new Array();
     }
 }
