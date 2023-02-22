@@ -13,6 +13,7 @@ import Settings from "./pages/settings/Settings";
 import SingleServer from "./pages/single-server/SingleServer";
 import AddServerPage from "./pages/add-server/AddServer";
 import AddUserPage from "./pages/add-user/AddUser"
+import DeleteUserPage from "./pages/delete-user/DeleteUser";
 
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/single-server" element={<SingleServer />} />
           <Route path="/addserver" element={<AddServerPage />} />
           <Route path="/adduser" element={<AddUserPage />} />
+          <Route path="/deleteuser" element={<DeleteUserPage />} />
         </Routes>
       </BrowserRouter>
     </div>

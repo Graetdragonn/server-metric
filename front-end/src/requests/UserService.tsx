@@ -63,7 +63,6 @@ class UserService {
      */
         async updateUser(email: string, first: string, last: string, pass: string, user: string, servers: string[]) {
             var res = "";
-            console.log("Email in UserService: " + email);
             var config = {
                 method: 'put',
                 url: USER_API_BASE_URL + 'api/v1/users/updateUser/' + email,
@@ -126,6 +125,29 @@ class UserService {
             })
             .catch(function (error: any) {
                 //alert(error);
+            });
+        return res;
+    }
+
+    /**
+     * 
+     * @param email user email
+     * @returns ERROR if fail
+     */
+    async deleteUserByEmail(email: string) {
+        var res = "ERROR";
+        var config = {
+            method: 'delete',
+            url: USER_API_BASE_URL + 'api/v1/users/deleteUser/' + email,
+            headers: {}
+        };
+
+        await axios(config)
+            .then(function (response: { data: any; }) {
+                res = JSON.stringify(response.data);
+            })
+            .catch(function (error: any) {
+                return res;
             });
         return res;
     }
