@@ -6,19 +6,21 @@ class UserService {
     /**
      * Get all users
      */
-    getUsers() {
+    async getUsers() {
+        var res = "";
         var config = {
             method: 'get',
             url: USER_API_BASE_URL + 'api/v1/users/getAllUsers',
             headers: {}
         };
-        axios(config)
+        await axios(config)
             .then(function (response: { data: any; }) {
-                alert(JSON.stringify(response.data));
+                res = JSON.stringify(response.data);
             })
             .catch(function (error: any) {
-                alert(error);
+                //alert(error);
             });
+        return res;
     }
 
     /**
@@ -98,7 +100,7 @@ class UserService {
                 res = JSON.stringify(response.data);
             })
             .catch(function (error: any) {
-                alert(error);
+                //alert(error);
             });
         return res;
     }

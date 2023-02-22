@@ -12,6 +12,7 @@ import ForgotPasswordPage from "./pages/forgot-password/ForgotPassword";
 import Settings from "./pages/settings/Settings";
 import SingleServer from "./pages/single-server/SingleServer";
 import AddServerPage from "./pages/add-server/AddServer";
+import AddUserPage from "./pages/add-user/AddUser"
 
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/settings" element={<Settings />} />
           <Route path="/single-server" element={<SingleServer />} />
           <Route path="/addserver" element={<AddServerPage />} />
+          <Route path="/adduser" element={<AddUserPage />} />
         </Routes>
       </BrowserRouter>
     </div>

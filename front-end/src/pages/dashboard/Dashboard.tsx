@@ -61,7 +61,12 @@ const DashboardPage = () => {
       </div>
       {/* ADMIN DASHBOARD VIEW */}
       <div style={{ display: userType !== "ADMIN" ? 'none' : '' }}>
-        <p>admin page</p>
+      <br></br>
+      <div className='div-for-addresses'>
+        <h1>User Services</h1>
+        <button style={{width: 20}} onClick={() => navigate('/addUser')}>Add User</button>
+        <button onClick={() => navigate('/addserver')}>Delete User</button>
+        </div> 
       </div>
     </div>
   );
