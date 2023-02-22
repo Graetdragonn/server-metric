@@ -18,14 +18,11 @@ const CreateAccountPage = () => {
         last: "",
         pass: "",
         confirmPass: "",
-        userType: ""
+        userType: "ADMIN"
     });
 
     // tracks if user confirms password correctly
     const [passMatch, setPassMatch] = useState(true);
-
-    // tracks if user has selcted a user type
-    const [roleSelected, setRoleSelected] = useState(true);
 
     // checks for errors on login
     const [error, setError] = useState(false);
@@ -46,18 +43,12 @@ const CreateAccountPage = () => {
             setPassMatch(false);
         }
 
-        // check that user type is selected, show error if not
-        if (isTypeDefault(state.userType)) {
-            setRoleSelected(false);
-        }
-
         // verify fields and create account
         else if (checkEmail(state.email) && checkPassword(state.pass, state.confirmPass) && !isEmpty(state.email) &&
             !isEmpty(state.first) && !isEmpty(state.last) && !isEmpty(state.pass) &&
             !isEmpty(state.confirmPass) && !isTypeDefault(state.userType)) {
 
             if (await submit(state.email, state.first, state.last, state.pass, state.userType)) {
-                //globalThis.username = state.email;
                 localStorage.setItem("email", JSON.stringify(state.email));
                 navigate('/dashboard');
             }
@@ -84,18 +75,8 @@ const CreateAccountPage = () => {
       <input placeholder='Password' type="password" name="pass" required={true} value={state.pass} onChange={handleChange}></input>
       <br></br>
       <input placeholder='Confirm password' type="password" name="confirmPass" required={true} value={state.confirmPass} onChange={handleChange}></input>
-      <div className="row">
-        <select onChange={(e) => setState({ ...state, userType: e.target.value })}>
-        <option value="default">- Select User Type -</option>
-        <option value="ADMIN">Admin</option>
-        <option value="SERVICE_MANAGER">Service Manager</option>
-        <option value="SERVICE_PROVIDER">Service Provider</option>
-        <option value="CLIENT">Client</option>
-        </select>
-        </div>
       <button>Submit</button>
         <span style={{ visibility: passMatch ? 'hidden' : 'visible' }} className='error'>&nbsp; Passwords do not match </span>
-        <span style={{ visibility: roleSelected ? 'hidden' : 'visible' }} className='error'>&nbsp; No user type selected </span >
         <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email is already in use</span >
     </form>
     </div>
