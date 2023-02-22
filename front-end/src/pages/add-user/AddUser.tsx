@@ -15,8 +15,8 @@ const AddUserPage = () => {
         email: "",
         first: "",
         last: "",
-        pass: "",
-        confirmPass: "",
+        pass: " ",
+        confirmPass: " ",
         userType: "",
         serviceProvider: ""
     });
@@ -29,10 +29,13 @@ const AddUserPage = () => {
     const [roleSelected, setRoleSelected] = useState(true);
 
     // tracks if user has selcted a service provider
-    const [spSelcted, setspSelected] = useState(true);
+    const [spSelected, setspSelected] = useState(true);
 
-    // checks for errors on login
-    const [error, setError] = useState(false);
+    // checks if email is already in use
+    const [email, setEmail] = useState(false);
+
+    // checks for errors on submit
+    const [submitted, setSubmitted] = useState(false);
 
     // to update user information when user inputs data
     const handleChange = (e: { target: { name: string; value: any; }; }) => {
@@ -45,6 +48,9 @@ const AddUserPage = () => {
     // submits form
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setRoleSelected(true);
+        setspSelected(true);
+        setEmail(false);
 
         // check that user type is selected, show error if not
         if (isTypeDefault(state.userType)) {
@@ -61,10 +67,10 @@ const AddUserPage = () => {
             !isEmpty(state.first) && !isEmpty(state.last) && !isTypeDefault(state.userType)) {
 
             if (await submit(state.email, state.first, state.last, state.pass, state.userType)) {
-                navigate('/dashboard');
+                setSubmitted(true);
             }
             else {
-                setError(true);
+                setEmail(true);
             }
         }
     };
@@ -79,7 +85,7 @@ const AddUserPage = () => {
     return (
         <><Header></Header><body className='Form-Body'>
             <div>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} style={{ display: submitted ? 'none' : '' }}>
                     <BackButton></BackButton>
                     <h1>Create a New User</h1>
                     <input placeholder='Email' type="email" name="email" required={true} value={state.email} onChange={handleChange}></input>
@@ -104,10 +110,15 @@ const AddUserPage = () => {
                     </div>
                     <button>Submit</button>
                     <span style={{ visibility: roleSelected ? 'hidden' : 'visible' }} className='error'>&nbsp; No user type selected </span>
-                    <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email is already in use</span>
-                    <span style={{ visibility: spSelcted ? 'hidden' : 'visible' }} className='error'>&nbsp; No service provider selected </span>
+                    <span style={{ visibility: email ? 'visible' : 'hidden' }} className='error'>Email is already in use</span>
+                    <span style={{ visibility: spSelected ? 'hidden' : 'visible' }} className='error'>&nbsp; No service provider selected </span>
                 </form>
+                
             </div>
+            <form onSubmit={handleSubmit} style={{display: submitted ? '' : 'none'}}>
+                    <p style={{fontSize:20, textAlign:'center'}}>User {state.email} was successfully created</p>
+                    <button onClick={() => navigate('/dashboard')}>Back to dashboard</button>
+                </form>
         </body></>
     );
 

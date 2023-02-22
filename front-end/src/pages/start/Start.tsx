@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const StartPage = () => {
   const navigate = useNavigate();
+  localStorage.clear();
   return (
     <div className="Start-Page">
       <header className="App-header">
