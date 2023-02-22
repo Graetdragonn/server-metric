@@ -45,3 +45,15 @@ export function checkEmpty(s: string): boolean {
 export function emailCheck(email: string): boolean {
     return checkEmail(email);
 }
+
+/**
+ * Get user type
+ * @param user user email
+ * @returns user type
+ */
+export async function getUserType(user: string){
+    const userInfo = await UserService.getUserByEmail(user);
+    var userData = JSON.parse(userInfo);
+    var userType = userData['userType'];
+    return userType;
+}

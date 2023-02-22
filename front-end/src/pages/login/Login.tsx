@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
-import { checkEmpty, submit } from './LoginLogic';
+import { checkEmpty, getUserType, submit } from './LoginLogic';
 import { checkEmail } from '../create-account/CreateAccountLogic';
 import BackButton from '../../components/back-button/BackButton';
 
@@ -41,8 +41,8 @@ const LoginPage = () => {
     // verifies fields and logs user in
     if (checkEmail(state.email) && !checkEmpty(state.email) && !checkEmpty(state.pass)) {
       if(await submit(state.email, state.pass)){
-        //globalThis.username = state.email;
         localStorage.setItem("email", JSON.stringify(state.email));
+        localStorage.setItem("userType", await getUserType(JSON.parse(localStorage.getItem('email') || '')));
         navigate('/dashboard');
       }
       else{

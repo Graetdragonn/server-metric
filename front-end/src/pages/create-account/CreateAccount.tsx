@@ -59,13 +59,11 @@ const CreateAccountPage = () => {
     };
 
     return (
-      <body className='Form-Body'>
+    <body className='Form-Body'>
     <div>
     <form onSubmit={handleSubmit}>
     <BackButton></BackButton>
       <h1>Create Account</h1>
-      
-
       <input placeholder='Email' type="email" name="email" required={true} value={state.email} onChange={handleChange}></input>
       <br></br>
       <input placeholder='First Name' type="text" name="first" required={true} value={state.first} onChange={handleChange}></input>

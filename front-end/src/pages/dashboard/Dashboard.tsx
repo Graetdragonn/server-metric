@@ -11,19 +11,27 @@ const DashboardPage = () => {
   // dictionary of packets sent per each address
   const [packetsPerIp, setPacketsPerIp] = useState([] as any[]);
   const [userAddresses, setUserAddresses] = useState([] as string[]);
+  const userType = localStorage.getItem('userType');
   var userInfo: string[];
   var packetsPer: any[];
 
+  
+
   // get data to render on screen immediately
   useEffect(() => {
+    const email = JSON.parse(localStorage.getItem('email') || '');
+    
     async function getUserAddresses() {
-      const email = JSON.parse(localStorage.getItem('email') || '');
       userInfo = await getServersByUser(email);
       setUserAddresses(userInfo);
       packetsPer = await getNumPacketsSentPerAddresses(userAddresses);
       setPacketsPerIp(packetsPer);
     }
-    getUserAddresses();
+
+    if(userType !== "ADMIN"){
+      getUserAddresses();
+    }
+    
   }, [packetsPerIp]);
 
   const renderPacketsPerAddress = () => {
@@ -37,8 +45,8 @@ const DashboardPage = () => {
   return (
     <div className="Dashboard-Page">
       <Header />
-     
-      <div>
+      {/* NON-ADMIN DASHBOARD VIEW */}
+      <div style={{ display: userType !== "ADMIN" ? '' : 'none' }}>
         <br></br>
           <div className='div-for-addresses'>
             <h1>Server Packet Traffic</h1>
@@ -49,10 +57,11 @@ const DashboardPage = () => {
         <div className='div-for-addresses'>
           <h1>Server Settings</h1>
         <button onClick={() => navigate('/addserver')}>Add Server</button>
-       
-        </div>
-          
-        
+        </div> 
+      </div>
+      {/* ADMIN DASHBOARD VIEW */}
+      <div style={{ display: userType !== "ADMIN" ? 'none' : '' }}>
+        <p>admin page</p>
       </div>
     </div>
   );
