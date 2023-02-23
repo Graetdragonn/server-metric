@@ -14,6 +14,7 @@ import SingleServer from "./pages/single-server/SingleServer";
 import AddServerPage from "./pages/add-server/AddServer";
 import AddUserPage from "./pages/add-user/AddUser"
 import DeleteUserPage from "./pages/delete-user/DeleteUser";
+import AdminEditUserPage from "./pages/admin-edit-user/AdminEditUser";
 
 
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
           <Route path="/addserver" element={<AddServerPage />} />
           <Route path="/adduser" element={<AddUserPage />} />
           <Route path="/deleteuser" element={<DeleteUserPage />} />
+          <Route path="/adminedituser" element={<AdminEditUserPage />} />
         </Routes>
       </BrowserRouter>
     </div>
