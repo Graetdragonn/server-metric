@@ -94,7 +94,7 @@ const AddUserPage = () => {
                     <br></br>
                     <input placeholder='Last Name' type="text" name="last" required={true} value={state.last} onChange={handleChange}></input>
                     <br></br>
-                    <div className="row">
+                    <div className="row" style={{display: "flex"}}>
                         <select onChange={(e) => setState({ ...state, userType: e.target.value })}>
                             <option value="default">- Select User Type -</option>
                             <option value="ADMIN">Admin</option>
