@@ -12,10 +12,5 @@ export async function getAllUsers(){
 export async function getUserInfo(email: string) {
     const userInfo = await UserService.getUserByEmail(email);
     var userData = JSON.parse(userInfo);
-    var password = userData['userPassword'];
-    var userType = userData['userType'];
-    var firstName = userData['userFirstName'];
-    var lastName = userData['userLastName'];
-    var servers = userData['servers'];
     return userData;
 }
