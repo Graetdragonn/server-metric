@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { getNumPacketsSentPerAddresses } from './DashboardLogic';
 import { getServersByUser } from '../../components/navigation-bar/NavBarLogic';
 import UserList from '../../components/user-list/UserList';
+import ServerList from '../../components/server-list/ServerList';
 
 const DashboardPage = () => {
   const navigate = useNavigate();
@@ -61,13 +62,19 @@ const DashboardPage = () => {
       {/* ADMIN DASHBOARD VIEW */}
       <div style={{ display: userType !== "ADMIN" ? 'none' : '' }}>
       <br></br>
+      <div className='row' style={{display: 'flex', justifyContent:'space-around'}}>
       <UserList></UserList>
-      <br></br>
+
+      <ServerList></ServerList>
+
       <div className='div-for-addresses'>
         <h1>User Services</h1>
         <button style={{width: 20}} onClick={() => navigate('/adduser')}>Add User</button>
         <button onClick={() => navigate('/deleteuser')}>Delete User</button>
         </div> 
+      </div>
+      <br></br>
+      
       </div>
       
     </div>

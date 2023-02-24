@@ -9,6 +9,11 @@ export async function getAllUsers(){
     return JSON.parse(res);
 }
 
+/**
+ * Get user data from email
+ * @param email user email
+ * @returns user data
+ */
 export async function getUserInfo(email: string) {
     const userInfo = await UserService.getUserByEmail(email);
     var userData = JSON.parse(userInfo);
