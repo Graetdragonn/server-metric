@@ -21,7 +21,6 @@ export default function UserList(){
     
     return (
     <div >
-    
       <table className="userTable">
       <caption>All Users</caption>
         <tr>
