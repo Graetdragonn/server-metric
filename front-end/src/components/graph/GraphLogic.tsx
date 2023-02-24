@@ -12,7 +12,6 @@ type dataProps = {
 export const HistogramGraph = ({width, height, data}: dataProps)=> {
     const bucketGen = d3
         .bin()
-        .value((d) => d)
         .domain([0,5])
         .thresholds([0,1,2,3,4,5]);
 
@@ -63,5 +62,4 @@ export const HistogramGraph = ({width, height, data}: dataProps)=> {
             </svg>
         </div>
     );
-    
 }
