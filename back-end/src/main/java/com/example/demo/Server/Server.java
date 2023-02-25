@@ -19,6 +19,7 @@ public class Server {
     @Id
     @Column(name = "address")
     private String address;
+    private String serverName = "";
 
     @JsonIgnore
     @ManyToMany(mappedBy = "servers", cascade = CascadeType.ALL)
@@ -32,10 +33,14 @@ public class Server {
     }
 
     //Server constructor with all private variables being assigned
-    public Server(String address, List<User> users){
+
+    public Server(String address, String serverName, List<User> users, Set<Traffic> traffic) {
         this.address = address;
+        this.serverName = serverName;
         this.users = users;
+        this.traffic = traffic;
     }
+
     //getAddress() returns a servers address
     public String getAddress() {
         return address;
@@ -66,24 +71,34 @@ public class Server {
         this.users.remove(user);
     }
 
+    public String getServerName() {
+        return serverName;
+    }
+
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Server server = (Server) o;
-        return Objects.equals(address, server.address) && Objects.equals(users, server.users);
+        return Objects.equals(address, server.address) && Objects.equals(serverName, server.serverName) && Objects.equals(users, server.users) && Objects.equals(traffic, server.traffic);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(address, users);
+        return Objects.hash(address, serverName, users, traffic);
     }
 
     @Override
     public String toString() {
         return "Server{" +
                 "address='" + address + '\'' +
+                ", serverName='" + serverName + '\'' +
                 ", users=" + users +
+                ", traffic=" + traffic +
                 '}';
     }
 }

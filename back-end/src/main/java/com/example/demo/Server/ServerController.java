@@ -46,6 +46,6 @@ public class ServerController {
     @PutMapping("update/{serverAddress}")
     @CrossOrigin
     public void updateServer(@PathVariable("serverAddress") String serverAddress, @RequestBody Server server){
-        serverService.updateUser(serverAddress, server);
+        serverService.updateServer(serverAddress, server);
     }
 }
