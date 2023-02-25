@@ -41,15 +41,11 @@ public class ServerService {
         serverRepository.deleteServerByAddress(serverAddress);
     }
     @Transactional
-    public void updateUser(String serverAddress, Server server) {
+    public void updateServer(String serverAddress, Server server) {
         Server serverUpdate = serverRepository.findServerByAddress(serverAddress).orElseThrow(()-> new IllegalStateException("Server with address " + serverAddress + " does not exist"));
-        if(server.getAddress() == null){
-            throw new IllegalStateException("address field is null");
-        }
         serverUpdate.setAddress(server.getAddress());
-        serverRepository.save(server);
+        serverUpdate.setServerName(server.getServerName());
+        serverRepository.save(serverUpdate);
 
     }
-
-
 }

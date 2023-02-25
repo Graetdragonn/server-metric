@@ -91,25 +91,25 @@ public class UserService {
 
     public void addClient(String userEmail, User user) {
         User userUpdate = userRepository.findUserByUserEmail(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + "does not exist"));
-        userUpdate.addClient(user);
+        userUpdate.addClientToUser(user);
         userRepository.save(userUpdate);
     }
 
     public void removeClient(String userEmail, User user) {
         User userUpdate = userRepository.findUserByUserEmail(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + "does not exist"));
-        userUpdate.removeClient(user);
+        userUpdate.removeClientFromUser(user);
         userRepository.save(userUpdate);
     }
 
     public void addClients(String userEmail, List<User> users) {
         User userUpdate = userRepository.findUserByUserEmail(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + "does not exist"));
-        userUpdate.addClients(users);
+        userUpdate.addClientsToUser(users);
         userRepository.save(userUpdate);
     }
 
     public void removeClients(String userEmail, List<User>  users) {
         User userUpdate = userRepository.findUserByUserEmail(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + "does not exist"));
-        userUpdate.removeClients(users);
+        userUpdate.removeClientsFromUser(users);
         userRepository.save(userUpdate);
     }
 }

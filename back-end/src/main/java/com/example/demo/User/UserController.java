@@ -77,7 +77,7 @@ public class UserController {
         userService.addClient(userEmail, user);
     }
 
-    @PutMapping("{userEmail}/removeClient")
+    @DeleteMapping("{userEmail}/removeClient")
     @CrossOrigin
     public void removeClientFromUser(@PathVariable("userEmail") String userEmail, @RequestBody User user){
         userService.removeClient(userEmail, user);
@@ -89,7 +89,7 @@ public class UserController {
         userService.addClients(userEmail, users);
     }
 
-    @PutMapping("{userEmail}/removeClients")
+    @DeleteMapping("{userEmail}/removeClients")
     @CrossOrigin
     public void removeClientsFromUser(@PathVariable("userEmail") String userEmail, @RequestBody List<User> users){
         userService.removeClients(userEmail, users);

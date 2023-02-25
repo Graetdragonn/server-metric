@@ -1,10 +1,7 @@
 package com.example.demo.User;
 
 import com.example.demo.Server.Server;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnJava;
-
 import java.util.*;
 
 //User stores 5 variables:
@@ -26,27 +23,23 @@ public class User {
     @JoinTable(name = "user_servers", joinColumns = @JoinColumn(name = "userEmail"), inverseJoinColumns = @JoinColumn(name = "address"))
     List<Server> servers = new ArrayList<>();
 
-//    @ManyToOne
-//    @JsonIgnore
-//    private User serviceProvider;
-
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "sp_clients")
-    private Set<User> clients;
+    private List<User> clients;
 
     //basic User constructor
     public User() {
     }
 
     //User constructor with all private variables being assigned
-    public User(String userEmail, String userPassword, UserType userType, String userFirstName, String userLastName, List<Server> servers, User serviceProvider, Set<User> clients) {
+
+    public User(String userEmail, String userPassword, UserType userType, String userFirstName, String userLastName, List<Server> servers, List<User> clients) {
         this.userEmail = userEmail;
         this.userPassword = userPassword;
         this.userType = userType;
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.servers = servers;
-//        this.serviceProvider = serviceProvider;
         this.clients = clients;
     }
 
@@ -116,28 +109,32 @@ public class User {
         this.userLastName = userLastName;
     }
 
-    public Set<User> getClients() {
+    public List<User> getClients() {
         return clients;
     }
 
-    public void setClients(Set<User> clients) {
+    public void setClients(List<User> clients) {
         this.clients = clients;
     }
 
-    public void addClient(User client){
+    public void addClientToUser(User client){
         this.clients.add(client);
     }
 
-    public void removeClient(User client){
-        this.clients.remove(client);
+    public void removeClientFromUser(User client){
+        System.out.println(this.clients.remove(client));
     }
 
-    public void addClients(List<User> users) {
-        users.forEach((user) -> addClient(user));
+    public void addClientsToUser(List<User> users) {
+        for (User user : users) {
+            clients.add(user);
+        }
     }
 
-    public void removeClients(List<User> users) {
-        users.forEach((user) -> removeClient(user));
+    public void removeClientsFromUser(List<User> users) {
+        for (User user : users) {
+            clients.remove(user);
+        }
     }
 
     @Override
@@ -145,7 +142,7 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(userEmail, user.userEmail) && Objects.equals(userPassword, user.userPassword) && userType == user.userType && Objects.equals(userFirstName, user.userFirstName) && Objects.equals(userLastName, user.userLastName) && Objects.equals(servers, user.servers) && Objects.equals(clients, user.clients);
+        return Objects.equals(userEmail, user.userEmail);
     }
 
     @Override
@@ -165,6 +162,4 @@ public class User {
                 ", clients=" + clients +
                 '}';
     }
-
-
 }

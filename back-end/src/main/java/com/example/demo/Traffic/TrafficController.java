@@ -3,7 +3,6 @@ package com.example.demo.Traffic;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +27,7 @@ public class TrafficController {
                                         @RequestParam Optional<Integer> dstPort){
         Traffic t = new Traffic();
         timestamp.ifPresent(time -> t.setTime(time));
-        srcIP.ifPresent(src -> t.setSrcIP(new Server(src, null)));
+        srcIP.ifPresent(src -> t.setSrcIP(new Server(src, "", null, null)));
         srcPort.ifPresent(src -> t.setSrcPort(src));
         dstIP.ifPresent(dst -> t.setDstIP(dst));
         dstPort.ifPresent(dst -> t.setDstPort(dst));

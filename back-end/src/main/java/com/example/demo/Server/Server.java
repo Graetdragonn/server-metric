@@ -33,10 +33,14 @@ public class Server {
     }
 
     //Server constructor with all private variables being assigned
-    public Server(String address, List<User> users){
+
+    public Server(String address, String serverName, List<User> users, Set<Traffic> traffic) {
         this.address = address;
+        this.serverName = serverName;
         this.users = users;
+        this.traffic = traffic;
     }
+
     //getAddress() returns a servers address
     public String getAddress() {
         return address;
