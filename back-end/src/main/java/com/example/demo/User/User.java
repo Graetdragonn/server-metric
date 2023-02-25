@@ -1,11 +1,11 @@
 package com.example.demo.User;
 
 import com.example.demo.Server.Server;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnJava;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 //User stores 5 variables:
 //Integer id: is used as the primary key so a user can be uniquely identified.
@@ -26,18 +26,28 @@ public class User {
     @JoinTable(name = "user_servers", joinColumns = @JoinColumn(name = "userEmail"), inverseJoinColumns = @JoinColumn(name = "address"))
     List<Server> servers = new ArrayList<>();
 
+//    @ManyToOne
+//    @JsonIgnore
+//    private User serviceProvider;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "sp_clients")
+    private Set<User> clients;
+
     //basic User constructor
     public User() {
     }
 
     //User constructor with all private variables being assigned
-    public User(String userEmail, String userPassword, UserType userType, String userFirstName, String userLastName, List<Server> servers) {
+    public User(String userEmail, String userPassword, UserType userType, String userFirstName, String userLastName, List<Server> servers, User serviceProvider, Set<User> clients) {
         this.userEmail = userEmail;
         this.userPassword = userPassword;
         this.userType = userType;
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.servers = servers;
+//        this.serviceProvider = serviceProvider;
+        this.clients = clients;
     }
 
     //getUserEmail() returns a users email
@@ -106,20 +116,45 @@ public class User {
         this.userLastName = userLastName;
     }
 
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        if (!super.equals(object)) return false;
-        User user = (User) object;
-        return java.util.Objects.equals(userEmail, user.userEmail) && java.util.Objects.equals(userPassword, user.userPassword) && java.util.Objects.equals(userType, user.userType) && java.util.Objects.equals(userFirstName, user.userFirstName) && java.util.Objects.equals(userLastName, user.userLastName) && java.util.Objects.equals(servers, user.servers);
+    public Set<User> getClients() {
+        return clients;
     }
 
+    public void setClients(Set<User> clients) {
+        this.clients = clients;
+    }
+
+    public void addClient(User client){
+        this.clients.add(client);
+    }
+
+    public void removeClient(User client){
+        this.clients.remove(client);
+    }
+
+    public void addClients(List<User> users) {
+        users.forEach((user) -> addClient(user));
+    }
+
+    public void removeClients(List<User> users) {
+        users.forEach((user) -> removeClient(user));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(userEmail, user.userEmail) && Objects.equals(userPassword, user.userPassword) && userType == user.userType && Objects.equals(userFirstName, user.userFirstName) && Objects.equals(userLastName, user.userLastName) && Objects.equals(servers, user.servers) && Objects.equals(clients, user.clients);
+    }
+
+    @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), userEmail, userPassword, userType, userFirstName, userLastName, servers);
+        return Objects.hash(userEmail, userPassword, userType, userFirstName, userLastName, servers, clients);
     }
 
-    @java.lang.Override
-    public java.lang.String toString() {
+    @Override
+    public String toString() {
         return "User{" +
                 "userEmail='" + userEmail + '\'' +
                 ", userPassword='" + userPassword + '\'' +
@@ -127,6 +162,9 @@ public class User {
                 ", userFirstName='" + userFirstName + '\'' +
                 ", userLastName='" + userLastName + '\'' +
                 ", servers=" + servers +
+                ", clients=" + clients +
                 '}';
     }
+
+
 }
