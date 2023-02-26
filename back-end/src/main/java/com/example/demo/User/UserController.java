@@ -94,4 +94,15 @@ public class UserController {
     public void removeClientsFromUser(@PathVariable("userEmail") String userEmail, @RequestBody List<User> users){
         userService.removeClients(userEmail, users);
     }
+
+    @PutMapping("{serviceProviderEmail}/addClient/{clientEmail}")
+    @CrossOrigin
+    public void addClientToUserByEmail(@PathVariable("serviceProviderEmail") String userEmail, @PathVariable("clientEmail") String clientEmail){
+        userService.addClientByEmail(userEmail, clientEmail);
+    }
+    @DeleteMapping("{serviceProviderEmail}/removeClient/{clientEmail}")
+    @CrossOrigin
+    public void removeClientFromUserByEmail(@PathVariable("serviceProviderEmail") String userEmail, @PathVariable("clientEmail") String clientEmail){
+        userService.removeClientByEmail(userEmail, clientEmail);
+    }
 }
