@@ -1,5 +1,9 @@
 import UserService from "../../requests/UserService";
 
+/**
+ * Get list of all service providers
+ * @returns list of all service providers
+ */
 export async function getServiceProviderList() {
     const res = await UserService.getUsers();
     var userList = JSON.parse(res);
@@ -11,4 +15,20 @@ export async function getServiceProviderList() {
         }
     }
     return serverProviders;
+}
+
+/**
+ * Adds a client to a server provider list
+ * @param serviceProvider service provider email
+ * @param client client email
+ * @returns true on success, false otherwise
+ */
+export async function setServiceProvider(serviceProvider: string, client: string) {
+    const res = await UserService.addServiceProviderClientByEmail(serviceProvider, client);
+    if (res === "ERROR") {
+        return false;
+    }
+    else {
+        return true;
+    }
 }

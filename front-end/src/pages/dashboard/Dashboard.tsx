@@ -68,9 +68,11 @@ const DashboardPage = () => {
       <ServerList></ServerList>
 
       <div className='div-for-addresses'>
-        <h1>User Services</h1>
+        <h1>Admin Services</h1>
         <button style={{width: 20}} onClick={() => navigate('/adduser')}>Add User</button>
-        <button onClick={() => navigate('/deleteuser')}>Delete User</button>
+        <button style={{width: 20}} onClick={() => navigate('/deleteuser')}>Delete User</button>
+        <button style={{width: 20}} onClick={() => navigate('/deleteuser')}>Add Server</button>
+        <button style={{width: 20}} onClick={() => navigate('/deleteuser')}>Delete Server</button>
         </div> 
       </div>
       <br></br>
