@@ -3,11 +3,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import BackButton from '../../components/back-button/BackButton';
 import Header from '../../components/navigation-bar/Header';
 import '../../style/Master.css';
-import { getServiceProviderList } from "../../pages/add-user/AddUserLogic";
+import { getServiceProviderList, addClientToServerProvider } from "../../pages/add-user/AddUserLogic";
 import { checkServerFormat } from '../add-server/AddServerLogic';
 import { checkIfServerInList } from './AdminEditUserLogic';
 import { checkEmail, isEmpty } from '../create-account/CreateAccountLogic';
 import { submitEdits } from '../settings/SettingsLogic';
+import { deleteServerProviderClientByEmail, getClientServiceProvider } from '../delete-user/DeleteUserLogic';
+import { getUserType } from '../login/LoginLogic';
 
 const AdminEditUserPage = () => {
     const navigate = useNavigate();
@@ -22,7 +24,7 @@ const AdminEditUserPage = () => {
         confirmPass: userInfo['userPassword'],
         userType: userInfo['userType'],
         servers: userInfo['servers'],
-        serviceProvider: ""
+        sp: ""
     });
 
     const [serverToAddOrDelete, setServerToAddOrDelete] = useState("");
@@ -30,6 +32,8 @@ const AdminEditUserPage = () => {
     const [addServerError, setAddServerError] = useState(false);
     const [serverFormatError, setServerFormatError] = useState(false);
     const [deleteServerError, setDeleteServerError] = useState(false);
+    const [serviceProvider, setServiceProvider] = useState("");
+    const [clientType, setClientType] = useState(false);
 
     // gets list of all service providers
     var serviceProviders = new Array();
@@ -127,15 +131,38 @@ const AdminEditUserPage = () => {
     // submits user changes
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        // if user was a client but changed type
+        if (clientType && info.userType !== 'CLIENT') {
+            await deleteServerProviderClientByEmail(info.sp, info.email);
+        }
+
+        // if user is already a client but changed service providers
+        else if (clientType && info.sp !== serviceProvider) {
+            if (await deleteServerProviderClientByEmail(info.sp, info.email) !== "ERROR") {
+                await addClientToServerProvider(serviceProvider, info.email);
+            }
+            else if (info.sp === "") {
+                await addClientToServerProvider(serviceProvider, info.email);
+            }
+        }
+
+        // if user type is changed to client
+        else if(info.userType === 'CLIENT' && !clientType) {
+            setClientType(true);
+            await addClientToServerProvider(serviceProvider, info.email);
+        }
+
+        // update user account
         if (checkEmail(info.email) && !isEmpty(info.email) &&
-          !isEmpty(info.first) && !isEmpty(info.last)) {
-          if (await submitEdits(info.email, info.first, info.last, state.pass, info.userType, userServersList)) {
-            setError(false);
-          }
-          else {
-            setError(true);
-          }
-      }
+            !isEmpty(info.first) && !isEmpty(info.last)) {
+            if (await submitEdits(info.email, info.first, info.last, state.pass, info.userType, userServersList)) {
+                setError(false);
+            }
+            else {
+                setError(true);
+            }
+        }
     }
 
     // get list of all service providers
@@ -145,16 +172,31 @@ const AdminEditUserPage = () => {
     }
     getServiceProviders();
 
+    // get service provider of client
+    const getSP = async () => {
+        if (await getUserType(info.email) === "CLIENT") {
+            setClientType(true);
+            var temp = await getClientServiceProvider(info.email);
+            setServiceProvider(temp);
+            setInfo({
+                ...info,
+                sp: temp
+            });
+        }
+        
+  }
+  
     // set server list array
     useEffect(() => {
         setUserServersList(userInfo['servers']);
+        getSP();
     }, []);
 
     return (
         <><Header />
-            <body className='Form-Body'>
+            <body className='Form-Body' >
                 <div>
-                    <form onSubmit={handleSubmit} style={{ display: error ? '' : 'none' }}>
+                    <form onSubmit={handleSubmit} style={{ display: error ? '' : 'none'}} >
                         <BackButton></BackButton>
                         <h1>User Information</h1>
                         <div className="row" style={{ display: "flex" }}>
@@ -173,14 +215,13 @@ const AdminEditUserPage = () => {
                         <br></br>
                         <label>User Type</label>
                         <div className="row" style={{ display: "flex" }}>
-                            <select value={info.userType} onChange={(e) => setInfo({ ...state, userType: e.target.value })}>
+                            <select value={info.userType} onChange={(e) => setInfo({ ...info, userType: e.target.value })}>
                                 <option value="ADMIN">Admin</option>
                                 <option value="SERVICE_MANAGER">Service Manager</option>
                                 <option value="SERVICE_PROVIDER">Service Provider</option>
                                 <option value="CLIENT">Client</option>
                             </select>
-                            <select onChange={(e) => setInfo({ ...state, serviceProvider: e.target.value })} style={{ display: info.userType === "CLIENT" ? '' : 'none' }}>
-                                <option value="default"> - Select Service Provider -</option>
+                            <select value={serviceProvider} onChange={(e) => setServiceProvider(e.target.value)} style={{ display: info.userType === "CLIENT" ? '' : 'none' }}>
                                 {serviceProviderList.map(user => { return <option value={user.userEmail}>{user.userFirstName} {user.userLastName}</option>; })}
                             </select>
                         </div>
