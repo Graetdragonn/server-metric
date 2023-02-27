@@ -27,7 +27,7 @@ public class TrafficController {
                                         @RequestParam Optional<Integer> dstPort){
         Traffic t = new Traffic();
         timestamp.ifPresent(time -> t.setTime(time));
-        srcIP.ifPresent(src -> t.setSrcIP(new Server(src, "", null, null)));
+        srcIP.ifPresent(src -> t.setSrcIP(src));
         srcPort.ifPresent(src -> t.setSrcPort(src));
         dstIP.ifPresent(dst -> t.setDstIP(dst));
         dstPort.ifPresent(dst -> t.setDstPort(dst));
@@ -40,4 +40,10 @@ public class TrafficController {
     public void addTraffic(@RequestBody Map<String, Netflow9> traffic) {
         trafficService.addTraffic(traffic);
     }
+
+    // @DeleteMapping
+    // @CrossOrigin
+    // public void deleteTraffic(@RequestBody Map<String, Netflow9> traffic) {
+    //     trafficService.addTraffic(traffic);
+    // }
 }

@@ -25,20 +25,16 @@ public class Server {
     @ManyToMany(mappedBy = "servers", cascade = CascadeType.ALL)
     List<User> users = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
-    Set<Traffic> traffic;
-
     //basic Server constructor
     public Server() {
     }
 
     //Server constructor with all private variables being assigned
 
-    public Server(String address, String serverName, List<User> users, Set<Traffic> traffic) {
+    public Server(String address, String serverName, List<User> users) {
         this.address = address;
         this.serverName = serverName;
         this.users = users;
-        this.traffic = traffic;
     }
 
     public Server(String address, String serverName){
@@ -89,12 +85,12 @@ public class Server {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Server server = (Server) o;
-        return Objects.equals(address, server.address) && Objects.equals(serverName, server.serverName) && Objects.equals(users, server.users) && Objects.equals(traffic, server.traffic);
+        return Objects.equals(address, server.address) && Objects.equals(serverName, server.serverName) && Objects.equals(users, server.users);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(address, serverName, users, traffic);
+        return Objects.hash(address, serverName, users);
     }
 
     @Override
@@ -103,7 +99,6 @@ public class Server {
                 "address='" + address + '\'' +
                 ", serverName='" + serverName + '\'' +
                 ", users=" + users +
-                ", traffic=" + traffic +
                 '}';
     }
 }
