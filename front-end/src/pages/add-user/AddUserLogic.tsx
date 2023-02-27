@@ -23,7 +23,7 @@ export async function getServiceProviderList() {
  * @param client client email
  * @returns true on success, false otherwise
  */
-export async function setServiceProvider(serviceProvider: string, client: string) {
+export async function addClientToServerProvider(serviceProvider: string, client: string) {
     const res = await UserService.addServiceProviderClientByEmail(serviceProvider, client);
     if (res === "ERROR") {
         return false;

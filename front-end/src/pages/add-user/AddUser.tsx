@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import BackButton from "../../components/back-button/BackButton";
 import Header from "../../components/navigation-bar/Header";
 import { isTypeDefault, checkEmail, isEmpty, submit } from "../create-account/CreateAccountLogic";
-import { getServiceProviderList, setServiceProvider } from "./AddUserLogic";
+import { getServiceProviderList, addClientToServerProvider } from "./AddUserLogic";
 
 const AddUserPage = () => {
 
@@ -69,7 +69,7 @@ const AddUserPage = () => {
 
             if (await submit(state.email, state.first, state.last, state.pass, state.userType)) {
                 if (state.userType === "CLIENT"){
-                    await setServiceProvider(state.serviceProvider, state.email);
+                    await addClientToServerProvider(state.serviceProvider, state.email);
                 }
                 setSubmitted(true);
             }

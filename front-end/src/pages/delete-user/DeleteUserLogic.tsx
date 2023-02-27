@@ -50,4 +50,5 @@ export async function getClientServiceProvider(email: string) {
 
 export async function deleteServerProviderClientByEmail(serviceProvider: string, client: string) {
     const res = UserService.deleteServiceProviderClientByEmail(serviceProvider, client);
+    return res;
 }
