@@ -41,6 +41,11 @@ public class Server {
         this.traffic = traffic;
     }
 
+    public Server(String address, String serverName){
+        this.address = address;
+        this.serverName = serverName;
+    }
+
     //getAddress() returns a servers address
     public String getAddress() {
         return address;
