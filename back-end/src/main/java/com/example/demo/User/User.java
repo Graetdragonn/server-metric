@@ -2,6 +2,10 @@ package com.example.demo.User;
 
 import com.example.demo.Server.Server;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.*;
 
 //User stores 5 variables:
@@ -10,11 +14,12 @@ import java.util.*;
 //String userPassword: used for verification of user at sign in.
 //List Servers: contains all servers that the user is connected to. Implemented using a many-to-many relationship with servers
 @Entity
-public class User {
+public class User implements UserDetails{
     @Id
     @Column(name = "userEmail")
     private String userEmail;
     private String userPassword;
+    @Enumerated(EnumType.STRING)
     private UserType userType;
     private String userFirstName;
     private String userLastName;
@@ -29,6 +34,14 @@ public class User {
 
     //basic User constructor
     public User() {
+    }
+
+    public User(String userEmail, String userPassword, UserType userType, String userFirstName, String userLastName) {
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
+        this.userType = userType;
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
     }
 
     //User constructor with all private variables being assigned
@@ -161,5 +174,40 @@ public class User {
                 ", servers=" + servers +
                 ", clients=" + clients +
                 '}';
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(userType.name()));
+    }
+
+    @Override
+    public String getPassword() {
+        return userPassword;
+    }
+
+    @Override
+    public String getUsername() {
+        return userEmail;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
