@@ -31,7 +31,7 @@ public class UserService {
         if(userOptional.isPresent()){
             throw new IllegalStateException("Email is already taken");
         }
-        User userToAdd = new User(user.getUserEmail(), user.getPassword(), user.getUserType(), user.getUserFirstName(), user.getUserLastName(), user.getServers(), user.getClients());
+        User userToAdd = new User(user.getUserEmail(), user.getUserPassword(), user.getUserType(), user.getUserFirstName(), user.getUserLastName(), user.getServers(), user.getClients());
         userRepository.save(userToAdd);
     }
 

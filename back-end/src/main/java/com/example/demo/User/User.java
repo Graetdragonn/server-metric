@@ -14,7 +14,7 @@ import java.util.*;
 //String userPassword: used for verification of user at sign in.
 //List Servers: contains all servers that the user is connected to. Implemented using a many-to-many relationship with servers
 @Entity
-public class User implements UserDetails{
+public class User{
     @Id
     @Column(name = "userEmail")
     private String userEmail;
@@ -174,40 +174,5 @@ public class User implements UserDetails{
                 ", servers=" + servers +
                 ", clients=" + clients +
                 '}';
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(userType.name()));
-    }
-
-    @Override
-    public String getPassword() {
-        return userPassword;
-    }
-
-    @Override
-    public String getUsername() {
-        return userEmail;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 }
