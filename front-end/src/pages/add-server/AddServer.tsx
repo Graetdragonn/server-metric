@@ -33,6 +33,9 @@ const AddServerPage = () => {
   // get user email
   const email = JSON.parse(localStorage.getItem('email') || '');
 
+    // get user type
+    const userType = JSON.parse(localStorage.getItem('userType') || '');
+
   // submits form
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
