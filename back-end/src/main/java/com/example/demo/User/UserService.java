@@ -2,7 +2,6 @@ package com.example.demo.User;
 import com.example.demo.Server.Server;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
@@ -34,7 +32,7 @@ public class UserService {
         if(userOptional.isPresent()){
             throw new IllegalStateException("Email is already taken");
         }
-        User userToAdd = new User(user.getUserEmail(), passwordEncoder.encode(user.getPassword()), user.getUserType(), user.getUserFirstName(), user.getUserLastName(), user.getServers(), user.getClients());
+        User userToAdd = new User(user.getUserEmail(), user.getPassword(), user.getUserType(), user.getUserFirstName(), user.getUserLastName(), user.getServers(), user.getClients());
         userRepository.save(userToAdd);
     }
 
@@ -50,7 +48,7 @@ public class UserService {
     public void updateUser(String userEmail, User user) {
         User userUpdate = userRepository.findUserByUserEmail(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
         if(user.getUserPassword() != null ){
-            userUpdate.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
+            userUpdate.setUserPassword(user.getUserPassword());
         }
         if (user.getUserType() != null) {
             userUpdate.setUserType(user.getUserType());
