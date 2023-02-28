@@ -32,13 +32,6 @@ public class User{
     public User() {
     }
 
-    public User(String userEmail, String userPassword, UserType userType, String userFirstName, String userLastName) {
-        this.userEmail = userEmail;
-        this.userPassword = userPassword;
-        this.userType = userType;
-        this.userFirstName = userFirstName;
-        this.userLastName = userLastName;
-    }
 
     //User constructor with all private variables being assigned
 
