@@ -17,8 +17,7 @@ public class TrafficService {
       this.trafficRepository = trafficRepository;
    }
    
-   public void addTraffic(Map<String, Netflow9> traffic) {
-      Netflow9 netflow = (Netflow9) traffic.values().toArray()[0]; 
+   public void addTraffic(Netflow9 netflow) {
       for (Map<String, Object> flow : netflow.flows()) {
          // Optional<Server> server = serverRepository.findServerByAddress((String) flow.get("IPV4_SRC_ADDR"));
          // if (!server.isPresent()) {

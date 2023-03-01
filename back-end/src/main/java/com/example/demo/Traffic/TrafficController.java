@@ -37,7 +37,7 @@ public class TrafficController {
 
     @PostMapping
     @CrossOrigin
-    public void addTraffic(@RequestBody Map<String, Netflow9> traffic) {
+    public void addTraffic(@RequestBody Netflow9 traffic) {
         trafficService.addTraffic(traffic);
     }
 

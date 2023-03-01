@@ -6,10 +6,13 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 import com.example.demo.Server.Server;
-import com.example.demo.Traffic.Traffic;
+import com.example.demo.Traffic.Netflow9;
 
 public class DataGenerator {
     //TODO need to add routes that don't have security so we can generate traffic
@@ -22,9 +25,12 @@ public class DataGenerator {
     }
 
 
-    public String generateSingularTraffic() throws IOException {
+    public String generateSingularTraffic(Optional<String> routerIP, 
+                                          Optional<Integer> numFlows,
+                                          Optional<List<MockServer>> servers,
+                                          Optional<String> clients) throws IOException {
         //TODO need to fill in all the fields for traffic (randomly generated like generate a server below)
-        Traffic traffic = new Traffic();
+        Netflow9 traffic = new Netflow9();
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpPost post = new HttpPost(serverPostURL);
         StringEntity postingString = new StringEntity(gson.toJson(traffic)); //gson.toJson converts class to json
