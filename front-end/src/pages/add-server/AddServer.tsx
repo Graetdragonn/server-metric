@@ -28,9 +28,6 @@ const AddServerPage = () => {
   // get user email
   const email = JSON.parse(localStorage.getItem('email') || '');
 
-    // get user type
-    const userType = JSON.parse(localStorage.getItem('userType') || '');
-
   // submits form
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -77,7 +74,7 @@ const AddServerPage = () => {
           <h1>Add Server</h1>
 
           <input placeholder='Server Address' type="text" required={true} name="server" onChange={handleChange}></input>
-
+          
           <br></br>
 
           <button>Submit</button>

@@ -71,7 +71,7 @@ const DashboardPage = () => {
         <h1>Admin Services</h1>
         <button style={{width: 20}} onClick={() => navigate('/adduser')}>Add User</button>
         <button style={{width: 20}} onClick={() => navigate('/deleteuser')}>Delete User</button>
-        <button style={{width: 20}} onClick={() => navigate('/deleteuser')}>Add Server</button>
+        <button style={{width: 20}} onClick={() => navigate('/adminaddserver')}>Add Server</button>
         <button style={{width: 20}} onClick={() => navigate('/admindeleteserver')}>Delete Server</button>
         </div> 
       </div>
