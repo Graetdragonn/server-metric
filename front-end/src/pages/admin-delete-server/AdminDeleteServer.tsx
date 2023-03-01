@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
 import BackButton from '../../components/back-button/BackButton';
-import { checkServerFormat, checkIfExists, addServerToList, addServerToUser } from '../add-server/AddServerLogic';
+import { checkServerFormat } from '../add-server/AddServerLogic';
 import Header from '../../components/navigation-bar/Header';
 import { deleteServer } from './AdminDeleteServerLogic';
+import { getAllServers } from '../../components/server-list/ServerListLogic';
 
 /**
  * Add server screen
@@ -16,6 +17,9 @@ const AdminDeleteServerPage = () => {
   // tracks server address
   const [server, setServer] = useState("");
 
+  // all servers
+  const [serverList, setServerList] = useState([] as any[]);
+
   // checks for errors
   const [error, setError] = useState(false);
 
@@ -25,65 +29,73 @@ const AdminDeleteServerPage = () => {
   // check if server is successfully added
   const [serverDeleted, setServerDeleted] = useState(false);
 
+  // get all servers
+  const getServerList = async () => {
+    var servers = await getAllServers();
+    setServerList(servers);
+  }
+  getServerList();
+
   // submits form
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(false);
     setServerError(false);
     setServerDeleted(false)
-
+    
     // checks address format
-    if (!checkServerFormat(server)){
-        setError(true);
+    if (!checkServerFormat(server)) {
+      setError(true);
     }
 
     else if (await deleteServer(server)) {
-        setServerDeleted(true);
+      setServerDeleted(true);
     }
 
     else {
-        setServerError(true);
+      setServerError(true);
     }
 
-    
+
   };
 
-    // to update user information when user inputs data
-    const handleChange = (e: { target: { name: string; value: any; }; }) => {
-        setServer(e.target.value);
-      };
+  // to update user information when user inputs data
+  const handleChange = (e: { target: { name: string; value: any; }; }) => {
+    setServer(e.target.value);
+  };
 
   return (
     <><Header />
-    <body className='Form-Body'>
-      <div>
-        <form onSubmit={handleSubmit} style={{ display: serverDeleted ? 'none' : '' }}>
-          <BackButton></BackButton>
-          <h1>Delete Server</h1>
+      <body className='Form-Body'>
+        <div>
+          <form onSubmit={handleSubmit} style={{ display: serverDeleted ? 'none' : '' }}>
+            <BackButton></BackButton>
+            <h1>Delete Server</h1>
+            <div className="center">
+              <select onChange={handleChange}>
+                <option value="default"> - Select Server to Delete -</option>
+                {serverList.map(server => { return <option value={server.address}>{server.address}</option>; })}
+              </select>
+            </div> 
+            <button>Submit</button>
+            <br></br>
+            <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>&nbsp; Please select a server </span>
+            <span style={{ visibility: serverError ? 'visible' : 'hidden' }} className='error'>&nbsp; Server does not exist  </span>
+          </form>
+          <form style={{ display: serverDeleted ? '' : 'none' }}>
+            <BackButton></BackButton>
+            <h1>Add Server</h1>
 
-          <input placeholder='Server Address' type="text" required={true} name="server" onChange={handleChange}></input>
+            <p style={{ fontSize: 40, textAlign: 'center' }}>Server successfully deleted</p>
 
-          <br></br>
+            <br></br>
 
-          <button>Submit</button>
-          <br></br>
-          <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>&nbsp; Not valid address format </span>
-          <span style={{ visibility: serverError ? 'visible' : 'hidden' }} className='error'>&nbsp; Server does not exist  </span>
-        </form>
-        <form style={{ display: serverDeleted ? '' : 'none' }}>
-          <BackButton></BackButton>
-          <h1>Add Server</h1>
+            <button onClick={() => navigate('/dashboard')}>Back to dashboard</button>
+            <br></br>
+          </form>
+        </div>
+      </body></>
 
-          <p style={{ fontSize: 40, textAlign: 'center' }}>Server successfully deleted</p>
-
-          <br></br>
-
-          <button onClick={() => navigate('/dashboard')}>Back to dashboard</button>
-          <br></br>
-        </form>
-      </div>
-    </body></>
-    
   );
 }
 

@@ -17,6 +17,7 @@ import DeleteUserPage from "./pages/delete-user/DeleteUser";
 import AdminEditUserPage from "./pages/admin-edit-user/AdminEditUser";
 import AdminSingleServerPage from "./pages/admin-single-server/AdminSingleServer";
 import AdminDeleteServerPage from "./pages/admin-delete-server/AdminDeleteServer";
+import AdminAddServerPage from "./pages/admin-add-server/AdminAddServer";
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
           <Route path="/adminedituser" element={<AdminEditUserPage />} />
           <Route path="/adminsingleserver" element={<AdminSingleServerPage />} />
           <Route path="/admindeleteserver" element={<AdminDeleteServerPage />} />
+          <Route path="/adminaddserver" element={<AdminAddServerPage />} />
         </Routes>
       </BrowserRouter>
     </div>

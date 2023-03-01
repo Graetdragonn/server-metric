@@ -7,6 +7,7 @@ export default function UserList(){
     var servers = new Array();
     const navigate = useNavigate();
     
+    // get all servers
     const getServerList = async () => {
         servers = await getAllServers();
         setServerList(servers);
