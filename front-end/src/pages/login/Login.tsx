@@ -5,11 +5,6 @@ import { checkEmpty, getUserType, submit } from './LoginLogic';
 import { checkEmail } from '../create-account/CreateAccountLogic';
 import BackButton from '../../components/back-button/BackButton';
 
-// Global variable to carry username accross screens
-declare global{
-  var username: string
-}
-
 /**
  * Login screen
  */
@@ -40,12 +35,12 @@ const LoginPage = () => {
 
     // verifies fields and logs user in
     if (checkEmail(state.email) && !checkEmpty(state.email) && !checkEmpty(state.pass)) {
-      if(await submit(state.email, state.pass)){
+      if (await submit(state.email, state.pass)) {
         localStorage.setItem("email", JSON.stringify(state.email));
         localStorage.setItem("userType", await getUserType(JSON.parse(localStorage.getItem('email') || '')));
         navigate('/dashboard');
       }
-      else{
+      else {
         setError(true);
       }
     }
@@ -59,25 +54,25 @@ const LoginPage = () => {
 
   return (
     <body className='Form-Body'>
-    <div>
-    <form onSubmit={handleSubmit}>
-    <BackButton></BackButton>
-      <h1>Login</h1>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <BackButton></BackButton>
+          <h1>Login</h1>
 
-      <input placeholder='Email' type="text" required={true} name="email" value={state.email} onChange={handleChange}></input>
+          <input placeholder='Email' type="text" required={true} name="email" value={state.email} onChange={handleChange}></input>
 
-      <br></br>
+          <br></br>
 
-      <input placeholder='Password' type="password" name="pass" required={true} value={state.pass} onChange={handleChange}>
-      </input>
-      <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email or password are incorrect</span>
-      <br></br>
-      <p className='forgotPass' onClick={forgotPass}>Forgot password?</p>
-      <button>Submit</button>
-    </form>
-    </div>
+          <input placeholder='Password' type="password" name="pass" required={true} value={state.pass} onChange={handleChange}>
+          </input>
+          <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email or password are incorrect</span>
+          <br></br>
+          <p className='forgotPass' onClick={forgotPass}>Forgot password?</p>
+          <button>Submit</button>
+        </form>
+      </div>
     </body>
-    
+
   );
 }
 

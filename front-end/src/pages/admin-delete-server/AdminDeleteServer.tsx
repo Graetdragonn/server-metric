@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
 import BackButton from '../../components/back-button/BackButton';
-import { checkServerFormat, checkIfExists, addServerToList, addServerToUser } from './AddServerLogic';
+import { checkServerFormat, checkIfExists, addServerToList, addServerToUser } from '../add-server/AddServerLogic';
 import Header from '../../components/navigation-bar/Header';
+import { deleteServer } from './AdminDeleteServerLogic';
 
 /**
  * Add server screen
  */
-const AddServerPage = () => {
+const AdminDeleteServerPage = () => {
   // for screen navigation
   const navigate = useNavigate();
-
 
   // tracks server address
   const [server, setServer] = useState("");
@@ -23,44 +23,29 @@ const AddServerPage = () => {
   const [serverError, setServerError] = useState(false);
 
   // check if server is successfully added
-  const [serverAdded, setServerAdded] = useState(false);
-
-  // get user email
-  const email = JSON.parse(localStorage.getItem('email') || '');
-
-    // get user type
-    const userType = JSON.parse(localStorage.getItem('userType') || '');
+  const [serverDeleted, setServerDeleted] = useState(false);
 
   // submits form
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError(false);
+    setServerError(false);
+    setServerDeleted(false)
 
     // checks address format
     if (!checkServerFormat(server)){
         setError(true);
     }
 
-    // checks if server already exists
-    else if (await checkIfExists(server)) {
-      
-       if (await addServerToUser(email, server)) {
-           setServerAdded(true);
-       }
-       else {
-            setServerError(true);
-       }
+    else if (await deleteServer(server)) {
+        setServerDeleted(true);
     }
-    // server added to list and to user
+
     else {
-        if (await addServerToList(server)){
-            if (await addServerToUser(email, server)){
-                setServerAdded(true);
-            }
-            else {
-                setServerError(true);
-           }
-        }
+        setServerError(true);
     }
+
+    
   };
 
     // to update user information when user inputs data
@@ -72,9 +57,9 @@ const AddServerPage = () => {
     <><Header />
     <body className='Form-Body'>
       <div>
-        <form onSubmit={handleSubmit} style={{ display: serverAdded ? 'none' : '' }}>
+        <form onSubmit={handleSubmit} style={{ display: serverDeleted ? 'none' : '' }}>
           <BackButton></BackButton>
-          <h1>Add Server</h1>
+          <h1>Delete Server</h1>
 
           <input placeholder='Server Address' type="text" required={true} name="server" onChange={handleChange}></input>
 
@@ -83,13 +68,13 @@ const AddServerPage = () => {
           <button>Submit</button>
           <br></br>
           <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>&nbsp; Not valid address format </span>
-          <span style={{ visibility: serverError ? 'visible' : 'hidden' }} className='error'>&nbsp; Server already added to user  </span>
+          <span style={{ visibility: serverError ? 'visible' : 'hidden' }} className='error'>&nbsp; Server does not exist  </span>
         </form>
-        <form style={{ display: serverAdded ? '' : 'none' }}>
+        <form style={{ display: serverDeleted ? '' : 'none' }}>
           <BackButton></BackButton>
           <h1>Add Server</h1>
 
-          <p style={{ fontSize: 40, textAlign: 'center' }}>Server successfully added</p>
+          <p style={{ fontSize: 40, textAlign: 'center' }}>Server successfully deleted</p>
 
           <br></br>
 
@@ -102,4 +87,4 @@ const AddServerPage = () => {
   );
 }
 
-export default AddServerPage;
+export default AdminDeleteServerPage;

@@ -8,7 +8,6 @@ import Header from '../../components/navigation-bar/Header';
 
 const Settings = () => {
   const navigate = useNavigate();
-  //const user = globalThis.username; 
   const user = JSON.parse(localStorage.getItem('email') || '');
   
     // user input for account creation
