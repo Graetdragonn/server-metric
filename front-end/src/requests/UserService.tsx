@@ -22,6 +22,7 @@ class UserService {
             });
         return res;
     }
+    
 
     /**
      * Create user
@@ -124,7 +125,30 @@ class UserService {
                 res = JSON.stringify(response.data);
             })
             .catch(function (error: any) {
-                //alert(error);
+            });
+        return res;
+    }
+
+    /**
+     * Remove a server from a user
+     * @param email user email
+     * @param address server address
+     * @returns error if fail
+     */
+    async removeServerFromUser(email: string, address: string){
+        var res = "ERROR";
+        var config = {
+            method: 'delete',
+            url: USER_API_BASE_URL + 'api/v1/users/' + email + '/removeServer',
+            headers: {},
+            data: {address: address}
+        };
+
+        await axios(config)
+            .then(function (response: { data: any; }) {
+                res = JSON.stringify(response.data);
+            })
+            .catch(function (error: any) {
             });
         return res;
     }
@@ -199,6 +223,12 @@ class UserService {
         return res;
     }
 
+    /**
+     * Delete a client from a service provider's list
+     * @param serviceProvider service provider email
+     * @param client client email
+     * @returns error if fail
+     */
     async deleteServiceProviderClientByEmail(serviceProvider: string, client: string) {
         var res = "ERROR";
         var config = {
