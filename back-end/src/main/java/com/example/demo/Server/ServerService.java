@@ -44,7 +44,6 @@ public class ServerService {
     public void updateServer(String serverAddress, Server server) {
         Server serverUpdate = serverRepository.findServerByAddress(serverAddress).orElseThrow(()-> new IllegalStateException("Server with address " + serverAddress + " does not exist"));
         serverUpdate.setAddress(server.getAddress());
-        serverUpdate.setServerName(server.getServerName());
         serverRepository.save(serverUpdate);
 
     }

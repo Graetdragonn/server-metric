@@ -35,7 +35,7 @@ public class DataGenerator {
     }
 
     public String generateAServer() throws IOException {
-        Server server = new Server(randomIPGenerator(), "");
+        Server server = new Server(randomIPGenerator());
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpPost post = new HttpPost(serverPostURL);
         StringEntity postingString = new StringEntity(gson.toJson(server)); //gson.toJson converts class to json

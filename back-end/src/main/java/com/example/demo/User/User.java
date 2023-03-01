@@ -22,7 +22,7 @@ public class User{
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_servers", joinColumns = @JoinColumn(name = "userEmail"), inverseJoinColumns = @JoinColumn(name = "address"))
-    List<Server> servers = new ArrayList<>();
+    List<Server> servers;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "sp_clients")
@@ -92,7 +92,7 @@ public class User{
 
     //removeServer() removes a server from the current users server list
     public void removeServer(Server server){
-        this.servers.remove(server);
+        servers.remove(server);
     }
 
     public String getUserFirstName() {
@@ -124,13 +124,11 @@ public class User{
     }
 
     public void removeClientFromUser(User client){
-        System.out.println(this.clients.remove(client));
+        clients.remove(client);
     }
 
     public void addClientsToUser(List<User> users) {
-        for (User user : users) {
-            clients.add(user);
-        }
+        clients.addAll(users);
     }
 
     public void removeClientsFromUser(List<User> users) {
