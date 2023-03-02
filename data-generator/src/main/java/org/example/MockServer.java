@@ -1,9 +1,11 @@
 package org.example;
 
 import java.util.List;
+import lombok.*;
 
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor 
 public class MockServer {
-   String address;
-   List<Integer> openPorts;
-   int MAC; 
+   private String address;
+   private List<Integer> openPorts;
+   private long MAC; 
 }

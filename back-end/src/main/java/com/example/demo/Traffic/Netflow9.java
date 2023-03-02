@@ -3,14 +3,21 @@ package com.example.demo.Traffic;
 import java.util.List;
 import java.util.Map;
 
-public record Netflow9(List<Object> client,
-                        Header header,
-                        List<Map<String, Object>> flows) {
+import lombok.*;
 
-    public static record Header(int version,
-                        int count,
-                        long uptime,
-                        long timestamp,
-                        long sequence,
-                        long source_id) {}
+@Getter @Setter @NoArgsConstructor
+public class Netflow9 {
+    private List<Object> client;
+    private Header header; 
+    private List<Map<String, Object>> flows;
+
+    @Getter @Setter @NoArgsConstructor @AllArgsConstructor
+    public static class Header {
+        private int version;
+        private int count;
+        private long uptime;
+        private long timestamp;
+        private long sequence;
+        private long source_id;
+    }
 }

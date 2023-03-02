@@ -18,7 +18,7 @@ public class TrafficService {
    }
    
    public void addTraffic(Netflow9 netflow) {
-      for (Map<String, Object> flow : netflow.flows()) {
+      for (Map<String, Object> flow : netflow.getFlows()) {
          // Optional<Server> server = serverRepository.findServerByAddress((String) flow.get("IPV4_SRC_ADDR"));
          // if (!server.isPresent()) {
          //    continue;
@@ -28,7 +28,7 @@ public class TrafficService {
          }
 
          Traffic t = new Traffic();
-         t.setTime(netflow.header().timestamp());
+         t.setTime(netflow.getHeader().getTimestamp());
          t.setSrcIP((String) flow.get("IPV4_SRC_ADDR"));
          t.setSrcPort((int) flow.get("L4_SRC_PORT"));
          t.setDstIP((String) flow.get("IPV4_DST_ADDR"));
