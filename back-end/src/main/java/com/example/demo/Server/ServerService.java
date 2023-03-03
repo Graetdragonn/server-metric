@@ -33,6 +33,7 @@ public class ServerService {
         serverRepository.save(server);
     }
 
+    @Transactional
     public void deleteServer(String serverAddress){
         Optional<Server> serverOptional = serverRepository.findServerByAddress(serverAddress);
         if(serverOptional.isEmpty()){

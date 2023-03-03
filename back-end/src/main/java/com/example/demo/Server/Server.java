@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 //Servers stores 2 variables:
 //Integer id: is used as the primary key so a server can be uniquely identified.
@@ -20,7 +19,7 @@ public class Server {
     private String address;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "servers", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "servers")
     List<User> users = new ArrayList<>();
 
     //basic Server constructor
