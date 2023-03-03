@@ -40,6 +40,7 @@ const AdminSingleServerPage = () => {
         }
         else if (await addServerToUser(userToAddOrDelete, serverInfo.address)) {
             getUserList();
+            setUserToAddOrDelete("");
         }
         else {
             setAddUserError(true);
@@ -58,6 +59,7 @@ const AdminSingleServerPage = () => {
         }
         else if (await removeServerFromUser(userToAddOrDelete, serverInfo.address)) {
             getUserList();
+            setUserToAddOrDelete("");
         }
         else {
             setDeleteUserError(true);

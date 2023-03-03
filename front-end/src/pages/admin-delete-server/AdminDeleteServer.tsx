@@ -6,6 +6,7 @@ import { checkServerFormat } from '../add-server/AddServerLogic';
 import Header from '../../components/navigation-bar/Header';
 import { deleteServer } from './AdminDeleteServerLogic';
 import { getAllServers } from '../../components/server-list/ServerListLogic';
+import { getUsersOnServer, removeServerFromUser } from '../admin-single-server/AdminSingleServerLogic';
 
 /**
  * Add server screen
@@ -29,12 +30,23 @@ const AdminDeleteServerPage = () => {
   // check if server is successfully added
   const [serverDeleted, setServerDeleted] = useState(false);
 
+  // users on server
+  const [userList, setUserList] = useState([] as any[]);
+    var users = new Array();
+
   // get all servers
   const getServerList = async () => {
     var servers = await getAllServers();
     setServerList(servers);
   }
   getServerList();
+
+  // get users watching server
+  const getUserList = async () => {
+    users = await getUsersOnServer(server);
+    setUserList(users);
+  }
+  getUserList();
 
   // submits form
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -48,6 +60,18 @@ const AdminDeleteServerPage = () => {
       setError(true);
     }
 
+    // checks if users are watching server
+    else if (userList.length > 0) {
+
+      // remove server from user's lists
+      for (let i = 0; i < userList.length; i++) {
+        await removeServerFromUser(userList[i]["userEmail"], server);
+      }
+      if (await deleteServer(server)) {
+        setServerDeleted(true);
+      }
+    }
+
     else if (await deleteServer(server)) {
       setServerDeleted(true);
     }
@@ -55,7 +79,6 @@ const AdminDeleteServerPage = () => {
     else {
       setServerError(true);
     }
-
 
   };
 
