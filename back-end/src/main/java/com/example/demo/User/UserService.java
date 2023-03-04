@@ -2,6 +2,7 @@ package com.example.demo.User;
 import com.example.demo.Server.Server;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,9 +14,12 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<User> getUsers(){
@@ -31,6 +35,7 @@ public class UserService {
         if(userOptional.isPresent()){
             throw new IllegalStateException("Email is already taken");
         }
+        user.setPassword(user.getPassword());
         userRepository.save(user);
     }
 
@@ -44,26 +49,26 @@ public class UserService {
     }
     @Transactional
     public void updateUser(String userEmail, User user) {
-        User userUpdate = userRepository.findUserByUsername(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
+        User userToUpdate = userRepository.findUserByUsername(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
         if(user.getPassword() != null ){
-            userUpdate.setPassword(user.getPassword());
+            userToUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
         }
         if (user.getUserType() != null) {
-            userUpdate.setUserType(user.getUserType());
+            userToUpdate.setUserType(user.getUserType());
         }
         if(user.getUserFirstName() != null){
-            userUpdate.setUserFirstName(user.getUserFirstName());
+            userToUpdate.setUserFirstName(user.getUserFirstName());
         }
         if(user.getUserLastName() != null){
-            userUpdate.setUserLastName(user.getUserLastName());
+            userToUpdate.setUserLastName(user.getUserLastName());
         }
         if(user.getServers() != null){
-            userUpdate.setServers(user.getServers());
+            userToUpdate.setServers(user.getServers());
         }
         if(user.getClients() != null){
-            userUpdate.setClients(user.getClients());
+            userToUpdate.setClients(user.getClients());
         }
-        userRepository.save(userUpdate);
+        userRepository.save(userToUpdate);
     }
 
     public void addServer(String userEmail, Server server){
@@ -94,7 +99,8 @@ public class UserService {
 
     public void addClient(String userEmail, User user) {
         User userUpdate = userRepository.findUserByUsername(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
-        userUpdate.addClientToUser(user);
+        User userClient = userRepository.findUserByUsername(user.getUsername()).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
+        userUpdate.addClientToUser(userClient);
         userRepository.save(userUpdate);
     }
 
@@ -106,7 +112,12 @@ public class UserService {
 
     public void addClients(String userEmail, List<User> users) {
         User userUpdate = userRepository.findUserByUsername(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
-        userUpdate.addClientsToUser(users);
+        List<User> actualUsers = new ArrayList<>();
+        for (User user : users) {
+            User userToAdd = userRepository.findUserByUsername(user.getUsername()).orElseThrow(() -> new IllegalStateException("user with email " + userEmail + " does not exist"));
+            actualUsers.add(userToAdd);
+        }
+        userUpdate.addClientsToUser(actualUsers);
         userRepository.save(userUpdate);
     }
 
