@@ -1,12 +1,10 @@
 package com.example.demo.Traffic;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.Server.Server;
 
 @RestController
 @RequestMapping("api/v1/traffic")

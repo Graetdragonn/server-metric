@@ -5,7 +5,7 @@ import java.util.Map;
 
 import lombok.*;
 
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class Netflow9 {
     private List<Object> client;
     private Header header; 
