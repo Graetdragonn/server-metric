@@ -11,10 +11,9 @@ import com.example.demo.User.*;
 @NoArgsConstructor
 public class RegisterRequest {
 
-    private String userEmail;
-    private String userPassword;
+    private String username;
+    private String password;
     private UserType userType;
     private String userFirstName;
     private String userLastName;
-
 }
