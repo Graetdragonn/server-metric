@@ -50,6 +50,7 @@ const CreateAccountPage = () => {
 
             if (await submit(state.email, state.first, state.last, state.pass, state.userType)) {
                 localStorage.setItem("email", JSON.stringify(state.email));
+                localStorage.setItem("userType", state.userType);
                 navigate('/dashboard');
             }
             else {

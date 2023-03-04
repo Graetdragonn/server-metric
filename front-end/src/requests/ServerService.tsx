@@ -68,7 +68,26 @@ class ServerService {
                 res = JSON.stringify(response.data);
             })
             .catch(function (error: any) {
-                alert(error);
+               // alert(error);
+            });
+        return res;
+    }
+
+    async deleteFromServerList(address: string) {
+        var res = "ERROR";
+        var config = {
+            method: 'delete',
+            url: USER_API_BASE_URL + 'api/v1/servers/delete/' + address,
+            headers: {},
+            data: {}
+        };
+
+        await axios(config)
+            .then(function (response: { data: any; }) {
+                res = JSON.stringify(response.data);
+            })
+            .catch(function (error: any) {
+               // alert(error);
             });
         return res;
     }

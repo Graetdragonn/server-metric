@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import BackButton from "../../components/back-button/BackButton";
 import Header from "../../components/navigation-bar/Header";
 import { isTypeDefault, checkEmail, isEmpty, submit } from "../create-account/CreateAccountLogic";
-import { getServiceProviderList } from "./AddUserLogic";
+import { getServiceProviderList, addClientToServerProvider } from "./AddUserLogic";
 
 const AddUserPage = () => {
 
@@ -61,12 +61,16 @@ const AddUserPage = () => {
         if (state.userType === "CLIENT" && isTypeDefault(state.serviceProvider)) {
             setspSelected(false);
         }
+        
 
         // verify fields and create account
         else if (checkEmail(state.email) && !isEmpty(state.email) &&
             !isEmpty(state.first) && !isEmpty(state.last) && !isTypeDefault(state.userType)) {
 
             if (await submit(state.email, state.first, state.last, state.pass, state.userType)) {
+                if (state.userType === "CLIENT"){
+                    await addClientToServerProvider(state.serviceProvider, state.email);
+                }
                 setSubmitted(true);
             }
             else {
@@ -94,7 +98,7 @@ const AddUserPage = () => {
                     <br></br>
                     <input placeholder='Last Name' type="text" name="last" required={true} value={state.last} onChange={handleChange}></input>
                     <br></br>
-                    <div className="row">
+                    <div className="row" style={{display: "flex"}}>
                         <select onChange={(e) => setState({ ...state, userType: e.target.value })}>
                             <option value="default">- Select User Type -</option>
                             <option value="ADMIN">Admin</option>
@@ -113,7 +117,6 @@ const AddUserPage = () => {
                     <span style={{ visibility: email ? 'visible' : 'hidden' }} className='error'>Email is already in use</span>
                     <span style={{ visibility: spSelected ? 'hidden' : 'visible' }} className='error'>&nbsp; No service provider selected </span>
                 </form>
-                
             </div>
             <form onSubmit={handleSubmit} style={{display: submitted ? '' : 'none'}}>
                     <p style={{fontSize:20, textAlign:'center'}}>User {state.email} was successfully created</p>
