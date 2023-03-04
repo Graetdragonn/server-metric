@@ -23,11 +23,11 @@ public class UserService {
     }
 
     public Optional<User> getUser(String userEmail){
-        return userRepository.findUserByUserEmail(userEmail);
+        return userRepository.findUserByUsername(userEmail);
     }
 
     public void addUser(User user){
-        Optional<User> userOptional = userRepository.findUserByUserEmail(user.getUserEmail());
+        Optional<User> userOptional = userRepository.findUserByUsername(user.getUsername());
         if(userOptional.isPresent()){
             throw new IllegalStateException("Email is already taken");
         }
@@ -36,17 +36,17 @@ public class UserService {
 
     @Transactional
     public void deleteUser(String userEmail){
-        Optional<User> userOptional = userRepository.findUserByUserEmail(userEmail);
+        Optional<User> userOptional = userRepository.findUserByUsername(userEmail);
         if(userOptional.isEmpty()){
             throw new IllegalStateException("No Such User");
         }
-        userRepository.deleteUserByUserEmail(userEmail);
+        userRepository.deleteUserByUsername(userEmail);
     }
     @Transactional
     public void updateUser(String userEmail, User user) {
-        User userUpdate = userRepository.findUserByUserEmail(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
-        if(user.getUserPassword() != null ){
-            userUpdate.setUserPassword(user.getUserPassword());
+        User userUpdate = userRepository.findUserByUsername(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
+        if(user.getPassword() != null ){
+            userUpdate.setPassword(user.getPassword());
         }
         if (user.getUserType() != null) {
             userUpdate.setUserType(user.getUserType());
@@ -67,13 +67,13 @@ public class UserService {
     }
 
     public void addServer(String userEmail, Server server){
-        User userUpdate = userRepository.findUserByUserEmail(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
+        User userUpdate = userRepository.findUserByUsername(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
         userUpdate.addServer(server);
         userRepository.save(userUpdate);
     }
 
     public void removeServer(String userEmail, Server server){
-        User userUpdate = userRepository.findUserByUserEmail(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
+        User userUpdate = userRepository.findUserByUsername(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
         userUpdate.removeServer(server);
         userRepository.save(userUpdate);
     }
@@ -93,40 +93,40 @@ public class UserService {
     }
 
     public void addClient(String userEmail, User user) {
-        User userUpdate = userRepository.findUserByUserEmail(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
+        User userUpdate = userRepository.findUserByUsername(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
         userUpdate.addClientToUser(user);
         userRepository.save(userUpdate);
     }
 
     public void removeClient(String userEmail, User user) {
-        User userUpdate = userRepository.findUserByUserEmail(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
+        User userUpdate = userRepository.findUserByUsername(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
         userUpdate.removeClientFromUser(user);
         userRepository.save(userUpdate);
     }
 
     public void addClients(String userEmail, List<User> users) {
-        User userUpdate = userRepository.findUserByUserEmail(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
+        User userUpdate = userRepository.findUserByUsername(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
         userUpdate.addClientsToUser(users);
         userRepository.save(userUpdate);
     }
 
     public void removeClients(String userEmail, List<User>  users) {
-        User userUpdate = userRepository.findUserByUserEmail(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
+        User userUpdate = userRepository.findUserByUsername(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
         userUpdate.removeClientsFromUser(users);
         userRepository.save(userUpdate);
     }
 
     public void removeClientByEmail(String userEmail, String clientEmail) {
-        User userUpdate = userRepository.findUserByUserEmail(userEmail).orElseThrow(() -> new IllegalStateException("user with email " + userEmail + " does not exist"));
-        User client = userRepository.findUserByUserEmail(clientEmail).orElseThrow(() -> new IllegalStateException("user with email " + clientEmail + " does not exist"));
+        User userUpdate = userRepository.findUserByUsername(userEmail).orElseThrow(() -> new IllegalStateException("user with email " + userEmail + " does not exist"));
+        User client = userRepository.findUserByUsername(clientEmail).orElseThrow(() -> new IllegalStateException("user with email " + clientEmail + " does not exist"));
         userUpdate.removeClientFromUser(client);
         userRepository.save(userUpdate);
     }
 
 
     public void addClientByEmail(String userEmail, String clientEmail) {
-        User userUpdate = userRepository.findUserByUserEmail(userEmail).orElseThrow(() -> new IllegalStateException("user with email " + userEmail + " does not exist"));
-        User client = userRepository.findUserByUserEmail(clientEmail).orElseThrow(() -> new IllegalStateException("user with email " + clientEmail + " does not exist"));
+        User userUpdate = userRepository.findUserByUsername(userEmail).orElseThrow(() -> new IllegalStateException("user with email " + userEmail + " does not exist"));
+        User client = userRepository.findUserByUsername(clientEmail).orElseThrow(() -> new IllegalStateException("user with email " + clientEmail + " does not exist"));
         userUpdate.addClientToUser(client);
         userRepository.save(userUpdate);
     }
