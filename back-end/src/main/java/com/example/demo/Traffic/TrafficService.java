@@ -2,7 +2,6 @@ package com.example.demo.Traffic;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +16,8 @@ public class TrafficService {
       this.trafficRepository = trafficRepository;
    }
    
-   public void addTraffic(Map<String, Netflow9> traffic) {
-      Netflow9 netflow = (Netflow9) traffic.values().toArray()[0]; 
-      for (Map<String, Object> flow : netflow.flows()) {
+   public void addTraffic(Netflow9 netflow) {
+      for (Map<String, Object> flow : netflow.getFlows()) {
          // Optional<Server> server = serverRepository.findServerByAddress((String) flow.get("IPV4_SRC_ADDR"));
          // if (!server.isPresent()) {
          //    continue;
@@ -29,7 +27,7 @@ public class TrafficService {
          }
 
          Traffic t = new Traffic();
-         t.setTime(netflow.header().timestamp());
+         t.setTime(netflow.getHeader().getTimestamp());
          t.setSrcIP((String) flow.get("IPV4_SRC_ADDR"));
          t.setSrcPort((int) flow.get("L4_SRC_PORT"));
          t.setDstIP((String) flow.get("IPV4_DST_ADDR"));
