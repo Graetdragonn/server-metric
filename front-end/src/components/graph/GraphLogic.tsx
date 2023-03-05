@@ -11,11 +11,7 @@ type dataProps = {
 }
 
 
-
-
 const tempFakeData = [3,1,3,2,2,5,2,1,3]
-
-
 
 export const HistogramGraph = ({width, height, data}: dataProps)=> {
     const bucketGen = d3
@@ -61,7 +57,6 @@ export const HistogramGraph = ({width, height, data}: dataProps)=> {
             />
         );
     });
-
     return(
         <div>
             <svg width={width} height={height}>
@@ -69,4 +64,5 @@ export const HistogramGraph = ({width, height, data}: dataProps)=> {
             </svg>
         </div>
     );
+    
 }
