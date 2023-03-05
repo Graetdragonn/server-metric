@@ -2,6 +2,9 @@ package com.example.demo.User;
 
 import com.example.demo.Server.Server;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.*;
 
 //User stores 5 variables:
@@ -10,11 +13,12 @@ import java.util.*;
 //String userPassword: used for verification of user at sign in.
 //List Servers: contains all servers that the user is connected to. Implemented using a many-to-many relationship with servers
 @Entity
-public class User{
+public class User implements UserDetails {
     @Id
     @Column(name = "userEmail")
-    private String userEmail;
-    private String userPassword;
+    private String username;
+    @Column(name = "userPassword")
+    private String password;
     @Enumerated(EnumType.STRING)
     private UserType userType;
     private String userFirstName;
@@ -22,7 +26,7 @@ public class User{
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_servers", joinColumns = @JoinColumn(name = "userEmail"), inverseJoinColumns = @JoinColumn(name = "address"))
-    List<Server> servers = new ArrayList<>();
+    List<Server> servers;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "sp_clients")
@@ -35,9 +39,9 @@ public class User{
 
     //User constructor with all private variables being assigned
 
-    public User(String userEmail, String userPassword, UserType userType, String userFirstName, String userLastName, List<Server> servers, List<User> clients) {
-        this.userEmail = userEmail;
-        this.userPassword = userPassword;
+    public User(String username, String password, UserType userType, String userFirstName, String userLastName, List<Server> servers, List<User> clients) {
+        this.username = username;
+        this.password = password;
         this.userType = userType;
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
@@ -45,24 +49,34 @@ public class User{
         this.clients = clients;
     }
 
+    public User(String username, String password, UserType userType, String userFirstName, String userLastName) {
+        this.username = username;
+        this.password = password;
+        this.userType = userType;
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
+    }
+
     //getUserEmail() returns a users email
-    public String getUserEmail() {
-        return userEmail;
+    @Override
+    public String getUsername() {
+        return username;
     }
 
     //setUserEmail() sets a users email
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setUsername(String userEmail) {
+        this.username = userEmail;
     }
 
     //getUserPassword() returns a users password
-    public String getUserPassword() {
-        return userPassword;
+    @Override
+    public String getPassword() {
+        return password;
     }
 
     //setUserPassword() sets a users password
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public void setPassword(String userPassword) {
+        this.password = userPassword;
     }
 
     //getUserType() returns a users type
@@ -92,7 +106,7 @@ public class User{
 
     //removeServer() removes a server from the current users server list
     public void removeServer(Server server){
-        this.servers.remove(server);
+        servers.remove(server);
     }
 
     public String getUserFirstName() {
@@ -124,13 +138,11 @@ public class User{
     }
 
     public void removeClientFromUser(User client){
-        System.out.println(this.clients.remove(client));
+        clients.remove(client);
     }
 
     public void addClientsToUser(List<User> users) {
-        for (User user : users) {
-            clients.add(user);
-        }
+        clients.addAll(users);
     }
 
     public void removeClientsFromUser(List<User> users) {
@@ -144,24 +156,49 @@ public class User{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(userEmail, user.userEmail);
+        return Objects.equals(username, user.username);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userEmail, userPassword, userType, userFirstName, userLastName, servers, clients);
+        return Objects.hash(username, password, userType, userFirstName, userLastName, servers, clients);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "userEmail='" + userEmail + '\'' +
-                ", userPassword='" + userPassword + '\'' +
+                "userEmail='" + username + '\'' +
+                ", userPassword='" + password + '\'' +
                 ", userType=" + userType +
                 ", userFirstName='" + userFirstName + '\'' +
                 ", userLastName='" + userLastName + '\'' +
                 ", servers=" + servers +
                 ", clients=" + clients +
                 '}';
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

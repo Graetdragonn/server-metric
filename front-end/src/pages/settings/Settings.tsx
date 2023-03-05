@@ -8,8 +8,8 @@ import Header from '../../components/navigation-bar/Header';
 
 const Settings = () => {
   const navigate = useNavigate();
-  //const user = globalThis.username; 
   const user = JSON.parse(localStorage.getItem('email') || '');
+  
     // user input for account creation
     const [state, setState] = useState({
         email: "",
@@ -20,7 +20,6 @@ const Settings = () => {
         userType: "",
         servers: []
     });
-
 
     useEffect(() => {
       async function getUserInfo(email: string) {

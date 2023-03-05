@@ -5,11 +5,6 @@ import BackButton from '../../components/back-button/BackButton';
 import { checkServerFormat, checkIfExists, addServerToList, addServerToUser } from './AddServerLogic';
 import Header from '../../components/navigation-bar/Header';
 
-// Global variable to carry username accross screens
-declare global{
-  var username: string
-}
-
 /**
  * Add server screen
  */
@@ -79,7 +74,7 @@ const AddServerPage = () => {
           <h1>Add Server</h1>
 
           <input placeholder='Server Address' type="text" required={true} name="server" onChange={handleChange}></input>
-
+          
           <br></br>
 
           <button>Submit</button>

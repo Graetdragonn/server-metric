@@ -14,7 +14,10 @@ import SingleServer from "./pages/single-server/SingleServer";
 import AddServerPage from "./pages/add-server/AddServer";
 import AddUserPage from "./pages/add-user/AddUser"
 import DeleteUserPage from "./pages/delete-user/DeleteUser";
-
+import AdminEditUserPage from "./pages/admin-edit-user/AdminEditUser";
+import AdminSingleServerPage from "./pages/admin-single-server/AdminSingleServer";
+import AdminDeleteServerPage from "./pages/admin-delete-server/AdminDeleteServer";
+import AdminAddServerPage from "./pages/admin-add-server/AdminAddServer";
 
 const App = () => {
   return (
@@ -32,6 +35,10 @@ const App = () => {
           <Route path="/addserver" element={<AddServerPage />} />
           <Route path="/adduser" element={<AddUserPage />} />
           <Route path="/deleteuser" element={<DeleteUserPage />} />
+          <Route path="/adminedituser" element={<AdminEditUserPage />} />
+          <Route path="/adminsingleserver" element={<AdminSingleServerPage />} />
+          <Route path="/admindeleteserver" element={<AdminDeleteServerPage />} />
+          <Route path="/adminaddserver" element={<AdminAddServerPage />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -33,6 +33,7 @@ public class ServerService {
         serverRepository.save(server);
     }
 
+    @Transactional
     public void deleteServer(String serverAddress){
         Optional<Server> serverOptional = serverRepository.findServerByAddress(serverAddress);
         if(serverOptional.isEmpty()){
@@ -44,7 +45,6 @@ public class ServerService {
     public void updateServer(String serverAddress, Server server) {
         Server serverUpdate = serverRepository.findServerByAddress(serverAddress).orElseThrow(()-> new IllegalStateException("Server with address " + serverAddress + " does not exist"));
         serverUpdate.setAddress(server.getAddress());
-        serverUpdate.setServerName(server.getServerName());
         serverRepository.save(serverUpdate);
 
     }
