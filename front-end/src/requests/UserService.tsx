@@ -37,9 +37,10 @@ class UserService {
         var res = "";
         var config = {
             method: 'post',
-            url: USER_API_BASE_URL + 'api/v1/users/addUser',
+            maxBodyLength: Infinity,
+            url: USER_API_BASE_URL + 'api/v1/auth/register',
             headers: {},
-            data: { userEmail: email, userPassword: pass, userType: user, userFirstName: first, userLastName: last }
+            data: { username: email, password: pass, userType: user, userFirstName: first, userLastName: last }
         };
 
         await axios(config)
