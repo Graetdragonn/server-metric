@@ -44,7 +44,7 @@ public class Main {
                                    "Ex. -s 127.0.0.1 -p 22,80,443;\n");
                 while(parseServer(scan.nextLine()));
                 for (MockServer ms : servers) {
-                    Server mock = new Server(ms.getAddress(), "");
+                    Server mock = new Server(ms.getAddress());
                     dataGenerator.generateAServer(mock);
                 }
                 break;
