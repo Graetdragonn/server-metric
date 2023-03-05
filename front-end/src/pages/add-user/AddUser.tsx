@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../../components/back-button/BackButton";
 import Header from "../../components/navigation-bar/Header";
-import { isTypeDefault, checkEmail, isEmpty, submit } from "../create-account/CreateAccountLogic";
+import { isTypeDefault, checkEmail, isEmpty } from "../create-account/CreateAccountLogic";
+import { submit } from "./AddUserLogic"
 import { getServiceProviderList, addClientToServerProvider } from "./AddUserLogic";
 
 const AddUserPage = () => {
