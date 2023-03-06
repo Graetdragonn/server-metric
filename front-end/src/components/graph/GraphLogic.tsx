@@ -50,13 +50,14 @@ export const HistogramGraph = ({width, height, data}: dataProps)=> {
                 key={i}
                 fill="#008000"
                 stroke="black"
-                x = {xDimension(bucket.x0 as number) + 2}
-                width = {xDimension(bucket.x1 as number) - xDimension(bucket.x0 as number) - 2}
+                x = {xDimension(bucket.x0 as number)}
+                width = {xDimension(bucket.x1 as number) - xDimension(bucket.x0 as number)}
                 y = {yDimension(bucket.length)}
                 height = {height - yDimension(bucket.length)}
             />
         );
     });
+
     return(
         <div>
             <svg width={width} height={height}>
