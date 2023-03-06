@@ -9,6 +9,9 @@ type dataProps = {
     data: number[];
 }
 
+
+
+
 const tempFakeData = [3,1,3,2,2,5,2,1,3]
 
 
