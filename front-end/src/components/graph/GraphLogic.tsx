@@ -55,8 +55,6 @@ export const HistogramGraph = ({width, height, data}: dataProps)=> {
         );
     });
 
-
-
     return(
         <div>
             <svg width={width} height={height}>
