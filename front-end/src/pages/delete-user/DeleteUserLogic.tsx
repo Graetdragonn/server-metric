@@ -24,7 +24,7 @@ export async function deleteUser(email: string) {
 export async function deleteUserServers(email: string){
     const userInfo = await UserService.getUserByEmail(email);
     var userData = JSON.parse(userInfo);
-    var password = userData['userPassword'];
+    var password = userData['password'];
     var userType = userData['userType'];
     var firstName = userData['userFirstName'];
     var lastName = userData['userLastName'];
@@ -40,8 +40,8 @@ export async function getClientServiceProvider(email: string) {
     const serviceProviders = await getServiceProviderList();
     for (let i = 0; i < serviceProviders.length; i++) {
         for (let j = 0; j < serviceProviders[i]["clients"].length; j++) {
-            if (email === serviceProviders[i]["clients"][j]["userEmail"]) {
-                return serviceProviders[i]["userEmail"];
+            if (email === serviceProviders[i]["clients"][j]["username"]) {
+                return serviceProviders[i]["username"];
             }
         }
     }

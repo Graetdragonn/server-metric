@@ -32,3 +32,21 @@ export async function addClientToServerProvider(serviceProvider: string, client:
         return true;
     }
 }
+
+/**
+ * Sends post request to server to create account
+ * @param email User email
+ * @param first User first name
+ * @param last  User last name
+ * @param pass  User password
+ * @param user  User type
+ */
+export async function submit(email: string, first: string, last: string, pass: string, user: string) {
+
+    const res = await UserService.createUser(email, first, last, pass, user);
+    if (res === "") {
+        return false;
+    }
+    return true;
+
+}

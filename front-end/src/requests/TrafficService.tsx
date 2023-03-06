@@ -21,7 +21,7 @@ class TrafficService {
                 res = JSON.stringify(response.data);
             })
             .catch(function (error: any) {
-                alert(error);
+                //alert(error);
             });
         return res;
     }

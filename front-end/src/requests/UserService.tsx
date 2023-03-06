@@ -11,7 +11,7 @@ class UserService {
         var config = {
             method: 'get',
             url: USER_API_BASE_URL + 'api/v1/users/getAllUsers',
-            headers: {}
+            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}
         };
         await axios(config)
             .then(function (response: { data: any; }) {
@@ -31,15 +31,43 @@ class UserService {
      * @param last  user last name
      * @param pass  user password
      * @param user  user type
-     * @returns user information
+     * @returns bearer token
      */
     async createUser(email: string, first: string, last: string, pass: string, user: string) {
         var res = "";
         var config = {
             method: 'post',
-            url: USER_API_BASE_URL + 'api/v1/users/addUser',
+            maxBodyLength: Infinity,
+            url: USER_API_BASE_URL + 'api/v1/auth/register',
             headers: {},
-            data: { userEmail: email, userPassword: pass, userType: user, userFirstName: first, userLastName: last }
+            data: { username: email, password: pass, userType: user, userFirstName: first, userLastName: last }
+        };
+
+        await axios(config)
+            .then(function (response: { data: any; }) {
+                res = JSON.stringify(response.data);
+            })
+            .catch(function (error: any) {
+                
+            });
+
+        return res;
+    }
+
+    /**
+     * Signs in user
+     * @param email user email
+     * @param pass user passsord
+     * @returns bearer token
+     */
+    async signIn(email: string, pass: string) {
+        var res = "";
+        var config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: USER_API_BASE_URL + 'api/v1/auth/sign-in',
+            headers: {},
+            data: { username: email, password: pass }
         };
 
         await axios(config)
@@ -67,8 +95,8 @@ class UserService {
             var config = {
                 method: 'put',
                 url: USER_API_BASE_URL + 'api/v1/users/updateUser/' + email,
-                headers: {},
-                data: {userPassword: pass, userType: user, userFirstName: first, userLastName: last, servers: servers}
+                headers: {Authorization: 'Bearer ' + localStorage.getItem("token")},
+                data: {password: pass, userType: user, userFirstName: first, userLastName: last, servers: servers}
             };
     
             await axios(config)
@@ -92,7 +120,7 @@ class UserService {
         var config = {
             method: 'get',
             url: USER_API_BASE_URL + 'api/v1/users/getUserByEmail/' + email,
-            headers: {}
+            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}
         };
 
         await axios(config)
@@ -116,7 +144,7 @@ class UserService {
         var config = {
             method: 'post',
             url: USER_API_BASE_URL + 'api/v1/users/' + email + '/addServer',
-            headers: {},
+            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")},
             data: {address: address}
         };
 
@@ -140,7 +168,7 @@ class UserService {
         var config = {
             method: 'delete',
             url: USER_API_BASE_URL + 'api/v1/users/' + email + '/removeServer',
-            headers: {},
+            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")},
             data: {address: address}
         };
 
@@ -163,7 +191,7 @@ class UserService {
         var config = {
             method: 'delete',
             url: USER_API_BASE_URL + 'api/v1/users/deleteUser/' + email,
-            headers: {}
+            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}
         };
 
         await axios(config)
@@ -186,7 +214,7 @@ class UserService {
         var config = {
             method: 'get',
             url: USER_API_BASE_URL + 'api/v1/users/getAllUsersConnectedToServer/' + server,
-            headers: {}
+            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}
         };
 
         await axios(config)
@@ -210,7 +238,7 @@ class UserService {
         var config = {
             method: 'put',
             url: USER_API_BASE_URL + 'api/v1/users/' + serviceProvider + '/addClient/' + client,
-            headers: {}
+            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}
         };
 
         await axios(config)
@@ -234,7 +262,7 @@ class UserService {
         var config = {
             method: 'delete',
             url: USER_API_BASE_URL + 'api/v1/users/' + serviceProvider + '/removeClient/' + client,
-            headers: {}
+            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}
         };
 
         await axios(config)

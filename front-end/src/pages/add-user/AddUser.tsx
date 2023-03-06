@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../../components/back-button/BackButton";
 import Header from "../../components/navigation-bar/Header";
-import { isTypeDefault, checkEmail, isEmpty, submit } from "../create-account/CreateAccountLogic";
+import { isTypeDefault, checkEmail, isEmpty } from "../create-account/CreateAccountLogic";
+import { submit } from "./AddUserLogic"
 import { getServiceProviderList, addClientToServerProvider } from "./AddUserLogic";
 
 const AddUserPage = () => {
@@ -109,7 +110,7 @@ const AddUserPage = () => {
                         <br></br>
                         <select onChange={(e) => setState({ ...state, serviceProvider: e.target.value })} style={{display: state.userType === "CLIENT" ? '' : 'none'}}>
                             <option value="default"> - Select Service Provider -</option>
-                            {serviceProviderList.map(user => {return <option value={user.userEmail}>{user.userFirstName} {user.userLastName}</option>;})} 
+                            {serviceProviderList.map(user => {return <option value={user.username}>{user.userFirstName} {user.userLastName}</option>;})} 
                         </select>
                     </div>
                     <button>Submit</button>
