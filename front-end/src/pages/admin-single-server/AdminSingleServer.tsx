@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Header from "../../components/navigation-bar/Header";
 import { addServerToUser } from "../add-server/AddServerLogic";
 import { checkEmail } from "../create-account/CreateAccountLogic";
@@ -81,10 +81,10 @@ const AdminSingleServerPage = () => {
                     </tr>
                     {userList.map((user) => {
                         return (
-                            <tr key={user.userEmail} className="userRow" onClick={() => setUserToAddOrDelete(user.userEmail)}>
+                            <tr key={user.username} className="userRow" onClick={() => setUserToAddOrDelete(user.username)}>
                                 <td>{user.userFirstName}</td>
                                 <td>{user.userLastName}</td>
-                                <td>{user.userEmail}</td>
+                                <td>{user.username}</td>
                                 <td>{user.userType}</td>
                             </tr>
                         )

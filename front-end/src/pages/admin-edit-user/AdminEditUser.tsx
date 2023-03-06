@@ -17,7 +17,7 @@ const AdminEditUserPage = () => {
     const { userInfo } = state;
 
     const [info, setInfo] = useState({
-        email: userInfo['userEmail'],
+        email: userInfo['username'],
         first: userInfo['userFirstName'],
         last: userInfo['userLastName'],
         pass: userInfo['userPassword'],
@@ -222,7 +222,7 @@ const AdminEditUserPage = () => {
                                 <option value="CLIENT">Client</option>
                             </select>
                             <select value={serviceProvider} onChange={(e) => setServiceProvider(e.target.value)} style={{ display: info.userType === "CLIENT" ? '' : 'none' }}>
-                                {serviceProviderList.map(user => { return <option value={user.userEmail}>{user.userFirstName} {user.userLastName}</option>; })}
+                                {serviceProviderList.map(user => { return <option value={user.username}>{user.userFirstName} {user.userLastName}</option>; })}
                             </select>
                         </div>
                         <label>Servers</label>

@@ -11,6 +11,7 @@ export default function UserList(){
     const getUserList = async () => {
         users = await getAllUsers();
         setUserList(users);
+       
     }
     getUserList();
 
@@ -31,10 +32,10 @@ export default function UserList(){
         </tr>
         {userList.map((user) => {
           return (
-            <tr key={user.userEmail} className="userRow" onClick={() => goToEdit(user.userEmail)}>
+            <tr key={user.username} className="userRow" onClick={() => goToEdit(user.username)}>
               <td>{user.userFirstName}</td>
               <td>{user.userLastName}</td>
-              <td>{user.userEmail}</td>
+              <td>{user.username}</td>
               <td>{user.userType}</td> 
             </tr>
           )
