@@ -110,7 +110,7 @@ const AddUserPage = () => {
                         <br></br>
                         <select onChange={(e) => setState({ ...state, serviceProvider: e.target.value })} style={{display: state.userType === "CLIENT" ? '' : 'none'}}>
                             <option value="default"> - Select Service Provider -</option>
-                            {serviceProviderList.map(user => {return <option value={user.userEmail}>{user.userFirstName} {user.userLastName}</option>;})} 
+                            {serviceProviderList.map(user => {return <option value={user.username}>{user.userFirstName} {user.userLastName}</option>;})} 
                         </select>
                     </div>
                     <button>Submit</button>

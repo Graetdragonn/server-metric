@@ -15,7 +15,7 @@ export async function submit(email: string, first: string, last: string, pass: s
     if (res === "") {
         return false;
     }
-    localStorage.setItem("token", res);
+    localStorage.setItem("token", JSON.parse(res)["token"]);
     return true;
 
 }

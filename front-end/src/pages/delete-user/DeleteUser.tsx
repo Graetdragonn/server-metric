@@ -27,7 +27,7 @@ const DeleteUserPage = () => {
 
   // get service provider of client
   const getSP = async () => {
-    if(await getUserType(email) === "CLIENT"){
+    if(email !== "" && await getUserType(email) === "CLIENT"){
       setClientType(true);
       setServiceProvider(await getClientServiceProvider(email));
     }
@@ -65,6 +65,8 @@ const DeleteUserPage = () => {
       }
     }
 
+    setEmail("");
+
   };
 
   return (
@@ -78,7 +80,7 @@ const DeleteUserPage = () => {
             <div className="center">
               <select onChange={handleChange}>
                 <option value="default"> - Select a User to Delete -</option>
-                {userList.map(user => { return <option value={user.userEmail}>{user.userEmail}</option>; })}
+                {userList.map(user => { return <option value={user.username}>{user.username}</option>; })}
               </select>
             </div>
             <button>Submit</button>

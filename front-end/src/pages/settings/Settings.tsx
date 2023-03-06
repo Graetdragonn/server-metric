@@ -25,7 +25,7 @@ const Settings = () => {
       async function getUserInfo(email: string) {
         const userInfo = await UserService.getUserByEmail(email);
         var userData = JSON.parse(userInfo);
-        setState({...state, "email": user, "pass": userData['userPassword'],"confirmPass": userData['userPassword'], "first": userData['userFirstName'], "last": userData['userLastName'], "userType": userData['userType'], "servers": userData['servers']});
+        setState({...state, "email": user, "pass": userData['password'],"confirmPass": userData['password'], "first": userData['userFirstName'], "last": userData['userLastName'], "userType": userData['userType'], "servers": userData['servers']});
       }
       getUserInfo(user);
     }, []);

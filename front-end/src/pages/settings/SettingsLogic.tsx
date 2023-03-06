@@ -6,7 +6,7 @@ var password;
 export async function getUserInfo(email: string) {
     const userInfo = await UserService.getUserByEmail(email);
     var userData = JSON.parse(userInfo);
-    password = userData['userPassword'];
+    password = userData['password'];
     var userType = userData['userType'];
     var firstName = userData['userFirstName'];
     var lastName = userData['userLastName'];

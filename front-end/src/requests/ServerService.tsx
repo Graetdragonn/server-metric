@@ -13,7 +13,7 @@ class ServerService {
         var config = {
             method: 'get',
             url: USER_API_BASE_URL + 'api/v1/servers/getAllServers',
-            headers: {}
+            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}
         };
 
         await axios(config)
@@ -21,7 +21,7 @@ class ServerService {
                 res = JSON.stringify(response.data);
             })
             .catch(function (error: any) {
-                alert(error);
+                //alert(error);
             });
         return res;
     }
@@ -36,7 +36,7 @@ class ServerService {
         var config = {
             method: 'get',
             url: USER_API_BASE_URL + 'api/v1/servers/getServerByAddress/' + address,
-            headers: {}
+            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}
         };
 
         await axios(config)
@@ -59,7 +59,7 @@ class ServerService {
         var config = {
             method: 'post',
             url: USER_API_BASE_URL + 'api/v1/servers/addServer',
-            headers: {},
+            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")},
             data: {address: address}
         };
 
@@ -78,7 +78,7 @@ class ServerService {
         var config = {
             method: 'delete',
             url: USER_API_BASE_URL + 'api/v1/servers/delete/' + address,
-            headers: {},
+            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")},
             data: {}
         };
 

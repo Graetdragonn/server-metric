@@ -7,15 +7,12 @@ import { isEmpty, checkEmail } from "../create-account/CreateAccountLogic";
  * @param pass  User password
  */
 export async function submit(email: string, pass: string) {
-    try {
-        const res = await UserService.getUserByEmail(email);
-        var password = JSON.parse(res);
-        password = password['userPassword'];
-        return checkPass(pass, password);
-    }
-    catch {
+    const res = await UserService.signIn(email, pass);
+    if (res === "") {
         return false;
     }
+    localStorage.setItem("token", JSON.parse(res)["token"]);
+    return true;
 }
 
 /**

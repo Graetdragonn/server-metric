@@ -32,7 +32,7 @@ const AdminDeleteServerPage = () => {
 
   // users on server
   const [userList, setUserList] = useState([] as any[]);
-    var users = new Array();
+  var users = new Array();
 
   // get all servers
   const getServerList = async () => {
@@ -43,8 +43,10 @@ const AdminDeleteServerPage = () => {
 
   // get users watching server
   const getUserList = async () => {
-    users = await getUsersOnServer(server);
-    setUserList(users);
+    if (server !== "") {
+      users = await getUsersOnServer(server);
+      setUserList(users);
+    }
   }
   getUserList();
 
@@ -65,7 +67,7 @@ const AdminDeleteServerPage = () => {
 
       // remove server from user's lists
       for (let i = 0; i < userList.length; i++) {
-        await removeServerFromUser(userList[i]["userEmail"], server);
+        await removeServerFromUser(userList[i]["username"], server);
       }
       if (await deleteServer(server)) {
         setServerDeleted(true);
