@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 import { useMemo } from "react";
 
+
 //https://www.react-graph-gallery.com/histogram
 
 type dataProps = {
@@ -8,7 +9,6 @@ type dataProps = {
     height: number;
     data: number[];
 }
-
 
 export const HistogramGraph = ({width, height, data}: dataProps)=> {
     const bucketGen = d3
