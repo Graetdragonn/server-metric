@@ -24,7 +24,7 @@ const SingleServer = () => {
 
       <div className='div-for-single-address'>
         Date: {event.time.month}/{event.time.day}/{event.time.year} <br></br>
-        Time: {event.time.hour}:{event.time.min} <br></br>
+        Time: {event.time.hour}:{event.time.min}:{event.time.ms} <br></br>
         Destination IP: {event.dstIP} <br></br>
         Source Port: {event.srcPort} <br></br>
         Destination Port: {event.dstPort}
