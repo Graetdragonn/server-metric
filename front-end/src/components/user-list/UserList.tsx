@@ -13,7 +13,10 @@ export default function UserList(){
         setUserList(users);
        
     }
-    getUserList();
+    if (localStorage.getItem("userType") === "ADMIN") {
+      getUserList();
+    }
+   
 
     const goToEdit = async (email: string) => {
         var res = await getUserInfo(email);
