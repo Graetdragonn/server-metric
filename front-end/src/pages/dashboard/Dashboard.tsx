@@ -77,6 +77,7 @@ const DashboardPage = () => {
             <Graph/>
           </div>
         </div>
+
       </div>
 
 
