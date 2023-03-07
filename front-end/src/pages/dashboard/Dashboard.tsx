@@ -8,8 +8,6 @@ import UserList from '../../components/user-list/UserList';
 import ServerList from '../../components/server-list/ServerList';
 import Graph from '../../components/graph/Graph';
 
-
-
 const DashboardPage = () => {
   const navigate = useNavigate();
 
