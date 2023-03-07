@@ -27,7 +27,7 @@ export async function getNumPacketsSentPerAddresses(userAddresses: string[]) {
         });
 
         for (let i = 0; i < trafficList.length; i++){
-            var addr = trafficList[i]["srcIP"]["address"];
+            var addr = trafficList[i]["srcIP"];
             let idx = packetsPerIp.findIndex(obj => obj.address == addr);
             if (idx != -1){
                 packetsPerIp[idx].numPackets += 1;
