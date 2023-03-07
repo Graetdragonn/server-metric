@@ -1,10 +1,12 @@
 import React from "react";
 import '../../style/Master.css'
+import { HistogramGraph } from "./GraphLogic";
+
 
 const Graph = () => {
   return (
     <div >
-      <p className="title">Graph!</p>
+      
     </div>
   );
 }
