@@ -57,6 +57,7 @@ const DashboardPage = () => {
     <div className="Dashboard-Page">
       <Header />
       {/* NON-ADMIN DASHBOARD VIEW */}
+      <Graph/>
       <div style={{ display: userType !== "ADMIN" ? '' : 'none' }}>
           <div className = "background-side-by-side-parent">
           <div className='background-side-by-side-first-child'>
@@ -80,6 +81,11 @@ const DashboardPage = () => {
         <div>
           <Graph/>
         </div>
+        <br></br>
+        <div className='div-for-addresses'>
+          <h1>Server Settings</h1>
+        <button onClick={() => navigate('/addserver')}>Add Server</button>
+        </div> 
 
       {/* ADMIN DASHBOARD VIEW */}
       <div style={{ display: userType !== "ADMIN" ? 'none' : '' }}>
