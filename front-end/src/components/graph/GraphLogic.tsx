@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 import { useMemo } from "react";
 
+
 //https://www.react-graph-gallery.com/histogram
 
 type dataProps = {
