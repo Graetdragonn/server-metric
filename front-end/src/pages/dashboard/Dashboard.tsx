@@ -77,16 +77,17 @@ const DashboardPage = () => {
               <button onClick={() => navigate('/addserver')}>Add Server</button>
             </div>
           </div>
-        </div>
-        <div>
-          <Graph/>
-        </div>
         <br></br>
         <div className='div-for-addresses'>
           <h1>Server Settings</h1>
         <button onClick={() => navigate('/addserver')}>Add Server</button>
         </div> 
 
+        <div>
+          <Graph/>
+        </div>
+
+      </div>
       {/* ADMIN DASHBOARD VIEW */}
       <div style={{ display: userType !== "ADMIN" ? 'none' : '' }}>
 
