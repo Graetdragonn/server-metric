@@ -35,7 +35,7 @@ const DashboardPage = () => {
   }, [packetsPerIp]);
 
   const renderPacketsPerAddress = () => {
-    return packetsPerIp.map((addr) => <div className='div-for-single-address'>Address {addr.address} has sent {addr.numPackets} packet(s)</div>);
+    return packetsPerIp.map((addr) => <div className='div-for-single-address' onClick={()=>navigate("/single-server", {state: addr.address})}>Address {addr.address} has sent {addr.numPackets} packet(s)</div>);
   };
 
   const renderNoAddresses = () => {

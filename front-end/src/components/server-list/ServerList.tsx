@@ -12,7 +12,9 @@ export default function UserList(){
         servers = await getAllServers();
         setServerList(servers);
     }
-    getServerList();
+    if (localStorage.getItem("userType") === "ADMIN") {
+      getServerList();
+    }
 
     const goToSingleServer = async (address: string) => {
         var res = await getServerInfo(address);
