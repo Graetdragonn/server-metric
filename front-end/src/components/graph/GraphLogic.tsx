@@ -21,9 +21,7 @@ export const HistogramGraph = ({width, height, data}: dataProps)=> {
         .domain([0,5])
         .thresholds([0,1,2,3,4,5]);
 
-    //var buckets = bucketGen(data)
-    const tempFakeData = [3,1,3,2,2,5,2,1,3]
-    var buckets = bucketGen(tempFakeData)
+    var buckets = bucketGen(data)
 
     const xDimension = d3
         .scaleLinear()
@@ -56,7 +54,7 @@ export const HistogramGraph = ({width, height, data}: dataProps)=> {
     return(
         <div>
             <svg width={width} height={height}>
-            // will render here
+                {makeRectangles}
             </svg>
         </div>
     );

@@ -6,7 +6,7 @@ import { getNumPacketsSentPerAddresses, getNumPacketsReceivedPerAddresses } from
 import { getServersByUser } from '../../components/navigation-bar/NavBarLogic';
 import UserList from '../../components/user-list/UserList';
 import ServerList from '../../components/server-list/ServerList';
-import Graph from '../../components/server-list/ServerList';
+import Graph from '../../components/graph/Graph';
 
 const DashboardPage = () => {
   const navigate = useNavigate();
@@ -55,6 +55,7 @@ const DashboardPage = () => {
     <div className="Dashboard-Page">
       <Header />
       {/* NON-ADMIN DASHBOARD VIEW */}
+      <Graph/>
       <div style={{ display: userType !== "ADMIN" ? '' : 'none' }}>
           <div className = "background-side-by-side-parent">
           <div className='background-side-by-side-first-child'>
