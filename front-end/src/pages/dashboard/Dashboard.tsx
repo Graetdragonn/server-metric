@@ -6,7 +6,11 @@ import { getNumPacketsSentPerAddresses } from './DashboardLogic';
 import { getServersByUser } from '../../components/navigation-bar/NavBarLogic';
 import UserList from '../../components/user-list/UserList';
 import ServerList from '../../components/server-list/ServerList';
+<<<<<<< HEAD
 import Graph from '../../components/graph/Graph';
+=======
+import Graph from '../../components/server-list/ServerList';
+>>>>>>> 50ee573 (Working on adding graph)
 
 const DashboardPage = () => {
   const navigate = useNavigate();
@@ -60,6 +64,12 @@ const DashboardPage = () => {
           <h1>Server Settings</h1>
         <button onClick={() => navigate('/addserver')}>Add Server</button>
         </div> 
+<<<<<<< HEAD
+=======
+        <div>
+          <Graph/>
+        </div>
+>>>>>>> 50ee573 (Working on adding graph)
 
       </div>
       {/* ADMIN DASHBOARD VIEW */}
