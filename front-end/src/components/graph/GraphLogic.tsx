@@ -7,12 +7,7 @@ type dataProps = {
     data: number[];
 }
 
-
-
-
-const tempFakeData = [3,1,3,2,2,5,2,1,3]
-
-
+//const tempFakeData = [3,1,3,2,2,5,2,1,3]
 
 export const HistogramGraph = ({width, height, data}: dataProps)=> {
     const bucketGen = d3
