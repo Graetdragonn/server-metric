@@ -10,9 +10,9 @@ type dataProps = {
     data: number[];
 }
 
-const tempFakeData = [3,1,3,2,2,5,2,1,3]
-
 export const HistogramGraph = ({width, height, data}: dataProps)=> {
+    const bucketGen = d3
+        .bin()
         .value((d) => d)
         .domain([0,5])
         .thresholds([0,1,2,3,4,5]);
@@ -47,13 +47,15 @@ export const HistogramGraph = ({width, height, data}: dataProps)=> {
                 key={i}
                 fill="#008000"
                 stroke="black"
-                x = {xDimension(bucket.x0 as number)}
-                width = {xDimension(bucket.x1 as number) - xDimension(bucket.x0 as number)}
+                x = {xDimension(bucket.x0 as number) + 2}
+                width = {xDimension(bucket.x1 as number) - xDimension(bucket.x0 as number) - 2}
                 y = {yDimension(bucket.length)}
                 height = {height - yDimension(bucket.length)}
             />
         );
     });
+
+
 
     return(
         <div>
