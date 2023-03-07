@@ -9,7 +9,6 @@ type dataProps = {
     data: number[];
 }
 
-
 export const HistogramGraph = ({width, height, data}: dataProps)=> {
     const bucketGen = d3
         .bin()
