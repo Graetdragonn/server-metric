@@ -14,12 +14,17 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
+
+//    @Autowired
+//    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+//        this.userRepository = userRepository;
+//        this.passwordEncoder = passwordEncoder;
+//    }
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public List<User> getUsers(){
@@ -27,6 +32,7 @@ public class UserService {
     }
 
     public Optional<User> getUser(String userEmail){
+
         return userRepository.findUserByUsername(userEmail);
     }
 
@@ -51,7 +57,7 @@ public class UserService {
     public void updateUser(String userEmail, User user) {
         User userToUpdate = userRepository.findUserByUsername(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
         if(user.getPassword() != null ){
-            userToUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
+            userToUpdate.setPassword(user.getPassword());
         }
         if (user.getUserType() != null) {
             userToUpdate.setUserType(user.getUserType());

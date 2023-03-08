@@ -32,11 +32,11 @@ const NavBar = () => {
       title: 'Dashboard',
       url: '/dashboard',
     },
-    {
-      title: 'Servers',
-      url: '/single-server',
-      submenu: true,
-    },
+    // {
+    //   title: 'Servers',
+    //   url: '/single-server',
+    //   submenu: true,
+    // },
     {
       title: 'Settings',
       url: '/settings',

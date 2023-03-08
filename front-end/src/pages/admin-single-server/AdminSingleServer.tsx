@@ -4,6 +4,7 @@ import Header from "../../components/navigation-bar/Header";
 import { addServerToUser } from "../add-server/AddServerLogic";
 import { checkEmail } from "../create-account/CreateAccountLogic";
 import { getUsersOnServer, removeServerFromUser } from "./AdminSingleServerLogic";
+import BackButton from "../../components/back-button/BackButton";
 
 const AdminSingleServerPage = () => {
     const { state } = useLocation();
@@ -68,11 +69,12 @@ const AdminSingleServerPage = () => {
 
     return (
         <div className="Single-Server-Page">
-            <Header />
-            <p className="title" style={{ fontSize: 40 }}>Address {serverInfo.address} Info</p>
-            <div className='center'>
+            <Header/>
+            <div className='Form-Body'>
+                <form>
+                    <BackButton></BackButton>
+                    <p className="title" style={{fontWeight: "bold", textAlign: "center", color:"#24272C", fontSize: 30 }}>Users Watching Server: {serverInfo.address}</p>
                 <table className="userTable" style={{ margin: 'auto', boxShadow: 'none', left: 'auto' }}>
-                    <caption>Users Watching</caption>
                     <tr>
                         <th>First Name</th>
                         <th>Last Name</th>
@@ -90,20 +92,17 @@ const AdminSingleServerPage = () => {
                         )
                     })}
                 </table>
+                    <input type='text' style={{ width: 350, margin: 'auto' }} placeholder="User Email Address" value={userToAddOrDelete} onChange={handleChange}></input>
+                    <br></br>
+                    <p className='error' style={{display: emailFormatError ? '' : 'none', margin:'auto'}}>Please enter a valid email address</p>
+                    <p className='error' style={{display: addUserError ? '' : 'none', margin:'auto'}}>Unable to add server to user</p>
+                    <p className='error' style={{display: deleteUserError ? '' : 'none', margin:'auto'}}>Unable to remove server from user</p>
+                    <div >
+                    <button type="button"  onClick={addUserToServer}>Add</button>
+                    <button type="button" onClick={deleteUserFromServer}>Delete</button>
+                    </div>
+                </form>
             </div>
-            <br></br>
-            <div className="center" style={{textAlign: "center"}}>
-                <input type='text' style={{ width: 350, margin: 'auto' }} placeholder="User Email Address" value={userToAddOrDelete} onChange={handleChange}></input>
-                <br></br>
-                <p className='error' style={{display: emailFormatError ? '' : 'none', margin:'auto'}}>Please enter a valid email address</p>
-                <p className='error' style={{display: addUserError ? '' : 'none', margin:'auto'}}>Unable to add server to user</p>
-                <p className='error' style={{display: deleteUserError ? '' : 'none', margin:'auto'}}>Unable to remove server from user</p>
-            </div>
-            <div className='center' style={{ textAlign: 'center'}} >
-                <button type="button" className="addServerButton" style={{ margin: 'auto', display: 'inline-block', textAlign: 'center' }} onClick={addUserToServer}>Add</button>
-                <button type="button" className="addServerButton" style={{ margin: 'auto', display: 'inline-block', textAlign: 'center' }} onClick={deleteUserFromServer}>Delete</button>
-            </div>
-
         </div>
     );
 }
