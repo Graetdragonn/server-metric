@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     public AuthenticationResponse register(RegisterRequest request) {
-        User user = new User(request.getUsername(), passwordEncoder.encode(request.getPassword()), request.getUserType(), request.getUserFirstName() , request.getUserLastName());
+        User user = new User(request.getUsername(), request.getPassword(), request.getUserType(), request.getUserFirstName() , request.getUserLastName());
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
