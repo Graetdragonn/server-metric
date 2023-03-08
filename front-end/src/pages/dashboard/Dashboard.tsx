@@ -47,22 +47,33 @@ const DashboardPage = () => {
       <Header />
       {/* NON-ADMIN DASHBOARD VIEW */}
       <div style={{ display: userType !== "ADMIN" ? '' : 'none' }}>
-        <br></br>
-          <div className='div-for-addresses'>
-            <h1>Server Packet Traffic</h1>
+          <div className = "background-side-by-side-parent">
+          <div className='background-side-by-side-first-child'>
+            <h1>Server Sent Packet Traffic</h1>
             {packetsPerIp.length > 0 && renderPacketsPerAddress()}
             {packetsPerIp.length < 1 && renderNoAddresses()}
         </div>
-        <br></br>
-        <div className='div-for-addresses'>
+              <div className='background-side-by-side-child'>
+                  <h1>Server Received Packet Traffic</h1>
+                  {packetsPerIp.length > 0 && renderPacketsPerAddress()}
+                  {packetsPerIp.length < 1 && renderNoAddresses()}
+              </div>
+          </div>
+          <div className = "background-side-by-side-parent">
+        <div className='background-side-by-side-single-first-child'>
           <h1>Server Settings</h1>
         <button onClick={() => navigate('/addserver')}>Add Server</button>
-        </div> 
+        </div>
+          </div>
+
       </div>
+
       {/* ADMIN DASHBOARD VIEW */}
       <div style={{ display: userType !== "ADMIN" ? 'none' : '' }}>
+
       <br></br>
       <div className='row' style={{display: 'flex', justifyContent:'space-around'}}>
+
       <UserList></UserList>
 
       <ServerList></ServerList>
@@ -78,7 +89,6 @@ const DashboardPage = () => {
       <br></br>
       
       </div>
-      
     </div>
   );
 };

@@ -40,12 +40,21 @@ const SingleServer = () => {
   return (
     <div className="Single-Server-Page">
       <Header />
-      <p className="title">Network traffic for server {state}</p>
-      <div className='div-for-addresses'>
+        <div>
+      <h1 className='Gradient-Text' style={{textAlign: "center"}}> Network Traffic for Server {state}</h1>
+        <div className="background-side-by-side-parent">
+      <div className='background-side-by-side-first-child' style={{maxWidth: 700}}>
         <h1>Sent Packets</h1>
         {trafficList.length > 0 && renderTraffic()}
         {trafficList.length < 1 && noTraffic()}
       </div>
+        <div className='background-side-by-side-child' style={{maxWidth: 700}}>
+            <h1>Received Packets</h1>
+            {trafficList.length > 0 && renderTraffic()}
+            {trafficList.length < 1 && noTraffic()}
+        </div>
+        </div>
+        </div>
     </div>
   );
 }
