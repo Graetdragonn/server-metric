@@ -13,8 +13,8 @@ import com.example.demo.Traffic.Netflow9;
 
 public class DataGenerator {
     //TODO need to add routes that don't have security so we can generate traffic
-    private final String trafficURL = "http://localhost:8080/api/v1/traffic";//"http://coms-402-sd-05.class.las.iastate.edu:8080/api/v1/traffic";
-    private final String serverPostURL = "http://localhost:8080/api/v1/servers/addServer";
+    private final String trafficURL = "http://coms-402-sd-05.class.las.iastate.edu:8080/api/v1/traffic";
+    private final String serverPostURL = "http://coms-402-sd-05.class.las.iastate.edu:8080/api/v1/servers/addServer";
     private final Gson gson = new Gson();
     CloseableHttpClient httpClient;
 
