@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -14,18 +15,15 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-//    private final PasswordEncoder passwordEncoder;
 
-//    @Autowired
-//    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-//        this.userRepository = userRepository;
-//        this.passwordEncoder = passwordEncoder;
-//    }
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
+
 
     public List<User> getUsers(){
         return userRepository.findAll();
@@ -56,8 +54,8 @@ public class UserService {
     @Transactional
     public void updateUser(String userEmail, User user) {
         User userToUpdate = userRepository.findUserByUsername(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
-        if(user.getPassword() != null ){
-            userToUpdate.setPassword(user.getPassword());
+        if(user.getPassword() != null && !Objects.equals(user.getPassword(), userToUpdate.getPassword())){
+            userToUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
         }
         if (user.getUserType() != null) {
             userToUpdate.setUserType(user.getUserType());
@@ -74,6 +72,7 @@ public class UserService {
         if(user.getClients() != null){
             userToUpdate.setClients(user.getClients());
         }
+
         userRepository.save(userToUpdate);
     }
 
