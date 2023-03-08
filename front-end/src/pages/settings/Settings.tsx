@@ -81,13 +81,13 @@ const Settings = () => {
           <br></br>
           <label>Last Name</label>
           <input type="text" name="last" required={true} value={state.last} onChange={handleChange}></input>
-          {/*<br></br>*/}
-          {/*<label>Change Password</label>*/}
-          {/*<input name="pass" required={true} value={state.pass} onChange={handleChange}></input>*/}
-          {/*<br></br>*/}
-          {/*<label>Confirm Changed Password</label>*/}
-          {/*<input name="confirmPass" required={true} value={state.confirmPass} onChange={handleChange}></input>*/}
-          {/*<br></br>*/}
+          <br></br>
+          <label>Change Password</label>
+          <input name="pass" type = "password" required={true} value={state.pass} onChange={handleChange}></input>
+          <br></br>
+          <label>Confirm Changed Password</label>
+          <input name="confirmPass" type = "password" required={true} value={state.confirmPass} onChange={handleChange}></input>
+          <br></br>
           <button>Submit</button>
           <br></br>
           <span style={{ visibility: passMatch ? 'hidden' : 'visible' }} className='error'>&nbsp; Passwords do not match </span>
