@@ -83,10 +83,10 @@ const Settings = () => {
           <input type="text" name="last" required={true} value={state.last} onChange={handleChange}></input>
           <br></br>
           <label>Change Password</label>
-          <input name="pass" type = "password" required={true} value={state.pass} onChange={handleChange}></input>
+          <input name="pass" type = "password" required={true} onChange={handleChange}></input>
           <br></br>
           <label>Confirm Changed Password</label>
-          <input name="confirmPass" type = "password" required={true} value={state.confirmPass} onChange={handleChange}></input>
+          <input name="confirmPass" type = "password" required={true} onChange={handleChange}></input>
           <br></br>
           <button>Submit</button>
           <br></br>
