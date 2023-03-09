@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllServers, getServerInfo, getClientsByProvider } from "./ServerListLogic";
 
@@ -8,6 +8,10 @@ export default function UserList(){
     var clients = new Array();
     const navigate = useNavigate();
     
+    useEffect(() => {
+      getServerList();
+    }, []);
+
     // get all servers
     const getServerList = async () => {
       if (localStorage.getItem("userType") === "ADMIN") {
@@ -35,8 +39,6 @@ export default function UserList(){
         navigate('/adminsingleserver', { state: { serverInfo: res } });
     }
     
-    getServerList();
-
     return (
     <div >
       <table className="userTable">
