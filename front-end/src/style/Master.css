@@ -288,14 +288,10 @@ header {
   margin: 0px;
 }
 
-.menu-item {
-  padding-right: 20px;
-}
-
 .menu-items {
   position: relative;
   font-size: 20px;
-  padding-right: 24px;
+  padding-right: 44px;
 }
 
 .menu-items a {
