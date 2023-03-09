@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import BackButton from "../../components/back-button/BackButton";
 import Header from "../../components/navigation-bar/Header";
 import { getAllUsers } from "../../components/user-list/UserListLogic";
+import UserService from "../../requests/UserService";
 import { emailCheck, checkEmpty, getUserType } from "../login/LoginLogic";
 import { deleteServerProviderClientByEmail, deleteUser, getClientServiceProvider } from "./DeleteUserLogic";
 
@@ -12,7 +13,7 @@ const DeleteUserPage = () => {
   const navigate = useNavigate();
 
   // user input for email
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("default");
 
   // all users
   const [userList, setUserList] = useState([] as any[]);
@@ -25,14 +26,28 @@ const DeleteUserPage = () => {
 
   const [clientType, setClientType] = useState(false);
 
+  const [state, setState] = useState({
+    email: " ",
+    first: " ",
+    last: " ",
+    userType: " ",
+    servers: []
+});
+
   // get service provider of client
   const getSP = async () => {
-    if(email !== "" && await getUserType(email) === "CLIENT"){
+    if(email !== "default" && await getUserType(email) === "CLIENT"){
       setClientType(true);
       setServiceProvider(await getClientServiceProvider(email));
     }
   }
   getSP();
+
+  const getUserInfo = async (email: string) => {
+    const userInfo = await UserService.getUserByEmail(email);
+    var userData = JSON.parse(userInfo);
+    setState({...state, "email": email, "first": userData['userFirstName'], "last": userData['userLastName'], "userType": userData['userType'], "servers": userData['servers']});
+  }
 
   // get all servers
   const getUserList = async () => {
@@ -42,8 +57,14 @@ const DeleteUserPage = () => {
   getUserList();
 
   // to update user information when user inputs data
-  const handleChange = (e: { target: { name: string; value: any; }; }) => {
+  const handleChange = async (e: { target: { name: string; value: any; }; }) => {
     setEmail(e.target.value);
+    if (e.target.value !== "default") {
+      await getUserInfo(e.target.value);
+    }
+    else {
+          setState({...state, "email": " ", "first": " ", "last": " ", "userType": " ", "servers": []});
+    }
   };
 
   // submits form
@@ -82,6 +103,11 @@ const DeleteUserPage = () => {
                 <option value="default"> - Select a User to Delete -</option>
                 {userList.map(user => { return <option value={user.username}>{user.username}</option>; })}
               </select>
+            </div>
+            <div style={{margin: 'auto'}}>
+            <div className="row" style={{display: 'flex'}}> <p>First Name: &nbsp; </p><p>{state.first}</p> </div>
+              <div className="row" style={{display: 'flex'}}> <p>Last Name: &nbsp; </p><p>{state.last}</p> </div>
+              <div className="row" style={{display: 'flex'}}> <p>User Type: &nbsp; </p><p>{state.userType}</p> </div>
             </div>
             <button>Submit</button>
             <br></br>
