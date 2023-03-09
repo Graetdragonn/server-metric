@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import '../../style/Master.css';
 import { getServersByUser } from './NavBarLogic';
-import MenuItems from './MenuItems';
+import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
 
@@ -32,11 +32,6 @@ const NavBar = () => {
       title: 'Dashboard',
       url: '/dashboard',
     },
-    // {
-    //   title: 'Servers',
-    //   url: '/single-server',
-    //   submenu: true,
-    // },
     {
       title: 'Settings',
       url: '/settings',
@@ -51,7 +46,13 @@ const NavBar = () => {
     <nav>
       <ul className="menus">
         {menuItems.map((menu, index) => {
-          return <MenuItems items={menu} key={index} serverList={serverListObj}/>
+          return (        
+            <li className="menu-items">
+              <p>
+                <NavLink to={menu.url}>{menu.title}</NavLink>
+              </p>
+            </li>
+          )
         })}
       </ul>
     </nav>
