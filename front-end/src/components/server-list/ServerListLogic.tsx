@@ -1,6 +1,21 @@
 import ServerService from "../../requests/ServerService";
 import UserService from "../../requests/UserService";
 
+interface Client {
+    username: string;
+    password: string;
+    userType: string;
+    userFirstName: string;
+    userLastName: string;
+    servers: {address: string}[];
+    clients: Client[];
+    enabled: boolean;
+    credentialsNonExpired: boolean;
+    accountNonExpired: boolean;
+    accountNonLocked: boolean;
+    authorities: boolean;
+  }
+
 /**
  * Get all servers
  * @returns all servers in database
@@ -21,49 +36,30 @@ export async function getServerInfo(server: string){
     return serverData;
 }
 
+
+/**
+ * Get user by email
+ * @param user email
+ * @returns user data
+ */
+export async function getUserByEmail(email: string){
+    var res = await UserService.getUserByEmail(email);
+    var userData = JSON.parse(res);
+    return userData;
+}
+
 /**
  * Get all clients that belong to a certain service provider
  * @returns all clients in database belonging to a specified service provider
  */
-export async function getClientsByProvider(email: string){
+export async function getClientsByProvider(userInfo: Client){
     var clients = new Array();
-    var res = await UserService.getUserByEmail(email);
-    var userInfo = JSON.parse(res);
 
-    interface Client {
-        username: string;
-        password: string;
-        userType: string;
-        userFirstName: string;
-        userLastName: string;
-        servers: {address: string}[];
-        clients: [];
-        enabled: boolean;
-        credentialsNonExpired: boolean;
-        accountNonExpired: boolean;
-        accountNonLocked: boolean;
-        authorities: boolean;
+    if (userInfo["clients"] != null) {
+        userInfo["clients"].forEach((client: Client) => {
+            clients.push(client["username"]);
+        });
     }
 
-    userInfo["clients"].forEach((client: Client) => {
-        clients.push(client["username"]);
-    });
-
     return clients;
-}
-
-/**
- * Get all servers that belong to a certain client
- * @returns list of all servers in database belonging to a specified client
- */
-export async function getServersByClient(email: string){
-    var servers = new Array();
-    var res = await UserService.getUserByEmail(email);
-    var userInfo = JSON.parse(res);
-
-    userInfo["servers"].forEach((address: {address: string}) => {
-        servers.push(address["address"]);
-    });
-
-    return servers;
 }

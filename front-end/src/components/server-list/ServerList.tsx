@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllServers, getServerInfo, getClientsByProvider, getServersByClient } from "./ServerListLogic";
+import { getAllServers, getServerInfo, getClientsByProvider, getUserByEmail } from "./ServerListLogic";
+
 
 export default function UserList(){
     const [serverList, setServerList] = useState([] as any[]);
-    var servers = new Array();
+    var servers = new Array(); // type is {address: string}[]
     var clients = new Array();
     const navigate = useNavigate();
     
@@ -18,13 +19,15 @@ export default function UserList(){
         servers = await getAllServers();
       } else {
         if (localStorage.getItem("userType") === "SERVICE_PROVIDER") {
-          clients = await getClientsByProvider(localStorage.getItem("email")!);
+          var userInfo = await getUserByEmail(localStorage.getItem("email")!);
+          clients = await getClientsByProvider(userInfo);
         } else if (localStorage.getItem("userType") === "CLIENT") {
           clients = [localStorage.getItem("email")];
         }
+        // for each client (or if client, for self), add servers to list
         clients.forEach(async (clientEmail: string) => {
-          var clientServers = await getServersByClient(clientEmail);
-          servers.push(clientServers);
+          var userInfo = await getUserByEmail(clientEmail);
+          servers.push(userInfo["servers"]);
         });
       }
       
