@@ -9,9 +9,6 @@ const Graph = ({width = 700, height = 400}) => {
   return (
     <div style={{marginTop: 30, marginBottom: 20}}>
       <HistogramGraph width={width} height={height-20} data={tempFakeData}/>
-      <div >
-        <HistogramGraph data={tempFakeData} width={400} height={400}/>
-      </div>
     </div>
   );
 }
