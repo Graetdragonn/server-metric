@@ -1,7 +1,8 @@
 import * as d3 from "d3";
-import { useMemo } from "react";
+import { useMemo, useRef, useEffect } from "react";
 
 //https://www.react-graph-gallery.com/histogram
+//https://www.react-graph-gallery.com/build-axis-with-react
 
 type dataProps = {
     width: number;
@@ -9,27 +10,25 @@ type dataProps = {
     data: number[];
 }
 
-const tempFakeData = [3,1,3,2,2,5,2,1,3]
+const GRAPH_MARGINS = {top: 20, bottom: 20, left: 30, right:30};
+
 
 export const HistogramGraph = ({width, height, data}: dataProps)=> {
-    const bucketGen = d3
-        .bin()
-        .domain([0,5])
-        .thresholds([0,1,2,3,4,5]);
-
-   // var buckets = bucketGen(data)
+    const axesReference = useRef(null);
+    const axesHeight = height - GRAPH_MARGINS.top - GRAPH_MARGINS.bottom;
+    const axesWidth = width - GRAPH_MARGINS.right - GRAPH_MARGINS.left;
 
     const xDimension = d3
         .scaleLinear()
-        .domain([0,10])
-        .range([10, width - 10]);
+        .domain([0,25])
+        .range([25, axesWidth]);
 
     const buckets = useMemo(()=> {
         const bucketGen = d3
             .bin()
             .value((d) => d)
-            .domain([0,10])
-            .thresholds([0,1,2,3,4,5]);
+            .domain([0,25])
+            .thresholds([0,5,10,15,20,25]);
         return bucketGen(data);
     }, [xDimension]);
 

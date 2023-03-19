@@ -2,7 +2,7 @@ import React from "react";
 import '../../style/Master.css'
 import { HistogramGraph } from "./GraphLogic";
 
-const tempFakeData = [1,2,3,3,5,4,6,7,8,5,6,8,9]
+const tempFakeData = [0,2,3,7,10,11,20,18,17,16,22,24,16]
 
 const Graph = ({width = 700, height = 400}) => {
   return (
