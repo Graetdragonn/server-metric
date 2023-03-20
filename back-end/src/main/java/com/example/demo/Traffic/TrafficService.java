@@ -1,5 +1,6 @@
 package com.example.demo.Traffic;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,5 +45,40 @@ public class TrafficService {
          e.printStackTrace();
       }
       return null;
+   }
+
+    public List<Traffic> getReceivedTrafficListByServer(String serverAddress) {
+      List<Traffic> allTraffic = trafficRepository.findAll();
+      List<Traffic> allTrafficFromServer = new ArrayList<>();
+       for (Traffic traffic : allTraffic) {
+          if (traffic.getDstIP().equals(serverAddress)) {
+             allTrafficFromServer.add(traffic);
+          }
+       }
+      return allTrafficFromServer;
+    }
+
+   public List<Traffic> getSentTrafficListByServer(String serverAddress) {
+      List<Traffic> allTraffic = trafficRepository.findAll();
+      List<Traffic> allTrafficFromServer = new ArrayList<>();
+      for (Traffic traffic : allTraffic) {
+         if (traffic.getSrcIP().equals(serverAddress)) {
+            allTrafficFromServer.add(traffic);
+         }
+      }
+      return allTrafficFromServer;
+   }
+
+   public List<Traffic> getTrafficListByServer(String serverAddress){
+      List<Traffic> allTraffic = trafficRepository.findAll();
+      List<Traffic> allTrafficFromServer = new ArrayList<>();
+      for (Traffic traffic : allTraffic) {
+         if (traffic.getDstIP().equals(serverAddress)) {
+            allTrafficFromServer.add(traffic);
+         } else if (traffic.getSrcIP().equals(serverAddress)) {
+            allTrafficFromServer.add(traffic);
+         }
+      }
+      return allTrafficFromServer;
    }
 }

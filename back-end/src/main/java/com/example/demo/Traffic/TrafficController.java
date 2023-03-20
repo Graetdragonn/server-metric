@@ -33,6 +33,24 @@ public class TrafficController {
         return trafficService.getTrafficList(t);
     }
 
+    @GetMapping("getAllTrafficByServer/{serverAddress}")
+    @CrossOrigin
+    public List<Traffic> getAllTrafficByServer(@PathVariable("serverAddress") String serverAddress){
+        return trafficService.getTrafficListByServer(serverAddress);
+    }
+
+    @GetMapping("getAllSentTrafficByServer/{serverAddress}")
+    @CrossOrigin
+    public List<Traffic> getAllSentTrafficByServer(@PathVariable("serverAddress") String serverAddress){
+        return trafficService.getSentTrafficListByServer(serverAddress);
+    }
+
+    @GetMapping("getAllReceivedTrafficByServer/{serverAddress}")
+    @CrossOrigin
+    public List<Traffic> getAllReceivedTrafficByServer(@PathVariable("serverAddress") String serverAddress){
+        return trafficService.getReceivedTrafficListByServer(serverAddress);
+    }
+
     @PostMapping
     @CrossOrigin
     public void addTraffic(@RequestBody Netflow9 traffic) {
