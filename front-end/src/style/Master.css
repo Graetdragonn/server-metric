@@ -98,21 +98,38 @@
   display: inline-block;
 }
 
-/* Green to Grey button*/
-button {
-  min-width: 100%;
+.white-div{
+  max-height: fit-content;
+  margin-left: 35px;
   cursor: pointer;
   margin-right: 0.25em;
   margin-top: 1em;
   padding: 	0.938em;
   border: none;
   border-radius: 4px;
-  background-color: #619E57;
-  color: #fefefe;
+  background-color: white;
+  color: black;
   font-size: 16px;
   padding: 14px 40px;
   border-radius: 12px;
-  width: 250px;
+  display: inline-block;
+  box-shadow: 0px 8px 16px ;
+}
+
+
+/* Green to Grey button*/
+button {
+  margin-right: 0.25em;
+  margin-top: 1em;
+  padding: 	5px;
+  border: none;
+  border-radius: 4px;
+  background-color: #619E57;
+  color: #fefefe;
+  font-size: 16px;
+  padding: 14px 20px;
+  border-radius: 12px;
+  min-width: fit-content;
   display: inline-block;
 }
 button:hover {
@@ -176,7 +193,7 @@ button:disabled {
 }
 
  .settingsbutton {
-  
+
   color: white;
   font-size: 20px;
   padding: 14px 40px;
@@ -210,7 +227,7 @@ button:disabled {
   font-size: 55px;
   color: white;
   padding: 0px 0px;
- 
+
 }
 
 .submitbutton {
@@ -279,7 +296,7 @@ header {
 
 .menus {
   display: flex;
-  align-items: left;
+  /*align-items: left;*/
   flex-wrap: wrap;
   list-style: none;
   /*background-color: white;*/
@@ -475,26 +492,26 @@ form > .k-textbox-container, .k-floating-label-container {
   width: 100%;
 }
 
-button {
-  min-width: 100%;
-  cursor: pointer;
-  margin-right: 0.25em;
-  margin-top: 1em;
-  padding: 	0.938em;
-  border: none;
-  border-radius: 4px;
-  background-color: #619E57;
-  color: #fefefe;
-  font-size: 16px;
-  padding: 14px 40px;
-  border-radius: 12px;
-  width: 250px;
-  display: inline-block;
-}
-button:hover {
-  background-color: #24272C;
-  color: #fefefe;
-}
+/*button {*/
+/*  min-width: 100%;*/
+/*  cursor: pointer;*/
+/*  margin-right: 0.25em;*/
+/*  margin-top: 1em;*/
+/*  padding: 	0.938em;*/
+/*  border: none;*/
+/*  border-radius: 4px;*/
+/*  background-color: #619E57;*/
+/*  color: #fefefe;*/
+/*  font-size: 16px;*/
+/*  padding: 14px 40px;*/
+/*  border-radius: 12px;*/
+/*  width: fit-content;*/
+/*  display: inline-block;*/
+/*}*/
+/*button:hover {*/
+/*  background-color: #24272C;*/
+/*  color: #fefefe;*/
+/*}*/
 
 .active-navbar-item {
   font-weight: bold;
@@ -506,7 +523,7 @@ button:hover {
   font-size: 25px;
   display: flex;
   flex-direction: column;
-  align-items: right;
+  /*align-items: right;*/
   justify-content: right;
   text-indent: 350px;
   margin-top: 20px;
@@ -518,7 +535,7 @@ button:hover {
   font-size: 15px;
   display: flex;
   flex-direction: column;
-  align-items: left;
+  /*align-items: left;*/
   justify-content: left;
   text-indent: 450px;
 }
@@ -528,7 +545,7 @@ button:hover {
   cursor: pointer;
   margin-right: .25em;
   margin-top: 1em;
-  padding: 	0.938em; 
+  padding: 	0.938em;
   border: none;
   border-radius: 4px;
   background-color: #619E57;
@@ -575,11 +592,11 @@ table {
   overflow-y:scroll;
   display:block;
 }
-  
+
 th {
   border-bottom: 1px solid black;
 }
-  
+
 td {
   text-align: center;
 }
