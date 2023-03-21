@@ -1,32 +1,23 @@
 import { useState } from "react";
-import { getAllUsers, getUserInfo, getClientList } from "./UserListLogic";
+import { getAllUsers, getUserInfo } from "./UserListLogic";
 import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
 
 export default function UserList() {
   const [userList, setUserList] = useState([] as any[]);
   var users = new Array();
-  //var clients: Promise<any[]>;
   const navigate = useNavigate();
 
+  // get all users
   const getAllUserList = async () => {
     users = await getAllUsers();
     setUserList(users);
   }
-
-  const getClientList = async () => {
-    users = await getAllUsers();
-    setUserList(users);
-  }
-
   if (localStorage.getItem("userType") === "ADMIN") {
     getAllUserList();
   }
-  else if (localStorage.getItem("userType") === "SERVICE_MANAGER") {
-    getClientList();
-  }
 
-
+  // go to edit user page
   const goToEdit = async (email: string) => {
     var res = await getUserInfo(email);
     navigate('/adminedituser', { state: { userInfo: res } });

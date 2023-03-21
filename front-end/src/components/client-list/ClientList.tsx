@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { getAllUsers, getUserInfo, getClientList } from "../user-list/UserListLogic";
+import { getClientList } from "./ClientListLogic";
+import { getUserInfo } from "../user-list/UserListLogic";
 import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
 
@@ -13,12 +14,14 @@ export default function UserList() {
         users = await getClientList();
         setUserList(users);
     }
-    getClients();
+    if (localStorage.getItem("userType") === "SERVICE_MANAGER") {
+        getClients();
+    }
 
     // go to edit client
     const goToEdit = async (email: string) => {
         var res = await getUserInfo(email);
-        navigate('/adminedituser', { state: { userInfo: res } });
+        navigate('/spedituser', { state: { userInfo: res } });
     }
 
     return (
@@ -29,15 +32,15 @@ export default function UserList() {
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th>
-                    <th>User Type</th>
+                    <th>Service Provider</th>
                 </tr>
                 {userList.map((user) => {
                     return (
-                        <tr key={user.username} className="userRow" onClick={() => goToEdit(user.username)}>
-                            <td>{user.userFirstName}</td>
-                            <td>{user.userLastName}</td>
-                            <td>{user.username}</td>
-                            <td>{user.userType}</td>
+                        <tr key={user.client.username} className="userRow" onClick={() => goToEdit(user.client.username)}>
+                            <td>{user.client.userFirstName}</td>
+                            <td>{user.client.userLastName}</td>
+                            <td>{user.client.username}</td>
+                            <td>{user.serviceProvider}</td>
                         </tr>
                     )
                 })}
