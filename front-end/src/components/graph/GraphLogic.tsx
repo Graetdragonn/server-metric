@@ -6,7 +6,7 @@ import * as d3 from "d3";
 
 
 // set the dimensions and margins of the graph
-const margin = {top: 20, right: 30, bottom: 80, left: 30},
+const margin = {top: 20, right: 30, bottom: 75, left: 30},
     width = 460 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 

@@ -55,7 +55,9 @@ const DashboardPage = () => {
     <div className="Dashboard-Page">
       <Header />
       {/* NON-ADMIN DASHBOARD VIEW */}
-      <Graph/>
+
+      <Graph address={["123.43.245.21", "137.13.42.198"]} packet={[252, 345]}/>
+      
       <div style={{ display: userType !== "ADMIN" ? '' : 'none' }}>
           <div className = "background-side-by-side-parent">
           <div className='background-side-by-side-first-child'>
@@ -80,9 +82,8 @@ const DashboardPage = () => {
           <h1>Server Settings</h1>
         <button onClick={() => navigate('/addserver')}>Add Server</button>
         </div> 
-      <div>
-        <Graph/>
-      </div>
+
+       
 
       </div>
       {/* ADMIN DASHBOARD VIEW */}
