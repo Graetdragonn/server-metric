@@ -80,10 +80,9 @@ const DashboardPage = () => {
           <h1>Server Settings</h1>
         <button onClick={() => navigate('/addserver')}>Add Server</button>
         </div> 
-
-        <div>
-          <Graph/>
-        </div>
+      <div>
+        <Graph/>
+      </div>
 
       </div>
       {/* ADMIN DASHBOARD VIEW */}

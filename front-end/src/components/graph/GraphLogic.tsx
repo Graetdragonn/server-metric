@@ -1,79 +1,72 @@
 import * as d3 from "d3";
-import { useMemo, useRef, useEffect } from "react";
 
 //https://www.react-graph-gallery.com/histogram
 //https://www.react-graph-gallery.com/build-axis-with-react
+//https://d3-graph-gallery.com/graph/barplot_basic.html
+
+
+// set the dimensions and margins of the graph
+const margin = {top: 20, right: 30, bottom: 80, left: 30},
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#bar_graph")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 type dataProps = {
-    width: number;
-    height: number;
-    data: number[];
+    packets: number[]
+    names: string[]
 }
 
-const GRAPH_MARGINS = {top: 20, bottom: 20, left: 30, right:30};
-const NUM_BUCKETS = 5;
+export const BarGraph = ({packets, names}: dataProps) =>{
+    var data = [];
+    var i = 0;
+    for(i = 0; i < packets.length; i++){
+        const obj = {address: names[i], packets: packets[i]};
+        data.push(obj);
+    }
 
+    // Set up the X axis
+    var x_axis = d3.scaleBand()
+        .range([ 0, width ])
+        //  .domain(data.map(function(d) { return d.Country; }))
+        .domain(data.map(function(val) {return val.address;}))
+        .padding(0.25);
 
-export const HistogramGraph = ({width, height, data}: dataProps)=> {
-    const axisReference = useRef(null);
-    const axisHeight = height - GRAPH_MARGINS.top - GRAPH_MARGINS.bottom;
-    const axisWidth = width - GRAPH_MARGINS.right - GRAPH_MARGINS.left;
+    svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x_axis))
+        .selectAll("text")
+        .attr("transform", "translate(-10,0)rotate(-45)")
+        .style("text-anchor", "end");
 
-    const xDimension = d3
-        .scaleLinear()
-        .domain([0,25])
-        .range([25, axisWidth]);
+    // Set up Y axis
+    var y_axis = d3.scaleLinear()
+        .domain([0, Math.max(...packets)])
+        .range([ height, 0]);
 
-    const buckets = useMemo(()=> {
-        const bucketGen = d3
-            .bin()
-            .value((d) => d)
-            .domain([0,25])
-            .thresholds(xDimension.ticks(NUM_BUCKETS));
-        return bucketGen(data);
-    }, [xDimension]);
+    svg.append("g")
+        .call(d3.axisLeft(y_axis));
+    
 
-
-    const yDimension = useMemo(() =>{
-        const maxHeight = Math.max(...buckets.map((bucket)=> bucket?.length));
-        return d3.scaleLinear()
-            .range([axisHeight, 0])
-            .domain([0, maxHeight]);            
-    }, [data, height]);
-
-    const makeRectangles = buckets.map((bucket, i) => {
-        return(
-            <rect 
-                key={i}
-                fill="#008000"
-                stroke="black"
-                x = {xDimension(bucket.x0 as number) + 2}
-                width = {xDimension(bucket.x1 as number) - xDimension(bucket.x0 as number) - 2}
-                y = {yDimension(bucket.length)}
-                height = {axisHeight - yDimension(bucket.length)}
-            />
-        );
-    });
-
-    //Rendering X and Y axis.
-    useEffect(() =>{
-        const svg = d3.select(axisReference.current);
-        //svg.selectAll("*").remove();
-
-        const make_X_Axis = d3.axisBottom(xDimension);
-        svg.append("g").attr("transform", "translate(0," + axisHeight + ")").call(make_X_Axis);
-
-        const make_Y_Axis = d3.axisLeft(yDimension);
-        svg.append("g").call(make_Y_Axis);
-    }, [xDimension, yDimension, axisHeight]);
+    // Create bars
+    svg.selectAll("mybar")
+        .data(data)
+        .enter() 
+        .append("rect")
+        .attr("x", function(d) { return x_axis(d.address)!;})
+        .attr("y", function(d) { return y_axis(d.packets)!;})
+        .attr("width", x_axis.bandwidth())
+        .attr("height", function(d) { return height - y_axis(d.packets)!;}) //height - y_axis(packets.length)
+        .attr("fill", "#619E57")
 
     return(
-        <svg width={width} height={height}>
-            <g width={axisWidth} height={axisHeight} transform={`translate(${[GRAPH_MARGINS.left, GRAPH_MARGINS.top].join(",")})`}>
-                {makeRectangles}
-            </g>
-            <g width={axisWidth} height={axisHeight} ref={axisReference} transform={`translate(${[GRAPH_MARGINS.left, GRAPH_MARGINS.top].join(",")})`}>
-            </g>
-        </svg>
+        <div id="bar_graph"></div>
     );
 }
+
