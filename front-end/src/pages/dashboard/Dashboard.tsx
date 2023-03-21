@@ -56,8 +56,8 @@ const DashboardPage = () => {
       <Header />
       {/* NON-ADMIN DASHBOARD VIEW */}
 
-      <Graph address={["123.43.245.21", "137.13.42.198"]} packet={[252, 345]}/>
-      
+      <Graph x_axis={["123.43.245.21", "137.13.42.198"]} y_axis={[252, 345]}/>
+
       <div style={{ display: userType !== "ADMIN" ? '' : 'none' }}>
           <div className = "background-side-by-side-parent">
           <div className='background-side-by-side-first-child'>

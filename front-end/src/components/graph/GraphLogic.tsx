@@ -6,7 +6,7 @@ import * as d3 from "d3";
 
 
 // set the dimensions and margins of the graph
-const margin = {top: 20, right: 30, bottom: 75, left: 30},
+const margin = {top: 20, right: 30, bottom: 80, left: 30},
     width = 460 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
@@ -19,15 +19,15 @@ var svg = d3.select("#bar_graph")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 type dataProps = {
-    packets: number[]
+    values: number[]
     names: string[]
 }
 
-export const BarGraph = ({packets, names}: dataProps) =>{
+export const BarGraph = ({values, names}: dataProps) =>{
     var data = [];
     var i = 0;
-    for(i = 0; i < packets.length; i++){
-        const obj = {address: names[i], packets: packets[i]};
+    for(i = 0; i < values.length; i++){
+        const obj = {address: names[i], packets: values[i]};
         data.push(obj);
     }
 
@@ -47,7 +47,7 @@ export const BarGraph = ({packets, names}: dataProps) =>{
 
     // Set up Y axis
     var y_axis = d3.scaleLinear()
-        .domain([0, Math.max(...packets)])
+        .domain([0, Math.max(...values)])
         .range([ height, 0]);
 
     svg.append("g")
