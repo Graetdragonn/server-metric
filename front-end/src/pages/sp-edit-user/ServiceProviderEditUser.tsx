@@ -5,7 +5,6 @@ import Header from '../../components/navigation-bar/Header';
 import '../../style/Master.css';
 import { getServiceProviderList, addClientToServerProvider } from "../../pages/add-user/AddUserLogic";
 import { deleteServerProviderClientByEmail, getClientServiceProvider } from '../delete-user/DeleteUserLogic';
-import { getUserType } from '../login/LoginLogic';
 
 const ServiceProviderEditUserPage = () => {
     const navigate = useNavigate();

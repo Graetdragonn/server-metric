@@ -3,13 +3,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import BackButton from '../../components/back-button/BackButton';
 import Header from '../../components/navigation-bar/Header';
 import '../../style/Master.css';
-import { getServiceProviderList, addClientToServerProvider } from "../../pages/add-user/AddUserLogic";
+// import { getServiceProviderList, addClientToServerProvider } from "../../pages/add-user/AddUserLogic";
 import { checkServerFormat } from '../add-server/AddServerLogic';
 import { checkIfServerInList } from './AdminEditUserLogic';
 import { checkEmail, isEmpty } from '../create-account/CreateAccountLogic';
 import { submitEdits } from '../settings/SettingsLogic';
-import { deleteServerProviderClientByEmail, getClientServiceProvider } from '../delete-user/DeleteUserLogic';
-import { getUserType } from '../login/LoginLogic';
+// import { deleteServerProviderClientByEmail, getClientServiceProvider } from '../delete-user/DeleteUserLogic';
+// import { getUserType } from '../login/LoginLogic';
 
 const AdminEditUserPage = () => {
     const navigate = useNavigate();
@@ -32,12 +32,12 @@ const AdminEditUserPage = () => {
     const [addServerError, setAddServerError] = useState(false);
     const [serverFormatError, setServerFormatError] = useState(false);
     const [deleteServerError, setDeleteServerError] = useState(false);
-    const [serviceProvider, setServiceProvider] = useState("");
-    const [clientType, setClientType] = useState(false);
+    // const [serviceProvider, setServiceProvider] = useState("");
+    // const [clientType, setClientType] = useState(false);
 
     // gets list of all service providers
-    var serviceProviders = new Array();
-    const [serviceProviderList, setServiceProviderList] = useState([] as any[]);
+    // var serviceProviders = new Array();
+    // const [serviceProviderList, setServiceProviderList] = useState([] as any[]);
 
     const [userServersList, setUserServersList] = useState([] as any[]);
 
@@ -132,26 +132,26 @@ const AdminEditUserPage = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // if user was a client but changed type
-        if (clientType && info.userType !== 'CLIENT') {
-            await deleteServerProviderClientByEmail(info.sp, info.email);
-        }
+        // // if user was a client but changed type
+        // if (clientType && info.userType !== 'CLIENT') {
+        //     await deleteServerProviderClientByEmail(info.sp, info.email);
+        // }
 
-        // if user is already a client but changed service providers
-        else if (clientType && info.sp !== serviceProvider) {
-            if (await deleteServerProviderClientByEmail(info.sp, info.email) !== "ERROR") {
-                await addClientToServerProvider(serviceProvider, info.email);
-            }
-            else if (info.sp === "") {
-                await addClientToServerProvider(serviceProvider, info.email);
-            }
-        }
+        // // if user is already a client but changed service providers
+        // else if (clientType && info.sp !== serviceProvider) {
+        //     if (await deleteServerProviderClientByEmail(info.sp, info.email) !== "ERROR") {
+        //         await addClientToServerProvider(serviceProvider, info.email);
+        //     }
+        //     else if (info.sp === "") {
+        //         await addClientToServerProvider(serviceProvider, info.email);
+        //     }
+        // }
 
-        // if user type is changed to client
-        else if(info.userType === 'CLIENT' && !clientType) {
-            setClientType(true);
-            await addClientToServerProvider(serviceProvider, info.email);
-        }
+        // // if user type is changed to client
+        // else if(info.userType === 'CLIENT' && !clientType) {
+        //     setClientType(true);
+        //     await addClientToServerProvider(serviceProvider, info.email);
+        // }
 
         // update user account
         if (checkEmail(info.email) && !isEmpty(info.email) &&
@@ -165,31 +165,31 @@ const AdminEditUserPage = () => {
         }
     }
 
-    // get list of all service providers
-    const getServiceProviders = async () => {
-        serviceProviders = await getServiceProviderList();
-        setServiceProviderList(serviceProviders);
-    }
-    getServiceProviders();
+    // // get list of all service providers
+    // const getServiceProviders = async () => {
+    //     serviceProviders = await getServiceProviderList();
+    //     setServiceProviderList(serviceProviders);
+    // }
+    // getServiceProviders();
 
-    // get service provider of client
-    const getSP = async () => {
-        if (await getUserType(info.email) === "CLIENT") {
-            setClientType(true);
-            var temp = await getClientServiceProvider(info.email);
-            setServiceProvider(temp);
-            setInfo({
-                ...info,
-                sp: temp
-            });
-        }
+//     // get service provider of client
+//     const getSP = async () => {
+//         if (await getUserType(info.email) === "CLIENT") {
+//             setClientType(true);
+//             var temp = await getClientServiceProvider(info.email);
+//             setServiceProvider(temp);
+//             setInfo({
+//                 ...info,
+//                 sp: temp
+//             });
+//         }
         
-  }
+//   }
   
     // set server list array
     useEffect(() => {
         setUserServersList(userInfo['servers']);
-        getSP();
+        // getSP();
     }, []);
 
     return (
@@ -214,16 +214,16 @@ const AdminEditUserPage = () => {
                         <input type="text" name="last" required={true} value={info.email} onChange={handleChange}></input>
                         <br></br>
                         <label>User Type</label>
-                        <div className="row" style={{ display: "flex" }}>
+                        <div className="center">
                             <select value={info.userType} onChange={(e) => setInfo({ ...info, userType: e.target.value })}>
                                 <option value="ADMIN">Admin</option>
                                 <option value="SERVICE_MANAGER">Service Manager</option>
                                 <option value="SERVICE_PROVIDER">Service Provider</option>
                                 <option value="CLIENT">Client</option>
                             </select>
-                            <select value={serviceProvider} onChange={(e) => setServiceProvider(e.target.value)} style={{ display: info.userType === "CLIENT" ? '' : 'none' }}>
+                            {/* <select value={serviceProvider} onChange={(e) => setServiceProvider(e.target.value)} style={{ display: info.userType === "CLIENT" ? '' : 'none' }}>
                                 {serviceProviderList.map(user => { return <option value={user.username}>{user.userFirstName} {user.userLastName}</option>; })}
-                            </select>
+                            </select> */}
                         </div>
                         <label>Servers</label>
                         <div className="row" style={{ display: "flex" }}>
