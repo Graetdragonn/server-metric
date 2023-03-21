@@ -54,10 +54,10 @@ const DashboardPage = () => {
     <div className="Dashboard-Page">
       <Header />
       {/* NON-ADMIN DASHBOARD VIEW */}
+      <div style={{ display: userType !== "ADMIN" ? '' : 'none' }}>
       <div>
         <ServerList />
       </div>
-      <div style={{ display: userType !== "ADMIN" ? '' : 'none' }}>
           <div className = "background-side-by-side-parent">
           <div className='background-side-by-side-first-child'>
             <h1>Server Sent Packet Traffic</h1>

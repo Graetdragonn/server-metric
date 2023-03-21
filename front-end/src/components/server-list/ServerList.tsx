@@ -15,6 +15,7 @@ export default function UserList(){
 
     // get all servers
     const getServerList = async () => {
+      var email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
       if (localStorage.getItem("userType") === "ADMIN") {
         servers = await getAllServers();
       } else {
@@ -23,16 +24,24 @@ export default function UserList(){
           // userInfo is null, i think code should suspend until getUserByEmail is finished
           // and actually returns something but for some reason null is being passed to
           // getClientsByProvider... idk man this is so frustrating
-          var userInfo = await getUserByEmail(localStorage.getItem("email")!);
+          var userInfo = await getUserByEmail(email);
           clients = await getClientsByProvider(userInfo);
         } else if (localStorage.getItem("userType") === "CLIENT") {
-          clients = [localStorage.getItem("email")];
+          clients = [email];
         }
         // for each client (or if client, for self), add servers to list
-        clients.forEach(async (clientEmail: string) => {
-          var userInfo = await getUserByEmail(clientEmail);
-          servers.push(userInfo["servers"]);
-        });
+        // clients.forEach(async (clientEmail: string) => {
+        //   var userInfo = await getUserByEmail(clientEmail);
+        //   servers.push(userInfo["servers"]);
+        // });
+        
+        for (let i = 0; i < clients.length; i++) {
+          var userInfo = await getUserByEmail(clients[i]);
+          for (let j = 0; j < userInfo["servers"].length; j++) {
+            servers.push(userInfo["servers"][j]);
+            
+          }
+        }
       }
       
       // remove duplicates by casting to Set then back to Array
