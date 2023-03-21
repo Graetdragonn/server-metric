@@ -6,6 +6,7 @@ import { getNumPacketsSentPerAddresses, getNumPacketsReceivedPerAddresses } from
 import { getServersByUser } from '../../components/navigation-bar/NavBarLogic';
 import UserList from '../../components/user-list/UserList';
 import ServerList from '../../components/server-list/ServerList';
+import ClientList from '../../components/client-list/ClientList';
 
 const DashboardPage = () => {
   const navigate = useNavigate();
@@ -15,14 +16,15 @@ const DashboardPage = () => {
   const [receivedPacketsPerIp, setReceivedPacketsPerIp] = useState([] as any[]);
   const [userAddresses, setUserAddresses] = useState([] as string[]);
   const userType = localStorage.getItem('userType');
-    let userInfo: string[];
-    let sentPacketsPer: any[];
-    let receivedPacketsPer: any[];
+  let userInfo: string[];
+  let sentPacketsPer: any[];
+  let receivedPacketsPer: any[];
 
-    // get data to render on screen immediately
+  const email = JSON.parse(localStorage.getItem('email') || '');
+
+  // get data to render on screen immediately
   useEffect(() => {
-    const email = JSON.parse(localStorage.getItem('email') || '');
-    
+
     async function getUserAddresses() {
       userInfo = await getServersByUser(email);
       setUserAddresses(userInfo);
@@ -32,18 +34,18 @@ const DashboardPage = () => {
       setReceivedPacketsPerIp(receivedPacketsPer);
     }
 
-    if(userType !== "ADMIN"){
+    if (userType !== "ADMIN" && userType !== "SERVICE_MANAGER") {
       getUserAddresses();
     }
-    
+
   }, [sentPacketsPerIp, receivedPacketsPerIp]);
 
   const renderSentPacketsPerAddress = () => {
-    return sentPacketsPerIp.map((addr) => <div className='div-for-single-address' onClick={()=>navigate("/single-server", {state: addr.address})}>Address {addr.address} has sent {addr.numPackets} packet(s)</div>);
+    return sentPacketsPerIp.map((addr) => <div className='div-for-single-address' onClick={() => navigate("/single-server", { state: addr.address })}>Address {addr.address} has sent {addr.numPackets} packet(s)</div>);
   };
 
   const renderReceivedPacketsPerAddress = () => {
-      return receivedPacketsPerIp.map((addr) => <div className='div-for-single-address' onClick={()=>navigate("/single-server", {state: addr.address})}>Address {addr.address} has sent {addr.numPackets} packet(s)</div>);
+    return receivedPacketsPerIp.map((addr) => <div className='div-for-single-address' onClick={() => navigate("/single-server", { state: addr.address })}>Address {addr.address} has sent {addr.numPackets} packet(s)</div>);
   };
 
   const renderNoAddresses = () => {
@@ -53,52 +55,65 @@ const DashboardPage = () => {
   return (
     <div className="Dashboard-Page">
       <Header />
-      {/* NON-ADMIN DASHBOARD VIEW */}
-      <div style={{ display: userType !== "ADMIN" ? '' : 'none' }}>
-          <div className = "background-side-by-side-parent">
+      {/* NON-ADMIN AND NON-SERVICE MANAGER DASHBOARD VIEW */}
+      <div style={{ display: userType === "CLIENT" ? '' : 'none' }}>
+        <div className="background-side-by-side-parent">
           <div className='background-side-by-side-first-child'>
             <h1>Server Sent Packet Traffic</h1>
             {sentPacketsPerIp.length > 0 && renderSentPacketsPerAddress()}
             {sentPacketsPerIp.length < 1 && renderNoAddresses()}
-        </div>
-              <div className='background-side-by-side-child'>
-                  <h1>Server Received Packet Traffic</h1>
-                  {receivedPacketsPerIp.length > 0 && renderReceivedPacketsPerAddress()}
-                  {receivedPacketsPerIp.length < 1 && renderNoAddresses()}
-              </div>
           </div>
-          <div className = "background-side-by-side-parent">
-        <div className='background-side-by-side-single-first-child'>
-          <h1>Server Settings</h1>
-        <button onClick={() => navigate('/addserver')}>Add Server</button>
-        </div>
+          <div className='background-side-by-side-child'>
+            <h1>Server Received Packet Traffic</h1>
+            {receivedPacketsPerIp.length > 0 && renderReceivedPacketsPerAddress()}
+            {receivedPacketsPerIp.length < 1 && renderNoAddresses()}
           </div>
+        </div>
+        <div className="background-side-by-side-parent">
+          <div className='background-side-by-side-single-first-child'>
+            <h1>Server Settings</h1>
+            <button onClick={() => navigate('/addserver')}>Add Server</button>
+          </div>
+        </div>
 
       </div>
 
       {/* ADMIN DASHBOARD VIEW */}
-      <div style={{ display: userType !== "ADMIN" ? 'none' : '' }}>
+      <div style={{ display: userType === "ADMIN" ? '' : 'none' }}>
 
-      <br></br>
-      <div className='row' style={{display: 'flex', justifyContent:'space-around'}}>
+        <br></br>
+        <div className='row' style={{ display: 'flex', justifyContent: 'space-around' }}>
 
-      <UserList></UserList>
+          <UserList></UserList>
 
-      <ServerList></ServerList>
+          <ServerList></ServerList>
 
-      <div className='div-for-admin-services'>
-        <h1>Admin Services</h1>
-        <button style={{width: 20}} onClick={() => navigate('/adduser')}>Add User</button>
-        <button style={{width: 20}} onClick={() => navigate('/deleteuser')}>Delete User</button>
-        <button style={{width: 20}} onClick={() => navigate('/adminaddserver')}>Add Server</button>
-        <button style={{width: 20}} onClick={() => navigate('/admindeleteserver')}>Delete Server</button>
-        </div> 
+          <div className='div-for-admin-services'>
+            <h1>Admin Services</h1>
+            <button style={{ width: 20 }} onClick={() => navigate('/adduser')}>Add User</button>
+            <button style={{ width: 20 }} onClick={() => navigate('/deleteuser')}>Delete User</button>
+            <button style={{ width: 20 }} onClick={() => navigate('/adminaddserver')}>Add Server</button>
+            <button style={{ width: 20 }} onClick={() => navigate('/admindeleteserver')}>Delete Server</button>
+          </div>
+        </div>
+        <br></br>
+
       </div>
-      <br></br>
-      
+
+      {/* SERVICE MANAGER DASHBOARD VIEW */}
+      <div style={{ display: userType === "SERVICE_MANAGER" ? '' : 'none' }}>
+
+        <br></br>
+        <div className='row' style={{ display: 'flex', justifyContent: 'space-around' }}>
+
+          <ClientList></ClientList>
+
+        </div>
+        <br></br>
+
       </div>
     </div>
   );
 };
-  
+
 export default DashboardPage;

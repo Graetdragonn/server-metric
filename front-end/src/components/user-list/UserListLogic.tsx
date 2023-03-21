@@ -19,3 +19,20 @@ export async function getUserInfo(email: string) {
     var userData = JSON.parse(userInfo);
     return userData;
 }
+
+/**
+ * Get all clients
+ * @returns list of all clients
+ */
+export async function getClientList(): Promise<any[]>{
+    const res = await UserService.getUsers();
+    var clientList = JSON.parse(res);
+    var clients = new Array();
+    
+    for(let i = 0; i < clientList.length; i++){
+        if(clientList[i]["userType"] === "CLIENT"){
+            clients.push(clientList[i]);
+        }
+    }
+    return clients;
+}
