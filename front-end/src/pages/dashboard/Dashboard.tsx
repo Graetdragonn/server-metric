@@ -1,16 +1,15 @@
-import { useEffect, useState } from 'react';
-import '../../style/Master.css'
+import React, { useEffect, useState } from 'react';
 import Header from "../../components/navigation-bar/Header";
 import { useNavigate } from 'react-router-dom';
 import { getNumPacketsSentPerAddresses, getNumPacketsReceivedPerAddresses } from './DashboardLogic';
 import { getServersByUser } from '../../components/navigation-bar/NavBarLogic';
 import UserList from '../../components/user-list/UserList';
 import ServerList from '../../components/server-list/ServerList';
+import {Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 
 const DashboardPage = () => {
   const navigate = useNavigate();
 
-  // dictionary of packets sent per each address
   const [sentPacketsPerIp, setSentPacketsPerIp] = useState([] as any[]);
   const [receivedPacketsPerIp, setReceivedPacketsPerIp] = useState([] as any[]);
   const [userAddresses, setUserAddresses] = useState([] as string[]);
@@ -38,48 +37,48 @@ const DashboardPage = () => {
     
   }, [sentPacketsPerIp, receivedPacketsPerIp]);
 
-  const renderSentPacketsPerAddress = () => {
-    return sentPacketsPerIp.map((addr) => <div className='div-for-single-address' onClick={()=>navigate("/single-server", {state: addr.address})}>Address {addr.address} has sent {addr.numPackets} packet(s)</div>);
-  };
-
-  const renderReceivedPacketsPerAddress = () => {
-      return receivedPacketsPerIp.map((addr) => <div className='div-for-single-address' onClick={()=>navigate("/single-server", {state: addr.address})}>Address {addr.address} has sent {addr.numPackets} packet(s)</div>);
-  };
-
   const renderNoAddresses = () => {
     return <p>No addresses found.</p>
   };
 
   return (
-    <div className="Dashboard-Page">
-      <Header />
-      {/* NON-ADMIN DASHBOARD VIEW */}
-      <div style={{ display: userType !== "ADMIN" ? '' : 'none' }}>
-          <div className = "background-side-by-side-parent">
-          <div className='background-side-by-side-first-child'>
-            <h1>Server Sent Packet Traffic</h1>
-            {sentPacketsPerIp.length > 0 && renderSentPacketsPerAddress()}
-            {sentPacketsPerIp.length < 1 && renderNoAddresses()}
-        </div>
-              <div className='background-side-by-side-child'>
-                  <h1>Server Received Packet Traffic</h1>
-                  {receivedPacketsPerIp.length > 0 && renderReceivedPacketsPerAddress()}
-                  {receivedPacketsPerIp.length < 1 && renderNoAddresses()}
-              </div>
-          </div>
-          <div className = "background-side-by-side-parent">
-        <div className='background-side-by-side-single-first-child'>
-          <h1>Server Settings</h1>
-        <button onClick={() => navigate('/addserver')}>Add Server</button>
-        </div>
-          </div>
 
+    <div className="Dashboard-Page">
+       <Header />
+      {/* NON-ADMIN DASHBOARD VIEW */}
+      <div  style={{  display: userType !== "ADMIN" ? '' : 'none' }}>
+
+          <div className="white-div" style={{width: 1000}}>
+              <h1>Server Settings</h1>
+              <button onClick={() => navigate('/addserver')}>Add a Server</button>
+              <button onClick={() => navigate('')}>Remove a Server</button>
+          </div>
+          <br/>
+
+          <div className="white-div" style={{width: 1000}}>
+          <BarChart  height={300} width={1000} data={sentPacketsPerIp}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="address" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar name="Number Of Packets Sent" barSize={20} dataKey="numPackets" fill="#619E57" />
+          </BarChart>
+              <br/>
+          <BarChart height={300} width={1000} data={receivedPacketsPerIp}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="address" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar name="Number of Packets received" barSize={20} dataKey="numPackets" fill="#619E57" />
+          </BarChart>
+          </div>
       </div>
 
       {/* ADMIN DASHBOARD VIEW */}
       <div style={{ display: userType !== "ADMIN" ? 'none' : '' }}>
-
-      <br></br>
+          <br/>
       <div className='row' style={{display: 'flex', justifyContent:'space-around'}}>
 
       <UserList></UserList>
@@ -87,14 +86,15 @@ const DashboardPage = () => {
       <ServerList></ServerList>
 
       <div className='div-for-admin-services'>
-        <h1>Admin Services</h1>
-        <button style={{width: 20}} onClick={() => navigate('/adduser')}>Add User</button>
-        <button style={{width: 20}} onClick={() => navigate('/deleteuser')}>Delete User</button>
-        <button style={{width: 20}} onClick={() => navigate('/adminaddserver')}>Add Server</button>
-        <button style={{width: 20}} onClick={() => navigate('/admindeleteserver')}>Delete Server</button>
-        </div> 
+          <h1>Admin Services</h1>
+          <button style={{width: 150}} onClick={() => navigate('/adduser')}>Add User</button>
+          <button style={{width: 150}} onClick={() => navigate('/deleteuser')}>Delete User</button>
+          <button style={{width: 150}} onClick={() => navigate('/adminaddserver')}>Add Server</button>
+          <button style={{width: 150}} onClick={() => navigate('/admindeleteserver')}>Delete Server</button>
       </div>
-      <br></br>
+
+      </div>
+          <br/>
       
       </div>
     </div>

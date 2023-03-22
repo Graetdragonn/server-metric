@@ -1,6 +1,7 @@
 package com.example.demo.Traffic;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -51,15 +52,34 @@ public class TrafficController {
         return trafficService.getReceivedTrafficListByServer(serverAddress);
     }
 
+    @GetMapping("getMapOfServersAndPacketsSentByUser/{userEmail}")
+    @CrossOrigin
+    public Map<String, Integer> getMapOfServersAndPacketsSentByUser(@PathVariable("userEmail") String userEmail){
+        return trafficService.getUsersServersAndPacketsSent(userEmail);
+    }
+
+    @GetMapping("getMapOfServersAndPacketsReceivedByUser/{userEmail}")
+    @CrossOrigin
+    public Map<String, Integer> getMapOfServersAndPacketsReceivedByUser(@PathVariable("userEmail") String userEmail){
+        return trafficService.getUsersServersAndPacketsReceived(userEmail);
+    }
+
+    @GetMapping("getMapOfPortsSentByAddress/{serverAddress}")
+    @CrossOrigin
+    public Map<Integer, Integer> getMapOfPortsSentByAddress(@PathVariable("serverAddress") String serverAddress){
+        return trafficService.getServerPortsSent(serverAddress);
+    }
+
+    @GetMapping("getMapOfPortsReceivedByAddress/{serverAddress}")
+    @CrossOrigin
+    public Map<Integer, Integer> getMapOfPortsReceivedByAddress(@PathVariable("serverAddress") String serverAddress){
+        return trafficService.getServerPortsReceived(serverAddress);
+    }
+
     @PostMapping
     @CrossOrigin
     public void addTraffic(@RequestBody Netflow9 traffic) {
         trafficService.addTraffic(traffic);
     }
 
-    // @DeleteMapping
-    // @CrossOrigin
-    // public void deleteTraffic(@RequestBody Map<String, Netflow9> traffic) {
-    //     trafficService.addTraffic(traffic);
-    // }
 }
