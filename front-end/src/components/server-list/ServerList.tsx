@@ -48,6 +48,8 @@ export default function UserList(){
         }
     }
     
+    getServerList();
+
     return (
     <div >
       <table className="userTable">
