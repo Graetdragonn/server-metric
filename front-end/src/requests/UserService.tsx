@@ -122,7 +122,7 @@ class UserService {
             url: USER_API_BASE_URL + 'api/v1/users/getUserByEmail/' + email,
             headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}
         };
-
+        
         await axios(config)
             .then(function (response: { data: any; }) {
                 res = JSON.stringify(response.data);

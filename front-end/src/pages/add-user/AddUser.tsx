@@ -4,7 +4,7 @@ import BackButton from "../../components/back-button/BackButton";
 import Header from "../../components/navigation-bar/Header";
 import { isTypeDefault, checkEmail, isEmpty } from "../create-account/CreateAccountLogic";
 import { submit } from "./AddUserLogic"
-import { getServiceProviderList, addClientToServerProvider } from "./AddUserLogic";
+// import { getServiceProviderList, addClientToServerProvider } from "./AddUserLogic";
 
 const AddUserPage = () => {
 
@@ -58,10 +58,10 @@ const AddUserPage = () => {
             setRoleSelected(false);
         }
         
-        // check that service provider is selected if user is CLIENT, show error if not
-        if (state.userType === "CLIENT" && isTypeDefault(state.serviceProvider)) {
-            setspSelected(false);
-        }
+        // // check that service provider is selected if user is CLIENT, show error if not
+        // if (state.userType === "CLIENT" && isTypeDefault(state.serviceProvider)) {
+        //     setspSelected(false);
+        // }
         
 
         // verify fields and create account
@@ -69,9 +69,9 @@ const AddUserPage = () => {
             !isEmpty(state.first) && !isEmpty(state.last) && !isTypeDefault(state.userType)) {
 
             if (await submit(state.email, state.first, state.last, state.pass, state.userType)) {
-                if (state.userType === "CLIENT"){
-                    await addClientToServerProvider(state.serviceProvider, state.email);
-                }
+                // if (state.userType === "CLIENT"){
+                //     await addClientToServerProvider(state.serviceProvider, state.email);
+                // }
                 setSubmitted(true);
             }
             else {
@@ -81,11 +81,11 @@ const AddUserPage = () => {
     };
 
     // get list of all service providers
-    const getServiceProviders = async () => {
-        serviceProviders = await getServiceProviderList();
-        setServiceProviderList(serviceProviders);
-    }
-    getServiceProviders();
+    // const getServiceProviders = async () => {
+    //     serviceProviders = await getServiceProviderList();
+    //     setServiceProviderList(serviceProviders);
+    // }
+    // getServiceProviders();
 
     return (
         <><Header></Header><body className='Form-Body'>
@@ -108,10 +108,10 @@ const AddUserPage = () => {
                             <option value="CLIENT">Client</option>
                         </select>
                         <br></br>
-                        <select onChange={(e) => setState({ ...state, serviceProvider: e.target.value })} style={{display: state.userType === "CLIENT" ? '' : 'none'}}>
+                        {/* <select onChange={(e) => setState({ ...state, serviceProvider: e.target.value })} style={{display: state.userType === "CLIENT" ? '' : 'none'}}>
                             <option value="default"> - Select Service Provider -</option>
                             {serviceProviderList.map(user => {return <option value={user.username}>{user.userFirstName} {user.userLastName}</option>;})} 
-                        </select>
+                        </select> */}
                     </div>
                     <button>Submit</button>
                     <span style={{ visibility: roleSelected ? 'hidden' : 'visible' }} className='error'>&nbsp; No user type selected </span>
