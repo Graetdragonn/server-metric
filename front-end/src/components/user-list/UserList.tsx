@@ -26,23 +26,27 @@ export default function UserList() {
   return (
     <div >
       <table className="userTable">
-        <caption>All Users</caption>
-        <tr>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Email</th>
-          <th>User Type</th>
-        </tr>
-        {userList.map((user) => {
-          return (
-            <tr key={user.username} className="userRow" onClick={() => goToEdit(user.username)}>
-              <td>{user.userFirstName}</td>
-              <td>{user.userLastName}</td>
-              <td>{user.username}</td>
-              <td>{user.userType}</td>
-            </tr>
-          )
-        })}
+      <caption>All Users</caption>
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>User Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          {userList.map((user) => {
+            return (
+              <tr key={user.username} className="userRow" onClick={() => goToEdit(user.username)}>
+                <td>{user.userFirstName}</td>
+                <td>{user.userLastName}</td>
+                <td>{user.username}</td>
+                <td>{user.userType}</td> 
+              </tr>
+            )
+          })}
+        </tbody>
       </table>
     </div>
   );
