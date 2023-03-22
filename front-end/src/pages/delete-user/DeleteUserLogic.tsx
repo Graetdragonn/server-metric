@@ -48,6 +48,12 @@ export async function getClientServiceProvider(email: string) {
     return "";
 }
 
+/**
+ * Delete a client from a service provider's list
+ * @param serviceProvider service provider email
+ * @param client client email
+ * @returns error if fail
+ */
 export async function deleteServerProviderClientByEmail(serviceProvider: string, client: string) {
     const res = UserService.deleteServiceProviderClientByEmail(serviceProvider, client);
     return res;
