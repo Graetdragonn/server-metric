@@ -19,10 +19,6 @@ export default function UserList(){
         servers = await getAllServers();
       } else {
         if (localStorage.getItem("userType") === "SERVICE_PROVIDER") {
-          // PROBLEM IS HERE... not waiting for getUserByEmail to finish?
-          // userInfo is null, i think code should suspend until getUserByEmail is finished
-          // and actually returns something but for some reason null is being passed to
-          // getClientsByProvider... idk man this is so frustrating
           var userInfo = await getUserByEmail(localStorage.getItem("email")!);
           clients = await getClientsByProvider(userInfo);
         } else if (localStorage.getItem("userType") === "CLIENT") {
