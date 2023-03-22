@@ -58,6 +58,24 @@ public class TrafficController {
         return trafficService.getUsersServersAndPacketsSent(userEmail);
     }
 
+    @GetMapping("getMapOfServersAndPacketsReceivedByUser/{userEmail}")
+    @CrossOrigin
+    public Map<String, Integer> getMapOfServersAndPacketsReceivedByUser(@PathVariable("userEmail") String userEmail){
+        return trafficService.getUsersServersAndPacketsReceived(userEmail);
+    }
+
+    @GetMapping("getMapOfPortsSentByAddress/{serverAddress}")
+    @CrossOrigin
+    public Map<Integer, Integer> getMapOfPortsSentByAddress(@PathVariable("serverAddress") String serverAddress){
+        return trafficService.getServerPortsSent(serverAddress);
+    }
+
+    @GetMapping("getMapOfPortsReceivedByAddress/{serverAddress}")
+    @CrossOrigin
+    public Map<Integer, Integer> getMapOfPortsReceivedByAddress(@PathVariable("serverAddress") String serverAddress){
+        return trafficService.getServerPortsReceived(serverAddress);
+    }
+
     @PostMapping
     @CrossOrigin
     public void addTraffic(@RequestBody Netflow9 traffic) {
