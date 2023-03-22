@@ -6,7 +6,7 @@ import TrafficService from "../../requests/TrafficService";
  * Returns a dictionary
  * key = ip address, value = # of packets sent
  */
-export async function getNumPacketsSentPerAddresses(userAddresses: string[]) {
+export async function getNumPacketsSentPerAddressesClient(userAddresses: string[]) {
     try {
        
         const res = await TrafficService.getAllTraffic();
@@ -36,7 +36,7 @@ export async function getNumPacketsSentPerAddresses(userAddresses: string[]) {
  * Returns a dictionary
  * key = ip address, value = # of packets received
  */
-export async function getNumPacketsReceivedPerAddresses(userAddresses: string[]) {
+export async function getNumPacketsReceivedPerAddressesClient(userAddresses: string[]) {
     try {
 
         const res = await TrafficService.getAllTraffic();
@@ -60,6 +60,89 @@ export async function getNumPacketsReceivedPerAddresses(userAddresses: string[])
     }
 }
 
+export async function getNumPacketsSentPerAddressesSP(clientAndClientServers: any[]) {
+    try {
+        const res = await TrafficService.getAllTraffic();
+        var trafficList = JSON.parse(res);
+        var clientAndServersAndPackets = [] as any[];
+
+        for (let i = 0; i < clientAndClientServers.length; i++) {
+            let packets = [] as number[];
+            for (let j = 0; j < clientAndClientServers[i]["servers"].length; j++) {
+                packets.push(0);
+            }
+            clientAndServersAndPackets.push({
+                username: clientAndClientServers[i]["username"],
+                servers: clientAndClientServers[i]["servers"],
+                packets: packets
+            })
+        }
+
+        for (let i = 0; i < clientAndServersAndPackets.length; i++) {
+            for (let j = 0; j < clientAndServersAndPackets[i]["servers"].length; j++) {
+
+                for (let k = 0; k < trafficList.length; k++) {
+                    var addr = trafficList[k]["srcIP"];
+                    if (clientAndServersAndPackets[i]["servers"][j] == addr) {
+                        clientAndServersAndPackets[i]["packets"][j] += 1;
+                    }
+                }
+            }
+        }
+
+        var returnList = [] as any[]
+        for(let i = 0; i < clientAndServersAndPackets.length; i++){
+            for(let j = 0; j < clientAndServersAndPackets[i]["servers"].length; j++)
+            returnList.push({userAndAddress: clientAndServersAndPackets[i]["username"] + ": " + clientAndServersAndPackets[i]["servers"][j], numPackets: clientAndServersAndPackets[i]["packets"][j]})
+        }
+        return returnList;
+    }
+    catch {
+        return new Array();
+    }
+}
+
+export async function getNumPacketsReceivedPerAddressesSP(clientAndClientServers: any[]) {
+    try {
+        const res = await TrafficService.getAllTraffic();
+        var trafficList = JSON.parse(res);
+        var clientAndServersAndPackets = [] as any[];
+
+        for (let i = 0; i < clientAndClientServers.length; i++) {
+            let packets = [] as number[];
+            for (let j = 0; j < clientAndClientServers[i]["servers"].length; j++) {
+                packets.push(0);
+            }
+            clientAndServersAndPackets.push({
+                username: clientAndClientServers[i]["username"],
+                servers: clientAndClientServers[i]["servers"],
+                packets: packets
+            })
+        }
+
+        for (let i = 0; i < clientAndServersAndPackets.length; i++) {
+            for (let j = 0; j < clientAndServersAndPackets[i]["servers"].length; j++) {
+
+                for (let k = 0; k < trafficList.length; k++) {
+                    var addr = trafficList[k]["dstIP"];
+                    if (clientAndServersAndPackets[i]["servers"][j] == addr) {
+                        clientAndServersAndPackets[i]["packets"][j] += 1;
+                    }
+                }
+            }
+        }
+
+        var returnList = [] as any[]
+        for(let i = 0; i < clientAndServersAndPackets.length; i++){
+            for(let j = 0; j < clientAndServersAndPackets[i]["servers"].length; j++)
+                returnList.push({userAndAddress: clientAndServersAndPackets[i]["username"] + ": " + clientAndServersAndPackets[i]["servers"][j], numPackets: clientAndServersAndPackets[i]["packets"][j]})
+        }
+        return returnList;
+    }
+    catch {
+        return new Array();
+    }
+}
 export async function getReceivingPortsForAServer(address: string) {
     const res = await TrafficService.getMapOfPortsReceivedByAddress(address);
     var map = new Map(Object.entries(JSON.parse(res)));
