@@ -26,7 +26,6 @@ export default function ServerList(){
           clients = [email];
         }
         
-        // 
         for (let i = 0; i < clients.length; i++) {
           var clientInfo = await getUserByEmail(clients[i]);
           for (let j = 0; j < clientInfo["servers"].length; j++) {
@@ -44,7 +43,7 @@ export default function ServerList(){
         if (localStorage.getItem("userType") === "ADMIN") {
           navigate('/adminsingleserver', { state: { serverInfo: res } });
         } else {
-          navigate('/singleserver', { state: { serverInfo: res } });
+          navigate('/single-server', { state: { serverInfo: res } });
         }
     }
     

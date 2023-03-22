@@ -47,9 +47,9 @@ const DashboardPage = () => {
 
     <div className="Dashboard-Page">
       <Header />
-      {/* NON-ADMIN AND NON-SERVICE MANAGER DASHBOARD VIEW */}
-      <div style={{ display: userType === "CLIENT" ? '' : 'none' }}>
-
+      {/* CLIENT AND SERVICE PROVIDER DASHBOARD VIEW */}
+      <div style={{ display: userType === "CLIENT" || userType === "SERVICE_PROVIDER" ? '' : 'none' }}>
+        <ServerList></ServerList>
         <div className="white-div" style={{ width: 1000 }}>
           <h1>Server Settings</h1>
           <button onClick={() => navigate('/addserver')}>Add a Server</button>
