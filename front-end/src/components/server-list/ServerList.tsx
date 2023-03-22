@@ -43,7 +43,7 @@ export default function ServerList(){
         if (localStorage.getItem("userType") === "ADMIN") {
           navigate('/adminsingleserver', { state: { serverInfo: res } });
         } else {
-          navigate('/single-server', { state: { serverInfo: res } });
+          navigate('/single-server', { state: res["address"] });
         }
     }
     
