@@ -62,7 +62,7 @@ const DashboardPage = () => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar name="Number Of Packets Sent" barSize={20} dataKey="numPackets" fill="#619E57" />
+              <Bar onClick={(data)=> {navigate("/single-server", {state: data.address})}} name="Number Of Packets Sent" barSize={30} dataKey="numPackets" fill="#619E57" />
           </BarChart>
               <br/>
           <BarChart height={300} width={1000} data={receivedPacketsPerIp}>
@@ -71,7 +71,7 @@ const DashboardPage = () => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar name="Number of Packets received" barSize={20} dataKey="numPackets" fill="#619E57" />
+              <Bar onClick={(data)=> {navigate("/single-server", {state: data.address})}} name="Number of Packets received" barSize={30} dataKey="numPackets" fill="#619E57" />
           </BarChart>
           </div>
       </div>

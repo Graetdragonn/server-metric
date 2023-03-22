@@ -26,6 +26,40 @@ class TrafficService {
         return res;
     }
 
+    async getMapOfPortsSentByAddress(address: string){
+        var res = "";
+        var config = {
+            method: 'get',
+            url: USER_API_BASE_URL + 'api/v1/traffic' + '/getMapOfPortsSentByAddress/' + address,
+            headers: {}
+        };
+        await axios(config)
+            .then(function (response: { data: any; }) {
+                res = JSON.stringify(response.data);
+            })
+            .catch(function (error: any) {
+                //alert(error);
+            });
+        return res;
+    }
+
+    async getMapOfPortsReceivedByAddress(address: string){
+        var res = "";
+        var config = {
+            method: 'get',
+            url: USER_API_BASE_URL + 'api/v1/traffic' + '/getMapOfPortsReceivedByAddress/' + address,
+            headers: {}
+        };
+        await axios(config)
+            .then(function (response: { data: any; }) {
+                res = JSON.stringify(response.data);
+            })
+            .catch(function (error: any) {
+                //alert(error);
+            });
+        return res;
+    }
+
 }
 
 export default new TrafficService()

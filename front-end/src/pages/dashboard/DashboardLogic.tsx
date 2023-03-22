@@ -59,3 +59,27 @@ export async function getNumPacketsReceivedPerAddresses(userAddresses: string[])
         return new Array();
     }
 }
+
+export async function getReceivingPortsForAServer(address: string) {
+    const res = await TrafficService.getMapOfPortsReceivedByAddress(address);
+    var map = new Map(Object.entries(JSON.parse(res)));
+    var portsUsed = new Array();
+
+    // @ts-ignore
+    for (let entry of map.entries()) {
+        portsUsed.push({ports: "Port: " + entry[0], numUsed: entry[1]})
+    }
+    return portsUsed;
+}
+
+export async function getSentPortsForAServer(address: string) {
+    const res = await TrafficService.getMapOfPortsSentByAddress(address);
+    var map = new Map(Object.entries(JSON.parse(res)));
+    var portsUsed = new Array();
+
+    // @ts-ignore
+    for (let entry of map.entries()) {
+        portsUsed.push({ports: "Port: " + entry[0], numUsed: entry[1]})
+    }
+    return portsUsed;
+}

@@ -1,80 +1,56 @@
 import { useLocation } from "react-router-dom";
 import '../../style/Master.css';
 import Header from "../../components/navigation-bar/Header";
-import { useEffect, useState } from "react";
-import {getReceivedServerTraffic, getSentServerTraffic} from "./SingleServerLogic";
+import React, { useEffect, useState } from "react";
+import {Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis} from "recharts";
+import {getReceivingPortsForAServer, getSentPortsForAServer} from "../dashboard/DashboardLogic";
 
 const SingleServer = () => {
 
   const location = useLocation();
   const { state } = location;
-  const [sentTrafficList, setSentTrafficList] = useState([] as any[]);
-  const [receivedTrafficList, setReceivedTrafficList] = useState([] as any[]);
-  var sentTraffic: string[];
-  var receivedTraffic: string[];
+  const [receivedPortList, setReceivedPortList] = useState([] as any []);
+  var receivedPorts: string[];
+  const [sentPortList, setSentPortList] = useState([] as any []);
+  var sentPorts: string[];
 
   useEffect(() => {
     async function getTraffic() {
-      sentTraffic = await getSentServerTraffic(state);
-      setSentTrafficList(sentTraffic);
-      receivedTraffic = await getReceivedServerTraffic(state);
-      setReceivedTrafficList(receivedTraffic)
+      receivedPorts = await getReceivingPortsForAServer(state);
+      setReceivedPortList(receivedPorts);
+      sentPorts = await getSentPortsForAServer(state);
+      setSentPortList(sentPorts);
     }
     getTraffic();
 
-  }, [sentTrafficList, receivedTrafficList]);
-
-  const renderSentTraffic = () => {
-    return sentTrafficList.map((event) =>
-
-      <div className='div-for-single-address'>
-        Date: {event.time.month}/{event.time.day}/{event.time.year} <br></br>
-        Time: {event.time.hour}:{event.time.min}:{event.time.ms} <br></br>
-          Source IP: {event.srcIP} <br></br>
-        Destination IP: {event.dstIP} <br></br>
-        Source Port: {event.srcPort} <br></br>
-        Destination Port: {event.dstPort}
-      </div>
-   
-    );
-  }
-
-    const renderReceivedTraffic = () => {
-        return receivedTrafficList.map((event) =>
-
-            <div className='div-for-single-address'>
-                Date: {event.time.month}/{event.time.day}/{event.time.year} <br></br>
-                Time: {event.time.hour}:{event.time.min}:{event.time.ms} <br></br>
-                Source IP: {event.srcIP} <br></br>
-                Destination IP: {event.dstIP} <br></br>
-                Source Port: {event.srcPort} <br></br>
-                Destination Port: {event.dstPort}
-            </div>
-
-        );
-    }
-
-  const noTraffic = () => {
-    return <p>No network traffic found for this server</p>
-  }
+  }, [sentPortList, receivedPortList]);
   
   return (
     <div className="Single-Server-Page">
       <Header />
         <div>
-            <h1 className='Gradient-Text' style={{fontWeight: 900, textAlign: "center"}}> Network Traffic for Server {state}</h1>
-            <div className="background-side-by-side-parent">
-                <div className='background-side-by-side-first-child' style={{maxWidth: 700}}>
-        <h1>Sent Packets</h1>
-        {sentTrafficList.length > 0 && renderSentTraffic()}
-        {sentTrafficList.length < 1 && noTraffic()}
-      </div>
-        <div className='background-side-by-side-child' style={{maxWidth: 700}}>
-            <h1>Received Packets</h1>
-            {sentTrafficList.length > 0 && renderReceivedTraffic()}
-            {sentTrafficList.length < 1 && noTraffic()}
-        </div>
-        </div>
+            <br/>
+            <div className="white-div-for-single-server" style={{minWidth: 1000, maxHeight:80, marginLeft: "19.5%"}}> <h1 className='Gradient-Text' style={{textAlign: "center"}}> Server {state} </h1></div>
+            <div className="white-div" style={{width: 1000, marginLeft: "17%"}}>
+            <BarChart  height={300} width={1000} data={receivedPortList}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="ports" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar name="Number Received on Port" barSize={30} dataKey="numUsed" fill="#619E57" />
+            </BarChart>
+                <br/>
+            <BarChart  height={300} width={1000} data={sentPortList}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="ports" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar name="Number Sent on Port" barSize={30} dataKey="numUsed" fill="#619E57" />
+            </BarChart>
+            </div>
+
         </div>
     </div>
   );

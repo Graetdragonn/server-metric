@@ -116,6 +116,15 @@
   box-shadow: 0px 8px 16px ;
 }
 
+.white-div-for-single-server{
+  border: none;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 16px;
+  border-radius: 12px;
+  display: inline-block;
+  box-shadow: 0px 8px 16px ;
+}
 
 /* Green to Grey button*/
 button {
