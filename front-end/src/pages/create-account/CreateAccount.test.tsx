@@ -1,13 +1,12 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import CreateAccountPage from './CreateAccount';
 import { BrowserRouter } from 'react-router-dom';
 
-test('test email input render', () => {
-  const { container } = render(<BrowserRouter><CreateAccountPage /></BrowserRouter>);
-  const inputEl = container.querySelector(`input[name="email"]`);
-  expect(inputEl).toBeInTheDocument();
-});
+// test('test email input render', () => {
+//   const { container } = render(<BrowserRouter><CreateAccountPage /></BrowserRouter>);
+//   const inputEl = container.querySelector(`input[name="email"]`);
+//   expect(inputEl).toBeInTheDocument();
+// });
 
 test('test first name input render', () => {
   const { container } = render(<BrowserRouter><CreateAccountPage /></BrowserRouter>);

@@ -18,14 +18,19 @@ const DeleteUserPage = () => {
   // all users
   const [userList, setUserList] = useState([] as any[]);
 
+  // tracks if email is valid
   const [isValidEmail, setIsValidEmail] = useState(false);
 
+  // tracks if error
   const [error, setError] = useState(false);
 
+  // tracks user's service provider
   const [serviceProvider, setServiceProvider] = useState("");
 
+  // tracks if user is a client
   const [clientType, setClientType] = useState(false);
 
+  // user information
   const [state, setState] = useState({
     email: " ",
     first: " ",
@@ -43,6 +48,7 @@ const DeleteUserPage = () => {
   }
   getSP();
 
+  // get user info
   const getUserInfo = async (email: string) => {
     const userInfo = await UserService.getUserByEmail(email);
     var userData = JSON.parse(userInfo);

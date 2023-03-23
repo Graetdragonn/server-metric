@@ -11,36 +11,44 @@ import UserList from '../../components/user-list/UserList';
 import ServerList from '../../components/server-list/ServerList';
 import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from "recharts";
 
+/**
+ * Render dashboard page for each user type
+ * @returns dashboard page depending on user type
+ */
 const DashboardPage = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // for screen navigation
 
+  // track sent and received packets per IP - client
   const [sentPacketsPerIpClient, setSentPacketsPerIpClient] = useState([] as any[]);
   const [receivedPacketsPerIpClient, setReceivedPacketsPerIpClient] = useState([] as any[]);
 
+  // track sent and received packets per IP - service provider
   const [sentPacketsPerIpSP, setSentPacketsPerIpSP] = useState([] as any[]);
   const [receivedPacketsPerIpSP, setReceivedPacketsPerIpSP] = useState([] as any[]);
 
-  const [userAddresses, setUserAddresses] = useState([] as string[]);
-  const userType = localStorage.getItem('userType');
-
+  // track client packets sent and received data
   const [clientPacketsSentHasData, setClientPacketsSentHasData] = useState(Boolean);
   const [clientPacketsReceivedHasData, setClientPacketsReceivedHasData] = useState(Boolean);
 
+  // track service provider packets sent and received data
   const [spPacketsSentHasData, setSPPacketsSentHasData] = useState(Boolean);
   const [spPacketsReceivedHasData, setSPPacketsReceivedHasData] = useState(Boolean);
 
-  const [clientNames, setClientNames] = useState([] as any[]);
+  const [clientNames, setClientNames] = useState([] as any[]); // get clients' names
+  const [userAddresses, setUserAddresses] = useState([] as string[]);   // track user's server addresses
 
+  let userInfo: string[]; // user info
 
-  let userInfo: string[];
-
+  // sent and received packets per client
   let sentPacketsPerClient: any[];
   let receivedPacketsPerClient: any[];
 
+  // sent and received packets per service provider's clients
   let sentPacketsPerSP: any[];
   let receivedPacketsPerSP: any[];
 
-  const email = JSON.parse(localStorage.getItem('email') || '');
+  const email = JSON.parse(localStorage.getItem('email') || ''); // get user's email
+  const userType = localStorage.getItem('userType'); // get user's type
 
   // get data to render on screen immediately
   useEffect(() => {
@@ -65,6 +73,7 @@ const DashboardPage = () => {
 
     }
 
+    // get client's servers
     async function getClientAddresses() {
       userInfo = await getClientServersByUser(email);
       setClientNames(userInfo);
@@ -94,10 +103,12 @@ const DashboardPage = () => {
 
   }, [sentPacketsPerIpClient, receivedPacketsPerIpClient, sentPacketsPerIpSP, receivedPacketsPerIpSP]);
 
+  // no data found render
   const renderNoAddresses = () => {
     return <h1> Servers Have No Sent Data</h1>
   };
 
+  // get address from user and server
   const getAddressFromUserAndAddress = (userAndAddress: string) => {
     return userAndAddress.substring(userAndAddress.indexOf(' ') + 1);
   }

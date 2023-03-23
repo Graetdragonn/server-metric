@@ -8,17 +8,19 @@ import { getReceivingPortsForAServer, getSentPortsForAServer } from "../dashboar
 const { getService } = require('port-numbers');
 const SingleServer = () => {
 
-    const location = useLocation();
-    const { state } = location;
-    const [receivedPortList, setReceivedPortList] = useState([] as any[]);
-    let receivedPorts: string[];
-    const [sentPortList, setSentPortList] = useState([] as any[]);
-    let sentPorts: string[];
+    const location = useLocation(); // for screen navigation
+    const { state } = location; // get props
+    const [receivedPortList, setReceivedPortList] = useState([] as any[]); // tracks received ports
+    let receivedPorts: string[]; // temporary variable for received ports
+    const [sentPortList, setSentPortList] = useState([] as any[]); // tracks sent ports
+    let sentPorts: string[]; // temporary variable for sent ports
 
+    // tracks if port lists are not empty
     const [sentPortListHasData, setSentPortListHasData] = useState(Boolean)
     const [receivedPortListHasData, setReceivedPortListHasData] = useState(Boolean)
 
     useEffect(() => {
+        // get server traffic
         async function getTraffic() {
             receivedPorts = await getReceivingPortsForAServer(state);
             setReceivedPortList(receivedPorts);
@@ -38,23 +40,26 @@ const SingleServer = () => {
         getTraffic();
 
     }, [sentPortList, receivedPortList]);
-
+    
+    // get port name
     const getPortName = (label: string) => {
         const number = getService(Number(getPort(label)));
         return "Name of Service: " + number.name;
     };
 
+    // get port description
     const getPortDescription = (label: string) => {
         const number = getService(Number(getPort(label)));
         return "Description: " + number.description;
     };
 
+    // get port
     const getPort = (port: string) => {
         return port.substring(port.indexOf(' ') + 1);
 
     }
 
-
+    // tool for graph styling
     const CustomTooltip = ({ active, payload, label }: any) => {
         if (active && payload && payload.length) {
             return (
@@ -76,6 +81,7 @@ const SingleServer = () => {
         return null;
     };
 
+    // if no port data, render this
     const renderNoPortData = () => {
         return <h1> Servers Have No Port Data</h1>
     };

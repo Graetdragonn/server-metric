@@ -12,7 +12,6 @@ const AddServerPage = () => {
   // for screen navigation
   const navigate = useNavigate();
 
-
   // tracks server address
   const [server, setServer] = useState("");
 
@@ -33,69 +32,70 @@ const AddServerPage = () => {
     e.preventDefault();
 
     // checks address format
-    if (!checkServerFormat(server)){
-        setError(true);
+    if (!checkServerFormat(server)) {
+      setError(true);
     }
 
     // checks if server already exists
     else if (await checkIfExists(server)) {
-      
-       if (await addServerToUser(email, server)) {
-           setServerAdded(true);
-       }
-       else {
-            setServerError(true);
-       }
+
+      if (await addServerToUser(email, server)) {
+        setServerAdded(true);
+      }
+      else {
+        setServerError(true);
+      }
     }
+    
     // server added to list and to user
     else {
-        if (await addServerToList(server)){
-            if (await addServerToUser(email, server)){
-                setServerAdded(true);
-            }
-            else {
-                setServerError(true);
-           }
+      if (await addServerToList(server)) {
+        if (await addServerToUser(email, server)) {
+          setServerAdded(true);
         }
+        else {
+          setServerError(true);
+        }
+      }
     }
   };
 
-    // to update user information when user inputs data
-    const handleChange = (e: { target: { name: string; value: any; }; }) => {
-        setServer(e.target.value);
-      };
+  // to update user information when user inputs data
+  const handleChange = (e: { target: { name: string; value: any; }; }) => {
+    setServer(e.target.value);
+  };
 
   return (
     <><Header />
-    <body className='Form-Body'>
-      <div>
-        <form onSubmit={handleSubmit} style={{ display: serverAdded ? 'none' : '' }}>
-          <BackButton></BackButton>
-          <h1>Add Server</h1>
+      <body className='Form-Body'>
+        <div>
+          <form onSubmit={handleSubmit} style={{ display: serverAdded ? 'none' : '' }}>
+            <BackButton></BackButton>
+            <h1>Add Server</h1>
 
-          <input placeholder='Server Address' type="text" required={true} name="server" onChange={handleChange}></input>
-          
-          <br></br>
+            <input placeholder='Server Address' type="text" required={true} name="server" onChange={handleChange}></input>
 
-          <button>Submit</button>
-          <br></br>
-          <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>&nbsp; Not valid address format </span>
-          <span style={{ visibility: serverError ? 'visible' : 'hidden' }} className='error'>&nbsp; Server already added to user  </span>
-        </form>
-        <form style={{ display: serverAdded ? '' : 'none' }}>
-          <BackButton></BackButton>
-          <h1>Add Server</h1>
+            <br></br>
 
-          <p style={{ fontSize: 40, textAlign: 'center' }}>Server successfully added</p>
+            <button>Submit</button>
+            <br></br>
+            <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>&nbsp; Not valid address format </span>
+            <span style={{ visibility: serverError ? 'visible' : 'hidden' }} className='error'>&nbsp; Server already added to user  </span>
+          </form>
+          <form style={{ display: serverAdded ? '' : 'none' }}>
+            <BackButton></BackButton>
+            <h1>Add Server</h1>
 
-          <br></br>
+            <p style={{ fontSize: 40, textAlign: 'center' }}>Server successfully added</p>
 
-          <button onClick={() => navigate('/dashboard')}>Back to dashboard</button>
-          <br></br>
-        </form>
-      </div>
-    </body></>
-    
+            <br></br>
+
+            <button onClick={() => navigate('/dashboard')}>Back to dashboard</button>
+            <br></br>
+          </form>
+        </div>
+      </body></>
+
   );
 }
 

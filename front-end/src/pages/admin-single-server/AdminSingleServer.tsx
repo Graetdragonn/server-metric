@@ -6,18 +6,21 @@ import { checkEmail } from "../create-account/CreateAccountLogic";
 import { getUsersOnServer, removeServerFromUser } from "./AdminSingleServerLogic";
 import BackButton from "../../components/back-button/BackButton";
 
+/**
+ * Render admin single server screen
+ * @returns Admin single server page
+ */
 const AdminSingleServerPage = () => {
-    const { state } = useLocation();
-    const { serverInfo } = state;
+    const { state } = useLocation(); // get props
+    const { serverInfo } = state; // set server info with props
+    const [userList, setUserList] = useState([] as any[]); // track list of users watching the server
+    var users = new Array(); // temporary user list variable
+    const [userToAddOrDelete, setUserToAddOrDelete] = useState(""); // tracks user to add or delete from server
+    const [addUserError, setAddUserError] = useState(false); // tracks if error when adding user
+    const [emailFormatError, setEmailFormatError] = useState(false); // tracks if error in email format
+    const [deleteUserError, setDeleteUserError] = useState(false); // tracks if error when deleting user
 
-    const [userList, setUserList] = useState([] as any[]);
-    var users = new Array();
-
-    const [userToAddOrDelete, setUserToAddOrDelete] = useState("");
-    const [addUserError, setAddUserError] = useState(false);
-    const [emailFormatError, setEmailFormatError] = useState(false);
-    const [deleteUserError, setDeleteUserError] = useState(false);
-
+    // get all users on the server
     const getUserList = async () => {
         users = await getUsersOnServer(serverInfo.address);
         setUserList(users);
@@ -33,9 +36,12 @@ const AdminSingleServerPage = () => {
      * Handle add user to server
      */
     const addUserToServer = async () => {
+        // reset errors
         setAddUserError(false);
         setDeleteUserError(false);
         setEmailFormatError(false);
+
+        // check for format error
         if (!checkEmail(userToAddOrDelete)) {
             setEmailFormatError(true);
         }
@@ -52,9 +58,12 @@ const AdminSingleServerPage = () => {
      * Handle delete user from server
      */
     const deleteUserFromServer = async () => {
+        // reset errors
         setAddUserError(false);
         setDeleteUserError(false);
         setEmailFormatError(false);
+
+        // check for format error
         if (!checkEmail(userToAddOrDelete)) {
             setEmailFormatError(true);
         }

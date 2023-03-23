@@ -73,6 +73,11 @@ class ServerService {
         return res;
     }
 
+    /**
+     * Deletes server from list
+     * @param address server address
+     * @returns error if fail
+     */
     async deleteFromServerList(address: string) {
         var res = "ERROR";
         var config = {

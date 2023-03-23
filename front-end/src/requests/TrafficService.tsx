@@ -26,6 +26,11 @@ class TrafficService {
         return res;
     }
 
+    /**
+     * Get map of ports sent by address
+     * @param address server address
+     * @returns map of ports sent by address
+     */
     async getMapOfPortsSentByAddress(address: string){
         var res = "";
         var config = {
@@ -43,6 +48,11 @@ class TrafficService {
         return res;
     }
 
+    /**
+     * Get map of ports received by address
+     * @param address server address
+     * @returns map of ports recieved by address
+     */
     async getMapOfPortsReceivedByAddress(address: string){
         var res = "";
         var config = {
