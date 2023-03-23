@@ -82,7 +82,7 @@ const ServiceProviderEditUserPage = () => {
 
     return (
         <><Header />
-            <body className='Form-Body' >
+            <div className='Form-Body' >
                 <div>
                     <form onSubmit={handleSubmit} style={{ display: error ? '' : 'none' }} >
                         <BackButton></BackButton>
@@ -118,7 +118,7 @@ const ServiceProviderEditUserPage = () => {
                         <button onClick={() => navigate('/dashboard')}>Dashboard</button>
                     </form>
                 </div>
-            </body></>
+            </div></>
     );
 }
 

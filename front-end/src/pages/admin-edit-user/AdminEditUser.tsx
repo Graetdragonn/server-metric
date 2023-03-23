@@ -146,7 +146,7 @@ const AdminEditUserPage = () => {
 
     return (
         <><Header />
-            <body className='Form-Body' >
+            <div className='Form-Body' >
                 <div>
                     <form onSubmit={handleSubmit} style={{ display: error ? '' : 'none' }} >
                         <BackButton></BackButton>
@@ -179,16 +179,20 @@ const AdminEditUserPage = () => {
                             <table className='serverList' style={{ display: userServersList.length > 0 ? '' : 'none' }}>
                                 {userServersList.map(addr => {
                                     return (
-                                        <tr onClick={() => setServerToAddOrDelete(addr.address)} key={addr.address} className="userRow">
-                                            <td>{addr.address}</td>
-                                        </tr>
+                                        <tbody key={addr.address}>
+                                            <tr onClick={() => setServerToAddOrDelete(addr.address)} className="userRow">
+                                                <td>{addr.address}</td>
+                                            </tr>
+                                        </tbody>
                                     )
                                 })}
                             </table>
                             <table className='serverList' style={{ display: userServersList.length > 0 ? 'none' : '' }}>
-                                <tr className="userRow">
-                                    <td>User has no servers</td>
-                                </tr>
+                                <tbody>
+                                    <tr className="userRow">
+                                        <td>User has no servers</td>
+                                    </tr>
+                                </tbody>
                             </table>
                             <div>
                                 <input placeholder='Server Address' style={{ height: 10, width: 210 }} value={serverToAddOrDelete} type="text" name="serverToAdd" onChange={handleServerChange}></input>
@@ -208,7 +212,7 @@ const AdminEditUserPage = () => {
                         <button onClick={() => navigate('/dashboard')}>Dashboard</button>
                     </form>
                 </div>
-            </body></>
+            </div></>
     );
 }
 

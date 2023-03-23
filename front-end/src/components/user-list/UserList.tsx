@@ -79,20 +79,24 @@ export default function UserList() {
       <div>
         <table className="userTable" style={{ display: localStorage.getItem("userType") === "SERVICE_MANAGER" ? '' : 'none' }}>
           <caption>All Clients</caption>
-          <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Service Provider</th>
-          </tr>
+          <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Service Provider</th>
+            </tr>
+          </thead>
           {userList.map((user) => {
             return (
-              <tr key={user.client.username} className="userRow" onClick={() => goToEditSM(user.client.username)}>
-                <td>{user.client.userFirstName}</td>
-                <td>{user.client.userLastName}</td>
-                <td>{user.client.username}</td>
-                <td>{user.serviceProvider}</td>
-              </tr>
+              <tbody key={user.client.username}>
+                <tr  className="userRow" onClick={() => goToEditSM(user.client.username)}>
+                  <td>{user.client.userFirstName}</td>
+                  <td>{user.client.userLastName}</td>
+                  <td>{user.client.username}</td>
+                  <td>{user.serviceProvider}</td>
+                </tr>
+              </tbody>
             )
           })}
         </table>

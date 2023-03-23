@@ -67,7 +67,7 @@ const AddServerPage = () => {
 
   return (
     <><Header />
-      <body className='Form-Body'>
+      <div className='Form-Body'>
         <div>
           <form onSubmit={handleSubmit} style={{ display: serverAdded ? 'none' : '' }}>
             <BackButton></BackButton>
@@ -94,7 +94,7 @@ const AddServerPage = () => {
             <br></br>
           </form>
         </div>
-      </body></>
+      </div></>
 
   );
 }

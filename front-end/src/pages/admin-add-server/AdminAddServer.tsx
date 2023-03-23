@@ -73,7 +73,7 @@ const AdminAddServerPage = () => {
 
     return (
         <><Header />
-            <body className='Form-Body'>
+            <div className='Form-Body'>
                 <div>
                     <form onSubmit={handleSubmit} style={{ display: serverDeleted ? 'none' : '' }}>
                         <BackButton></BackButton>
@@ -98,7 +98,7 @@ const AdminAddServerPage = () => {
                         <br></br>
                     </form>
                 </div>
-            </body></>
+            </div></>
 
     );
 }

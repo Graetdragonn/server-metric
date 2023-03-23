@@ -99,7 +99,7 @@ const DeleteUserPage = () => {
   return (
     <div className='Forgot-Password-Page'>
       <Header></Header>
-      <body className='Form-Body'>
+      <div className='Form-Body'>
         <div>
           <form onSubmit={handleSubmit} style={{ display: isValidEmail ? 'none' : '' }}>
             <BackButton></BackButton>
@@ -124,7 +124,7 @@ const DeleteUserPage = () => {
             <button onClick={() => navigate('/dashboard')}>Back to dashboard</button>
           </form>
         </div>
-      </body>
+      </div>
     </div>
   );
 }
