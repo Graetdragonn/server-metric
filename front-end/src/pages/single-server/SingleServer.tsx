@@ -11,9 +11,12 @@ const SingleServer = () => {
   const location = useLocation();
   const { state } = location;
   const [receivedPortList, setReceivedPortList] = useState([] as any []);
-    let receivedPorts: string[];
-    const [sentPortList, setSentPortList] = useState([] as any []);
-    let sentPorts: string[];
+  let receivedPorts: string[];
+  const [sentPortList, setSentPortList] = useState([] as any []);
+  let sentPorts: string[];
+
+  const [sentPortListHasData, setSentPortListHasData] = useState(Boolean)
+    const [receivedPortListHasData, setReceivedPortListHasData] = useState(Boolean)
 
     useEffect(() => {
     async function getTraffic() {
@@ -21,6 +24,16 @@ const SingleServer = () => {
       setReceivedPortList(receivedPorts);
       sentPorts = await getSentPortsForAServer(state);
       setSentPortList(sentPorts);
+      if(sentPortList.length >= 1){
+          setSentPortListHasData(true)
+      }else{
+          setSentPortListHasData(false)
+      }
+        if(receivedPortList.length >= 1){
+            setReceivedPortListHasData(true)
+        }else{
+            setReceivedPortListHasData(false)
+        }
     }
     getTraffic();
 
@@ -61,6 +74,11 @@ const SingleServer = () => {
         return null;
     };
 
+    const renderNoPortData = () => {
+        return <h1> Servers Have No Port Data</h1>
+    };
+
+
     return (
     <div className="Single-Server-Page">
       <Header />
@@ -68,6 +86,7 @@ const SingleServer = () => {
             <br/>
             <div className="white-div-for-single-server" style={{minWidth: 1000, maxHeight:80, marginLeft: "19.5%"}}> <h1 className='Gradient-Text' style={{textAlign: "center"}}> Server {state} </h1></div>
             <div className="white-div" style={{width: 1000, marginLeft: "17%"}}>
+                <div style = {{display: !sentPortListHasData && !receivedPortListHasData ? 'none' : ''}}>
             <BarChart  height={300} width={1000} data={receivedPortList}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="ports" />
@@ -85,7 +104,14 @@ const SingleServer = () => {
                 <Legend />
                 <Bar name="Number Sent on Port" barSize={30} dataKey="numUsed" fill="#619E57" />
             </BarChart>
+                </div>
+                <div style = {{display: sentPortListHasData && receivedPortListHasData ? 'none' : ''}}>
+                    {renderNoPortData()}
+                </div>
             </div>
+
+        </div>
+        <div>
 
         </div>
     </div>

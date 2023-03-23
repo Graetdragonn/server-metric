@@ -24,6 +24,12 @@ const DashboardPage = () => {
   const [userAddresses, setUserAddresses] = useState([] as string[]);
   const userType = localStorage.getItem('userType');
 
+  const [clientPacketsSentHasData, setClientPacketsSentHasData] = useState(Boolean);
+  const [clientPacketsReceivedHasData, setClientPacketsReceivedHasData] = useState(Boolean);
+
+  const [spPacketsSentHasData, setSPPacketsSentHasData] = useState(Boolean);
+  const [spPacketsReceivedHasData, setSPPacketsReceivedHasData] = useState(Boolean);
+
   const [clientNames, setClientNames] = useState([] as any[]);
 
 
@@ -47,6 +53,17 @@ const DashboardPage = () => {
         setSentPacketsPerIpClient(sentPacketsPerClient);
         receivedPacketsPerClient = await getNumPacketsReceivedPerAddressesClient(userAddresses);
         setReceivedPacketsPerIpClient(receivedPacketsPerClient);
+        if(sentPacketsPerIpClient.length >= 1 ){
+          setClientPacketsSentHasData(true);
+        }else{
+          setClientPacketsSentHasData(false);
+        }
+      if(receivedPacketsPerClient.length >= 1 ){
+        setClientPacketsReceivedHasData(true);
+      }else{
+        setClientPacketsReceivedHasData(false);
+      }
+
     }
 
     async function getClientAddresses(){
@@ -56,6 +73,16 @@ const DashboardPage = () => {
       setSentPacketsPerIpSP(sentPacketsPerSP);
       receivedPacketsPerSP = await getNumPacketsReceivedPerAddressesSP(clientNames);
       setReceivedPacketsPerIpSP(receivedPacketsPerSP);
+      if(sentPacketsPerIpSP.length >= 1){
+        setSPPacketsSentHasData(true)
+      }else{
+        setSPPacketsSentHasData(false)
+      }
+      if(receivedPacketsPerIpSP.length >= 1){
+        setSPPacketsReceivedHasData(true)
+      }else{
+        setSPPacketsReceivedHasData(false)
+      }
     }
 
     if (userType == "CLIENT") {
@@ -69,7 +96,7 @@ const DashboardPage = () => {
   }, [sentPacketsPerIpClient, receivedPacketsPerIpClient, sentPacketsPerIpSP, receivedPacketsPerIpSP]);
 
   const renderNoAddresses = () => {
-    return <p>No addresses found.</p>
+    return <h1> Servers Have No Sent Data</h1>
   };
 
   const getAddressFromUserAndAddress = (userAndAddress: string) => {
@@ -91,6 +118,7 @@ const DashboardPage = () => {
         <br />
 
         <div className="white-div" style={{ width: 1000, display: userType !== "CLIENT" ? 'none' : ''}}>
+          <div style = {{display: !clientPacketsSentHasData && !clientPacketsReceivedHasData ? 'none' : ''}}>
           <BarChart height={300} width={1000} data={sentPacketsPerIpClient}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="address" />
@@ -108,9 +136,14 @@ const DashboardPage = () => {
             <Legend />
             <Bar onClick={(data) => { navigate("/single-server", { state: data.address }) }} name="Number of Packets received" barSize={30} dataKey="numPackets" fill="#619E57" />
           </BarChart>
+          </div>
+          <div style = {{display: clientPacketsSentHasData && clientPacketsReceivedHasData? 'none' : ''}}>
+            {renderNoAddresses()}
+          </div>
         </div>
 
         <div className="white-div" style={{ width: 1000, display: userType !== "SERVICE_PROVIDER" ? 'none' : ''}}>
+          <div style = {{display: !spPacketsSentHasData && !spPacketsReceivedHasData ? 'none' : ''}}>
           <BarChart height={300} width={1000} data={sentPacketsPerIpSP}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis name="Client and Address" dataKey="userAndAddress" />
@@ -128,6 +161,10 @@ const DashboardPage = () => {
             <Legend />
             <Bar onClick={(data) => { navigate("/single-server", { state: getAddressFromUserAndAddress(data.userAndAddress)}) }} name="Number of Packets received" barSize={30} dataKey="numPackets" fill="#619E57" />
           </BarChart>
+          </div>
+          <div style = {{display: spPacketsSentHasData && spPacketsReceivedHasData ? 'none' : ''}}>
+            {renderNoAddresses()}
+          </div>
         </div>
 
       </div>
