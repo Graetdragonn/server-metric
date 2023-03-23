@@ -48,5 +48,4 @@ export async function submit(email: string, first: string, last: string, pass: s
         return false;
     }
     return true;
-
 }

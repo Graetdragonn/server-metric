@@ -1,5 +1,4 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import CreateAccountPage from './CreateAccount';
 import { BrowserRouter } from 'react-router-dom';
 

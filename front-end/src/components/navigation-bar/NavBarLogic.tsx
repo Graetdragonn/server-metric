@@ -18,6 +18,11 @@ export async function getServersByUser(email: string) {
     }
 }
 
+/**
+ * Get list of client's servers
+ * @param email user email
+ * @returns a client's list of servers
+ */
 export async function getClientServersByUser(email: string) {
     try {
         const res = await UserService.getUserByEmail(email);

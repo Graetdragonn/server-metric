@@ -8,14 +8,17 @@ import { checkServerFormat } from '../add-server/AddServerLogic';
 import { checkIfServerInList } from './AdminEditUserLogic';
 import { checkEmail, isEmpty } from '../create-account/CreateAccountLogic';
 import { submitEdits } from '../settings/SettingsLogic';
-// import { deleteServerProviderClientByEmail, getClientServiceProvider } from '../delete-user/DeleteUserLogic';
-// import { getUserType } from '../login/LoginLogic';
 
+/**
+ * Render admin edit user screen
+ * @returns Admin edit user page
+ */
 const AdminEditUserPage = () => {
-    const navigate = useNavigate();
-    const { state } = useLocation();
-    const { userInfo } = state;
+    const navigate = useNavigate(); // for screen navigation
+    const { state } = useLocation(); // to get props
 
+    // set user info from props
+    const { userInfo } = state;
     const [info, setInfo] = useState({
         email: userInfo['username'],
         first: userInfo['userFirstName'],
@@ -27,22 +30,12 @@ const AdminEditUserPage = () => {
         sp: ""
     });
 
-    const [serverToAddOrDelete, setServerToAddOrDelete] = useState("");
-
-    const [addServerError, setAddServerError] = useState(false);
-    const [serverFormatError, setServerFormatError] = useState(false);
-    const [deleteServerError, setDeleteServerError] = useState(false);
-    // const [serviceProvider, setServiceProvider] = useState("");
-    // const [clientType, setClientType] = useState(false);
-
-    // gets list of all service providers
-    // var serviceProviders = new Array();
-    // const [serviceProviderList, setServiceProviderList] = useState([] as any[]);
-
-    const [userServersList, setUserServersList] = useState([] as any[]);
-
-    // checks for errors
-    const [error, setError] = useState(true);
+    const [userServersList, setUserServersList] = useState([] as any[]); // tracks user's servers
+    const [serverToAddOrDelete, setServerToAddOrDelete] = useState(""); // tracks which server to add or delete
+    const [addServerError, setAddServerError] = useState(false); // tracks if error when adding server
+    const [serverFormatError, setServerFormatError] = useState(false); // tracks if format error
+    const [deleteServerError, setDeleteServerError] = useState(false); // tracks if error when deleting server
+    const [error, setError] = useState(true); // checks for other errors
 
 
     // to update user information when user inputs data
@@ -96,6 +89,7 @@ const AdminEditUserPage = () => {
     const handleDeleteServer = async () => {
         var server = serverToAddOrDelete;
 
+        // reset errors
         setAddServerError(false);
         setDeleteServerError(false);
         setServerFormatError(false);
@@ -132,27 +126,6 @@ const AdminEditUserPage = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // // if user was a client but changed type
-        // if (clientType && info.userType !== 'CLIENT') {
-        //     await deleteServerProviderClientByEmail(info.sp, info.email);
-        // }
-
-        // // if user is already a client but changed service providers
-        // else if (clientType && info.sp !== serviceProvider) {
-        //     if (await deleteServerProviderClientByEmail(info.sp, info.email) !== "ERROR") {
-        //         await addClientToServerProvider(serviceProvider, info.email);
-        //     }
-        //     else if (info.sp === "") {
-        //         await addClientToServerProvider(serviceProvider, info.email);
-        //     }
-        // }
-
-        // // if user type is changed to client
-        // else if(info.userType === 'CLIENT' && !clientType) {
-        //     setClientType(true);
-        //     await addClientToServerProvider(serviceProvider, info.email);
-        // }
-
         // update user account
         if (checkEmail(info.email) && !isEmpty(info.email) &&
             !isEmpty(info.first) && !isEmpty(info.last)) {
@@ -165,27 +138,6 @@ const AdminEditUserPage = () => {
         }
     }
 
-    // // get list of all service providers
-    // const getServiceProviders = async () => {
-    //     serviceProviders = await getServiceProviderList();
-    //     setServiceProviderList(serviceProviders);
-    // }
-    // getServiceProviders();
-
-//     // get service provider of client
-//     const getSP = async () => {
-//         if (await getUserType(info.email) === "CLIENT") {
-//             setClientType(true);
-//             var temp = await getClientServiceProvider(info.email);
-//             setServiceProvider(temp);
-//             setInfo({
-//                 ...info,
-//                 sp: temp
-//             });
-//         }
-        
-//   }
-  
     // set server list array
     useEffect(() => {
         setUserServersList(userInfo['servers']);
@@ -194,9 +146,9 @@ const AdminEditUserPage = () => {
 
     return (
         <><Header />
-            <body className='Form-Body' >
+            <div className='Form-Body' >
                 <div>
-                    <form onSubmit={handleSubmit} style={{ display: error ? '' : 'none'}} >
+                    <form onSubmit={handleSubmit} style={{ display: error ? '' : 'none' }} >
                         <BackButton></BackButton>
                         <h1>User Information</h1>
                         <div className="row" style={{ display: "flex" }}>
@@ -221,35 +173,36 @@ const AdminEditUserPage = () => {
                                 <option value="SERVICE_PROVIDER">Service Provider</option>
                                 <option value="CLIENT">Client</option>
                             </select>
-                            {/* <select value={serviceProvider} onChange={(e) => setServiceProvider(e.target.value)} style={{ display: info.userType === "CLIENT" ? '' : 'none' }}>
-                                {serviceProviderList.map(user => { return <option value={user.username}>{user.userFirstName} {user.userLastName}</option>; })}
-                            </select> */}
                         </div>
                         <label>Servers</label>
                         <div className="row" style={{ display: "flex" }}>
-                        <table className='serverList' style={{ display: userServersList.length > 0 ? '' : 'none' }}>
-                            {userServersList.map(addr => {
-                                return (
-                                    <tr onClick={() => setServerToAddOrDelete(addr.address)} key={addr.address} className="userRow">
-                                        <td>{addr.address}</td>
+                            <table className='serverList' style={{ display: userServersList.length > 0 ? '' : 'none' }}>
+                                {userServersList.map(addr => {
+                                    return (
+                                        <tbody key={addr.address}>
+                                            <tr onClick={() => setServerToAddOrDelete(addr.address)} className="userRow">
+                                                <td>{addr.address}</td>
+                                            </tr>
+                                        </tbody>
+                                    )
+                                })}
+                            </table>
+                            <table className='serverList' style={{ display: userServersList.length > 0 ? 'none' : '' }}>
+                                <tbody>
+                                    <tr className="userRow">
+                                        <td>User has no servers</td>
                                     </tr>
-                                )
-                            })}
-                        </table>
-                        <table className='serverList' style={{ display: userServersList.length > 0 ? 'none' : '' }}>
-                            <tr className="userRow">
-                                <td>User has no servers</td>
-                            </tr>
-                        </table>
-                        <div>
-                        <input placeholder='Server Address' style={{height: 10, width:210}} value={serverToAddOrDelete} type="text" name ="serverToAdd" onChange={handleServerChange}></input>
-                        <p className='error' style={{display: serverFormatError ? '' : 'none'}}>Please enter a valid server address</p>
-                        <p className='error' style={{display: addServerError ? '' : 'none'}}>User already has this server</p>
-                        <p className='error' style={{display: deleteServerError ? '' : 'none'}}>User does not have this server</p>
-                        <br></br>
-                        <button type="button" className="addServerButton" onClick={handleAddServer}>Add</button>
-                        <button type="button" className="addServerButton" onClick={handleDeleteServer}>Delete</button>
-                        </div>
+                                </tbody>
+                            </table>
+                            <div>
+                                <input placeholder='Server Address' style={{ height: 10, width: 210 }} value={serverToAddOrDelete} type="text" name="serverToAdd" onChange={handleServerChange}></input>
+                                <p className='error' style={{ display: serverFormatError ? '' : 'none' }}>Please enter a valid server address</p>
+                                <p className='error' style={{ display: addServerError ? '' : 'none' }}>User already has this server</p>
+                                <p className='error' style={{ display: deleteServerError ? '' : 'none' }}>User does not have this server</p>
+                                <br></br>
+                                <button type="button" className="addServerButton" onClick={handleAddServer}>Add</button>
+                                <button type="button" className="addServerButton" onClick={handleDeleteServer}>Delete</button>
+                            </div>
                         </div>
                         <button type='submit'>Submit</button>
                         <br></br>
@@ -259,7 +212,7 @@ const AdminEditUserPage = () => {
                         <button onClick={() => navigate('/dashboard')}>Dashboard</button>
                     </form>
                 </div>
-            </body></>
+            </div></>
     );
 }
 

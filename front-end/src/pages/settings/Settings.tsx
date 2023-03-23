@@ -71,22 +71,22 @@ const Settings = () => {
 
   return (
     <><Header />
-    <body className='Form-Body'>
+    <div className='Form-Body'>
       <div>
         <form onSubmit={submitChange} style={{ display: error ? '' : 'none' }}>
           <BackButton></BackButton>
           <h1>Settings</h1>
           <label>First Name</label>
-          <input type="text" name="first" required={true} value={state.first} onChange={handleChange}></input>
+          <input type="text" name="first" required={true} value={state.first} onChange={handleChange} autoComplete='first-name'></input>
           <br></br>
           <label>Last Name</label>
-          <input type="text" name="last" required={true} value={state.last} onChange={handleChange}></input>
+          <input type="text" name="last" required={true} value={state.last} onChange={handleChange} autoComplete='last-name'></input>
           <br></br>
           <label>Change Password</label>
-          <input name="pass" type = "password" onChange={handleChange}></input>
+          <input name="pass" type = "password" onChange={handleChange} autoComplete='new-password'></input>
           <br></br>
           <label>Confirm Changed Password</label>
-          <input name="confirmPass" type = "password" onChange={handleChange}></input>
+          <input name="confirmPass" type = "password" onChange={handleChange} autoComplete='new-password'></input>
           <br></br>
           <button>Submit</button>
           <br></br>
@@ -97,7 +97,7 @@ const Settings = () => {
           <button onClick={() => navigate('/Dashboard')}>Dashboard</button>
         </form>
       </div>
-    </body></>
+    </div></>
   );
 }
   

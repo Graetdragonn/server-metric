@@ -9,9 +9,10 @@ import { getAllServers } from '../../components/server-list/ServerListLogic';
 import { getUsersOnServer, removeServerFromUser } from '../admin-single-server/AdminSingleServerLogic';
 
 /**
- * Add server screen
+ * Delete server screen
  */
 const AdminDeleteServerPage = () => {
+
   // for screen navigation
   const navigate = useNavigate();
 
@@ -53,10 +54,12 @@ const AdminDeleteServerPage = () => {
   // submits form
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // reset errors
     setError(false);
     setServerError(false);
     setServerDeleted(false)
-    
+
     // checks address format
     if (!checkServerFormat(server)) {
       setError(true);
@@ -73,11 +76,12 @@ const AdminDeleteServerPage = () => {
         setServerDeleted(true);
       }
     }
-
+    // delete server
     else if (await deleteServer(server)) {
       setServerDeleted(true);
     }
 
+    // an error occurred
     else {
       setServerError(true);
     }
@@ -91,7 +95,7 @@ const AdminDeleteServerPage = () => {
 
   return (
     <><Header />
-      <body className='Form-Body'>
+      <div className='Form-Body'>
         <div>
           <form onSubmit={handleSubmit} style={{ display: serverDeleted ? 'none' : '' }}>
             <BackButton></BackButton>
@@ -101,7 +105,7 @@ const AdminDeleteServerPage = () => {
                 <option value="default"> - Select Server to Delete -</option>
                 {serverList.map(server => { return <option value={server.address}>{server.address}</option>; })}
               </select>
-            </div> 
+            </div>
             <button>Submit</button>
             <br></br>
             <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>&nbsp; Please select a server </span>
@@ -119,7 +123,7 @@ const AdminDeleteServerPage = () => {
             <br></br>
           </form>
         </div>
-      </body></>
+      </div></>
 
   );
 }
