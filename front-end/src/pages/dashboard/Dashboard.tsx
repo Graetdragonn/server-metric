@@ -113,7 +113,7 @@ const DashboardPage = () => {
         <div className="white-div" style={{ width: 1000 }}>
           <h1>Server Settings</h1>
           <button onClick={() => navigate('/addserver')}>Add a Server</button>
-          <button onClick={() => navigate('')}>Remove a Server</button>
+          <button onClick={() => navigate('/removeserver')}>Remove a Server</button>
         </div>
         <br />
 
