@@ -10,7 +10,6 @@ import {getClientServersByUser, getServersByUser} from '../../components/navigat
 import UserList from '../../components/user-list/UserList';
 import ServerList from '../../components/server-list/ServerList';
 import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from "recharts";
-import ClientList from '../../components/client-list/ClientList';
 
 const DashboardPage = () => {
   const navigate = useNavigate();
@@ -193,7 +192,7 @@ const DashboardPage = () => {
       <div style={{ display: userType === "SERVICE_MANAGER" ? '' : 'none' }}>
         <br></br>
         <div className='row' style={{ display: 'flex', justifyContent: 'space-around' }}>
-          <ClientList></ClientList>
+          <UserList></UserList>
         </div>
         <br></br>
       </div>
