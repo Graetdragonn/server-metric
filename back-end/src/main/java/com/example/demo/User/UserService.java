@@ -35,12 +35,14 @@ public class UserService {
     }
 
     public void addUser(User user){
-        Optional<User> userOptional = userRepository.findUserByUsername(user.getUsername());
-        if(userOptional.isPresent()){
+        Optional<User> userToCheck = userRepository.findUserByUsername(user.getUsername());
+        if(userToCheck.isPresent()){
             throw new IllegalStateException("Email is already taken");
+        }else{
+            user.setPassword(user.getPassword());
+            userRepository.save(user);
         }
-        user.setPassword(user.getPassword());
-        userRepository.save(user);
+
     }
 
     @Transactional
