@@ -10,14 +10,14 @@ export async function getNumPacketsSentPerAddressesClient(userAddresses: string[
     try {
        
         const res = await TrafficService.getAllTraffic();
-        var trafficList = JSON.parse(res);
-        var packetsPerIp = new Array();
+        const trafficList = JSON.parse(res);
+        const packetsPerIp = [] as any [];
         userAddresses.forEach((address: string) => {
             packetsPerIp.push({address: address, numPackets: 0});
         });
 
         for (let i = 0; i < trafficList.length; i++){
-            var addr = trafficList[i]["srcIP"];
+            const addr = trafficList[i]["srcIP"];
             let idx = packetsPerIp.findIndex(obj => obj.address == addr);
             if (idx != -1){
                 packetsPerIp[idx].numPackets += 1;
@@ -26,7 +26,7 @@ export async function getNumPacketsSentPerAddressesClient(userAddresses: string[
         return packetsPerIp;
     }
     catch {
-        return new Array();
+        return [];
     }
 }
 
@@ -40,14 +40,14 @@ export async function getNumPacketsReceivedPerAddressesClient(userAddresses: str
     try {
 
         const res = await TrafficService.getAllTraffic();
-        var trafficList = JSON.parse(res);
-        var packetsPerIp = new Array();
+        const trafficList = JSON.parse(res);
+        const packetsPerIp = [] as any [];
         userAddresses.forEach((address: string) => {
             packetsPerIp.push({address: address, numPackets: 0});
         });
 
         for (let i = 0; i < trafficList.length; i++){
-            var addr = trafficList[i]["dstIP"];
+            const addr = trafficList[i]["dstIP"];
             let idx = packetsPerIp.findIndex(obj => obj.address == addr);
             if (idx != -1){
                 packetsPerIp[idx].numPackets += 1;
@@ -56,15 +56,15 @@ export async function getNumPacketsReceivedPerAddressesClient(userAddresses: str
         return packetsPerIp;
     }
     catch {
-        return new Array();
+        return [];
     }
 }
 
 export async function getNumPacketsSentPerAddressesSP(clientAndClientServers: any[]) {
     try {
         const res = await TrafficService.getAllTraffic();
-        var trafficList = JSON.parse(res);
-        var clientAndServersAndPackets = [] as any[];
+        const trafficList = JSON.parse(res);
+        const clientAndServersAndPackets = [] as any[];
 
         for (let i = 0; i < clientAndClientServers.length; i++) {
             let packets = [] as number[];
@@ -82,7 +82,7 @@ export async function getNumPacketsSentPerAddressesSP(clientAndClientServers: an
             for (let j = 0; j < clientAndServersAndPackets[i]["servers"].length; j++) {
 
                 for (let k = 0; k < trafficList.length; k++) {
-                    var addr = trafficList[k]["srcIP"];
+                    const addr = trafficList[k]["srcIP"];
                     if (clientAndServersAndPackets[i]["servers"][j] == addr) {
                         clientAndServersAndPackets[i]["packets"][j] += 1;
                     }
@@ -98,15 +98,15 @@ export async function getNumPacketsSentPerAddressesSP(clientAndClientServers: an
         return returnList;
     }
     catch {
-        return new Array();
+        return [];
     }
 }
 
 export async function getNumPacketsReceivedPerAddressesSP(clientAndClientServers: any[]) {
     try {
         const res = await TrafficService.getAllTraffic();
-        var trafficList = JSON.parse(res);
-        var clientAndServersAndPackets = [] as any[];
+        const trafficList = JSON.parse(res);
+        const clientAndServersAndPackets = [] as any[];
 
         for (let i = 0; i < clientAndClientServers.length; i++) {
             let packets = [] as number[];
@@ -124,7 +124,7 @@ export async function getNumPacketsReceivedPerAddressesSP(clientAndClientServers
             for (let j = 0; j < clientAndServersAndPackets[i]["servers"].length; j++) {
 
                 for (let k = 0; k < trafficList.length; k++) {
-                    var addr = trafficList[k]["dstIP"];
+                    const addr = trafficList[k]["dstIP"];
                     if (clientAndServersAndPackets[i]["servers"][j] == addr) {
                         clientAndServersAndPackets[i]["packets"][j] += 1;
                     }
@@ -140,13 +140,13 @@ export async function getNumPacketsReceivedPerAddressesSP(clientAndClientServers
         return returnList;
     }
     catch {
-        return new Array();
+        return [];
     }
 }
 export async function getReceivingPortsForAServer(address: string) {
     const res = await TrafficService.getMapOfPortsReceivedByAddress(address);
-    var map = new Map(Object.entries(JSON.parse(res)));
-    var portsUsed = new Array();
+    const map = new Map(Object.entries(JSON.parse(res)));
+    const portsUsed = [] as any[];
 
     // @ts-ignore
     for (let entry of map.entries()) {
@@ -157,8 +157,8 @@ export async function getReceivingPortsForAServer(address: string) {
 
 export async function getSentPortsForAServer(address: string) {
     const res = await TrafficService.getMapOfPortsSentByAddress(address);
-    var map = new Map(Object.entries(JSON.parse(res)));
-    var portsUsed = new Array();
+    const map = new Map(Object.entries(JSON.parse(res)));
+    let portsUsed = [] as any[];
 
     // @ts-ignore
     for (let entry of map.entries()) {

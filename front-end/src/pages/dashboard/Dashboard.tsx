@@ -5,14 +5,12 @@ import {
   getNumPacketsSentPerAddressesClient,
   getNumPacketsReceivedPerAddressesClient,
   getNumPacketsSentPerAddressesSP, getNumPacketsReceivedPerAddressesSP,
-  // getNumPacketsReceivedPerAddressesSP
 } from './DashboardLogic';
 import {getClientServersByUser, getServersByUser} from '../../components/navigation-bar/NavBarLogic';
 import UserList from '../../components/user-list/UserList';
 import ServerList from '../../components/server-list/ServerList';
-import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from "recharts";
 import ClientList from '../../components/client-list/ClientList';
-import {render} from "react-dom";
 
 const DashboardPage = () => {
   const navigate = useNavigate();
@@ -75,8 +73,7 @@ const DashboardPage = () => {
   };
 
   const getAddressFromUserAndAddress = (userAndAddress: string) => {
-    var address = userAndAddress.substring(userAndAddress.indexOf(' ') + 1);
-    return address
+    return userAndAddress.substring(userAndAddress.indexOf(' ') + 1);
   }
 
   return (

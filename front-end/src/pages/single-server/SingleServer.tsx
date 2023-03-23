@@ -1,21 +1,21 @@
-import { useLocation } from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import '../../style/Master.css';
 import Header from "../../components/navigation-bar/Header";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis} from "recharts";
 import {getReceivingPortsForAServer, getSentPortsForAServer} from "../dashboard/DashboardLogic";
 
-const {getService, getPort} = require('port-numbers');
+const {getService} = require('port-numbers');
 const SingleServer = () => {
 
   const location = useLocation();
   const { state } = location;
   const [receivedPortList, setReceivedPortList] = useState([] as any []);
-  var receivedPorts: string[];
-  const [sentPortList, setSentPortList] = useState([] as any []);
-  var sentPorts: string[];
+    let receivedPorts: string[];
+    const [sentPortList, setSentPortList] = useState([] as any []);
+    let sentPorts: string[];
 
-  useEffect(() => {
+    useEffect(() => {
     async function getTraffic() {
       receivedPorts = await getReceivingPortsForAServer(state);
       setReceivedPortList(receivedPorts);
@@ -28,19 +28,16 @@ const SingleServer = () => {
 
     const getPortName = (label: string) => {
         const number = getService(Number(getPort(label)));
-        const str = "Name of Service: " + number.name
-        return str;
+        return "Name of Service: " + number.name;
     };
 
     const getPortDescription = (label: string) => {
         const number = getService(Number(getPort(label)));
-        const str = "Description: " + number.description
-        return str;
+        return "Description: " + number.description;
     };
 
     const getPort = (port: string) => {
-        const str = port.substring(port.indexOf(' ') + 1);
-        return str;
+        return port.substring(port.indexOf(' ') + 1);
 
     }
 
@@ -51,7 +48,6 @@ const SingleServer = () => {
                 <div style={{backgroundColor: 'white',
                     opacity: '0.9',
                     border: '1px solid black',
-                    borderRadius: '15px',
                     paddingLeft:'10px',
                     paddingRight:'10px'}}>
                     <p className="label">{`${label}`}</p>
