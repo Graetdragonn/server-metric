@@ -11,7 +11,7 @@ class UserService {
         var config = {
             method: 'get',
             url: USER_API_BASE_URL + 'api/v1/users/getAllUsers',
-            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}
+            headers: { Authorization: 'Bearer ' + localStorage.getItem("token") }
         };
         await axios(config)
             .then(function (response: { data: any; }) {
@@ -22,7 +22,7 @@ class UserService {
             });
         return res;
     }
-    
+
 
     /**
      * Create user
@@ -48,7 +48,7 @@ class UserService {
                 res = JSON.stringify(response.data);
             })
             .catch(function (error: any) {
-                
+
             });
 
         return res;
@@ -75,13 +75,13 @@ class UserService {
                 res = JSON.stringify(response.data);
             })
             .catch(function (error: any) {
-                
+
             });
 
         return res;
     }
 
-        /**
+    /**
      * Update user Info
      * @param email user email
      * @param first user first name
@@ -90,26 +90,26 @@ class UserService {
      * @param user  user type
      * @returns user information
      */
-        async updateUser(email: string, first: string, last: string, pass: string, user: string, servers: string[]) {
-            var res = "";
-            var config = {
-                method: 'put',
-                url: USER_API_BASE_URL + 'api/v1/users/updateUser/' + email,
-                headers: {Authorization: 'Bearer ' + localStorage.getItem("token")},
-                data: {password: pass, userType: user, userFirstName: first, userLastName: last, servers: servers}
-            };
-    
-            await axios(config)
-                .then(function (response: { data: any; }) {
-                    res = JSON.stringify(response.data);
-                })
-                .catch(function (error: any) {
-                    
-                });
-    
-            return res;
-        }
-    
+    async updateUser(email: string, first: string, last: string, pass: string, user: string, servers: string[]) {
+        var res = "";
+        var config = {
+            method: 'put',
+            url: USER_API_BASE_URL + 'api/v1/users/updateUser/' + email,
+            headers: { Authorization: 'Bearer ' + localStorage.getItem("token") },
+            data: { password: pass, userType: user, userFirstName: first, userLastName: last, servers: servers }
+        };
+
+        await axios(config)
+            .then(function (response: { data: any; }) {
+                res = JSON.stringify(response.data);
+            })
+            .catch(function (error: any) {
+
+            });
+
+        return res;
+    }
+
     /**
      * Get user by email
      * @param email user email
@@ -120,9 +120,9 @@ class UserService {
         var config = {
             method: 'get',
             url: USER_API_BASE_URL + 'api/v1/users/getUserByEmail/' + email,
-            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}
+            headers: { Authorization: 'Bearer ' + localStorage.getItem("token") }
         };
-        
+
         await axios(config)
             .then(function (response: { data: any; }) {
                 res = JSON.stringify(response.data);
@@ -139,13 +139,13 @@ class UserService {
      * @param address server address
      * @returns error if fail
      */
-    async addServerToUser(email: string, address: string){
+    async addServerToUser(email: string, address: string) {
         var res = "";
         var config = {
             method: 'post',
             url: USER_API_BASE_URL + 'api/v1/users/' + email + '/addServer',
-            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")},
-            data: {address: address}
+            headers: { Authorization: 'Bearer ' + localStorage.getItem("token") },
+            data: { address: address }
         };
 
         await axios(config)
@@ -163,13 +163,13 @@ class UserService {
      * @param address server address
      * @returns error if fail
      */
-    async removeServerFromUser(email: string, address: string){
+    async removeServerFromUser(email: string, address: string) {
         var res = "ERROR";
         var config = {
             method: 'delete',
             url: USER_API_BASE_URL + 'api/v1/users/' + email + '/removeServer',
-            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")},
-            data: {address: address}
+            headers: { Authorization: 'Bearer ' + localStorage.getItem("token") },
+            data: { address: address }
         };
 
         await axios(config)
@@ -191,7 +191,7 @@ class UserService {
         var config = {
             method: 'delete',
             url: USER_API_BASE_URL + 'api/v1/users/deleteUser/' + email,
-            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}
+            headers: { Authorization: 'Bearer ' + localStorage.getItem("token") }
         };
 
         await axios(config)
@@ -214,7 +214,7 @@ class UserService {
         var config = {
             method: 'get',
             url: USER_API_BASE_URL + 'api/v1/users/getAllUsersConnectedToServer/' + server,
-            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}
+            headers: { Authorization: 'Bearer ' + localStorage.getItem("token") }
         };
 
         await axios(config)
@@ -238,7 +238,7 @@ class UserService {
         var config = {
             method: 'put',
             url: USER_API_BASE_URL + 'api/v1/users/' + serviceProvider + '/addClient/' + client,
-            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}
+            headers: { Authorization: 'Bearer ' + localStorage.getItem("token") }
         };
 
         await axios(config)
@@ -262,7 +262,7 @@ class UserService {
         var config = {
             method: 'delete',
             url: USER_API_BASE_URL + 'api/v1/users/' + serviceProvider + '/removeClient/' + client,
-            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}
+            headers: { Authorization: 'Bearer ' + localStorage.getItem("token") }
         };
 
         await axios(config)

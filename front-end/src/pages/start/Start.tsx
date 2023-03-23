@@ -2,9 +2,14 @@ import logo from '../../images/logo.png';
 import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Renders the start screen
+ * @returns the start page
+ */
 const StartPage = () => {
-  const navigate = useNavigate();
-  localStorage.clear();
+  const navigate = useNavigate(); // for screen navigation
+  localStorage.clear(); // clears any cached data
+  
   return (
     <div className="Start-Page">
       <header className="App-header">

@@ -1,16 +1,4 @@
-import { getServersByUser } from '../../components/navigation-bar/NavBarLogic';
 import UserService from '../../requests/UserService';
-var password;
-
-
-export async function getUserInfo(email: string) {
-    const userInfo = await UserService.getUserByEmail(email);
-    var userData = JSON.parse(userInfo);
-    password = userData['password'];
-    var userType = userData['userType'];
-    var firstName = userData['userFirstName'];
-    var lastName = userData['userLastName'];
-}
 
 /**
  * Checks that user confirmed password correctly
@@ -64,6 +52,16 @@ export function checkEmail(email: string): boolean {
     return false;
 }
 
+/**
+ * Submit edits
+ * @param email user email
+ * @param first user first name
+ * @param last user last name
+ * @param pass user password
+ * @param user user type
+ * @param servers user's servers
+ * @returns true on success, false otherwise
+ */
 export async function submitEdits(email: string, first: string, last: string, pass: string, user: string, servers: string[]) {
     const res = await UserService.updateUser(email, first, last, pass, user, servers);
     if (res === "") {

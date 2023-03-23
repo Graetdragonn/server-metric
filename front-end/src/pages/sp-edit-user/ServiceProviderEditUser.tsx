@@ -7,10 +7,11 @@ import { getServiceProviderList, addClientToServerProvider } from "../../pages/a
 import { deleteServerProviderClientByEmail, getClientServiceProvider } from '../delete-user/DeleteUserLogic';
 
 const ServiceProviderEditUserPage = () => {
-    const navigate = useNavigate();
-    const { state } = useLocation();
-    const { userInfo } = state;
+    const navigate = useNavigate(); // for screen navigation
+    const { state } = useLocation(); // get props
 
+    // set user info for props
+    const { userInfo } = state;
     const [info, setInfo] = useState({
         email: userInfo['username'],
         first: userInfo['userFirstName'],
@@ -22,6 +23,7 @@ const ServiceProviderEditUserPage = () => {
         sp: ""
     });
 
+    // tracks client's current service provider
     const [serviceProvider, setServiceProvider] = useState("");
 
     // gets list of all service providers
@@ -30,7 +32,6 @@ const ServiceProviderEditUserPage = () => {
 
     // checks for errors
     const [error, setError] = useState(true);
-
 
     // submits user changes
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -81,7 +82,7 @@ const ServiceProviderEditUserPage = () => {
 
     return (
         <><Header />
-            <body className='Form-Body' >
+            <div className='Form-Body' >
                 <div>
                     <form onSubmit={handleSubmit} style={{ display: error ? '' : 'none' }} >
                         <BackButton></BackButton>
@@ -117,7 +118,7 @@ const ServiceProviderEditUserPage = () => {
                         <button onClick={() => navigate('/dashboard')}>Dashboard</button>
                     </form>
                 </div>
-            </body></>
+            </div></>
     );
 }
 

@@ -1,6 +1,10 @@
 import '../../style/Master.css';
 import { NavLink } from "react-router-dom";
 
+/**
+ * Render the navigation bar
+ * @returns the navigation bar
+ */
 const NavBar = () => {
 
   // ideally, put this somewhere else like in a global file then import

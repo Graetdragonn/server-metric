@@ -15,8 +15,8 @@ const AdminAddServerPage = () => {
 
     // tracks server address
     const [info, setInfo] = useState({
-       server: "",
-       serverName: ""
+        server: "",
+        serverName: ""
     });
 
     // checks for errors
@@ -30,19 +30,18 @@ const AdminAddServerPage = () => {
 
     // gets list of all clients
     var clients = new Array();
-    const [clientList, setClientList] = useState([] as any[]);
-    const [serverClientList, setServerClientList] = useState([] as any[]);
 
     // get list of all service providers
     const getClients = async () => {
         clients = await getClientList();
-        setClientList(clients);
     }
     getClients();
 
     // submits form
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        // reset errors
         setError(false);
         setServerError(false);
         setServerAdded(false)
@@ -52,10 +51,11 @@ const AdminAddServerPage = () => {
             setError(true);
         }
 
+        // add server to list
         else if (await addServerToList(info.server)) {
             setServerAdded(true);
         }
-
+         // an errror occurred
         else {
             setServerError(true);
         }
@@ -73,7 +73,7 @@ const AdminAddServerPage = () => {
 
     return (
         <><Header />
-            <body className='Form-Body'>
+            <div className='Form-Body'>
                 <div>
                     <form onSubmit={handleSubmit} style={{ display: serverDeleted ? 'none' : '' }}>
                         <BackButton></BackButton>
@@ -98,7 +98,7 @@ const AdminAddServerPage = () => {
                         <br></br>
                     </form>
                 </div>
-            </body></>
+            </div></>
 
     );
 }

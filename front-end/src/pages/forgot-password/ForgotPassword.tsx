@@ -32,23 +32,23 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-<div className='Forgot-Password-Page'>
-    <body className='Form-Body'>
-    <div>
-    <form onSubmit={handleSubmit}  style={{display: isValidEmail ? 'none' : ''}}>
-    <BackButton></BackButton>
-      <h1>Forgot Password</h1>
-      <p style={{fontSize:15, textAlign:'center'}}>Please submit your email to reset your password</p>
-      <input placeholder='Email' type="text" required={true} name="email" value={email} onChange={handleChange}></input>
-      <button>Submit</button>
-    </form>
-    <form onSubmit={handleSubmit} style={{display: isValidEmail ? '' : 'none'}}>
-    <p style={{fontSize:50, textAlign:'center'}}>An email was sent to reset your password</p>
-    <button onClick={() => navigate('/login')}>Go to login</button>
-    </form>
-    
-    </div>
-    </body>
+    <div className='Forgot-Password-Page'>
+      <div className='Form-Body'>
+        <div>
+          <form onSubmit={handleSubmit} style={{ display: isValidEmail ? 'none' : '' }}>
+            <BackButton></BackButton>
+            <h1>Forgot Password</h1>
+            <p style={{ fontSize: 15, textAlign: 'center' }}>Please submit your email to reset your password</p>
+            <input placeholder='Email' type="text" required={true} name="email" value={email} onChange={handleChange}></input>
+            <button>Submit</button>
+          </form>
+          <form onSubmit={handleSubmit} style={{ display: isValidEmail ? '' : 'none' }}>
+            <p style={{ fontSize: 50, textAlign: 'center' }}>An email was sent to reset your password</p>
+            <button onClick={() => navigate('/login')}>Go to login</button>
+          </form>
+
+        </div>
+      </div>
     </div>
   );
 }

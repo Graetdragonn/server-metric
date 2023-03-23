@@ -8,5 +8,3 @@ render(<BrowserRouter> <BackButton></BackButton></BrowserRouter>)
   const backButton = screen.getByText(/back/i);
   expect(backButton).toBeInTheDocument();
 });
-
-// code above modified from App.test.tsx
