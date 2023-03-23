@@ -8,9 +8,9 @@ import { useNavigate } from "react-router-dom";
  * @returns all users for admin, all clients for service manager
  */
 export default function UserList() {
-  const [userList, setUserList] = useState([] as any[]);
-  var users = new Array();
-  const navigate = useNavigate();
+  const [userList, setUserList] = useState([] as any[]); // user list to render
+  var users = new Array(); // temporary user list variable
+  const navigate = useNavigate(); // for screen navigation
 
   // get all users for admin
   const getAllUserList = async () => {

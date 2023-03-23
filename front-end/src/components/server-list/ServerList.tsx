@@ -1,56 +1,57 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllServers, getServerInfo, getClientsByProvider, getUserByEmail } from "./ServerListLogic";
+import { getAllServers, getServerInfo, getClientsByProvider, getUserByEmail, getClientsServers } from "./ServerListLogic";
 
+/**
+ * Render a server list
+ * @returns list of all servers for admin, list of client's servers for client, list of their client's servers for service provider
+ */
+export default function ServerList() {
+  const [serverList, setServerList] = useState([] as any[]); // server list to be displayed
+  var servers = new Array(); // server list temp variable
+  var clients = [] as string[]; // list of clients for service provider
+  const navigate = useNavigate(); // for screen navigation
 
-export default function ServerList(){
-    const [serverList, setServerList] = useState([] as any[]);
-    var servers = [] as {address: string}[]; // type is {address: string}[]
-    var clients = [] as string[];
-    const navigate = useNavigate();
-    
-    useEffect(() => {
-      getServerList();
-    }, []);
+  useEffect(() => {
+    getServerList();
+  }, []);
 
-    // get all servers
-    const getServerList = async () => {
-      var email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
-      if (localStorage.getItem("userType") === "ADMIN") {
-        servers = await getAllServers();
-      } else {
-        if (localStorage.getItem("userType") === "SERVICE_PROVIDER") {
-          var userInfo = await getUserByEmail(email);
-          clients = await getClientsByProvider(userInfo);
-        } else if (localStorage.getItem("userType") === "CLIENT") {
-          clients = [email];
-        }
-        
-        for (let i = 0; i < clients.length; i++) {
-          var clientInfo = await getUserByEmail(clients[i]);
-          for (let j = 0; j < clientInfo["servers"].length; j++) {
-            servers.push(clientInfo["servers"][j]);
-          }
-        }
+  // get all servers
+  const getServerList = async () => {
+    var email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
+
+    // if user is an admin, then get all servers
+    if (localStorage.getItem("userType") === "ADMIN") {
+      servers = await getAllServers();
+    } else {
+      if (localStorage.getItem("userType") === "SERVICE_PROVIDER") {
+        var userInfo = await getUserByEmail(email);
+        clients = await getClientsByProvider(userInfo);
+      } else if (localStorage.getItem("userType") === "CLIENT") {
+        clients = [email];
       }
-      
-      // remove duplicates by casting to Set then back to Array
-      setServerList(Array.from(new Set(servers)));
+      // get list of servers
+      servers = await getClientsServers(clients);
     }
 
-    const goToSingleServer = async (address: string) => {
-        var res = await getServerInfo(address);
-        if (localStorage.getItem("userType") === "ADMIN") {
-          navigate('/adminsingleserver', { state: { serverInfo: res } });
-        } else {
-          navigate('/single-server', { state: res["address"] });
-        }
+    // remove duplicates by casting to Set then back to Array
+    setServerList(Array.from(new Set(servers)));
+  }
+
+  // navigate to single server page
+  const goToSingleServer = async (address: string) => {
+    var res = await getServerInfo(address);
+    if (localStorage.getItem("userType") === "ADMIN") {
+      navigate('/adminsingleserver', { state: { serverInfo: res } });
+    } else {
+      navigate('/single-server', { state: res["address"] });
     }
-    
-    return (
+  }
+
+  return (
     <div >
       <table className="userTable">
-      <caption>All Servers</caption>
+        <caption>All Servers</caption>
         <thead>
           <tr>
             <th>Addresses</th>
@@ -59,7 +60,7 @@ export default function ServerList(){
         <tbody>
           {serverList.map((server) => {
             return (
-              <tr key={server.address} className="userRow" onClick={() => {goToSingleServer(server.address)}}>
+              <tr key={server.address} className="userRow" onClick={() => { goToSingleServer(server.address) }}>
                 <td>{server.address}</td>
               </tr>
             )
@@ -67,5 +68,5 @@ export default function ServerList(){
         </tbody>
       </table>
     </div>
-    );
+  );
 }

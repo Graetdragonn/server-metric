@@ -60,26 +60,26 @@ const CreateAccountPage = () => {
     };
 
     return (
-    <body className='Form-Body'>
-    <div>
-    <form onSubmit={handleSubmit}>
-    <BackButton></BackButton>
-      <h1>Create Account</h1>
-      <input placeholder='Email' type="email" name="email" required={true} value={state.email} onChange={handleChange}></input>
-      <br></br>
-      <input placeholder='First Name' type="text" name="first" required={true} value={state.first} onChange={handleChange}></input>
-      <br></br>
-      <input placeholder='Last Name' type="text" name="last" required={true} value={state.last} onChange={handleChange}></input>
-      <br></br>
-      <input placeholder='Password' type="password" name="pass" required={true} value={state.pass} onChange={handleChange}></input>
-      <br></br>
-      <input placeholder='Confirm password' type="password" name="confirmPass" required={true} value={state.confirmPass} onChange={handleChange}></input>
-      <button>Submit</button>
-        <span style={{ visibility: passMatch ? 'hidden' : 'visible' }} className='error'>&nbsp; Passwords do not match </span>
-        <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email is already in use</span >
-    </form>
-    </div>
-    </body>
+        <body className='Form-Body'>
+            <div>
+                <form onSubmit={handleSubmit}>
+                    <BackButton></BackButton>
+                    <h1>Create Account</h1>
+                    <input placeholder='Email' type="email" name="email" required={true} value={state.email} onChange={handleChange}></input>
+                    <br></br>
+                    <input placeholder='First Name' type="text" name="first" required={true} value={state.first} onChange={handleChange}></input>
+                    <br></br>
+                    <input placeholder='Last Name' type="text" name="last" required={true} value={state.last} onChange={handleChange}></input>
+                    <br></br>
+                    <input placeholder='Password' type="password" name="pass" required={true} value={state.pass} onChange={handleChange}></input>
+                    <br></br>
+                    <input placeholder='Confirm password' type="password" name="confirmPass" required={true} value={state.confirmPass} onChange={handleChange}></input>
+                    <button>Submit</button>
+                    <span style={{ visibility: passMatch ? 'hidden' : 'visible' }} className='error'>&nbsp; Passwords do not match </span>
+                    <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email is already in use</span >
+                </form>
+            </div>
+        </body>
     );
 }
 
