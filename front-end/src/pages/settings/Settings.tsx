@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { checkEmail, checkPassword, isEmpty, isTypeDefault, submitEdits} from './SettingsLogic';
 import UserService from '../../requests/UserService';
 import BackButton from '../../components/back-button/BackButton';
-import Header from '../../components/navigation-bar/Header';
+import NavBar from '../../components/navigation-bar/NavBar';
 
 const Settings = () => {
   const navigate = useNavigate();
@@ -70,7 +70,7 @@ const Settings = () => {
 
 
   return (
-    <><Header />
+    <><NavBar />
     <div className='Form-Body'>
       <div>
         <form onSubmit={submitChange} style={{ display: error ? '' : 'none' }}>

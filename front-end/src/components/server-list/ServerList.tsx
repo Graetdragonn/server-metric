@@ -8,7 +8,7 @@ import { getAllServers, getServerInfo, getClientsByProvider, getUserByEmail, get
  */
 export default function ServerList() {
   const [serverList, setServerList] = useState([] as any[]); // server list to be displayed
-  var servers = new Array(); // server list temp variable
+  var servers = [] as any[]; // server list temp variable
   var clients = [] as string[]; // list of clients for service provider
   const navigate = useNavigate(); // for screen navigation
 

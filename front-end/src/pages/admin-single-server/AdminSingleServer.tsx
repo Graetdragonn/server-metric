@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import Header from "../../components/navigation-bar/Header";
+import NavBar from "../../components/navigation-bar/NavBar";
 import { addServerToUser } from "../add-server/AddServerLogic";
 import { checkEmail } from "../create-account/CreateAccountLogic";
 import { getUsersOnServer, removeServerFromUser } from "./AdminSingleServerLogic";
@@ -78,7 +78,7 @@ const AdminSingleServerPage = () => {
 
     return (
         <div className="Single-Server-Page">
-            <Header />
+            <NavBar />
             <div className='Form-Body'>
                 <form>
                     <BackButton></BackButton>

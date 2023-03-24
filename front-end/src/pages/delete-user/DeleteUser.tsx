@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../../components/back-button/BackButton";
-import Header from "../../components/navigation-bar/Header";
+import NavBar from "../../components/navigation-bar/NavBar";
 import { getAllUsers } from "../../components/user-list/UserListLogic";
 import UserService from "../../requests/UserService";
 import { emailCheck, checkEmpty, getUserType } from "../login/LoginLogic";
@@ -98,7 +98,7 @@ const DeleteUserPage = () => {
 
   return (
     <div className='Forgot-Password-Page'>
-      <Header></Header>
+      <NavBar />
       <div className='Form-Body'>
         <div>
           <form onSubmit={handleSubmit} style={{ display: isValidEmail ? 'none' : '' }}>

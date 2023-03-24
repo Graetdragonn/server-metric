@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BackButton from '../../components/back-button/BackButton';
-import Header from '../../components/navigation-bar/Header';
+import NavBar from '../../components/navigation-bar/NavBar';
 import '../../style/Master.css';
 // import { getServiceProviderList, addClientToServerProvider } from "../../pages/add-user/AddUserLogic";
 import { checkServerFormat } from '../add-server/AddServerLogic';
@@ -145,7 +145,7 @@ const AdminEditUserPage = () => {
     }, []);
 
     return (
-        <><Header />
+        <><NavBar />
             <div className='Form-Body' >
                 <div>
                     <form onSubmit={handleSubmit} style={{ display: error ? '' : 'none' }} >

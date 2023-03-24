@@ -3,7 +3,7 @@ import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
 import BackButton from '../../components/back-button/BackButton';
 import { checkServerFormat } from '../add-server/AddServerLogic';
-import Header from '../../components/navigation-bar/Header';
+import NavBar from '../../components/navigation-bar/NavBar';
 import { deleteServer } from './AdminDeleteServerLogic';
 import { getAllServers } from '../../components/server-list/ServerListLogic';
 import { getUsersOnServer, removeServerFromUser } from '../admin-single-server/AdminSingleServerLogic';
@@ -94,7 +94,7 @@ const AdminDeleteServerPage = () => {
   };
 
   return (
-    <><Header />
+    <><NavBar />
       <div className='Form-Body'>
         <div>
           <form onSubmit={handleSubmit} style={{ display: serverDeleted ? 'none' : '' }}>

@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import '../../style/Master.css';
-import Header from "../../components/navigation-bar/Header";
+import NavBar from "../../components/navigation-bar/NavBar";
 import React, { useEffect, useState } from "react";
 import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from "recharts";
 import { getReceivingPortsForAServer, getSentPortsForAServer } from "../dashboard/DashboardLogic";
@@ -89,7 +89,7 @@ const SingleServer = () => {
 
     return (
         <div className="Single-Server-Page">
-            <Header />
+            <NavBar />
             <div>
                 <br />
                 <div className="white-div-for-single-server" style={{ minWidth: 1000, maxHeight: 80, marginLeft: "19.5%" }}> <h1 className='Gradient-Text' style={{ textAlign: "center" }}> Server {state} </h1></div>

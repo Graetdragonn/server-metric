@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../../components/back-button/BackButton";
-import Header from "../../components/navigation-bar/Header";
+import NavBar from "../../components/navigation-bar/NavBar";
 import { isTypeDefault, checkEmail, isEmpty } from "../create-account/CreateAccountLogic";
 import { submit } from "./AddUserLogic"
 
@@ -75,7 +75,7 @@ const AddUserPage = () => {
     };
 
     return (
-        <><Header></Header>
+        <><NavBar />
             <div className='Form-Body'>
                 <div>
                     <form onSubmit={handleSubmit} style={{ display: submitted ? 'none' : '' }}>

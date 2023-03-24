@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BackButton from '../../components/back-button/BackButton';
-import Header from '../../components/navigation-bar/Header';
+import NavBar from '../../components/navigation-bar/NavBar';
 import '../../style/Master.css';
 import { getServiceProviderList, addClientToServerProvider } from "../../pages/add-user/AddUserLogic";
 import { deleteServerProviderClientByEmail, getClientServiceProvider } from '../delete-user/DeleteUserLogic';
@@ -27,7 +27,7 @@ const ServiceProviderEditUserPage = () => {
     const [serviceProvider, setServiceProvider] = useState("");
 
     // gets list of all service providers
-    var serviceProviders = new Array();
+    var serviceProviders = [] as any[];
     const [serviceProviderList, setServiceProviderList] = useState([] as any[]);
 
     // checks for errors
@@ -81,7 +81,7 @@ const ServiceProviderEditUserPage = () => {
     }, []);
 
     return (
-        <><Header />
+        <><NavBar />
             <div className='Form-Body' >
                 <div>
                     <form onSubmit={handleSubmit} style={{ display: error ? '' : 'none' }} >

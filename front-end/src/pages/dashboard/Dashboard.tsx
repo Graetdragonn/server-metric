@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
-import Header from "../../components/navigation-bar/Header";
+import NavBar from "../../components/navigation-bar/NavBar";
 import { useNavigate } from 'react-router-dom';
 import {
   getNumPacketsSentPerAddressesClient,
   getNumPacketsReceivedPerAddressesClient,
-  getNumPacketsSentPerAddressesSP, getNumPacketsReceivedPerAddressesSP,
+  getNumPacketsSentPerAddressesSP, 
+  getNumPacketsReceivedPerAddressesSP,
+  getServersByUser,
+  getClientServersByUser
 } from './DashboardLogic';
-import { getClientServersByUser, getServersByUser } from '../../components/navigation-bar/NavBarLogic';
 import UserList from '../../components/user-list/UserList';
 import ServerList from '../../components/server-list/ServerList';
 import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from "recharts";
@@ -93,11 +95,11 @@ const DashboardPage = () => {
       }
     }
 
-    if (userType == "CLIENT") {
+    if (userType === "CLIENT") {
       getUserAddresses();
     }
 
-    if (userType == "SERVICE_PROVIDER") {
+    if (userType === "SERVICE_PROVIDER") {
       getClientAddresses();
     }
 
@@ -116,67 +118,67 @@ const DashboardPage = () => {
   return (
 
     <div className="Dashboard-Page">
-      <Header />
+      <NavBar />
       {/* CLIENT AND SERVICE PROVIDER DASHBOARD VIEW */}
       <div style={{ display: userType === "CLIENT" || userType === "SERVICE_PROVIDER" ? '' : 'none' }}>
         <br />
         <div className='side-menu'>
-          <ServerList></ServerList>
+          <ServerList />
           <button onClick={() => navigate('/addserver')}>Add a Server</button>
           <button onClick={() => navigate('')}>Remove a Server</button>
         </div>
-        </div>
-        <br />
+      </div>
+      <br />
 
-        <div className="white-div" style={{ width: 1000, display: userType !== "CLIENT" ? 'none' : '' }}>
-          <div style={{ display: !clientPacketsSentHasData && !clientPacketsReceivedHasData ? 'none' : '' }}>
-            <BarChart height={300} width={1000} data={sentPacketsPerIpClient}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="address" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar onClick={(data) => { navigate("/single-server", { state: data.address }) }} name="Number Of Packets Sent" barSize={30} dataKey="numPackets" fill="#619E57" />
-            </BarChart>
-            <br />
-            <BarChart height={300} width={1000} data={receivedPacketsPerIpClient}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="address" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar onClick={(data) => { navigate("/single-server", { state: data.address }) }} name="Number of Packets received" barSize={30} dataKey="numPackets" fill="#619E57" />
-            </BarChart>
-          </div>
-          <div style={{ display: clientPacketsSentHasData && clientPacketsReceivedHasData ? 'none' : '' }}>
-            {renderNoAddresses()}
-          </div>
+      <div className="white-div" style={{ width: 1000, display: userType !== "CLIENT" ? 'none' : '' }}>
+        <div style={{ display: !clientPacketsSentHasData && !clientPacketsReceivedHasData ? 'none' : '' }}>
+          <BarChart height={300} width={1000} data={sentPacketsPerIpClient}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="address" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar onClick={(data) => { navigate("/single-server", { state: data.address }) }} name="Number of Packets Sent" barSize={30} dataKey="numPackets" fill="#619E57" />
+          </BarChart>
+          <br />
+          <BarChart height={300} width={1000} data={receivedPacketsPerIpClient}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="address" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar onClick={(data) => { navigate("/single-server", { state: data.address }) }} name="Number of Packets Received" barSize={30} dataKey="numPackets" fill="#619E57" />
+          </BarChart>
         </div>
+        <div style={{ display: clientPacketsSentHasData && clientPacketsReceivedHasData ? 'none' : '' }}>
+          {renderNoAddresses()}
+        </div>
+      </div>
 
-        <div className="white-div" style={{ width: 1000, display: userType !== "SERVICE_PROVIDER" ? 'none' : '' }}>
-          <div style={{ display: !spPacketsSentHasData && !spPacketsReceivedHasData ? 'none' : '' }}>
-            <BarChart height={300} width={1000} data={sentPacketsPerIpSP}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis name="Client and Address" dataKey="userAndAddress" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar onClick={(data) => { navigate("/single-server", { state: getAddressFromUserAndAddress(data.userAndAddress) }) }} name="Number Of Packets Sent" barSize={30} dataKey="numPackets" fill="#619E57" />
-            </BarChart>
-            <br />
-            <BarChart height={300} width={1000} data={receivedPacketsPerIpSP}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis name="Client and Address" dataKey="userAndAddress" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar onClick={(data) => { navigate("/single-server", { state: getAddressFromUserAndAddress(data.userAndAddress) }) }} name="Number of Packets received" barSize={30} dataKey="numPackets" fill="#619E57" />
-            </BarChart>
-          </div>
-          <div style={{ display: spPacketsSentHasData && spPacketsReceivedHasData ? 'none' : '' }}>
-            {renderNoAddresses()}
-          </div>
+      <div className="white-div" style={{ width: 1000, display: userType !== "SERVICE_PROVIDER" ? 'none' : '' }}>
+        <div style={{ display: !spPacketsSentHasData && !spPacketsReceivedHasData ? 'none' : '' }}>
+          <BarChart height={300} width={1000} data={sentPacketsPerIpSP}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis name="Client and Address" dataKey="userAndAddress" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar onClick={(data) => { navigate("/single-server", { state: getAddressFromUserAndAddress(data.userAndAddress) }) }} name="Number of Packets Sent" barSize={30} dataKey="numPackets" fill="#619E57" />
+          </BarChart>
+          <br />
+          <BarChart height={300} width={1000} data={receivedPacketsPerIpSP}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis name="Client and Address" dataKey="userAndAddress" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar onClick={(data) => { navigate("/single-server", { state: getAddressFromUserAndAddress(data.userAndAddress) }) }} name="Number of Packets Received" barSize={30} dataKey="numPackets" fill="#619E57" />
+          </BarChart>
         </div>
+        <div style={{ display: spPacketsSentHasData && spPacketsReceivedHasData ? 'none' : '' }}>
+          {renderNoAddresses()}
+        </div>
+      </div>
 
 
 
@@ -184,12 +186,11 @@ const DashboardPage = () => {
       <div style={{ display: userType !== "ADMIN" ? 'none' : '' }}>
         <br />
         <div className='white-div'>
-
           <div className='side-menu'>
-            <ServerList></ServerList>
+            <ServerList />
           </div>
           <div style={{ marginTop: '20px' }}>
-            <UserList></UserList>
+            <UserList />
           </div>
           <br />
           <div className='div-for-admin-services'>
@@ -199,19 +200,18 @@ const DashboardPage = () => {
             <button style={{ width: 150 }} onClick={() => navigate('/adminaddserver')}>Add Server</button>
             <button style={{ width: 150 }} onClick={() => navigate('/admindeleteserver')}>Delete Server</button>
           </div>
-
         </div>
         <br />
       </div>
 
       {/* SERVICE MANAGER DASHBOARD VIEW */}
       <div style={{ display: userType === "SERVICE_MANAGER" ? '' : 'none' }}>
-        <br></br>
-        <div style={{marginTop: '50px'}}></div>
+        <br />
+        <div style={{marginTop: '50px'}} />
         <div className='row' style={{ display: 'flex', justifyContent: 'space-around' }}>
-          <UserList></UserList>
+          <UserList />
         </div>
-        <br></br>
+        <br />
       </div>
 
     </div>
