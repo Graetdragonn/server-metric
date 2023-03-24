@@ -4,12 +4,12 @@
 
 /* Page styling*/
 .Start-Page {
-  background-color: #f8f8ff;
+  background-color: white;
 }
 
 .Sign-In-Page {
   background-color: #619E57;
-  position: relative;
+  position: fixed;
   top: 0px;
   right: 0px;
   bottom: 0px;
@@ -19,7 +19,7 @@
 
 .Create-Account-Page {
   background-color: #619E57;
-  position: relative;
+  position: fixed;
   top: 0px;
   right: 0px;
   bottom: 0px;
@@ -27,7 +27,7 @@
 }
 
 .Dashboard-Page {
-  background-color: #f8f8ff;
+  background-color: white;
   position: relative;
   top: 0px;
   right: 0px;
@@ -36,17 +36,17 @@
 }
 
 .Settings-Page {
-  background-color: #f8f8ff;
+  background-color: white;
   position: relative;
-  top: 0px;
+  top: 50px;
   right: 0px;
   bottom: 0px;
   left: 0px;
 }
 
 .Edit-Settings-Page {
-  background-color: #f8f8ff;
-  position: relative;
+  background-color: white;
+  position: fixed;
   top: 0px;
   right: 0px;
   bottom: 0px;
@@ -55,15 +55,15 @@
 
 .Single-Server-Page {
   position: relative;
-  background-color: #f8f8ff;
-  top: 0px;
+  background-color: white;
+  top: 50px;
   right: 0px;
   bottom: 0px;
   left: 0px;
 }
 
 .Forgot-Password-Page {
-  background-color: #f8f8ff;
+  background-color: white;
   position: relative;
   top: 0px;
   right: 0px;
@@ -100,20 +100,18 @@
 
 .white-div {
   max-height: fit-content;
-  margin-left: 35px;
+  margin-left: 110px;
   cursor: pointer;
   margin-right: 0.25em;
   margin-top: 1em;
   padding: 0.938em;
   border: none;
-  border-radius: 4px;
   background-color: white;
   color: black;
   font-size: 16px;
   padding: 14px 40px;
-  border-radius: 12px;
   display: inline-block;
-  box-shadow: 0px 8px 16px;
+  cursor: default;
 }
 
 .white-div-for-single-server {
@@ -140,6 +138,7 @@ button {
   border-radius: 12px;
   min-width: fit-content;
   display: inline-block;
+  cursor: pointer;
 }
 
 button:hover {
@@ -291,6 +290,33 @@ div.row {
 
 /* Styling for NavBar, MenuItems, and Dropdown */
 
+.side-menu {
+  height: 100%;
+  width: 110px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1;
+  top: 50px;
+  left: 0;
+  background-color: #619E57; 
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+  cursor: default;
+}
+
+.server-list {
+  list-style: none;
+  color: white;
+  margin: 0px;
+  padding: 6px 8px 6px 16px;
+  display: block;
+}
+
+.server-in-list:hover {
+  text-decoration: underline;
+  color: #fefefe;
+  cursor: pointer;
+}
+
 header {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   color: #212529;
@@ -300,10 +326,13 @@ header {
   display: flex;
   align-items: center;
   margin: 0 auto;
-  padding: 10px 0px;
-  /*background-color: white;*/
+  padding: 0px 10px;
   background-color: #619E57;
-  z-index: 10;
+  overflow: hidden;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+  height: 50px;
 }
 
 .menus {
@@ -315,6 +344,7 @@ header {
   background-color: #619E57;
   color: white;
   margin: 0px;
+  
 }
 
 .menu-items {
@@ -399,7 +429,7 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #f8f8ff;
+  background-color: white;
 }
 
 form {
@@ -416,7 +446,7 @@ form {
 
 .div-for-addresses {
 
-  background-color: #f8f8ff;
+  background-color: white;
   max-width: 650px;
   max-height: 300px;
   position: relative;

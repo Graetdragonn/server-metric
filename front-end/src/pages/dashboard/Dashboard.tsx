@@ -120,13 +120,10 @@ const DashboardPage = () => {
       {/* CLIENT AND SERVICE PROVIDER DASHBOARD VIEW */}
       <div style={{ display: userType === "CLIENT" || userType === "SERVICE_PROVIDER" ? '' : 'none' }}>
         <br />
-        <div className='row' style={{ display: "flex"}}>
-        <ServerList></ServerList>
-        <div className="white-div" style={{ width: 325, height: 150 }}>
-          <h1>Server Settings</h1>
+        <div className='side-menu'>
+          <ServerList></ServerList>
           <button onClick={() => navigate('/addserver')}>Add a Server</button>
           <button onClick={() => navigate('')}>Remove a Server</button>
-        </div>
         </div>
         <br />
 
@@ -185,9 +182,15 @@ const DashboardPage = () => {
       {/* ADMIN DASHBOARD VIEW */}
       <div style={{ display: userType !== "ADMIN" ? 'none' : '' }}>
         <br />
-        <div className='row' style={{ display: 'flex', justifyContent: 'space-around' }}>
-          <ServerList></ServerList>
-          <UserList></UserList>
+        <div className='white-div'>
+
+          <div className='side-menu'>
+            <ServerList></ServerList>
+          </div>
+          <div style={{ marginTop: '20px' }}>
+            <UserList></UserList>
+          </div>
+          <br />
           <div className='div-for-admin-services'>
             <h1>Admin Services</h1>
             <button style={{ width: 150 }} onClick={() => navigate('/adduser')}>Add User</button>
@@ -195,6 +198,7 @@ const DashboardPage = () => {
             <button style={{ width: 150 }} onClick={() => navigate('/adminaddserver')}>Add Server</button>
             <button style={{ width: 150 }} onClick={() => navigate('/admindeleteserver')}>Delete Server</button>
           </div>
+
         </div>
         <br />
       </div>
@@ -202,6 +206,7 @@ const DashboardPage = () => {
       {/* SERVICE MANAGER DASHBOARD VIEW */}
       <div style={{ display: userType === "SERVICE_MANAGER" ? '' : 'none' }}>
         <br></br>
+        <div style={{marginTop: '50px'}}></div>
         <div className='row' style={{ display: 'flex', justifyContent: 'space-around' }}>
           <UserList></UserList>
         </div>
