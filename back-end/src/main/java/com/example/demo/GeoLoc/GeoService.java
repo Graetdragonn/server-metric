@@ -15,7 +15,7 @@ import com.maxmind.geoip2.record.Location;
 public class GeoService {
     private DatabaseReader dbReader;
     public GeoService() throws IOException {
-        File database = new File("GeoLite2-City.mmdb");
+        File database = new File("srv/GeoLite2-City.mmdb");
         dbReader = new DatabaseReader.Builder(database).build();
     }
 
