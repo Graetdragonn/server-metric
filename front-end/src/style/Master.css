@@ -4,76 +4,76 @@
 
 /* Page styling*/
 .Start-Page {
-  background-color: #f8f8ff;
+  background-color: white;
 }
 
-.Sign-In-Page{
+.Sign-In-Page {
   background-color: #619E57;
-  position:absolute;
-  top:0px;
-  right:0px;
-  bottom:0px;
-  left:0px;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
 
 }
 
-.Create-Account-Page{
+.Create-Account-Page {
   background-color: #619E57;
-  position:absolute;
-  top:0px;
-  right:0px;
-  bottom:0px;
-  left:0px;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
 }
 
-.Dashboard-Page{
-  background-color: #f8f8ff;
-  position:absolute;
-  top:0px;
-  right:0px;
-  bottom:0px;
-  left:0px;
+.Dashboard-Page {
+  background-color: white;
+  position: relative;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
 }
 
-.Settings-Page{
-  background-color: #f8f8ff;
-  position:absolute;
-  top:0px;
-  right:0px;
-  bottom:0px;
-  left:0px;
+.Settings-Page {
+  background-color: white;
+  position: relative;
+  top: 50px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
 }
 
-.Edit-Settings-Page{
-  background-color: #f8f8ff;
-  position:absolute;
-  top:0px;
-  right:0px;
-  bottom:0px;
-  left:0px;
+.Edit-Settings-Page {
+  background-color: white;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
 }
 
-.Single-Server-Page{;
-  position:absolute;
-  background-color: #f8f8ff;
-  top:0px;
-  right:0px;
-  bottom:0px;
-  left:0px;
+.Single-Server-Page {
+  position: relative;
+  background-color: white;
+  top: 50px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
 }
 
-.Forgot-Password-Page{
-  background-color: #f8f8ff;
-  position:absolute;
-  top:0px;
-  right:0px;
-  bottom:0px;
-  left:0px;
+.Forgot-Password-Page {
+  background-color: white;
+  position: relative;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
 }
 
 /* Gradient text for start page */
 
-.Gradient-Text{
+.Gradient-Text {
   background-image: linear-gradient(60deg, #619E57, #94579E);
   font-family: 'Lato', sans-serif;
   background-clip: text;
@@ -81,13 +81,13 @@
   color: transparent;
 }
 
-.div-for-single-address{
+.div-for-single-address {
   max-width: fit-content;
   max-height: fit-content;
   cursor: pointer;
   margin-right: 0.25em;
   margin-top: 1em;
-  padding: 	0.938em;
+  padding: 0.938em;
   border: none;
   border-radius: 4px;
   background-color: #619E57;
@@ -98,39 +98,37 @@
   display: inline-block;
 }
 
-.white-div{
+.white-div {
   max-height: fit-content;
-  margin-left: 35px;
+  margin-left: 110px;
   cursor: pointer;
   margin-right: 0.25em;
   margin-top: 1em;
-  padding: 	0.938em;
+  padding: 0.938em;
   border: none;
-  border-radius: 4px;
   background-color: white;
   color: black;
   font-size: 16px;
   padding: 14px 40px;
-  border-radius: 12px;
   display: inline-block;
-  box-shadow: 0px 8px 16px ;
+  cursor: default;
 }
 
-.white-div-for-single-server{
+.white-div-for-single-server {
   border: none;
   border-radius: 4px;
   background-color: white;
   font-size: 16px;
   border-radius: 12px;
   display: inline-block;
-  box-shadow: 0px 8px 16px ;
+  box-shadow: 0px 8px 16px;
 }
 
 /* Green to Grey button*/
 button {
   margin-right: 0.25em;
   margin-top: 1em;
-  padding: 	5px;
+  padding: 5px;
   border: none;
   border-radius: 4px;
   background-color: #619E57;
@@ -140,11 +138,14 @@ button {
   border-radius: 12px;
   min-width: fit-content;
   display: inline-block;
+  cursor: pointer;
 }
+
 button:hover {
   background-color: #24272C;
   color: #fefefe;
 }
+
 button:disabled {
   opacity: 0.2;
 }
@@ -201,8 +202,7 @@ button:disabled {
   cursor: pointer;
 }
 
- .settingsbutton {
-
+.settingsbutton {
   color: white;
   font-size: 20px;
   padding: 14px 40px;
@@ -210,9 +210,10 @@ button:disabled {
   display: inline-block;
   float: right;
 }
+
 .settingsbutton:hover {
   cursor: pointer;
- }
+}
 
 
 .forgotPass {
@@ -224,9 +225,10 @@ button:disabled {
   text-decoration: underline;
   user-select: none;
 }
+
 .forgotPass:hover {
   cursor: pointer;
- }
+}
 
 .form {
   display: flex;
@@ -288,6 +290,33 @@ div.row {
 
 /* Styling for NavBar, MenuItems, and Dropdown */
 
+.side-menu {
+  height: 100%;
+  width: 110px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1;
+  top: 50px;
+  left: 0;
+  background-color: #619E57; 
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+  cursor: default;
+}
+
+.server-list {
+  list-style: none;
+  color: white;
+  margin: 0px;
+  padding: 6px 8px 6px 16px;
+  display: block;
+}
+
+.server-in-list:hover {
+  text-decoration: underline;
+  color: #fefefe;
+  cursor: pointer;
+}
+
 header {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   color: #212529;
@@ -297,10 +326,13 @@ header {
   display: flex;
   align-items: center;
   margin: 0 auto;
-  padding: 10px 0px;
-  /*background-color: white;*/
+  padding: 0px 10px;
   background-color: #619E57;
-  z-index: 10;
+  overflow: hidden;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+  height: 50px;
 }
 
 .menus {
@@ -310,8 +342,9 @@ header {
   list-style: none;
   /*background-color: white;*/
   background-color: #619E57;
-  color:white;
+  color: white;
   margin: 0px;
+  
 }
 
 .menu-items {
@@ -338,7 +371,8 @@ header {
   width: 100%;
 }
 
-.menu-items > a, .menu-items button {
+.menu-items>a,
+.menu-items button {
   text-align: left;
   padding: 0.7rem 1rem;
 }
@@ -387,7 +421,7 @@ header {
 /* Stuff below is for forms */
 
 
-.Form-Body{
+.Form-Body {
   font-family: Lato;
   height: 97vh;
   width: 100%;
@@ -395,7 +429,7 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #f8f8ff;
+  background-color: white;
 }
 
 form {
@@ -406,36 +440,36 @@ form {
   min-height: 400px;
   padding: 20px 40px 40px 40px;
   border-radius: 6px;
-  box-shadow: 0px 8px 36px ;
+  box-shadow: 0px 8px 36px;
   background-color: white;
 }
 
 .div-for-addresses {
 
-background-color: #f8f8ff;
-max-width: 650px;
-max-height: 300px;
-position: relative;
-left: 20px;
-border-radius: 6px;
-box-shadow: 0px 8px 24px ;
-padding: 10px;
-overflow-y: scroll;
+  background-color: white;
+  max-width: 650px;
+  max-height: 300px;
+  position: relative;
+  left: 20px;
+  border-radius: 6px;
+  box-shadow: 0px 8px 24px;
+  padding: 10px;
+  overflow-y: scroll;
 }
 
 .div-for-admin-services {
 
-  background-color: #f8f8ff;
+  background-color: white;
   max-width: fit-content;
   max-height: fit-content;
   position: relative;
   left: 20px;
   border-radius: 6px;
-  box-shadow: 0px 8px 24px ;
+  box-shadow: 0px 8px 24px;
   padding: 10px;
-  }
+}
 
-form > h1 {
+form>h1 {
   display: flex;
   justify-content: center;
   font-family: Lato, sans-serif;
@@ -445,7 +479,7 @@ form > h1 {
   letter-spacing: 2px;
 }
 
-form > div {
+form>div {
   margin: 0.5em 0;
 }
 
@@ -465,65 +499,51 @@ input {
   flex-direction: column;
   width: 100%;
 }
-form > .invalid {
+
+form>.invalid {
   border: 1px solid #db2269;
   box-shadow: none;
 }
+
 input[type="checkbox"].invalid {
   box-shadow: 0px 0px 0px 1px #db2269;
 }
-input, select {
+
+input,
+select {
   padding: 10px 10px;
   border-radius: 5px;
   border: 1px solid #d6d1d5;
   display: block;
 }
-form > select {
+
+form>select {
   width: 100%;
   height: 35px;
 }
-form > input[type="checkbox"] {
+
+form>input[type="checkbox"] {
   margin-right: 0.4em;
   margin-top: 0.2em;
 }
 
-form > .required {
-  color:#db2269;
+form>.required {
+  color: #db2269;
   font-size: 0.8em;
   margin-top: 0.5em;
 }
 
-form > .k-textbox-container, .k-floating-label-container {
+form>.k-textbox-container,
+.k-floating-label-container {
   width: 100%;
 }
-
-/*button {*/
-/*  min-width: 100%;*/
-/*  cursor: pointer;*/
-/*  margin-right: 0.25em;*/
-/*  margin-top: 1em;*/
-/*  padding: 	0.938em;*/
-/*  border: none;*/
-/*  border-radius: 4px;*/
-/*  background-color: #619E57;*/
-/*  color: #fefefe;*/
-/*  font-size: 16px;*/
-/*  padding: 14px 40px;*/
-/*  border-radius: 12px;*/
-/*  width: fit-content;*/
-/*  display: inline-block;*/
-/*}*/
-/*button:hover {*/
-/*  background-color: #24272C;*/
-/*  color: #fefefe;*/
-/*}*/
 
 .active-navbar-item {
   font-weight: bold;
 }
 
 /* CSS for Settings and Edit-Settings pages*/
-.header{
+.header {
   color: white;
   font-size: 25px;
   display: flex;
@@ -535,7 +555,7 @@ form > .k-textbox-container, .k-floating-label-container {
   margin-bottom: 20px;
 }
 
-.header2{
+.header2 {
   color: white;
   font-size: 15px;
   display: flex;
@@ -550,7 +570,7 @@ form > .k-textbox-container, .k-floating-label-container {
   cursor: pointer;
   margin-right: .25em;
   margin-top: 1em;
-  padding: 	0.938em;
+  padding: 0.938em;
   border: none;
   border-radius: 4px;
   background-color: #619E57;
@@ -569,12 +589,14 @@ form > .k-textbox-container, .k-floating-label-container {
   background-color: #24272C;
   color: #fefefe;
 }
+
 .editbutton:disabled {
   opacity: 0.2;
 }
 
 .addServer {
-  background-color: white; /* Green */
+  background-color: white;
+  /* Green */
   border: none;
   color: black;
 }
@@ -587,15 +609,15 @@ form > .k-textbox-container, .k-floating-label-container {
   position: relative;
   left: 20px;
   border-radius: 6px;
-  box-shadow: 0px 8px 24px ;
+  box-shadow: 0px 8px 24px;
   padding: 10px;
 }
 
 table {
-  height:250px;
+  height: 250px;
   width: fit-content;
-  overflow-y:scroll;
-  display:block;
+  overflow-y: scroll;
+  display: block;
 }
 
 th {
@@ -606,7 +628,7 @@ td {
   text-align: center;
 }
 
-.userRow:hover{
+.userRow:hover {
   background-color: #53575f;
   color: #fefefe;
   cursor: pointer;
@@ -622,20 +644,20 @@ caption {
 }
 
 .serverList {
- height: 100px;
- overflow-y: scroll;
- margin-left: auto;
- margin-right: auto;
- border: 1px solid rgba(0, 0, 0, 0.196);
- cursor: default;
- font-size: smaller;
- width: 150px;
+  height: 100px;
+  overflow-y: scroll;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid rgba(0, 0, 0, 0.196);
+  cursor: default;
+  font-size: smaller;
+  width: 150px;
 }
 
 .addServerButton {
   min-width: 0%;
   cursor: pointer;
-  width:110px;
+  width: 110px;
   border: none;
   border-radius: 4px;
   background-color: #484a46;
@@ -656,13 +678,13 @@ caption {
   justify-content: center;
 }
 
-.background-side-by-side-parent{
+.background-side-by-side-parent {
   max-height: fit-content;
   padding: 20px 10px;
   text-align: center;
 }
 
-.background-side-by-side-first-child{
+.background-side-by-side-first-child {
   display: inline-block;
   vertical-align: middle;
   max-width: 900px;
@@ -670,13 +692,13 @@ caption {
   position: relative;
   border-radius: 6px;
   background-color: white;
-  box-shadow: 0px 8px 24px ;
+  box-shadow: 0px 8px 24px;
   padding: 10px;
   overflow-y: scroll;
   margin-right: 20px;
 }
 
-.background-side-by-side-child{
+.background-side-by-side-child {
   display: inline-block;
   vertical-align: middle;
   max-width: 900px;
@@ -684,12 +706,12 @@ caption {
   background-color: white;
   position: relative;
   border-radius: 6px;
-  box-shadow: 0px 8px 24px ;
+  box-shadow: 0px 8px 24px;
   padding: 10px;
   overflow-y: scroll;
 }
 
-.background-side-by-side-single-first-child{
+.background-side-by-side-single-first-child {
   display: inline-block;
   vertical-align: middle;
   width: 900px;
@@ -697,9 +719,7 @@ caption {
   position: relative;
   border-radius: 6px;
   background-color: white;
-  box-shadow: 0px 8px 24px ;
+  box-shadow: 0px 8px 24px;
   padding: 10px;
   overflow-y: scroll;
 }
-
-

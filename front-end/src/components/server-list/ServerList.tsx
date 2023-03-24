@@ -50,23 +50,18 @@ export default function ServerList() {
 
   return (
     <div >
-      <table className="userTable">
-        <caption>All Servers</caption>
-        <thead>
-          <tr>
-            <th>Addresses</th>
-          </tr>
-        </thead>
-        <tbody>
-          {serverList.map((server) => {
-            return (
-              <tr key={server.address} className="userRow" onClick={() => { goToSingleServer(server.address) }}>
-                <td>{server.address}</td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
+      <ul className="server-list">
+      <h1 style={{fontSize: 18, textDecoration: 'underline'}}>Servers</h1>
+        {serverList.map((server) => {
+          return (
+            <li className='server-in-list' key={server.address} onClick={() => { goToSingleServer(server.address) }}>
+              <p>
+                {server.address}
+              </p>
+            </li>
+          )
+        })}
+      </ul>
     </div>
   );
 }
