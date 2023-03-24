@@ -119,11 +119,14 @@ const DashboardPage = () => {
       <Header />
       {/* CLIENT AND SERVICE PROVIDER DASHBOARD VIEW */}
       <div style={{ display: userType === "CLIENT" || userType === "SERVICE_PROVIDER" ? '' : 'none' }}>
+        <br />
+        <div className='row' style={{ display: "flex"}}>
         <ServerList></ServerList>
-        <div className="white-div" style={{ width: 1000 }}>
+        <div className="white-div" style={{ width: 325, height: 150 }}>
           <h1>Server Settings</h1>
           <button onClick={() => navigate('/addserver')}>Add a Server</button>
           <button onClick={() => navigate('')}>Remove a Server</button>
+        </div>
         </div>
         <br />
 
@@ -183,11 +186,8 @@ const DashboardPage = () => {
       <div style={{ display: userType !== "ADMIN" ? 'none' : '' }}>
         <br />
         <div className='row' style={{ display: 'flex', justifyContent: 'space-around' }}>
-
-          <UserList></UserList>
-
           <ServerList></ServerList>
-
+          <UserList></UserList>
           <div className='div-for-admin-services'>
             <h1>Admin Services</h1>
             <button style={{ width: 150 }} onClick={() => navigate('/adduser')}>Add User</button>
