@@ -6,6 +6,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import com.example.demo.Server.Server;
@@ -47,6 +49,16 @@ public class DataGenerator {
 
     public static String randomIPGenerator(){
         Random r = new Random();
-        return r.nextInt(256) + "." + r.nextInt(256) + "." + r.nextInt(256) + "." + r.nextInt(256);
+        int [] octets = new int[4];
+
+        List<Integer> ignoreNetworks = Arrays.asList(NetConst.IGNORE_NETWORKS);
+        do { 
+            octets[0] = r.nextInt(1, NetConst.MAX_NETWORK);
+        } while (ignoreNetworks.contains(octets[0]));
+
+        octets[1] = r.nextInt(1, 256);
+        octets[2] = r.nextInt(1,256);
+        octets[3] = r.nextInt(1,256);
+        return octets[0] + "." + octets[1] + "." + octets[2] + "." + octets[3];
     }
 }
