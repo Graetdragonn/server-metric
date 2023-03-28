@@ -12,7 +12,7 @@ import ForgotPasswordPage from "./pages/forgot-password/ForgotPassword";
 import Settings from "./pages/settings/Settings";
 import SingleServer from "./pages/single-server/SingleServer";
 import AddServerPage from "./pages/add-server/AddServer";
-import RemoveServerPage from "./pages/remove-server/RemoveServer";
+import RemoveServerPage from "./pages/client-remove-server/RemoveServer";
 import AddUserPage from "./pages/add-user/AddUser"
 import DeleteUserPage from "./pages/delete-user/DeleteUser";
 import AdminEditUserPage from "./pages/admin-edit-user/AdminEditUser";
