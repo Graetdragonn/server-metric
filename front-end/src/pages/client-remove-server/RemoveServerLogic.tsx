@@ -1,5 +1,6 @@
 import ServerService from '../../requests/ServerService';
 import UserService from '../../requests/UserService';
+import {getUserByEmail } from "../../components/server-list/ServerListLogic";
 
 /**
  * Checks server address format
@@ -28,28 +29,41 @@ export async function checkIfExists(server: string): Promise<boolean> {
 }
 
 /**
- * Add server to server list
+ * Remove server from server list
  * @param server server address
  * @returns true if success, false otherwise
  */
 export async function removeServerFromList(server: string): Promise<boolean> {
-    var addServer = await ServerService.deleteFromServerList(server);
-    if(addServer === ''){
+    var removeServer = await ServerService.deleteFromServerList(server);
+    if(removeServer === ''){
         return false; 
     }
     return true;
 }
 
 /**
- * Add server to user's list
+ * Remove server from user's list
  * @param email user email
  * @param server server address
  * @returns true if success, false otherwise
  */
 export async function removeServerFromUser(email: string, server: string): Promise<boolean> {
-    var addServer = await UserService.removeServerFromUser(email, server);
-    if(addServer === ''){
+    var removeServer = await UserService.removeServerFromUser(email, server);
+    if(removeServer === ''){
         return false; 
     }
     return true;
+}
+
+/**
+ * Get a list of servers for the user.
+ * @param email user email
+ */
+export async function getAllClientServers(email:string){
+    var clientInfo = await getUserByEmail(email);
+    var servers = [];
+    for (let j = 0; j < clientInfo["servers"].length; j++) {
+        servers.push(clientInfo["servers"][j]);
+    }
+    return servers;
 }
