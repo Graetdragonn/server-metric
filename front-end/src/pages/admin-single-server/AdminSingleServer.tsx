@@ -106,7 +106,7 @@ export default function AdminSingleServerPage() {
                         })}
                     </table>
                     <input type='text' style={{ width: 350, margin: 'auto' }} placeholder="User Email Address" value={userToAddOrDelete} onChange={handleChange}></input>
-                    <br></br>
+                    <br />
                     <p className='error' style={{ display: emailFormatError ? '' : 'none', margin: 'auto' }}>Please enter a valid email address</p>
                     <p className='error' style={{ display: addUserError ? '' : 'none', margin: 'auto' }}>Unable to add server to user</p>
                     <p className='error' style={{ display: deleteUserError ? '' : 'none', margin: 'auto' }}>Unable to remove server from user</p>

@@ -81,32 +81,32 @@ const RemoveServerPage = () => {
     <body className='Form-Body'>
         <div>
             <form onSubmit={handleSubmit} style={{ display: serverRemoved ? 'none' : '' }}>
-            <BackButton></BackButton>
-            <h1>Remove Server</h1>
+                <BackButton />
+                <h1>Remove Server</h1>
 
-            <div className="center">
-                <select onChange={handleChange}>
-                    <option value="default"> - Select Server to Delete -</option>
-                    {serverList.map(server => { return <option value={server.address}>{server.address}</option>; })}
-                </select>
-            </div> 
+                <div className="center">
+                    <select onChange={handleChange}>
+                        <option value="default"> - Select Server to Delete -</option>
+                        {serverList.map(server => { return <option value={server.address}>{server.address}</option>; })}
+                    </select>
+                </div> 
 
-            <button>Submit</button>
-            <br></br>
-            <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>&nbsp; Not valid address format </span>
-            <span style={{ visibility: serverError ? 'visible' : 'hidden' }} className='error'>&nbsp; Server already added to user  </span>
+                <button>Submit</button>
+                <br />
+                <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>&nbsp; Not valid address format </span>
+                <span style={{ visibility: serverError ? 'visible' : 'hidden' }} className='error'>&nbsp; Server already added to user  </span>
+                </form>
+                <form style={{ display: serverRemoved ? '' : 'none' }}>
+                <BackButton />
+                <h1>Remove Server</h1>
+
+                <p style={{ fontSize: 40, textAlign: 'center' }}>Server successfully removed</p>
+
+                <br />
+
+                <button onClick={() => navigate('/dashboard')}>Back to dashboard</button>
+                <br />
             </form>
-            <form style={{ display: serverRemoved ? '' : 'none' }}>
-            <BackButton></BackButton>
-            <h1>Remove Server</h1>
-
-            <p style={{ fontSize: 40, textAlign: 'center' }}>Server successfully removed</p>
-
-            <br></br>
-
-            <button onClick={() => navigate('/dashboard')}>Back to dashboard</button>
-            <br></br>
-        </form>
         </div>
     </body></>
     
