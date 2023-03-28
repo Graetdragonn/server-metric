@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
 import BackButton from '../../components/back-button/BackButton';
-import { checkServerFormat, checkIfExists, removeServerFromList, removeServerFromUser } from './RemoveServerLogic';
+import { checkServerFormat, checkIfExists, removeServerFromList, removeServerFromUser, getAllClientServers } from './RemoveServerLogic';
 import Header from '../../components/navigation-bar/Header';
 
 /**
@@ -22,11 +22,21 @@ const RemoveServerPage = () => {
     // checks for errors
     const [serverError, setServerError] = useState(false);
 
-    // check if server is successfully added
+    // check if server is successfully removed
     const [serverRemoved, setServerRemoved] = useState(false);
 
     // get user email
     const email = JSON.parse(localStorage.getItem('email') || '');
+
+    // server list for user
+    const [serverList, setServerList] = useState([] as any[]);
+
+    // get all servers
+    const getServerList = async () => {
+        var servers = await getAllClientServers(email);
+        setServerList(servers);
+    }
+    getServerList();
 
     // submits form
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -37,7 +47,7 @@ const RemoveServerPage = () => {
             setError(true);
         }
 
-        // checks if server already exists
+        // checks if exists and can be removed
         else if (await checkIfExists(server)) { 
             if (await removeServerFromUser(email, server)) {
                 setServerRemoved(true);
@@ -46,7 +56,7 @@ const RemoveServerPage = () => {
                 setServerError(true);
             }
         }
-        // server added to list and to user
+        // server removed from list and user
         else {
             if (await removeServerFromList(server)){
                 if (await removeServerFromUser(email, server)){
@@ -72,9 +82,12 @@ const RemoveServerPage = () => {
             <BackButton></BackButton>
             <h1>Remove Server</h1>
 
-            <input placeholder='Server Address' type="text" required={true} name="server" onChange={handleChange}></input>
-
-            <br></br>
+            <div className="center">
+                <select onChange={handleChange}>
+                    <option value="default"> - Select Server to Delete -</option>
+                    {serverList.map(server => { return <option value={server.address}>{server.address}</option>; })}
+                </select>
+            </div> 
 
             <button>Submit</button>
             <br></br>
