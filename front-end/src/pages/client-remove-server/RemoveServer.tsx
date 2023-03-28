@@ -3,7 +3,9 @@ import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
 import BackButton from '../../components/back-button/BackButton';
 import { checkServerFormat, checkIfExists, removeServerFromList, removeServerFromUser, getAllClientServers } from './RemoveServerLogic';
-import Header from '../../components/navigation-bar/Header';
+//import Header from '../../components/navigation-bar/Header';
+import NavBar from '../../components/navigation-bar/NavBar';
+
 
 /**
  * Remove server screen
@@ -75,7 +77,7 @@ const RemoveServerPage = () => {
     };
 
     return (
-    <><Header />
+    <><NavBar />
     <body className='Form-Body'>
         <div>
             <form onSubmit={handleSubmit} style={{ display: serverRemoved ? 'none' : '' }}>
