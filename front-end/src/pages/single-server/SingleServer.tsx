@@ -4,9 +4,9 @@ import NavBar from "../../components/navigation-bar/NavBar";
 import React, { useEffect, useState } from "react";
 import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from "recharts";
 import { getReceivingPortsForAServer, getSentPortsForAServer } from "../dashboard/DashboardLogic";
-
 const { getService } = require('port-numbers');
-const SingleServer = () => {
+
+export default function SingleServer() {
 
     const location = useLocation(); // for screen navigation
     const { state } = location; // get props
@@ -117,13 +117,8 @@ const SingleServer = () => {
                         {renderNoPortData()}
                     </div>
                 </div>
-
             </div>
-            <div>
-
-            </div>
+            <div></div>
         </div>
     );
 }
-
-export default SingleServer;

@@ -6,7 +6,7 @@ import UserService from '../../requests/UserService';
 import BackButton from '../../components/back-button/BackButton';
 import NavBar from '../../components/navigation-bar/NavBar';
 
-const Settings = () => {
+export default function Settings() {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('email') || '');
   
@@ -74,22 +74,22 @@ const Settings = () => {
     <div className='Form-Body'>
       <div>
         <form onSubmit={submitChange} style={{ display: error ? '' : 'none' }}>
-          <BackButton></BackButton>
+          <BackButton />
           <h1>Settings</h1>
           <label>First Name</label>
           <input type="text" name="first" required={true} value={state.first} onChange={handleChange} autoComplete='first-name'></input>
-          <br></br>
+          <br />
           <label>Last Name</label>
           <input type="text" name="last" required={true} value={state.last} onChange={handleChange} autoComplete='last-name'></input>
-          <br></br>
+          <br />
           <label>Change Password</label>
           <input name="pass" type = "password" onChange={handleChange} autoComplete='new-password'></input>
-          <br></br>
+          <br />
           <label>Confirm Changed Password</label>
           <input name="confirmPass" type = "password" onChange={handleChange} autoComplete='new-password'></input>
-          <br></br>
+          <br />
           <button>Submit</button>
-          <br></br>
+          <br />
           <span style={{ visibility: passMatch ? 'hidden' : 'visible' }} className='error'>&nbsp; Passwords do not match </span>
         </form>
         <form style={{ display: error ? 'none' : '' }}>
@@ -101,4 +101,3 @@ const Settings = () => {
   );
 }
   
-export default Settings;

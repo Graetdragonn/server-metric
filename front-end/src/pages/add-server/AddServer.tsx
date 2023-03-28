@@ -8,7 +8,7 @@ import NavBar from '../../components/navigation-bar/NavBar';
 /**
  * Add server screen
  */
-const AddServerPage = () => {
+export default function AddServerPage() {
   // for screen navigation
   const navigate = useNavigate();
 
@@ -70,33 +70,31 @@ const AddServerPage = () => {
       <div className='Form-Body'>
         <div>
           <form onSubmit={handleSubmit} style={{ display: serverAdded ? 'none' : '' }}>
-            <BackButton></BackButton>
+            <BackButton />
             <h1>Add Server</h1>
 
             <input placeholder='Server Address' type="text" required={true} name="server" onChange={handleChange}></input>
 
-            <br></br>
+            <br />
 
             <button>Submit</button>
-            <br></br>
+            <br />
             <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>&nbsp; Not valid address format </span>
             <span style={{ visibility: serverError ? 'visible' : 'hidden' }} className='error'>&nbsp; Server already added to user  </span>
           </form>
           <form style={{ display: serverAdded ? '' : 'none' }}>
-            <BackButton></BackButton>
+            <BackButton />
             <h1>Add Server</h1>
 
             <p style={{ fontSize: 40, textAlign: 'center' }}>Server successfully added</p>
 
-            <br></br>
+            <br />
 
             <button onClick={() => navigate('/dashboard')}>Back to dashboard</button>
-            <br></br>
+            <br />
           </form>
         </div>
       </div></>
 
   );
 }
-
-export default AddServerPage;

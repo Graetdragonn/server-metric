@@ -6,7 +6,7 @@ import '../../style/Master.css';
 import { getServiceProviderList, addClientToServerProvider } from "../../pages/add-user/AddUserLogic";
 import { deleteServerProviderClientByEmail, getClientServiceProvider } from '../delete-user/DeleteUserLogic';
 
-const ServiceProviderEditUserPage = () => {
+export default function ServiceProviderEditUserPage() {
     const navigate = useNavigate(); // for screen navigation
     const { state } = useLocation(); // get props
 
@@ -67,7 +67,6 @@ const ServiceProviderEditUserPage = () => {
 
     // get service provider of client
     const getSP = async () => {
-
         var temp = await getClientServiceProvider(info.email);
         setServiceProvider(temp);
         setInfo({
@@ -85,7 +84,7 @@ const ServiceProviderEditUserPage = () => {
             <div className='Form-Body' >
                 <div>
                     <form onSubmit={handleSubmit} style={{ display: error ? '' : 'none' }} >
-                        <BackButton></BackButton>
+                        <BackButton />
                         <h1>User Information</h1>
                         <div className="row" style={{ display: "flex" }}>
                             <div>
@@ -97,10 +96,10 @@ const ServiceProviderEditUserPage = () => {
                                 <input type="text" name="last" readOnly={true} required={true} value={info.last} ></input>
                             </div>
                         </div>
-                        <br></br>
+                        <br />
                         <label>Email</label>
                         <input type="text" name="last" readOnly={true} required={true} value={info.email} ></input>
-                        <br></br>
+                        <br />
                         <label>Client's Service Provider</label>
                         <div className='center'>
 
@@ -111,7 +110,7 @@ const ServiceProviderEditUserPage = () => {
                         </div>
 
                         <button type='submit'>Submit</button>
-                        <br></br>
+                        <br />
                     </form>
                     <form style={{ display: error ? 'none' : '' }}>
                         <p style={{ fontSize: 20, textAlign: 'center' }}>User {info.email} was updated</p>
@@ -121,5 +120,3 @@ const ServiceProviderEditUserPage = () => {
             </div></>
     );
 }
-
-export default ServiceProviderEditUserPage;

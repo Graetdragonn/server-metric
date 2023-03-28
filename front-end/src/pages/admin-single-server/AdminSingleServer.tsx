@@ -10,7 +10,7 @@ import BackButton from "../../components/back-button/BackButton";
  * Render admin single server screen
  * @returns Admin single server page
  */
-const AdminSingleServerPage = () => {
+export default function AdminSingleServerPage() {
     const { state } = useLocation(); // get props
     const { serverInfo } = state; // set server info with props
     const [userList, setUserList] = useState([] as any[]); // track list of users watching the server
@@ -81,7 +81,7 @@ const AdminSingleServerPage = () => {
             <NavBar />
             <div className='Form-Body'>
                 <form>
-                    <BackButton></BackButton>
+                    <BackButton />
                     <p className="title" style={{ fontWeight: "bold", textAlign: "center", color: "#24272C", fontSize: 30 }}>Users Watching Server: {serverInfo.address}</p>
                     <table className="userTable" style={{ margin: 'auto', boxShadow: 'none', left: 'auto' }}>
                         <thead>
@@ -119,5 +119,3 @@ const AdminSingleServerPage = () => {
         </div>
     );
 }
-
-export default AdminSingleServerPage;

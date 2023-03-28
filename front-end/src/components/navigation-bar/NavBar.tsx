@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
  * Render the navigation bar
  * @returns the navigation bar
  */
-const NavBar = () => {
+export default function NavBar() {
 
   // navigation bar items and their corresponding routes
   const menuItems = [
@@ -42,5 +42,3 @@ const NavBar = () => {
   );
 
 };
-
-export default NavBar;

@@ -8,7 +8,7 @@ import BackButton from '../../components/back-button/BackButton';
 /**
  * Login screen
  */
-const LoginPage = () => {
+export default function LoginPage() {
   // for screen navigation
   const navigate = useNavigate();
 
@@ -56,17 +56,14 @@ const LoginPage = () => {
     <div className='Form-Body'>
       <div>
         <form onSubmit={handleSubmit}>
-          <BackButton></BackButton>
+          <BackButton />
           <h1>Login</h1>
 
           <input placeholder='Email' type="text" required={true} name="email" value={state.email} onChange={handleChange} autoComplete="email"></input>
-
-          <br></br>
-
-          <input placeholder='Password' type="password" name="pass" required={true} value={state.pass} onChange={handleChange} autoComplete="current-password">
-          </input>
+          <br />
+          <input placeholder='Password' type="password" name="pass" required={true} value={state.pass} onChange={handleChange} autoComplete="current-password"></input>
           <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Email or password are incorrect</span>
-          <br></br>
+          <br />
           <p className='forgotPass' onClick={forgotPass}>Forgot password?</p>
           <button>Submit</button>
         </form>
@@ -74,5 +71,3 @@ const LoginPage = () => {
     </div>
   );
 }
-
-export default LoginPage;

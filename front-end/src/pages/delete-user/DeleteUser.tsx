@@ -8,7 +8,7 @@ import { emailCheck, checkEmpty, getUserType } from "../login/LoginLogic";
 import { deleteServerProviderClientByEmail, deleteUser, getClientServiceProvider } from "./DeleteUserLogic";
 
 
-const DeleteUserPage = () => {
+export default function DeleteUserPage() {
   // for screen navigation
   const navigate = useNavigate();
 
@@ -102,7 +102,7 @@ const DeleteUserPage = () => {
       <div className='Form-Body'>
         <div>
           <form onSubmit={handleSubmit} style={{ display: isValidEmail ? 'none' : '' }}>
-            <BackButton></BackButton>
+            <BackButton />
             <h1>Delete a User</h1>
             <div className="center">
               <select onChange={handleChange}>
@@ -116,7 +116,7 @@ const DeleteUserPage = () => {
               <div className="row" style={{display: 'flex'}}> <p>User Type: &nbsp; </p><p>{state.userType}</p> </div>
             </div>
             <button>Submit</button>
-            <br></br>
+            <br />
             <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>Please select a user</span>
           </form>
           <form onSubmit={handleSubmit} style={{ display: isValidEmail ? '' : 'none' }}>
@@ -128,5 +128,3 @@ const DeleteUserPage = () => {
     </div>
   );
 }
-
-export default DeleteUserPage;

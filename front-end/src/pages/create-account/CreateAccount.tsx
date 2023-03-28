@@ -7,7 +7,7 @@ import BackButton from '../../components/back-button/BackButton';
 /**
  * Create Account Screen
  */
-const CreateAccountPage = () => {
+export default function CreateAccountPage() {
     // for screen navigation
     const navigate = useNavigate();
 
@@ -63,16 +63,16 @@ const CreateAccountPage = () => {
         <div className='Form-Body'>
             <div>
                 <form onSubmit={handleSubmit}>
-                    <BackButton></BackButton>
+                    <BackButton />
                     <h1>Create Account</h1>
                     <input placeholder='Email' type="email" name="email" required={true} value={state.email} onChange={handleChange} autoComplete="email"></input>
-                    <br></br>
+                    <br />
                     <input placeholder='First Name' type="text" name="first" required={true} value={state.first} onChange={handleChange} autoComplete="first-name"></input>
-                    <br></br>
+                    <br />
                     <input placeholder='Last Name' type="text" name="last" required={true} value={state.last} onChange={handleChange} autoComplete="last-name"></input>
-                    <br></br>
+                    <br />
                     <input placeholder='Password' type="password" name="pass" required={true} value={state.pass} onChange={handleChange} autoComplete="new-password"></input>
-                    <br></br>
+                    <br />
                     <input placeholder='Confirm password' type="password" name="confirmPass" required={true} value={state.confirmPass} onChange={handleChange} autoComplete="new-password"></input>
                     <button>Submit</button>
                     <span style={{ visibility: passMatch ? 'hidden' : 'visible' }} className='error'>&nbsp; Passwords do not match </span>
@@ -82,6 +82,3 @@ const CreateAccountPage = () => {
         </div>
     );
 }
-
-
-export default CreateAccountPage;

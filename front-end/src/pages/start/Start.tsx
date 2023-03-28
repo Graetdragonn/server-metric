@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
  * Renders the start screen
  * @returns the start page
  */
-const StartPage = () => {
+export default function StartPage() {
   const navigate = useNavigate(); // for screen navigation
   localStorage.clear(); // clears any cached data
   
@@ -26,10 +26,6 @@ const StartPage = () => {
           <button type="button" onClick={() => navigate('/createaccount')}>Create Account</button>
         </div>
       </header>
-
     </div>
   );
 }
-
-export default StartPage;
-

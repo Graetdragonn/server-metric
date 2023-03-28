@@ -11,7 +11,7 @@ import { getUsersOnServer, removeServerFromUser } from '../admin-single-server/A
 /**
  * Delete server screen
  */
-const AdminDeleteServerPage = () => {
+export default function AdminDeleteServerPage() {
 
   // for screen navigation
   const navigate = useNavigate();
@@ -98,7 +98,7 @@ const AdminDeleteServerPage = () => {
       <div className='Form-Body'>
         <div>
           <form onSubmit={handleSubmit} style={{ display: serverDeleted ? 'none' : '' }}>
-            <BackButton></BackButton>
+            <BackButton />
             <h1>Delete Server</h1>
             <div className="center">
               <select onChange={handleChange}>
@@ -107,25 +107,23 @@ const AdminDeleteServerPage = () => {
               </select>
             </div>
             <button>Submit</button>
-            <br></br>
+            <br />
             <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>&nbsp; Please select a server </span>
             <span style={{ visibility: serverError ? 'visible' : 'hidden' }} className='error'>&nbsp; Server does not exist  </span>
           </form>
           <form style={{ display: serverDeleted ? '' : 'none' }}>
-            <BackButton></BackButton>
+            <BackButton />
             <h1>Add Server</h1>
 
             <p style={{ fontSize: 40, textAlign: 'center' }}>Server successfully deleted</p>
 
-            <br></br>
+            <br />
 
             <button onClick={() => navigate('/dashboard')}>Back to dashboard</button>
-            <br></br>
+            <br />
           </form>
         </div>
       </div></>
 
   );
 }
-
-export default AdminDeleteServerPage;

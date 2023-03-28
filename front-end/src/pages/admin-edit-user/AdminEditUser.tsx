@@ -13,7 +13,7 @@ import { submitEdits } from '../settings/SettingsLogic';
  * Render admin edit user screen
  * @returns Admin edit user page
  */
-const AdminEditUserPage = () => {
+export default function AdminEditUserPage() {
     const navigate = useNavigate(); // for screen navigation
     const { state } = useLocation(); // to get props
 
@@ -149,7 +149,7 @@ const AdminEditUserPage = () => {
             <div className='Form-Body' >
                 <div>
                     <form onSubmit={handleSubmit} style={{ display: error ? '' : 'none' }} >
-                        <BackButton></BackButton>
+                        <BackButton />
                         <h1>User Information</h1>
                         <div className="row" style={{ display: "flex" }}>
                             <div>
@@ -161,10 +161,10 @@ const AdminEditUserPage = () => {
                                 <input type="text" name="last" required={true} value={info.last} onChange={handleChange}></input>
                             </div>
                         </div>
-                        <br></br>
+                        <br />
                         <label>Email</label>
                         <input type="text" name="last" required={true} value={info.email} onChange={handleChange}></input>
-                        <br></br>
+                        <br />
                         <label>User Type</label>
                         <div className="center">
                             <select value={info.userType} onChange={(e) => setInfo({ ...info, userType: e.target.value })}>
@@ -199,13 +199,13 @@ const AdminEditUserPage = () => {
                                 <p className='error' style={{ display: serverFormatError ? '' : 'none' }}>Please enter a valid server address</p>
                                 <p className='error' style={{ display: addServerError ? '' : 'none' }}>User already has this server</p>
                                 <p className='error' style={{ display: deleteServerError ? '' : 'none' }}>User does not have this server</p>
-                                <br></br>
+                                <br />
                                 <button type="button" className="addServerButton" onClick={handleAddServer}>Add</button>
                                 <button type="button" className="addServerButton" onClick={handleDeleteServer}>Delete</button>
                             </div>
                         </div>
                         <button type='submit'>Submit</button>
-                        <br></br>
+                        <br />
                     </form>
                     <form style={{ display: error ? 'none' : '' }}>
                         <p style={{ fontSize: 20, textAlign: 'center' }}>User {info.email} was updated</p>
@@ -215,5 +215,3 @@ const AdminEditUserPage = () => {
             </div></>
     );
 }
-
-export default AdminEditUserPage;

@@ -17,7 +17,7 @@ import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from "rec
  * Render dashboard page for each user type
  * @returns dashboard page depending on user type
  */
-const DashboardPage = () => {
+export default function DashboardPage() {
   const navigate = useNavigate(); // for screen navigation
 
   // track sent and received packets per IP - client
@@ -217,5 +217,3 @@ const DashboardPage = () => {
     </div>
   );
 };
-
-export default DashboardPage;

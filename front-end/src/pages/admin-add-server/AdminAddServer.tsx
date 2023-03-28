@@ -9,7 +9,7 @@ import { getClientList } from './AdminAddServerLogic';
 /**
  * Add server screen
  */
-const AdminAddServerPage = () => {
+export default function AdminAddServerPage() {
     // for screen navigation
     const navigate = useNavigate();
 
@@ -59,8 +59,6 @@ const AdminAddServerPage = () => {
         else {
             setServerError(true);
         }
-
-
     };
 
     // to update user information when user inputs data
@@ -76,31 +74,29 @@ const AdminAddServerPage = () => {
             <div className='Form-Body'>
                 <div>
                     <form onSubmit={handleSubmit} style={{ display: serverDeleted ? 'none' : '' }}>
-                        <BackButton></BackButton>
+                        <BackButton />
                         <h1>Add Server</h1>
                         <input placeholder='Server Address' type="text" required={true} name="server" onChange={handleChange}></input>
-                        <br></br>
+                        <br />
 
                         <button>Submit</button>
-                        <br></br>
+                        <br />
                         <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>&nbsp; Not valid address format </span>
                         <span style={{ visibility: serverError ? 'visible' : 'hidden' }} className='error'>&nbsp; Server already exists  </span>
                     </form>
                     <form style={{ display: serverDeleted ? '' : 'none' }}>
-                        <BackButton></BackButton>
+                        <BackButton />
                         <h1>Add Server</h1>
 
                         <p style={{ fontSize: 40, textAlign: 'center' }}>Server successfully deleted</p>
 
-                        <br></br>
+                        <br />
 
                         <button onClick={() => navigate('/dashboard')}>Back to dashboard</button>
-                        <br></br>
+                        <br />
                     </form>
                 </div>
             </div></>
 
     );
 }
-
-export default AdminAddServerPage;

@@ -7,7 +7,7 @@ import { checkEmpty, emailCheck } from '../login/LoginLogic';
 /**
  * Forgot password screen
  */
-const ForgotPasswordPage = () => {
+export default function ForgotPasswordPage() {
   // for screen navigation
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ const ForgotPasswordPage = () => {
       <div className='Form-Body'>
         <div>
           <form onSubmit={handleSubmit} style={{ display: isValidEmail ? 'none' : '' }}>
-            <BackButton></BackButton>
+            <BackButton />
             <h1>Forgot Password</h1>
             <p style={{ fontSize: 15, textAlign: 'center' }}>Please submit your email to reset your password</p>
             <input placeholder='Email' type="text" required={true} name="email" value={email} onChange={handleChange}></input>
@@ -52,6 +52,3 @@ const ForgotPasswordPage = () => {
     </div>
   );
 }
-
-
-export default ForgotPasswordPage;

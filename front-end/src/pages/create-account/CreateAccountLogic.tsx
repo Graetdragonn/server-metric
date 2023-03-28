@@ -71,4 +71,3 @@ export function checkEmail(email: string): boolean {
     }
     return false;
 }
-

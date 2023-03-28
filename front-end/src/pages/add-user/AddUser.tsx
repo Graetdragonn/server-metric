@@ -9,7 +9,7 @@ import { submit } from "./AddUserLogic"
  * Render add user page
  * @returns add user screen
  */
-const AddUserPage = () => {
+export default function AddUserPage() {
 
     // for screen navigation
     const navigate = useNavigate();
@@ -79,14 +79,14 @@ const AddUserPage = () => {
             <div className='Form-Body'>
                 <div>
                     <form onSubmit={handleSubmit} style={{ display: submitted ? 'none' : '' }}>
-                        <BackButton></BackButton>
+                        <BackButton />
                         <h1>Create a New User</h1>
                         <input placeholder='Email' type="email" name="email" required={true} value={state.email} onChange={handleChange}></input>
-                        <br></br>
+                        <br />
                         <input placeholder='First Name' type="text" name="first" required={true} value={state.first} onChange={handleChange}></input>
-                        <br></br>
+                        <br />
                         <input placeholder='Last Name' type="text" name="last" required={true} value={state.last} onChange={handleChange}></input>
-                        <br></br>
+                        <br />
                         <div className="row" style={{ display: "flex" }}>
                             <select onChange={(e) => setState({ ...state, userType: e.target.value })}>
                                 <option value="default">- Select User Type -</option>
@@ -95,7 +95,7 @@ const AddUserPage = () => {
                                 <option value="SERVICE_PROVIDER">Service Provider</option>
                                 <option value="CLIENT">Client</option>
                             </select>
-                            <br></br>
+                            <br />
                         </div>
                         <button>Submit</button>
                         <span style={{ visibility: roleSelected ? 'hidden' : 'visible' }} className='error'>&nbsp; No user type selected </span>
@@ -111,5 +111,3 @@ const AddUserPage = () => {
     );
 
 }
-
-export default AddUserPage;
