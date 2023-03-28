@@ -124,8 +124,8 @@ export default function DashboardPage() {
         <br />
         <div className='side-menu'>
           <ServerList />
-          <button onClick={() => navigate('/addserver')}>Add a Server</button>
-          <button onClick={() => navigate('/removeserver')}>Remove a Server</button>
+          <button style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate('/addserver')}>Add a Server</button>
+          <button style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate('/removeserver')}>Remove a Server</button>
         </div>
       </div>
       <br />
