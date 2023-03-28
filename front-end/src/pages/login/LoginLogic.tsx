@@ -16,16 +16,6 @@ export async function submit(email: string, pass: string) {
 }
 
 /**
- * Checks that the user's input password is correct
- * @param userInputPass the password the user input
- * @param actualPass the password in database
- * @returns true if passwords match, false otherwise
- */
-function checkPass(userInputPass: string, actualPass: string): boolean {
-    return userInputPass === actualPass;
-}
-
-/**
  * Checks to make sure no field is empty
  * @param s string in input field
  * @returns true if field is empty, false otherwis

@@ -14,7 +14,7 @@ export default function AdminSingleServerPage() {
     const { state } = useLocation(); // get props
     const { serverInfo } = state; // set server info with props
     const [userList, setUserList] = useState([] as any[]); // track list of users watching the server
-    var users = new Array(); // temporary user list variable
+    var users = [] as any[]; // temporary user list variable
     const [userToAddOrDelete, setUserToAddOrDelete] = useState(""); // tracks user to add or delete from server
     const [addUserError, setAddUserError] = useState(false); // tracks if error when adding user
     const [emailFormatError, setEmailFormatError] = useState(false); // tracks if error in email format

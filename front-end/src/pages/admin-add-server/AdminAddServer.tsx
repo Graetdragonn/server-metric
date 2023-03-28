@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import BackButton from '../../components/back-button/BackButton';
 import { addServerToList, checkServerFormat } from '../add-server/AddServerLogic';
 import NavBar from '../../components/navigation-bar/NavBar';
-import { getClientList } from './AdminAddServerLogic';
 
 /**
  * Add server screen
@@ -27,15 +26,6 @@ export default function AdminAddServerPage() {
 
     // check if server is successfully added
     const [serverDeleted, setServerAdded] = useState(false);
-
-    // gets list of all clients
-    var clients = new Array();
-
-    // get list of all service providers
-    const getClients = async () => {
-        clients = await getClientList();
-    }
-    getClients();
 
     // submits form
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

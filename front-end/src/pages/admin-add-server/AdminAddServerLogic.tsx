@@ -7,7 +7,7 @@ import UserService from "../../requests/UserService";
 export async function getClientList() {
     const res = await UserService.getUsers();
     var userList = JSON.parse(res);
-    var clients = new Array();
+    var clients = [] as any[];
     
     for(let i = 0; i < userList.length; i++){
         if(userList[i]["userType"] === "CLIENT"){

@@ -25,10 +25,6 @@ export default function AddUserPage() {
         serviceProvider: ""
     });
 
-    // gets list of all service providers
-    var serviceProviders = new Array();
-    const [serviceProviderList, setServiceProviderList] = useState([] as any[]);
-
     // tracks if user has selcted a user type
     const [roleSelected, setRoleSelected] = useState(true);
 

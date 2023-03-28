@@ -33,7 +33,7 @@ export default function AdminDeleteServerPage() {
 
   // users on server
   const [userList, setUserList] = useState([] as any[]);
-  var users = new Array();
+  var users = [] as any[];
 
   // get all servers
   const getServerList = async () => {
