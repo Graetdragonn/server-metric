@@ -124,6 +124,15 @@
   box-shadow: 0px 8px 16px;
 }
 
+.white-div-for-single-server-title {
+  background-color: white;
+  font-size: 16px;
+  border-radius: 12px;
+  display: inline-block;
+
+}
+
+
 /* Green to Grey button*/
 button {
   margin-right: 0.25em;
