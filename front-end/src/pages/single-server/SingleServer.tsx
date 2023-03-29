@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import '../../style/Master.css';
 import NavBar from "../../components/navigation-bar/NavBar";
 import React, { useEffect, useState } from "react";
-import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from "recharts";
+import {Bar, BarChart, CartesianGrid, Label, Legend, Tooltip, XAxis, YAxis} from "recharts";
 import { getReceivingPortsForAServer, getSentPortsForAServer } from "../dashboard/DashboardLogic";
 const { getService } = require('port-numbers');
 
@@ -92,9 +92,10 @@ export default function SingleServer() {
             <NavBar />
             <div>
                 <br />
-                <div className="white-div-for-single-server" style={{ minWidth: 1000, maxHeight: 80, marginLeft: "19.5%" }}> <h1 className='Gradient-Text' style={{ textAlign: "center" }}> Server {state} </h1></div>
+                <div className="white-div-for-single-server-title" style={{ minWidth: 1000, maxHeight: 80, marginLeft: "19.5%" }}> <h1 className='Gradient-Text' style={{ textAlign: "center" }}> Server {state} </h1></div>
                 <div className="white-div" style={{ width: 1000, marginLeft: "17%" }}>
                     <div style={{ display: !sentPortListHasData && !receivedPortListHasData ? 'none' : '' }}>
+                        <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "33%",  textDecoration: "underline" }}> Graph of Packets Sent through Specific Ports </h3>
                         <BarChart height={300} width={1000} data={receivedPortList}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="ports" />
@@ -104,13 +105,14 @@ export default function SingleServer() {
                             <Bar name="Number Received on Port" barSize={30} dataKey="numUsed" fill="#619E57" />
                         </BarChart>
                         <br />
+                        <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "31%",  textDecoration: "underline"}}> Graph of Packets Received through Specific Ports </h3>
                         <BarChart height={300} width={1000} data={sentPortList}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="ports" />
                             <YAxis />
                             <Tooltip content={<CustomTooltip />} />
                             <Legend />
-                            <Bar name="Number Sent on Port" barSize={30} dataKey="numUsed" fill="#619E57" />
+                            <Bar name="Number Sent on Port" barSize={30} dataKey="numUsed" fill="#619E57"> </Bar>
                         </BarChart>
                     </div>
                     <div style={{ display: sentPortListHasData && receivedPortListHasData ? 'none' : '' }}>
