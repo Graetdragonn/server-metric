@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.demo.Server.Server;
-import com.example.demo.Server.ServerRepository;
 import com.example.demo.User.User;
 import com.example.demo.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,20 +17,14 @@ public class TrafficService {
    private final TrafficRepository trafficRepository;
    private final UserRepository userRepository;
 
-   private final ServerRepository serverRepository;
    @Autowired
-   public TrafficService(TrafficRepository trafficRepository, UserRepository userRepository, ServerRepository serverRepository) {
+   public TrafficService(TrafficRepository trafficRepository, UserRepository userRepository) {
       this.trafficRepository = trafficRepository;
       this.userRepository = userRepository;
-      this.serverRepository = serverRepository;
    }
    
    public void addTraffic(Netflow9 netflow) {
       for (Map<String, Object> flow : netflow.getFlows()) {
-         // Optional<Server> server = serverRepository.findServerByAddress((String) flow.get("IPV4_SRC_ADDR"));
-         // if (!server.isPresent()) {
-         //    continue;
-         // }
          if (flow.get("ICMP_TYPE") != null) {
             continue;
          }
@@ -50,7 +43,6 @@ public class TrafficService {
       try {
          return trafficRepository.findTraffic(criteria);
       } catch (IllegalArgumentException | IllegalAccessException e) {
-         // TODO Auto-generated catch block
          e.printStackTrace();
       }
       return null;
