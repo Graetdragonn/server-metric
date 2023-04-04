@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import NavBar from "../../components/navigation-bar/NavBar";
 import { useNavigate } from 'react-router-dom';
 import {
-  getNumPacketsSentPerAddressesClient,
-  getNumPacketsReceivedPerAddressesClient,
-  getNumPacketsSentPerAddressesSP, 
-  getNumPacketsReceivedPerAddressesSP,
   getServersByUser,
-  getClientServersByUser
+  getClientServersByUser,
+  getNumPacketsSentAndReceivedClient,
+  getNumPacketsSentAndReceivedSP
 } from './DashboardLogic';
 import UserList from '../../components/user-list/UserList';
 import ServerList from '../../components/server-list/ServerList';
@@ -21,20 +19,16 @@ export default function DashboardPage() {
   const navigate = useNavigate(); // for screen navigation
 
   // track sent and received packets per IP - client
-  const [sentPacketsPerIpClient, setSentPacketsPerIpClient] = useState([] as any[]);
-  const [receivedPacketsPerIpClient, setReceivedPacketsPerIpClient] = useState([] as any[]);
+  const [allPacketsPerIpClient, setAllPacketsPerIpClient] = useState([] as any[]);
 
   // track sent and received packets per IP - service provider
-  const [sentPacketsPerIpSP, setSentPacketsPerIpSP] = useState([] as any[]);
-  const [receivedPacketsPerIpSP, setReceivedPacketsPerIpSP] = useState([] as any[]);
+  const [allPacketsPerIpSP, setAllPacketsPerIpSP] = useState([] as any[]);
 
   // track client packets sent and received data
-  const [clientPacketsSentHasData, setClientPacketsSentHasData] = useState(Boolean);
-  const [clientPacketsReceivedHasData, setClientPacketsReceivedHasData] = useState(Boolean);
+  const [clientPacketsHasData, setClientPacketsHasData] = useState(Boolean);
 
   // track service provider packets sent and received data
-  const [spPacketsSentHasData, setSPPacketsSentHasData] = useState(Boolean);
-  const [spPacketsReceivedHasData, setSPPacketsReceivedHasData] = useState(Boolean);
+  const [spPacketsHasData, setSPPacketsHasData] = useState(Boolean);
 
   const [clientNames, setClientNames] = useState([] as any[]); // get clients' names
   const [userAddresses, setUserAddresses] = useState([] as string[]);   // track user's server addresses
@@ -42,12 +36,10 @@ export default function DashboardPage() {
   let userInfo: string[]; // user info
 
   // sent and received packets per client
-  let sentPacketsPerClient: any[];
-  let receivedPacketsPerClient: any[];
+  let allPacketsPerClient: any[];
 
   // sent and received packets per service provider's clients
-  let sentPacketsPerSP: any[];
-  let receivedPacketsPerSP: any[];
+  let allPacketsPerSP: any[];
 
   const email = JSON.parse(localStorage.getItem('email') || ''); // get user's email
   const userType = localStorage.getItem('userType'); // get user's type
@@ -58,19 +50,12 @@ export default function DashboardPage() {
     async function getUserAddresses() {
       userInfo = await getServersByUser(email);
       setUserAddresses(userInfo);
-      sentPacketsPerClient = await getNumPacketsSentPerAddressesClient(userAddresses);
-      setSentPacketsPerIpClient(sentPacketsPerClient);
-      receivedPacketsPerClient = await getNumPacketsReceivedPerAddressesClient(userAddresses);
-      setReceivedPacketsPerIpClient(receivedPacketsPerClient);
-      if (sentPacketsPerIpClient.length >= 1) {
-        setClientPacketsSentHasData(true);
+      allPacketsPerClient = await getNumPacketsSentAndReceivedClient(userAddresses);
+      setAllPacketsPerIpClient(allPacketsPerClient);
+      if (allPacketsPerClient.length >= 1) {
+        setClientPacketsHasData(true);
       } else {
-        setClientPacketsSentHasData(false);
-      }
-      if (receivedPacketsPerClient.length >= 1) {
-        setClientPacketsReceivedHasData(true);
-      } else {
-        setClientPacketsReceivedHasData(false);
+        setClientPacketsHasData(false);
       }
 
     }
@@ -79,19 +64,12 @@ export default function DashboardPage() {
     async function getClientAddresses() {
       userInfo = await getClientServersByUser(email);
       setClientNames(userInfo);
-      sentPacketsPerSP = await getNumPacketsSentPerAddressesSP(clientNames);
-      setSentPacketsPerIpSP(sentPacketsPerSP);
-      receivedPacketsPerSP = await getNumPacketsReceivedPerAddressesSP(clientNames);
-      setReceivedPacketsPerIpSP(receivedPacketsPerSP);
-      if (sentPacketsPerIpSP.length >= 1) {
-        setSPPacketsSentHasData(true)
+      allPacketsPerSP = await getNumPacketsSentAndReceivedSP(clientNames);
+      setAllPacketsPerIpSP(allPacketsPerSP);
+      if (allPacketsPerIpSP.length >= 1) {
+        setSPPacketsHasData(true)
       } else {
-        setSPPacketsSentHasData(false)
-      }
-      if (receivedPacketsPerIpSP.length >= 1) {
-        setSPPacketsReceivedHasData(true)
-      } else {
-        setSPPacketsReceivedHasData(false)
+        setSPPacketsHasData(false)
       }
     }
 
@@ -103,7 +81,7 @@ export default function DashboardPage() {
       getClientAddresses();
     }
 
-  }, [sentPacketsPerIpClient, receivedPacketsPerIpClient, sentPacketsPerIpSP, receivedPacketsPerIpSP]);
+  }, [allPacketsPerIpClient, allPacketsPerIpSP]);
 
   // no data found render
   const renderNoAddresses = () => {
@@ -130,54 +108,40 @@ export default function DashboardPage() {
       </div>
       <br />
 
-      <div className="white-div" style={{ width: 1000, display: userType !== "CLIENT" ? 'none' : '' }}>
-        <div style={{ display: !clientPacketsSentHasData && !clientPacketsReceivedHasData ? 'none' : '' }}>
-          <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "33%",  textDecoration: "underline" }}> Graph of Packets Sent through each Server</h3>
-          <BarChart height={300} width={1000} data={sentPacketsPerIpClient}>
+      <div className="white-div" style={{ width: 1400, display: userType !== "CLIENT" ? 'none' : '' }}>
+        <div style={{ display: !clientPacketsHasData? 'none' : '' }}>
+          <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "33%",  textDecoration: "underline" }}> Graph of Packets Sent and Received through each Server</h3>
+          <BarChart height={500} width={1400} data={allPacketsPerIpClient}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="address" />
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar onClick={(data) => { navigate("/single-server", { state: data.address }) }} name="Number of Packets Sent" barSize={30} dataKey="numPackets" fill= "var(--orange_wheel)" />
+            <Bar onClick={(data) => { navigate("/single-server", { state: data.address }) }} name="Number of Packets Sent" barSize={30} dataKey="numPacketsSent" fill= "var(--orange_wheel)" />
+            <Bar onClick={(data) => { navigate("/single-server", { state: data.address }) }} name="Number of Packets Received" barSize={30} dataKey="numPacketsReceived" fill= "var(--some_purple)" />
           </BarChart>
           <br />
-          <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "33%",  textDecoration: "underline" }}> Graph of Packets Received through each Server </h3>
-          <BarChart height={300} width={1000} data={receivedPacketsPerIpClient}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="address" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar onClick={(data) => { navigate("/single-server", { state: data.address }) }} name="Number of Packets Received" barSize={30} dataKey="numPackets" fill= "var(--orange_wheel)" />
-          </BarChart>
         </div>
-        <div style={{ display: clientPacketsSentHasData && clientPacketsReceivedHasData ? 'none' : '' }}>
+        <div style={{ display: clientPacketsHasData? 'none' : '' }}>
           {renderNoAddresses()}
         </div>
       </div>
 
-      <div className="white-div" style={{ width: 1000, display: userType !== "SERVICE_PROVIDER" ? 'none' : '' }}>
-        <div style={{ display: !spPacketsSentHasData && !spPacketsReceivedHasData ? 'none' : '' }}>
-          <BarChart height={300} width={1000} data={sentPacketsPerIpSP}>
+      <div className="white-div" style={{ width: 1400, display: userType !== "SERVICE_PROVIDER" ? 'none' : '' }}>
+        <div style={{ display: !spPacketsHasData ? 'none' : '' }}>
+          <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "31%",  textDecoration: "underline" }}> Graph of Packets Sent/Received through Different Client Servers</h3>
+          <BarChart height={500} width={1400} data={allPacketsPerIpSP}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis name="Client and Address" dataKey="userAndAddress" />
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar onClick={(data) => { navigate("/single-server", { state: getAddressFromUserAndAddress(data.userAndAddress) }) }} name="Number of Packets Sent" barSize={30} dataKey="numPackets" fill="#619E57" />
+            <Bar onClick={(data) => { navigate("/single-server", { state: getAddressFromUserAndAddress(data.userAndAddress) }) }} name="Number of Packets Sent" barSize={30} dataKey="sentPackets" fill = "var(--orange_wheel)" />
+            <Bar onClick={(data) => { navigate("/single-server", { state: getAddressFromUserAndAddress(data.userAndAddress) }) }} name="Number of Packets Received" barSize={30} dataKey="receivedPackets" fill= "var(--some_purple)" />
           </BarChart>
           <br />
-          <BarChart height={300} width={1000} data={receivedPacketsPerIpSP}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis name="Client and Address" dataKey="userAndAddress" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar onClick={(data) => { navigate("/single-server", { state: getAddressFromUserAndAddress(data.userAndAddress) }) }} name="Number of Packets Received" barSize={30} dataKey="numPackets" fill="#619E57" />
-          </BarChart>
         </div>
-        <div style={{ display: spPacketsSentHasData && spPacketsReceivedHasData ? 'none' : '' }}>
+        <div style={{ display: spPacketsHasData ? 'none' : '' }}>
           {renderNoAddresses()}
         </div>
       </div>
