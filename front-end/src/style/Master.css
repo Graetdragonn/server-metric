@@ -2,13 +2,24 @@
   font-family: 'Lato', sans-serif;
 }
 
+:root {
+  --rose_quartz: #ad9baa;
+  --zomp: #65a48f;
+  --caribbean_current: #216869;
+  --persian_red: #bb4430;
+  --berkeley_blue: #12355b;
+  --orange_wheel: #ee8434;
+  --some_purple: #94579E;
+
+}
+
 /* Page styling*/
 .Start-Page {
   background-color: white;
 }
 
 .Sign-In-Page {
-  background-color: #619E57;
+  background-color:var(--zomp);
   position: fixed;
   top: 0px;
   right: 0px;
@@ -18,7 +29,7 @@
 }
 
 .Create-Account-Page {
-  background-color: #619E57;
+  background-color:var(--zomp);
   position: fixed;
   top: 0px;
   right: 0px;
@@ -74,11 +85,19 @@
 /* Gradient text for start page */
 
 .Gradient-Text {
-  background-image: linear-gradient(60deg, #619E57, #94579E);
+  background-image: linear-gradient(60deg,var(--zomp), var(--some_purple));
   font-family: 'Lato', sans-serif;
   background-clip: text;
   font-weight: 800;
   color: transparent;
+}
+
+.text-for-single-server-header{
+  color: black;
+  font-family: 'Lato', sans-serif;
+  background-clip: text;
+  font-weight: 800;
+
 }
 
 .div-for-single-address {
@@ -90,7 +109,7 @@
   padding: 0.938em;
   border: none;
   border-radius: 4px;
-  background-color: #619E57;
+  background-color:var(--zomp);
   color: #fefefe;
   font-size: 16px;
   padding: 14px 40px;
@@ -140,7 +159,23 @@ button {
   padding: 5px;
   border: none;
   border-radius: 4px;
-  background-color: #619E57;
+  background-color:var(--zomp);
+  color: #fefefe;
+  font-size: 16px;
+  padding: 14px 20px;
+  border-radius: 12px;
+  min-width: fit-content;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.server-list-button{
+  margin-right: 0.25em;
+  margin-top: 1em;
+  padding: 5px;
+  border: none;
+  border-radius: 4px;
+  background-color:var(--zomp);
   color: #fefefe;
   font-size: 16px;
   padding: 14px 20px;
@@ -306,7 +341,7 @@ div.row {
   z-index: 1;
   top: 50px;
   left: 0;
-  background-color: #619E57; 
+  background-color:var(--zomp);
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 20px;
   cursor: default;
@@ -336,7 +371,7 @@ header {
   align-items: center;
   margin: 0 auto;
   padding: 0px 10px;
-  background-color: #619E57;
+  background-color:var(--zomp);
   overflow: hidden;
   position: fixed; /* Set the navbar to fixed position */
   top: 0; /* Position the navbar at the top of the page */
@@ -350,7 +385,7 @@ header {
   flex-wrap: wrap;
   list-style: none;
   /*background-color: white;*/
-  background-color: #619E57;
+  background-color:var(--zomp);
   color: white;
   margin: 0px;
   
@@ -582,7 +617,7 @@ form>.k-textbox-container,
   padding: 0.938em;
   border: none;
   border-radius: 4px;
-  background-color: #619E57;
+  background-color:var(--zomp);
   color: #fefefe;
   border-radius: 24px;
   width: 250px;

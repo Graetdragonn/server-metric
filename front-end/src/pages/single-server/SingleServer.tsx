@@ -92,27 +92,27 @@ export default function SingleServer() {
             <NavBar />
             <div>
                 <br />
-                <div className="white-div-for-single-server-title" style={{ minWidth: 1000, maxHeight: 80, marginLeft: "19.5%" }}> <h1 className='Gradient-Text' style={{ textAlign: "center" }}> Server {state} </h1></div>
+                <div className="white-div-for-single-server-title" style={{ minWidth: 1000, maxHeight: 80, marginLeft: "19.5%" }}> <h1 className='text-for-single-server-header' style={{ textAlign: "center"}}> Server {state} </h1></div>
                 <div className="white-div" style={{ width: 1000, marginLeft: "17%" }}>
                     <div style={{ display: !sentPortListHasData && !receivedPortListHasData ? 'none' : '' }}>
-                        <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "33%",  textDecoration: "underline" }}> Graph of Packets Sent through Specific Ports </h3>
-                        <BarChart height={300} width={1000} data={receivedPortList}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="ports" />
-                            <YAxis />
-                            <Tooltip content={<CustomTooltip />} />
-                            <Legend />
-                            <Bar name="Number Received on Port" barSize={30} dataKey="numUsed" fill="#619E57" />
-                        </BarChart>
-                        <br />
-                        <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "31%",  textDecoration: "underline"}}> Graph of Packets Received through Specific Ports </h3>
+                        <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "30%",  textDecoration: "underline" }}> Graph of Packets Sent through Specific Ports </h3>
                         <BarChart height={300} width={1000} data={sentPortList}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="ports" />
                             <YAxis />
                             <Tooltip content={<CustomTooltip />} />
                             <Legend />
-                            <Bar name="Number Sent on Port" barSize={30} dataKey="numUsed" fill="#619E57"> </Bar>
+                            <Bar name="Number Sent on Port" barSize={30} dataKey="numUsed" fill="var(--orange_wheel)"> </Bar>
+                        </BarChart>
+                        <br />
+                        <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "29%",  textDecoration: "underline"}}> Graph of Packets Received through Specific Ports </h3>
+                        <BarChart height={300} width={1000} data={receivedPortList}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="ports" />
+                            <YAxis />
+                            <Tooltip content={<CustomTooltip />} />
+                            <Legend />
+                            <Bar name="Number Received on Port" barSize={30} dataKey="numUsed" fill="var(--orange_wheel)" />
                         </BarChart>
                     </div>
                     <div style={{ display: sentPortListHasData && receivedPortListHasData ? 'none' : '' }}>

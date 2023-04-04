@@ -124,8 +124,8 @@ export default function DashboardPage() {
         <br />
         <div className='side-menu'>
           <ServerList />
-          <button style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate('/addserver')}>Add a Server</button>
-          <button style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate('/removeserver')}>Remove a Server</button>
+          <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none'}} onClick={() => navigate('/addserver')}>Add a Server</button>
+          <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate('/removeserver')}>Remove a Server</button>
         </div>
       </div>
       <br />
@@ -139,7 +139,7 @@ export default function DashboardPage() {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar onClick={(data) => { navigate("/single-server", { state: data.address }) }} name="Number of Packets Sent" barSize={30} dataKey="numPackets" fill="#619E57" />
+            <Bar onClick={(data) => { navigate("/single-server", { state: data.address }) }} name="Number of Packets Sent" barSize={30} dataKey="numPackets" fill= "var(--orange_wheel)" />
           </BarChart>
           <br />
           <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "33%",  textDecoration: "underline" }}> Graph of Packets Received through each Server </h3>
@@ -149,7 +149,7 @@ export default function DashboardPage() {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar onClick={(data) => { navigate("/single-server", { state: data.address }) }} name="Number of Packets Received" barSize={30} dataKey="numPackets" fill="#619E57" />
+            <Bar onClick={(data) => { navigate("/single-server", { state: data.address }) }} name="Number of Packets Received" barSize={30} dataKey="numPackets" fill= "var(--orange_wheel)" />
           </BarChart>
         </div>
         <div style={{ display: clientPacketsSentHasData && clientPacketsReceivedHasData ? 'none' : '' }}>
