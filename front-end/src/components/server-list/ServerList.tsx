@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { JSXElementConstructor, ReactElement, ReactFragment, ReactPortal, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllServers, getServerInfo, getClientsByProvider, getUserByEmail, getClientsServers } from "./ServerListLogic";
+import { getAllServers, getServerInfo, getClientsByProvider, getUserByEmail, getClientsServers, sortServers } from "./ServerListLogic";
 
 /**
  * Render a server list
@@ -33,6 +33,7 @@ export default function ServerList() {
       // get list of servers
       servers = await getClientsServers(clients);
     }
+    servers = sortServers(servers);
 
     // remove duplicates by casting to Set then back to Array
     setServerList(Array.from(new Set(servers)));
@@ -51,13 +52,22 @@ export default function ServerList() {
   return (
     <div >
       <ul className="server-list">
-      <h1 style={{fontSize: 18, textDecoration: 'underline'}}>Servers</h1>
+        <h1 style={{ fontSize: 18, textDecoration: 'underline' }}>Servers</h1>
         {serverList.map((server) => {
           return (
-            <li className='server-in-list' key={server.address} onClick={() => { goToSingleServer(server.address) }}>
+            <li className='server-in-list' key={server.firstThree}>
               <p>
-                {server.address}
+                {server.firstThree}
               </p>
+              {server.addresses.map((address: { address: string; }) => {
+                return (
+                  <li className='server-in-list' key={server.firstThree} onClick={() => { goToSingleServer(address.address) }}>
+                    <p>
+                      {address.address}
+                    </p>
+                  </li>
+                )
+              })}
             </li>
           )
         })}

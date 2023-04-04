@@ -79,3 +79,32 @@ export async function getClientsServers(clients: string[]) {
     }
     return servers;
 }
+
+export function sortServers(servers: any[]) {
+    var sorted = new Array();
+
+    for (let i = 0; i < servers.length; i++) {
+        var serverAddressSplit = servers[i].address.split('.');
+        var firstThree = serverAddressSplit[0] + "." + serverAddressSplit[1] + "." + serverAddressSplit[2];
+        var isIn = false;
+
+
+        // check if we already have a server in that list
+        for (var j = 0; j < sorted.length; j++) {
+            if (JSON.stringify(sorted[j].firstThree) === JSON.stringify(firstThree)) {
+                isIn = true;
+                break;
+            }
+        }
+        if (!isIn) {
+            sorted.push({ firstThree: firstThree, addresses: [{ address: servers[i].address }] });
+        }
+        else {
+            sorted[j].addresses.push({ address: servers[i].address });
+        }
+
+
+    }
+    console.log(sorted);
+    return sorted;
+}

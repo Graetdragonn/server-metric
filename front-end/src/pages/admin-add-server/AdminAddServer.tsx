@@ -78,7 +78,7 @@ export default function AdminAddServerPage() {
                         <BackButton />
                         <h1>Add Server</h1>
 
-                        <p style={{ fontSize: 40, textAlign: 'center' }}>Server successfully deleted</p>
+                        <p style={{ fontSize: 40, textAlign: 'center' }}>Server successfully added</p>
 
                         <br />
 
