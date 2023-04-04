@@ -2,44 +2,34 @@ import { useLocation } from "react-router-dom";
 import '../../style/Master.css';
 import NavBar from "../../components/navigation-bar/NavBar";
 import React, { useEffect, useState } from "react";
-import {Bar, BarChart, CartesianGrid, Label, Legend, Tooltip, XAxis, YAxis} from "recharts";
-import { getReceivingPortsForAServer, getSentPortsForAServer } from "../dashboard/DashboardLogic";
+import {Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis} from "recharts";
+import {getPortTrafficForAServer,} from "./SingleServerLogic";
 const { getService } = require('port-numbers');
 
 export default function SingleServer() {
 
     const location = useLocation(); // for screen navigation
     const { state } = location; // get props
-    const [receivedPortList, setReceivedPortList] = useState([] as any[]); // tracks received ports
-    let receivedPorts: string[]; // temporary variable for received ports
-    const [sentPortList, setSentPortList] = useState([] as any[]); // tracks sent ports
-    let sentPorts: string[]; // temporary variable for sent ports
+    const [allPortList, setAllPortList] = useState([] as any[]); // tracks received ports
+    let allPorts: string[]; // temporary variable for received ports
 
     // tracks if port lists are not empty
-    const [sentPortListHasData, setSentPortListHasData] = useState(Boolean)
-    const [receivedPortListHasData, setReceivedPortListHasData] = useState(Boolean)
+    const [allPortListHasData, setAllPortListHasData] = useState(Boolean)
 
     useEffect(() => {
         // get server traffic
         async function getTraffic() {
-            receivedPorts = await getReceivingPortsForAServer(state);
-            setReceivedPortList(receivedPorts);
-            sentPorts = await getSentPortsForAServer(state);
-            setSentPortList(sentPorts);
-            if (sentPortList.length >= 1) {
-                setSentPortListHasData(true)
+            allPorts = await getPortTrafficForAServer(state);
+            setAllPortList(allPorts);
+            if (allPortList.length >= 1) {
+                setAllPortListHasData(true)
             } else {
-                setSentPortListHasData(false)
-            }
-            if (receivedPortList.length >= 1) {
-                setReceivedPortListHasData(true)
-            } else {
-                setReceivedPortListHasData(false)
+                setAllPortListHasData(false)
             }
         }
         getTraffic();
 
-    }, [sentPortList, receivedPortList]);
+    }, [allPortList]);
     
     // get port name
     const getPortName = (label: string) => {
@@ -62,6 +52,7 @@ export default function SingleServer() {
     // tool for graph styling
     const CustomTooltip = ({ active, payload, label }: any) => {
         if (active && payload && payload.length) {
+            console.log(payload)
             return (
                 <div style={{
                     backgroundColor: 'white',
@@ -71,7 +62,8 @@ export default function SingleServer() {
                     paddingRight: '10px'
                 }}>
                     <p className="label">{`${label}`}</p>
-                    <p className="intro">{"Packets Transferred: " + `${payload[0].value}`}</p>
+                    <p className="intro">{"Packets Sent: " + `${payload[0].value}`}</p>
+                    <p className="intro">{"Packets Received: " + `${payload[1].value}`}</p>
                     <p className="intro">{getPortName(label)}</p>
                     <p className="intro">{getPortDescription(label)}</p>
                 </div>
@@ -93,29 +85,20 @@ export default function SingleServer() {
             <div>
                 <br />
                 <div className="white-div-for-single-server-title" style={{ minWidth: 1000, maxHeight: 80, marginLeft: "19.5%" }}> <h1 className='text-for-single-server-header' style={{ textAlign: "center"}}> Server {state} </h1></div>
-                <div className="white-div" style={{ width: 1000, marginLeft: "17%" }}>
-                    <div style={{ display: !sentPortListHasData && !receivedPortListHasData ? 'none' : '' }}>
-                        <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "30%",  textDecoration: "underline" }}> Graph of Packets Sent through Specific Ports </h3>
-                        <BarChart height={300} width={1000} data={sentPortList}>
+                <div className="white-div" style={{ width: 1200, marginLeft: "10%" }}>
+                    <div style={{ display: !allPortListHasData ? 'none' : '' }}>
+                        <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "30%",  textDecoration: "underline" }}> Graph of Packets Sent and Received through Specific Ports </h3>
+                        <BarChart height={500} width={1200} data={allPortList}>
                             <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="ports" />
+                            <XAxis dataKey="port" />
                             <YAxis />
                             <Tooltip content={<CustomTooltip />} />
                             <Legend />
-                            <Bar name="Number Sent on Port" barSize={30} dataKey="numUsed" fill="var(--orange_wheel)"> </Bar>
-                        </BarChart>
-                        <br />
-                        <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "29%",  textDecoration: "underline"}}> Graph of Packets Received through Specific Ports </h3>
-                        <BarChart height={300} width={1000} data={receivedPortList}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="ports" />
-                            <YAxis />
-                            <Tooltip content={<CustomTooltip />} />
-                            <Legend />
-                            <Bar name="Number Received on Port" barSize={30} dataKey="numUsed" fill="var(--orange_wheel)" />
+                            <Bar name="Number Sent on Port" barSize={30} dataKey="numSent" fill="var(--orange_wheel)"> </Bar>
+                            <Bar name="Number Received on Port" barSize={30} dataKey="numReceived" fill="var(--some_purple)" />
                         </BarChart>
                     </div>
-                    <div style={{ display: sentPortListHasData && receivedPortListHasData ? 'none' : '' }}>
+                    <div style={{ display: allPortListHasData ? 'none' : '' }}>
                         {renderNoPortData()}
                     </div>
                 </div>
