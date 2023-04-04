@@ -13,8 +13,11 @@ import com.maxmind.geoip2.record.Location;
 
 @Service
 public class GeoService {
+    //Database Reader to query from database
     private DatabaseReader dbReader;
+
     public GeoService() throws IOException {
+        //Binary database file with Geolocation information
         File database = new File("srv/GeoLite2-City.mmdb");
         dbReader = new DatabaseReader.Builder(database).build();
     }

@@ -12,12 +12,20 @@ import com.example.demo.Server.Server;
 
 public class Main {
     private static DataGenerator dataGenerator;
+
+    //Threads for generating Netflow data
+    private static ArrayList<TrafficThread> trafficList;
+
+    //Netflow builders & locks for each thread
     private static ArrayList<Netflow9Builder> builders;
     private static ArrayList<Lock> locks;
-    private static ArrayList<TrafficThread> trafficList;
+
+    //List of servers to generate data for
     private static ArrayList<MockServer> servers;
 
     public static void main(String[] args) throws IOException {
+
+        //Constuct everything
         dataGenerator = new DataGenerator();
         builders = new ArrayList<>();
         locks = new ArrayList<>();
@@ -35,8 +43,10 @@ public class Main {
                               "6: Quit\n\n" +
                               "Option: "); 
             int input = scan.nextInt();
+
+            //Take in user input based on string above
             switch (input) {
-                case 1:
+                case 1: //Add servers to backend
                 System.out.println("Input servers:\n" + 
                                    "Specify: -s <IP> -p <Port>,<Port>...\n" +
                                    "Random: -r <Number of Servers>\n" + 
@@ -49,14 +59,16 @@ public class Main {
                 }
                 break;
 
-                case 2:
+                case 2: //Prints list of add servers
                 printServers();
                 break;
 
-                case 3:
+                case 3: //Create a thread to generate Netflow traffic
 
                 builders.add(new Netflow9Builder().setRouter(Optional.empty())
                                                   .setHeader(Optional.empty()));
+                
+                //Choose servers to generate traffic for
                 printServers();
                 System.out.println("Choose server numbers from the list to generate traffic from:\n" + 
                                    "Specify: <Server 1>, <Server 2>... \n" +
@@ -76,11 +88,11 @@ public class Main {
                 trafficList.get(trafficList.size()-1).start();
                 break;
 
-                case 4:
+                case 4: //Print list of traffic generating threads currently running
                 printTrafficStreams();
                 break;
 
-                case 5:
+                case 5: //Stop traffic generating thread
                 printTrafficStreams();
                 System.out.print("Choose traffic stream to stop:");
                 input = scan.nextInt();
@@ -94,7 +106,7 @@ public class Main {
                     System.out.println("Invalid Input.");
                 break;
 
-                case 6:
+                case 6: //Quit program
                 trafficList.forEach(t -> t.interrupt());
                 scan.close();
                 return;
@@ -104,17 +116,21 @@ public class Main {
         }
     }
 
+    //Parse server IP and open ports from user input
     private static boolean parseServer(String input) {
         String[] str = input.split("[, ]+|((?<=(-s|-p|-r|;.))|(?=(-s|-p|-r|;)))");
         String token;
         for (int i = 0; i < str.length; i++) {
             token = str[i];
+
+            //Parse server IP
             if (token.equals("-s") && ++i < str.length) {
                 token = str[i];
                 if (token.matches("\\d+\\.\\d+\\.\\d+\\.\\d+"))
                     servers.add(new MockServer(token, new ArrayList<>(), new Random().nextLong(NetConst.MAX_MAC)));
             }
             
+            //Parse open ports
             else if (token.equals("-p")) {
                 while (++i < str.length) {
                     token = str[i];
@@ -127,6 +143,7 @@ public class Main {
                 }
             }
 
+            //Generate a random number of servers
             else if (token.equals("-r") && ++i < str.length) {
                 token = str[i];
                 if (token.matches("\\d+")) {
@@ -144,6 +161,7 @@ public class Main {
         return true;
     }
 
+    //Print list of threads and servers they are generating Netflow data for
     private static void printTrafficStreams() {
         for (int i = 0; i < trafficList.size(); i++) {
             System.out.printf("%d:\n",i);
@@ -151,6 +169,7 @@ public class Main {
         }
     }
 
+    //Print list of servers
     private static void printServers() {
         for (int i = 0; i < servers.size(); i++) {
             System.out.printf("%d: %s\n",i , servers.get(i));

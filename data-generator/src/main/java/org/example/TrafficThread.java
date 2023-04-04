@@ -6,6 +6,7 @@ import java.util.concurrent.locks.Lock;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
+//Seperate thread to continuously generate traffic data
 public class TrafficThread extends Thread {
     private final DataGenerator sender;
     private final Netflow9Builder builder;
@@ -16,11 +17,11 @@ public class TrafficThread extends Thread {
         while(!Thread.currentThread().isInterrupted()) {
             try {
                 lock.lock();
+                //Automatically generate flow packet data (src & dst IP, src & dst ports etc.)
                 sender.generateSingularTraffic(builder.setFlows().build());
                 lock.unlock();
                 Thread.sleep(1000);
             } catch (IOException | InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
                 break;
             }

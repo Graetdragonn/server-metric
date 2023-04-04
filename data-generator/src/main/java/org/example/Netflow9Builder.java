@@ -14,12 +14,14 @@ import com.example.demo.Traffic.Netflow9;
 import lombok.Getter;
 
 @Getter
+
+//Class to custom construct a Netflow9 object to represent traffic data
 public class Netflow9Builder {
-    private List<Object> router;
-    private Netflow9.Header header;
-    private List<Map<String, Object>> flows;
-    private List<MockServer> servers;
-    private List<String> clients;
+    private List<Object> router; //information about router forwarding the packets
+    private Netflow9.Header header; //Netflow v9 header information
+    private List<Map<String, Object>> flows; //Netflow v9 flows (ex. packet src & dst ip)
+    private List<MockServer> servers; //List of servers to mock sending/receiving packets
+    private List<String> clients; //List of client IPs sending/receiving packets
 
     public Netflow9Builder() {
         this.servers = new ArrayList<>();
@@ -61,9 +63,12 @@ public class Netflow9Builder {
         return this;
     }
 
+    //Flow contains the main traffic information (ex. src & dst ip of a packet)
     public Netflow9Builder setFlows() {
         Random rand = new Random();
         flows = new ArrayList<>();
+
+        //If no servers were specified, generate random ones
         if (servers.isEmpty()) {
             for (int i = 0; i < 5; i++) {
                 MockServer mock = new MockServer(DataGenerator.randomIPGenerator(), Arrays.asList(80, 443, 22, 25, 115),
@@ -72,14 +77,14 @@ public class Netflow9Builder {
             }
         }
 
+        //Generate number of flows based on count in header
         for (int i = 0; i < header.getCount()/2; i++) {
             // Set Flows
             Map<String, Object> flow = new HashMap<>();
             MockServer server = servers.get(rand.nextInt(servers.size()));
             List<Integer> ports = server.getOpenPorts();
 
-
-            if (rand.nextBoolean()) {
+            if (rand.nextBoolean()) { //Randomly choose whether server sending or receiving packet
                 flow.put("IPV4_SRC_ADDR", server.getAddress());
                 flow.put("L4_SRC_PORT", ports.get(rand.nextInt(ports.size())));
                 flow.put("IPV4_DST_ADDR", clients.isEmpty() ? DataGenerator.randomIPGenerator()
@@ -92,12 +97,14 @@ public class Netflow9Builder {
                 flow.put("IPV4_DST_ADDR", server.getAddress());
                 flow.put("L4_DST_PORT", ports.get(rand.nextInt(ports.size())));
             }
+
             flows.add(flow);
         }
 
         return this;
     }
 
+    //Build the Netflow9 object
     public Netflow9 build() {
         return new Netflow9(router, header, flows);
     }

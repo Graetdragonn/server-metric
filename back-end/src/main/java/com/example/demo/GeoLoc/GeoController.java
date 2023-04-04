@@ -22,6 +22,7 @@ public class GeoController {
         this.geoService = geoService;
     }
 
+    //GET request for a given IP address
     @GetMapping
     public Geo getGeo(@RequestParam String ip) throws IOException, GeoIp2Exception {
         return geoService.getGeo(ip);

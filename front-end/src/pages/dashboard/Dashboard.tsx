@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavBar from "../../components/navigation-bar/NavBar";
 import { useNavigate } from 'react-router-dom';
 import {
@@ -132,6 +132,7 @@ export default function DashboardPage() {
 
       <div className="white-div" style={{ width: 1000, display: userType !== "CLIENT" ? 'none' : '' }}>
         <div style={{ display: !clientPacketsSentHasData && !clientPacketsReceivedHasData ? 'none' : '' }}>
+          <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "33%",  textDecoration: "underline" }}> Graph of Packets Sent through each Server</h3>
           <BarChart height={300} width={1000} data={sentPacketsPerIpClient}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="address" />
@@ -141,6 +142,7 @@ export default function DashboardPage() {
             <Bar onClick={(data) => { navigate("/single-server", { state: data.address }) }} name="Number of Packets Sent" barSize={30} dataKey="numPackets" fill="#619E57" />
           </BarChart>
           <br />
+          <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "33%",  textDecoration: "underline" }}> Graph of Packets Received through each Server </h3>
           <BarChart height={300} width={1000} data={receivedPacketsPerIpClient}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="address" />

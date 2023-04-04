@@ -18,11 +18,14 @@ public class TrafficRepositoryImpl implements TrafficRepositoryCustom {
     @PersistenceContext
     private EntityManager em;
 
+    //Query traffic with custom filters
     public List<Traffic> findTraffic(Traffic criteria) throws IllegalArgumentException, IllegalAccessException {
+        //Create Criteria query
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Traffic> query = cb.createQuery(Traffic.class);
         Root<Traffic> t = query.from(Traffic.class);
 
+        //Add filters to query (src ip or src port etc.)
         List<Predicate> predicates = new ArrayList<>();
         for (Field field: criteria.getClass().getDeclaredFields()) {
             field.setAccessible(true);
@@ -32,6 +35,8 @@ public class TrafficRepositoryImpl implements TrafficRepositoryCustom {
         }
 
         query.select(t).where(cb.and(predicates.toArray(new Predicate[0])));
+
+        //Execute & return query
         return em.createQuery(query).getResultList();
     }
 }
