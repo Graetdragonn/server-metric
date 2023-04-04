@@ -189,10 +189,6 @@ export default function DashboardPage() {
           <div className='side-menu'>
             <ServerList />
           </div>
-          <div style={{ marginTop: '20px' }}>
-            <UserList />
-          </div>
-          <br />
           <div className='div-for-admin-services'>
             <h1>Admin Services</h1>
             <button style={{ width: 150 }} onClick={() => navigate('/adduser')}>Add User</button>
@@ -200,6 +196,11 @@ export default function DashboardPage() {
             <button style={{ width: 150 }} onClick={() => navigate('/adminaddserver')}>Add Server</button>
             <button style={{ width: 150 }} onClick={() => navigate('/admindeleteserver')}>Delete Server</button>
           </div>
+          <div style={{ marginTop: '20px' }}>
+            <UserList />
+          </div>
+          <br />
+          
         </div>
         <br />
       </div>
