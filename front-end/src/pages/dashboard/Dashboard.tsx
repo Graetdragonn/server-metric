@@ -11,6 +11,7 @@ import {
 import UserList from '../../components/user-list/UserList';
 import ServerList from '../../components/server-list/ServerList';
 import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from "recharts";
+import NetworkGraph from "../../components/network-graph/NetworkGraph";
 
 /**
  * Render dashboard page for each user type
@@ -121,6 +122,12 @@ export default function DashboardPage() {
             <Bar onClick={(data) => { navigate("/single-server", { state: data.address }) }} name="Number of Packets Received" barSize={30} dataKey="numPacketsReceived" fill= "var(--some_purple)" />
           </BarChart>
           <br />
+          <br/>
+          <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "38%",  textDecoration: "underline" }}> Graph of Overall Network Connections</h3>
+          <div  style={{backgroundColor: "white", marginLeft: "4%", height: "510px", width: "1410 px", borderColor: "black", borderStyle: "solid"}}>
+            <NetworkGraph></NetworkGraph>
+          </div>
+          <p style = {{display: "inline-flex", textAlign: "center", marginLeft: "34%"}}> Orange Nodes: Local Addresses, Purple Nodes: Global Nodes</p>
         </div>
         <div style={{ display: clientPacketsHasData? 'none' : '' }}>
           {renderNoAddresses()}
