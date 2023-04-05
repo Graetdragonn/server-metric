@@ -119,7 +119,7 @@
 
 .white-div {
   max-height: fit-content;
-  margin-left: 110px;
+  margin-left: 120px;
   cursor: pointer;
   margin-right: 0.25em;
   margin-top: 1em;
@@ -336,7 +336,7 @@ div.row {
 
 .side-menu {
   height: 100%;
-  width: 110px; /* Set the width of the sidebar */
+  width: 120px; /* Set the width of the sidebar */
   position: fixed; /* Fixed Sidebar (stay in place on scroll) */
   z-index: 1;
   top: 50px;
@@ -357,8 +357,13 @@ div.row {
 
 .server-in-list:hover {
   text-decoration: underline;
-  color: #fefefe;
+  color: #24272C;
   cursor: pointer;
+}
+
+.accordion {
+  background-color: var(--zomp);
+  color: white;
 }
 
 header {
@@ -381,10 +386,8 @@ header {
 
 .menus {
   display: flex;
-  /*align-items: left;*/
   flex-wrap: wrap;
   list-style: none;
-  /*background-color: white;*/
   background-color:var(--zomp);
   color: white;
   margin: 0px;
@@ -424,6 +427,7 @@ header {
 .menu-items a:hover,
 .menu-items button:hover {
   text-decoration: underline;
+  color: #24272C;
 }
 
 .arrow::after {
@@ -767,3 +771,4 @@ caption {
   padding: 10px;
   overflow-y: scroll;
 }
+

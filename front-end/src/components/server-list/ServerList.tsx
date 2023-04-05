@@ -1,6 +1,13 @@
-import { JSXElementConstructor, ReactElement, ReactFragment, ReactPortal, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllServers, getServerInfo, getClientsByProvider, getUserByEmail, getClientsServers, sortServers } from "./ServerListLogic";
+import '../../style/Master.css';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+
+
 
 /**
  * Render a server list
@@ -12,6 +19,7 @@ export default function ServerList() {
   var clients = [] as string[]; // list of clients for service provider
   const navigate = useNavigate(); // for screen navigation
 
+  // get server list
   useEffect(() => {
     getServerList();
   }, []);
@@ -50,28 +58,26 @@ export default function ServerList() {
   }
 
   return (
-    <div >
-      <ul className="server-list">
-        <h1 style={{ fontSize: 18, textDecoration: 'underline' }}>Servers</h1>
-        {serverList.map((server) => {
-          return (
-            <li className='server-in-list' key={server.firstThree}>
-              <p>
-                {server.firstThree}
-              </p>
-              {server.addresses.map((address: { address: string; }) => {
-                return (
-                  <li className='server-in-list' key={server.firstThree} onClick={() => { goToSingleServer(address.address) }}>
-                    <p>
-                      {address.address}
-                    </p>
-                  </li>
-                )
-              })}
-            </li>
-          )
-        })}
-      </ul>
+    <div>
+      <h1 className = "server-list" style={{ fontSize: 18, textDecoration: 'underline' }}>Servers</h1>
+      {serverList.map((server) => {
+        return (
+          <div>
+            <Accordion style={{color: "white"}}>
+              <AccordionSummary sx={{backgroundColor: 'var(--zomp)', margin: 0}}>
+              <Typography className='server-in-list' style={{fontWeight:'bold'}}>{server.firstThree}</Typography>
+              </AccordionSummary>
+              <AccordionDetails className="accordion">
+                {server.addresses.map((address: any) => {
+                  return (
+                    <Typography onClick={() => { goToSingleServer(address.address) }} className='server-in-list'>{address.address}</Typography>
+                  )
+                })}
+              </AccordionDetails>
+            </Accordion>
+          </div>
+        )
+      })}
     </div>
   );
 }
