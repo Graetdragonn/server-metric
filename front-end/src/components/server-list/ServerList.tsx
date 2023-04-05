@@ -7,8 +7,6 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 
-
-
 /**
  * Render a server list
  * @returns list of all servers for admin, list of client's servers for client, list of their client's servers for service provider
@@ -63,8 +61,8 @@ export default function ServerList() {
       {serverList.map((server) => {
         return (
           <div>
-            <Accordion style={{color: "white"}}>
-              <AccordionSummary sx={{backgroundColor: 'var(--zomp)', margin: 0}}>
+            <Accordion style={{color: "white", padding: 0}} elevation={0}>
+              <AccordionSummary sx={{backgroundColor: 'var(--zomp)'}}>
               <Typography className='server-in-list' style={{fontWeight:'bold'}}>{server.firstThree}</Typography>
               </AccordionSummary>
               <AccordionDetails className="accordion">

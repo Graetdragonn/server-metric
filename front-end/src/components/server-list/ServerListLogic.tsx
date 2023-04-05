@@ -82,12 +82,13 @@ export async function getClientsServers(clients: string[]) {
 
 export function sortServers(servers: any[]) {
     var sorted = new Array();
-
+    if (localStorage.getItem("userType") == "CLIENT") {
+        servers = servers.slice(1);
+    }
     for (let i = 0; i < servers.length; i++) {
         var serverAddressSplit = servers[i].address.split('.');
         var firstThree = serverAddressSplit[0] + "." + serverAddressSplit[1] + "." + serverAddressSplit[2];
         var isIn = false;
-
 
         // check if we already have a server in that list
         for (var j = 0; j < sorted.length; j++) {
@@ -102,9 +103,6 @@ export function sortServers(servers: any[]) {
         else {
             sorted[j].addresses.push({ address: servers[i].address });
         }
-
-
     }
-    console.log(sorted);
     return sorted;
 }
