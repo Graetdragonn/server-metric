@@ -69,6 +69,10 @@ export default function NetworkGraph() {
                 // repulsion: {
                 //     nodeDistance:100 // Put more distance between the nodes.
                 // },
+                // stabilization: {
+                //     enabled: true,
+                //     iterations: 5000    // YMMV
+                // },
                 barnesHut: {
                     "springConstant": 0,
                     "avoidOverlap": 0.2

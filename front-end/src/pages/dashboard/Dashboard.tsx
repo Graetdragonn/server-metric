@@ -127,6 +127,7 @@ export default function DashboardPage() {
           <div  style={{backgroundColor: "white", marginLeft: "4%", height: "510px", width: "1410 px", borderColor: "black", borderStyle: "solid"}}>
             <NetworkGraph></NetworkGraph>
           </div>
+          <p style = {{display: "inline-flex", textAlign: "center", marginLeft: "34%"}}> Orange Nodes: Local Addresses, Purple Nodes: Global Nodes</p>
         </div>
         <div style={{ display: clientPacketsHasData? 'none' : '' }}>
           {renderNoAddresses()}

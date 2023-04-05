@@ -3,7 +3,7 @@ import TrafficService from "../../requests/TrafficService";
 function addressInNodeList(address: string, addresses: [{id: number; label: string}]){
     for(let i = 0; i < addresses.length; i++){
         // @ts-ignore
-        if(address == addresses[i]["label"]){
+        if(address === addresses[i]["label"]){
             return true;
         }
     }
@@ -14,7 +14,7 @@ function addressInNodeList(address: string, addresses: [{id: number; label: stri
 function addressInUserAddress(address: string, addresses: string[]){
     for(let i = 0; i < addresses.length; i++){
         // @ts-ignore
-        if(address == addresses[i]){
+        if(address === addresses[i]){
             return true;
         }
     }
@@ -34,26 +34,24 @@ export async function generateNodesForNetworkGraph(userAddresses: string[]){
 
     }
 
+    for(let j = 0; (j + 15) < lengthOfTrafficList; j += 15){
 
-    for(let i = 0; i <lengthOfTrafficList; i++){
+        const addrRec = trafficList[j]["dstIP"];
+        const addrSnt = trafficList[j]["srcIP"];
 
-        const addrRec = trafficList[i]["dstIP"];
-        const addrSnt = trafficList[i]["srcIP"];
-        if(i <= 100){
             if(addressInUserAddress(addrRec, userAddresses)){
 
                 if(!addressInNodeList(addrSnt, nodeList)){
 
-                    nodeList.push({id: i + lengthOfUserAddresses, label: addrSnt, color: "#94579E"})
+                    nodeList.push({id: j + lengthOfUserAddresses, label: addrSnt, color: "#94579E"})
                 }
             }else if(addressInUserAddress(addrSnt, userAddresses)){
 
                 if(!addressInNodeList(addrRec, nodeList)){
 
-                    nodeList.push({id: i + lengthOfUserAddresses, label: addrRec, color: "#94579E"})
+                    nodeList.push({id: j + lengthOfUserAddresses, label: addrRec, color: "#94579E"})
                 }
             }
-        }
 
     }
 
@@ -62,7 +60,7 @@ export async function generateNodesForNetworkGraph(userAddresses: string[]){
 
 function getIDFromNodeList(address: string, nodeList: any[]){
     for(let i = 0; i < nodeList.length; i++){
-        if(nodeList[i]["label"] == address){
+        if(nodeList[i]["label"] === address){
             return nodeList[i]["id"];
         }
     }
@@ -81,9 +79,10 @@ export async function generateEdgesForNetworkGraph(nodeList: any[]){
 
             const addrRec = trafficList[j]["dstIP"];
             const addrSnt = trafficList[j]["srcIP"];
-            if(addrRec == addressToFindConnection){
+
+            if(addrRec === addressToFindConnection){
                 edgeList.push({from: getIDFromNodeList(addrSnt, nodeList), to: nodeList[i]["id"]})
-            }else if(addrSnt == addressToFindConnection){
+            }else if(addrSnt === addressToFindConnection){
                 edgeList.push({from: nodeList[i]["id"], to: getIDFromNodeList(addrRec, nodeList)})
             }
         }
