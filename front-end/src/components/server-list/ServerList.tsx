@@ -68,7 +68,7 @@ export default function ServerList() {
               <AccordionDetails className="accordion">
                 {server.addresses.map((address: any) => {
                   return (
-                    <Typography onClick={() => { goToSingleServer(address.address) }} className='server-in-list'>{address.address}</Typography>
+                    <Typography key={address.address} onClick={() => { goToSingleServer(address.address) }} className='server-in-list'>{address.address}</Typography>
                   )
                 })}
               </AccordionDetails>
