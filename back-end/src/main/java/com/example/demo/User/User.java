@@ -23,6 +23,8 @@ public class User implements UserDetails {
     private UserType userType;
     private String userFirstName;
     private String userLastName;
+    private String phoneNumber;
+
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_servers", joinColumns = @JoinColumn(name = "userEmail"), inverseJoinColumns = @JoinColumn(name = "address"))
@@ -36,25 +38,25 @@ public class User implements UserDetails {
     public User() {
     }
 
-
     //User constructor with all private variables being assigned
-
-    public User(String username, String password, UserType userType, String userFirstName, String userLastName, List<Server> servers, List<User> clients) {
+    public User(String username, String password, UserType userType, String userFirstName, String userLastName, String phoneNumber, List<Server> servers, List<User> clients) {
         this.username = username;
         this.password = password;
         this.userType = userType;
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
+        this.phoneNumber = phoneNumber;
         this.servers = servers;
         this.clients = clients;
     }
 
-    public User(String username, String password, UserType userType, String userFirstName, String userLastName) {
+    public User(String username, String password, UserType userType, String userFirstName, String userLastName, String phoneNumber) {
         this.username = username;
         this.password = password;
         this.userType = userType;
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
+        this.phoneNumber = phoneNumber;
     }
 
     //getUserEmail() returns a users email
@@ -123,6 +125,14 @@ public class User implements UserDetails {
 
     public void setUserLastName(String userLastName) {
         this.userLastName = userLastName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public List<User> getClients() {
@@ -201,4 +211,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }

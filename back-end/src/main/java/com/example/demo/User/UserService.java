@@ -68,12 +68,16 @@ public class UserService {
         if(user.getUserLastName() != null){
             userToUpdate.setUserLastName(user.getUserLastName());
         }
+        if(user.getPhoneNumber() != null){
+            userToUpdate.setPhoneNumber(user.getPhoneNumber());
+        }
         if(user.getServers() != null){
             userToUpdate.setServers(user.getServers());
         }
         if(user.getClients() != null){
             userToUpdate.setClients(user.getClients());
         }
+
 
         userRepository.save(userToUpdate);
     }

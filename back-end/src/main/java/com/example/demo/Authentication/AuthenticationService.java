@@ -17,7 +17,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     public AuthenticationResponse register(RegisterRequest request) {
-        User user = new User(request.getUsername(), passwordEncoder.encode(request.getPassword()), request.getUserType(), request.getUserFirstName() , request.getUserLastName());
+        User user = new User(request.getUsername(), passwordEncoder.encode(request.getPassword()), request.getUserType(), request.getUserFirstName() , request.getUserLastName(), request.getPhoneNumber());
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
