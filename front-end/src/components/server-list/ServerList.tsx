@@ -57,6 +57,7 @@ export default function ServerList() {
     }
   }
 
+  // if user is service provider, then display client list dropdown
   if (localStorage.getItem("userType") === 'SERVICE_PROVIDER') {
     return (
       <div>
