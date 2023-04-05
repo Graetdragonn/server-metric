@@ -70,21 +70,40 @@ export async function getClientsByProvider(userInfo: Client) {
  * @returns list of servers
  */
 export async function getClientsServers(clients: string[]) {
-    var servers = new Array({ address: String });
-    for (let i = 0; i < clients.length; i++) {
-        var clientInfo = await getUserByEmail(clients[i]);
-        for (let j = 0; j < clientInfo["servers"].length; j++) {
-            servers.push(clientInfo["servers"][j]);
+    if (localStorage.getItem("userType") === "CLIENT") {
+        var servers = new Array({ address: String });
+        for (let i = 0; i < clients.length; i++) {
+            var clientInfo = await getUserByEmail(clients[i]);
+            for (let j = 0; j < clientInfo["servers"].length; j++) {
+                servers.push(clientInfo["servers"][j]);
+            }
         }
+        return servers;
     }
-    return servers;
+    else {
+        var serverWithClient = new Array();
+        for (let i = 0; i < clients.length; i++) {
+            var servers = new Array({ address: String });
+            var clientInfo = await getUserByEmail(clients[i]);
+            for (let j = 0; j < clientInfo["servers"].length; j++) {
+                servers.push(clientInfo["servers"][j]);
+            }
+            if (servers.length > 1) {
+                servers = sortServers(servers);
+                serverWithClient.push({firstName: clientInfo["userFirstName"], lastName: clientInfo["userLastName"], servers: servers})
+            }           
+        }
+        return serverWithClient;
+    }
 }
 
 export function sortServers(servers: any[]) {
     var sorted = new Array();
-    if (localStorage.getItem("userType") == "CLIENT") {
+
+    if (localStorage.getItem("userType") !== "ADMIN") {
         servers = servers.slice(1);
     }
+    
     for (let i = 0; i < servers.length; i++) {
         var serverAddressSplit = servers[i].address.split('.');
         var firstThree = serverAddressSplit[0] + "." + serverAddressSplit[1] + "." + serverAddressSplit[2];

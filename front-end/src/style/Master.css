@@ -362,9 +362,10 @@ div.row {
 }
 
 .accordion {
-  background-color: 'grey';
+  background-color: var(--zomp);
   color: var(--zomp);
   border-radius: none;
+  padding: 0px;
 }
 
 header {
