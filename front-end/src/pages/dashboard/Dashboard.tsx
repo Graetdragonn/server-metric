@@ -6,6 +6,7 @@ import {
   getClientServersByUser,
   getNumPacketsSentAndReceivedClient,
   getNumPacketsSentAndReceivedSP
+
 } from './DashboardLogic';
 import UserList from '../../components/user-list/UserList';
 import ServerList from '../../components/server-list/ServerList';
@@ -94,16 +95,15 @@ export default function DashboardPage() {
   }
 
   return (
-
     <div className="Dashboard-Page">
       <NavBar />
       {/* CLIENT AND SERVICE PROVIDER DASHBOARD VIEW */}
       <div style={{ display: userType === "CLIENT" || userType === "SERVICE_PROVIDER" ? '' : 'none' }}>
         <br />
         <div className='side-menu'>
-          <ServerList />
-          <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none'}} onClick={() => navigate('/addserver')}>Add a Server</button>
+          <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate('/addserver')}>Add a Server</button>
           <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate('/removeserver')}>Remove a Server</button>
+          <ServerList />
         </div>
       </div>
       <br />
@@ -166,7 +166,7 @@ export default function DashboardPage() {
             <UserList />
           </div>
           <br />
-          
+
         </div>
         <br />
       </div>
@@ -174,7 +174,7 @@ export default function DashboardPage() {
       {/* SERVICE MANAGER DASHBOARD VIEW */}
       <div style={{ display: userType === "SERVICE_MANAGER" ? '' : 'none' }}>
         <br />
-        <div style={{marginTop: '50px'}} />
+        <div style={{ marginTop: '50px' }} />
         <div className='row' style={{ display: 'flex', justifyContent: 'space-around' }}>
           <UserList />
         </div>

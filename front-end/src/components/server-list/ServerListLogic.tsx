@@ -70,12 +70,58 @@ export async function getClientsByProvider(userInfo: Client) {
  * @returns list of servers
  */
 export async function getClientsServers(clients: string[]) {
-    var servers = new Array({ address: String });
-    for (let i = 0; i < clients.length; i++) {
-        var clientInfo = await getUserByEmail(clients[i]);
-        for (let j = 0; j < clientInfo["servers"].length; j++) {
-            servers.push(clientInfo["servers"][j]);
+    if (localStorage.getItem("userType") === "CLIENT") {
+        var servers = new Array({ address: String });
+        for (let i = 0; i < clients.length; i++) {
+            var clientInfo = await getUserByEmail(clients[i]);
+            for (let j = 0; j < clientInfo["servers"].length; j++) {
+                servers.push(clientInfo["servers"][j]);
+            }
+        }
+        return servers;
+    }
+    else {
+        var serverWithClient = new Array();
+        for (let i = 0; i < clients.length; i++) {
+            var servers = new Array({ address: String });
+            var clientInfo = await getUserByEmail(clients[i]);
+            for (let j = 0; j < clientInfo["servers"].length; j++) {
+                servers.push(clientInfo["servers"][j]);
+            }
+            if (servers.length > 1) {
+                servers = sortServers(servers);
+                serverWithClient.push({firstName: clientInfo["userFirstName"], lastName: clientInfo["userLastName"], servers: servers})
+            }           
+        }
+        return serverWithClient;
+    }
+}
+
+export function sortServers(servers: any[]) {
+    var sorted = new Array();
+
+    if (localStorage.getItem("userType") !== "ADMIN") {
+        servers = servers.slice(1);
+    }
+    
+    for (let i = 0; i < servers.length; i++) {
+        var serverAddressSplit = servers[i].address.split('.');
+        var firstThree = serverAddressSplit[0] + "." + serverAddressSplit[1] + "." + serverAddressSplit[2];
+        var isIn = false;
+
+        // check if we already have a server in that list
+        for (var j = 0; j < sorted.length; j++) {
+            if (JSON.stringify(sorted[j].firstThree) === JSON.stringify(firstThree)) {
+                isIn = true;
+                break;
+            }
+        }
+        if (!isIn) {
+            sorted.push({ firstThree: firstThree, addresses: [{ address: servers[i].address }] });
+        }
+        else {
+            sorted[j].addresses.push({ address: servers[i].address });
         }
     }
-    return servers;
+    return sorted;
 }
