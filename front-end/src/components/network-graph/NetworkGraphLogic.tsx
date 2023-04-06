@@ -67,11 +67,16 @@ function getIDFromNodeList(address: string, nodeList: any[]){
     return null;
 }
 
-export async function generateEdgesForNetworkGraph(nodeList: any[]){
+export async function generateEdgesForNetworkGraph(nodeList: any[], userAddressesLength: number){
     const res = await TrafficService.getAllTraffic();
     const trafficList = JSON.parse(res);
     const edgeList = [] as any[]
 
+    for(let i = 0; i < userAddressesLength; i++){
+        for(let j = i + 1; j < userAddressesLength; j++){
+            edgeList.push({from: nodeList[i]["id"], to: nodeList[j]["id"]})
+        }
+    }
 
     for(let i = 0; i < nodeList.length; i++){
         let addressToFindConnection = nodeList[i]["label"];

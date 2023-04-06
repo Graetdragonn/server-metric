@@ -26,7 +26,7 @@ export default function NetworkGraph() {
             setUserAddresses(userInfo);
             nodeList = await  generateNodesForNetworkGraph(userAddresses);
             setNodes(nodeList)
-            edgeList = await generateEdgesForNetworkGraph(nodes);
+            edgeList = await generateEdgesForNetworkGraph(nodes, userAddresses.length);
             setEdges(edgeList)
         }
         getData()
