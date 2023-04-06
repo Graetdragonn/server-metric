@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {getServersByUser} from "../../pages/dashboard/DashboardLogic";
+import React, {useState} from "react";
 // @ts-ignore
 import Graph from "react-graph-vis"
 // @ts-ignore
 import {generateEdgesForNetworkGraph, generateNodesForNetworkGraph} from "./NetworkGraphLogic";
+import {getServersByUser} from "../packet-per-ip-graph-sp/PacketPerIPSPLogic";
 
 
 export default function NetworkGraph() {
@@ -16,26 +15,19 @@ export default function NetworkGraph() {
     let edgeList: { from: number; to: number }[];
     let userInfo: string[]; // user info
 
-    const navigate = useNavigate(); // for screen navigation
+    const getData = async () => {
 
-    useEffect(() => {
-
-        const getData = async () => {
-            var email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
-            userInfo = await getServersByUser(email);
-            setUserAddresses(userInfo);
-            nodeList = await  generateNodesForNetworkGraph(userAddresses);
-            setNodes(nodeList)
-            edgeList = await generateEdgesForNetworkGraph(nodes, userAddresses.length);
-            setEdges(edgeList)
-        }
-        getData()
-    }, [nodes]);
-
-
-
+        const email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
+        userInfo = await getServersByUser(email);
+        setUserAddresses(userInfo);
+        nodeList = await  generateNodesForNetworkGraph(userAddresses);
+        setNodes(nodeList)
+        edgeList = await generateEdgesForNetworkGraph(nodes, userAddresses.length);
+        setEdges(edgeList)
+    }
 
     const renderNetGraph = (nodeList: { id: number; label: string; color: string}[], edgeList: { to: number; from: number }[]) => {
+        getData()
         const graph = {
             nodes: nodeList,
             edges: edgeList
@@ -87,14 +79,13 @@ export default function NetworkGraph() {
 
         const events = {
             select: function ({event}: { event: any }) {
-                var {nodes, edges} = event;
+                const {nodes, edges} = event;
             }
         };
 
         return <Graph graph={graph} options={options} events={events}></Graph>
 
     }
-
 
     return (
         <div >

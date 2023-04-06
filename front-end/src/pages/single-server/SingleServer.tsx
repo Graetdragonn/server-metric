@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import '../../style/Master.css';
 import NavBar from "../../components/navigation-bar/NavBar";
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import {Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis} from "recharts";
 import {getPortTrafficForAServer,} from "./SingleServerLogic";
 const { getService } = require('port-numbers');
@@ -16,20 +16,15 @@ export default function SingleServer() {
     // tracks if port lists are not empty
     const [allPortListHasData, setAllPortListHasData] = useState(Boolean)
 
-    useEffect(() => {
-        // get server traffic
-        async function getTraffic() {
-            allPorts = await getPortTrafficForAServer(state);
-            setAllPortList(allPorts);
-            if (allPortList.length >= 1) {
-                setAllPortListHasData(true)
-            } else {
-                setAllPortListHasData(false)
-            }
+    async function getData() {
+        allPorts = await getPortTrafficForAServer(state);
+        setAllPortList(allPorts);
+        if (allPortList.length >= 1) {
+            setAllPortListHasData(true)
+        } else {
+            setAllPortListHasData(false)
         }
-        getTraffic();
-
-    }, [allPortList]);
+    }
     
     // get port name
     const getPortName = (label: string) => {
@@ -52,7 +47,6 @@ export default function SingleServer() {
     // tool for graph styling
     const CustomTooltip = ({ active, payload, label }: any) => {
         if (active && payload && payload.length) {
-            console.log(payload)
             return (
                 <div style={{
                     backgroundColor: 'white',
@@ -78,6 +72,19 @@ export default function SingleServer() {
         return <h1> Servers Have No Port Data</h1>
     };
 
+    const render = () =>{
+        getData()
+        return <BarChart height={500} width={1200} data={allPortList}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="port" />
+            <YAxis />
+            <Tooltip content={<CustomTooltip />} />
+            <Legend />
+            <Bar name="Number Sent on Port" barSize={30} dataKey="numSent" fill="var(--orange_wheel)"> </Bar>
+            <Bar name="Number Received on Port" barSize={30} dataKey="numReceived" fill="var(--some_purple)" />
+        </BarChart>
+    }
+
 
     return (
         <div className="Single-Server-Page">
@@ -88,15 +95,7 @@ export default function SingleServer() {
                 <div className="white-div" style={{ width: 1200, marginLeft: "10%" }}>
                     <div style={{ display: !allPortListHasData ? 'none' : '' }}>
                         <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "30%",  textDecoration: "underline" }}> Graph of Packets Sent and Received through Specific Ports </h3>
-                        <BarChart height={500} width={1200} data={allPortList}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="port" />
-                            <YAxis />
-                            <Tooltip content={<CustomTooltip />} />
-                            <Legend />
-                            <Bar name="Number Sent on Port" barSize={30} dataKey="numSent" fill="var(--orange_wheel)"> </Bar>
-                            <Bar name="Number Received on Port" barSize={30} dataKey="numReceived" fill="var(--some_purple)" />
-                        </BarChart>
+                        {render()}
                     </div>
                     <div style={{ display: allPortListHasData ? 'none' : '' }}>
                         {renderNoPortData()}

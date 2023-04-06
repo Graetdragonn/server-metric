@@ -1,54 +1,6 @@
 import TrafficService from "../../requests/TrafficService";
 
 /**
- * Get list of packets sent
- * @param address source address
- * @returns list of packets sent by address
- */
-export async function getSentServerTraffic(address: string) {
-    try {
-        const res = await TrafficService.getAllTraffic();
-        var allTrafficList = JSON.parse(res);
-        var serverTraffic = [];
-        for (let i = 0; i < allTrafficList.length; i++){
-            var addr = allTrafficList[i]["srcIP"];
-            allTrafficList[i].time = translateTime(allTrafficList[i]["time"]);
-            if(addr === address){
-                serverTraffic.push(allTrafficList[i]);
-            }
-        }
-        return serverTraffic;
-    }
-    catch {
-        return [];
-    }
-}
-
-/**
- * Get list of packets received
- * @param address dst address
- * @returns list of packets received by address
- */
-export async function getReceivedServerTraffic(address: string) {
-    try {
-        const res = await TrafficService.getAllTraffic();
-        var allTrafficList = JSON.parse(res);
-        var serverTraffic = [];
-        for (let i = 0; i < allTrafficList.length; i++){
-            var addr = allTrafficList[i]["dstIP"];
-            allTrafficList[i].time = translateTime(allTrafficList[i]["time"]);
-            if(addr === address){
-                serverTraffic.push(allTrafficList[i]);
-            }
-        }
-        return serverTraffic;
-    }
-    catch {
-        return [];
-    }
-}
-
-/**
  * Translate EPOCH UTC time to date
  * @param time UTC
  * @returns date
