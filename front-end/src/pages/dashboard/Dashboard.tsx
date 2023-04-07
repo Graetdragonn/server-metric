@@ -16,16 +16,6 @@ export default function DashboardPage() {
   const navigate = useNavigate(); // for screen navigation
   const userType = localStorage.getItem('userType'); // get user's type
 
-  // no data found render
-  const renderNoAddresses = () => {
-    return <h1> Servers Have No Sent Data</h1>
-  };
-
-  // get address from user and server
-  const getAddressFromUserAndAddress = (userAndAddress: string) => {
-    return userAndAddress.substring(userAndAddress.indexOf(' ') + 1);
-  }
-
   return (
     <div className="Dashboard-Page">
       <NavBar />
