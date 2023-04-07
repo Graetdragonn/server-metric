@@ -1,33 +1,37 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 // @ts-ignore
 import Graph from "react-graph-vis"
 // @ts-ignore
 import {generateEdgesForNetworkGraph, generateNodesForNetworkGraph} from "./NetworkGraphLogic";
 import {getServersByUser} from "../packet-per-ip-graph-sp/PacketPerIPSPLogic";
+import {getNumPacketsSentAndReceivedClient} from "../packet-per-ip-graph-client/PacketPerIPClientLogic";
 
 
 export default function NetworkGraph() {
     const [nodes, setNodes] = useState([] as { id: number; label: string; color: string}[])
     const [edges, setEdges] = useState([] as { to: number; from: number }[])
-    const [userAddresses, setUserAddresses] = useState([] as string[]);   // track user's server addresses
 
     let nodeList: { id: number; label: string; color: string}[]
     let edgeList: { from: number; to: number }[];
     let userInfo: string[]; // user info
 
-    const getData = async () => {
+    useEffect(() => {
+        const getData = async () => {
 
-        const email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
-        userInfo = await getServersByUser(email);
-        setUserAddresses(userInfo);
-        nodeList = await  generateNodesForNetworkGraph(userAddresses);
-        setNodes(nodeList)
-        edgeList = await generateEdgesForNetworkGraph(nodes, userAddresses.length);
-        setEdges(edgeList)
-    }
+            const email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
+            userInfo = await getServersByUser(email);
+            nodeList = await  generateNodesForNetworkGraph(userInfo);
+            setNodes(nodeList)
+            edgeList = await generateEdgesForNetworkGraph(nodeList, userInfo.length);
+            setEdges(edgeList)
+
+        }
+        getData()
+    }, [])
+
+
 
     const renderNetGraph = (nodeList: { id: number; label: string; color: string}[], edgeList: { to: number; from: number }[]) => {
-        getData()
         const graph = {
             nodes: nodeList,
             edges: edgeList

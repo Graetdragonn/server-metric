@@ -1,14 +1,16 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis} from "recharts";
 import {getClientServersByUser, getNumPacketsSentAndReceivedSP} from "./PacketPerIPSPLogic";
+import {
+    getNumPacketsSentAndReceivedClient,
+    getServersByUser
+} from "../packet-per-ip-graph-client/PacketPerIPClientLogic";
 
 
 export default function PacketPerIPSP() {
     // track sent and received packets per IP - service provider
     const [allPacketsPerIpSP, setAllPacketsPerIpSP] = useState([] as any[]);
-    const [clientNames, setClientNames] = useState([] as any[]); // get clients' names
-
     let userInfo: string[]; // user info
 
     // sent and received packets per service provider's clients
@@ -16,14 +18,16 @@ export default function PacketPerIPSP() {
 
     const navigate = useNavigate(); // for screen navigation
 
+    useEffect(() => {
+        const getData = async () => {
+            const email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
+            userInfo = await getClientServersByUser(email);
+            allPacketsPerSP = await getNumPacketsSentAndReceivedSP(userInfo);
+            setAllPacketsPerIpSP(allPacketsPerSP);
+        }
+        getData()
+    }, [])
 
-    const getData = async () => {
-        const email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
-        userInfo = await getClientServersByUser(email);
-        setClientNames(userInfo);
-        allPacketsPerSP = await getNumPacketsSentAndReceivedSP(clientNames);
-        setAllPacketsPerIpSP(allPacketsPerSP);
-    }
 
     // get address from user and server
     const getAddressFromUserAndAddress = (userAndAddress: string) => {
@@ -31,7 +35,6 @@ export default function PacketPerIPSP() {
     }
 
     const render = () =>{
-        getData()
         return  <BarChart height={500} width={1400} data={allPacketsPerIpSP}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis name="Client and Address" dataKey="userAndAddress" />

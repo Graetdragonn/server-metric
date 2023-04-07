@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import '../../style/Master.css';
 import NavBar from "../../components/navigation-bar/NavBar";
-import React, {useState } from "react";
+import React, {useEffect, useState} from "react";
 import {Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis} from "recharts";
 import {getPortTrafficForAServer,} from "./SingleServerLogic";
 const { getService } = require('port-numbers');
@@ -13,19 +13,15 @@ export default function SingleServer() {
     const [allPortList, setAllPortList] = useState([] as any[]); // tracks received ports
     let allPorts: string[]; // temporary variable for received ports
 
-    // tracks if port lists are not empty
-    const [allPortListHasData, setAllPortListHasData] = useState(Boolean)
-
-    async function getData() {
-        allPorts = await getPortTrafficForAServer(state);
-        setAllPortList(allPorts);
-        if (allPortList.length >= 1) {
-            setAllPortListHasData(true)
-        } else {
-            setAllPortListHasData(false)
+    useEffect(()=>{
+        async function getData() {
+            allPorts = await getPortTrafficForAServer(state);
+            setAllPortList(allPorts);
         }
-    }
-    
+        getData()
+    }, [])
+
+
     // get port name
     const getPortName = (label: string) => {
         const number = getService(Number(getPort(label)));
@@ -67,13 +63,7 @@ export default function SingleServer() {
         return null;
     };
 
-    // if no port data, render this
-    const renderNoPortData = () => {
-        return <h1> Servers Have No Port Data</h1>
-    };
-
     const render = () =>{
-        getData()
         return <BarChart height={500} width={1200} data={allPortList}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="port" />
@@ -93,13 +83,8 @@ export default function SingleServer() {
                 <br />
                 <div className="white-div-for-single-server-title" style={{ minWidth: 1000, maxHeight: 80, marginLeft: "19.5%" }}> <h1 className='text-for-single-server-header' style={{ textAlign: "center"}}> Server {state} </h1></div>
                 <div className="white-div" style={{ width: 1200, marginLeft: "10%" }}>
-                    <div style={{ display: !allPortListHasData ? 'none' : '' }}>
                         <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "30%",  textDecoration: "underline" }}> Graph of Packets Sent and Received through Specific Ports </h3>
                         {render()}
-                    </div>
-                    <div style={{ display: allPortListHasData ? 'none' : '' }}>
-                        {renderNoPortData()}
-                    </div>
                 </div>
             </div>
             <div></div>

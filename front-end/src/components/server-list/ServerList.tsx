@@ -19,33 +19,34 @@ export default function ServerList() {
 
   // get server list
   useEffect(() => {
+    // get all servers
+    const getServerList = async () => {
+      var email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
+
+      // if user is an admin, then get all servers
+      if (localStorage.getItem("userType") === "ADMIN") {
+        servers = await getAllServers();
+        servers = sortServers(servers);
+      }
+      else if (localStorage.getItem("userType") === "SERVICE_PROVIDER") {
+        var userInfo = await getUserByEmail(email);
+        clients = await getClientsByProvider(userInfo);
+        // get list of servers
+        servers = await getClientsServers(clients);
+      } else if (localStorage.getItem("userType") === "CLIENT") {
+        clients = [email];
+        // get list of servers
+        servers = await getClientsServers(clients);
+        servers = sortServers(servers);
+      }
+      // remove duplicates by casting to Set then back to Array
+      setServerList(Array.from(new Set(servers)));
+
+    }
     getServerList();
   }, []);
 
-  // get all servers
-  const getServerList = async () => {
-    var email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
 
-    // if user is an admin, then get all servers
-    if (localStorage.getItem("userType") === "ADMIN") {
-      servers = await getAllServers();
-      servers = sortServers(servers);
-    }
-    else if (localStorage.getItem("userType") === "SERVICE_PROVIDER") {
-      var userInfo = await getUserByEmail(email);
-      clients = await getClientsByProvider(userInfo);
-      // get list of servers
-      servers = await getClientsServers(clients);
-    } else if (localStorage.getItem("userType") === "CLIENT") {
-      clients = [email];
-      // get list of servers
-      servers = await getClientsServers(clients);
-      servers = sortServers(servers);
-    }
-
-    // remove duplicates by casting to Set then back to Array
-    setServerList(Array.from(new Set(servers)));
-  }
 
   // navigate to single server page
   const goToSingleServer = async (address: string) => {

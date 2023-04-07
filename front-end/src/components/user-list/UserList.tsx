@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { getAllUsers, getUserInfo, getClientList } from "./UserListLogic";
 import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
@@ -12,25 +12,31 @@ export default function UserList() {
   var users = new Array(); // temporary user list variable
   const navigate = useNavigate(); // for screen navigation
 
-  // get all users for admin
-  const getAllUserList = async () => {
-    users = await getAllUsers();
-    setUserList(users);
-  }
-  if (localStorage.getItem("userType") === "ADMIN") {
-    getAllUserList();
-  }
 
-  // get all clients for service manager
-  const getClients = async () => {
-    users = await getClientList();
-    setUserList(users);
-  }
-  if (localStorage.getItem("userType") === "SERVICE_MANAGER") {
-    getClients();
-  }
+  useEffect(() => {
 
-  // go to edit user page for admin
+
+    // get all users for admin
+    const getAllUserList = async () => {
+      users = await getAllUsers();
+      setUserList(users);
+    }
+
+    // get all clients for service manager
+    const getClients = async () => {
+      users = await getClientList();
+      setUserList(users);
+
+    }
+
+    if (localStorage.getItem("userType") === "ADMIN") {
+      getAllUserList();
+    }else if (localStorage.getItem("userType") === "SERVICE_MANAGER") {
+      getClients();
+    }
+
+  }, [])
+
   const goToEdit = async (email: string) => {
     var res = await getUserInfo(email);
     navigate('/adminedituser', { state: { userInfo: res } });
@@ -41,6 +47,9 @@ export default function UserList() {
     var res = await getUserInfo(email);
     navigate('/spedituser', { state: { userInfo: res } });
   }
+
+
+
 
   // RETURN ALL USERS FOR ADMIN
   if (localStorage.getItem("userType") === "ADMIN") {
