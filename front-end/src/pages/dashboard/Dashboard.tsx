@@ -5,6 +5,8 @@ import ServerList from '../../components/server-list/ServerList';
 import NetworkGraph from "../../components/network-graph/NetworkGraph";
 import PacketPerIPClient from "../../components/packet-per-ip-graph-client/PacketPerIPClient";
 import PacketPerIPSP from "../../components/packet-per-ip-graph-sp/PacketPerIPSP";
+import orangeCircle from './icons8-orange-circle-48.png'
+import purpleCircle from './icons8-purple-circle-48.png'
 
 /**
  * Render dashboard page for each user type
@@ -14,25 +16,19 @@ export default function DashboardPage() {
   const navigate = useNavigate(); // for screen navigation
   const userType = localStorage.getItem('userType'); // get user's type
 
-  // no data found render
-  const renderNoAddresses = () => {
-    return <h1> Servers Have No Sent Data</h1>
-  };
-
-  // get address from user and server
-  const getAddressFromUserAndAddress = (userAndAddress: string) => {
-    return userAndAddress.substring(userAndAddress.indexOf(' ') + 1);
-  }
-
   return (
     <div className="Dashboard-Page">
       <NavBar />
+        <br/>
+        <br/>
       {/* CLIENT AND SERVICE PROVIDER DASHBOARD VIEW */}
       <div style={{ display: userType === "CLIENT" || userType === "SERVICE_PROVIDER" ? '' : 'none' }}>
         <br />
         <div className='side-menu'>
-          <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate('/addserver')}>Add a Server</button>
-          <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate('/removeserver')}>Remove a Server</button>
+          <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate('/addserver')}>Add Server</button>
+          <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate('/removeserver')}>Remove Server</button>
+            <br/>
+            <br/>
           <ServerList />
         </div>
       </div>
@@ -47,7 +43,7 @@ export default function DashboardPage() {
           <div  style={{backgroundColor: "white", marginLeft: "4%", height: "510px", width: "1410 px", borderColor: "black", borderStyle: "solid"}}>
             <NetworkGraph></NetworkGraph>
           </div>
-          <p style = {{display: "inline-flex", textAlign: "center", marginLeft: "34%"}}> Orange Nodes: Local Addresses, Purple Nodes: Global Nodes</p>
+          <p style = {{display: "inline-flex", textAlign: "center", marginLeft: "39%"}}> <img style={{ width:20, height: 20}} src={orangeCircle} alt="Logo" /> <span style={{color:"var(--orange_wheel"}}>: Local Addresses &nbsp;</span> <img style={{ width:20, height: 20}} src={purpleCircle} alt="Logo" /> <span style={{color:"var(--some_purple"}}>: Global Addresses</span></p>
       </div>
 
       <div className="white-div" style={{ width: 1400, display: userType !== "SERVICE_PROVIDER" ? 'none' : '' }}>

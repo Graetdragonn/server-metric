@@ -169,6 +169,8 @@ button {
   cursor: pointer;
 }
 
+
+
 .server-list-button{
   margin-right: 0.25em;
   margin-top: 1em;
@@ -180,7 +182,7 @@ button {
   font-size: 16px;
   padding: 14px 20px;
   border-radius: 12px;
-  min-width: fit-content;
+  min-width: 140px;
   display: inline-block;
   cursor: pointer;
 }
@@ -236,7 +238,6 @@ button:disabled {
 .backbutton {
   color: #24272C;
   font-size: 20px;
-  padding: 10px 10px;
   border-radius: 12px;
   display: inline-block;
 }
@@ -336,7 +337,7 @@ div.row {
 
 .side-menu {
   height: 100%;
-  width: 120px; /* Set the width of the sidebar */
+  width: 140px; /* Set the width of the sidebar */
   position: fixed; /* Fixed Sidebar (stay in place on scroll) */
   z-index: 1;
   top: 50px;
@@ -351,7 +352,23 @@ div.row {
   list-style: none;
   color: white;
   margin: 0px;
-  padding: 6px 8px 6px 16px;
+  padding: 6px 8px 6px 22px;
+  display: block;
+}
+
+.server-list-header-sp {
+  list-style: none;
+  color: white;
+  margin: 0px;
+  padding: 6px 8px 6px 38px;
+  display: block;
+}
+
+.server-list-header-client {
+  list-style: none;
+  color: white;
+  margin: 0px;
+  padding: 6px 8px 6px 34px;
   display: block;
 }
 
@@ -377,13 +394,13 @@ header {
   display: flex;
   align-items: center;
   margin: 0 auto;
-  padding: 0px 10px;
   background-color:var(--zomp);
   overflow: hidden;
   position: fixed; /* Set the navbar to fixed position */
   top: 0; /* Position the navbar at the top of the page */
   width: 100%; /* Full width */
-  height: 50px;
+  height: 70px;
+  left: -21px;
 }
 
 .menus {
@@ -400,6 +417,7 @@ header {
   position: relative;
   font-size: 20px;
   padding-right: 44px;
+
 }
 
 .menu-items a {
@@ -428,7 +446,7 @@ header {
 
 .menu-items a:hover,
 .menu-items button:hover {
-  text-decoration: underline;
+  /*text-decoration: underline;*/
   color: #24272C;
 }
 

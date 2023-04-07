@@ -62,7 +62,7 @@ export default function ServerList() {
   if (localStorage.getItem("userType") === 'SERVICE_PROVIDER') {
     return (
       <div>
-        <h1 className="server-list" style={{ fontSize: 18, textDecoration: 'underline' }}>Clients</h1>
+        <h1 className="server-list-header-sp" style={{ fontSize: 18, textDecoration: 'underline' }}>Clients</h1>
         {serverList.map((client) => {
           return (
             <div>
@@ -100,7 +100,7 @@ export default function ServerList() {
   else if (localStorage.getItem("userType") !== 'SERVICE_MANAGER') {
     return (
       <div>
-        <h1 className="server-list" style={{ fontSize: 18, textDecoration: 'underline' }}>Servers</h1>
+        <h1 className="server-list-header-client" style={{ fontSize: 18, textDecoration: 'underline'}}>Servers</h1>
         {serverList.map((server) => {
           return (
             <div>
