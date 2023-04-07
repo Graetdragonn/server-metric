@@ -1,5 +1,6 @@
 import '../../style/Master.css';
 import {NavLink, useLocation} from "react-router-dom";
+import logo from './logo.png'
 
 /**
  * Render the navigation bar
@@ -9,6 +10,7 @@ export default function NavBar() {
 
   const location = useLocation(); // for screen navigation
   const pathname = location.pathname; // get props
+  console.log(logo);
 
   // navigation bar items and their corresponding routes
   const menuItems = [
@@ -47,13 +49,14 @@ export default function NavBar() {
 
 
 
-
   return (
-    <header className="nav-area">
+    <header className="nav-area" style={{zIndex:2}}>
+      <img style={{ width: 70, height: 70, paddingLeft: 57}} src={logo} alt="Logo" />
       <nav>
         <ul className="menus">
+
           {menuItems.map((menu, index) => {
-            return (        
+            return (
               <li className="menu-items" key={index}>
                 <p>
                   <NavLink style={{ color: `${checkColor(menu.url)}`, fontWeight: `${checkBold(menu.url)}`, textDecoration: `${checkUnderline(menu.url)}`}} to={menu.url}>{menu.title}</NavLink>
@@ -62,7 +65,10 @@ export default function NavBar() {
             )
           })}
         </ul>
+
+
       </nav>
+      {/*<img style={{ width: 70, height: 70, paddingLeft: 800}} src={logo} alt="Logo" />*/}
     </header>
   );
 

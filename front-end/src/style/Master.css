@@ -169,6 +169,8 @@ button {
   cursor: pointer;
 }
 
+
+
 .server-list-button{
   margin-right: 0.25em;
   margin-top: 1em;
@@ -444,7 +446,7 @@ header {
 
 .menu-items a:hover,
 .menu-items button:hover {
-  text-decoration: underline;
+  /*text-decoration: underline;*/
   color: #24272C;
 }
 
