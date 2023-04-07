@@ -27,12 +27,16 @@ export default function DashboardPage() {
   return (
     <div className="Dashboard-Page">
       <NavBar />
+        <br/>
+        <br/>
       {/* CLIENT AND SERVICE PROVIDER DASHBOARD VIEW */}
       <div style={{ display: userType === "CLIENT" || userType === "SERVICE_PROVIDER" ? '' : 'none' }}>
         <br />
         <div className='side-menu'>
-          <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate('/addserver')}>Add a Server</button>
-          <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate('/removeserver')}>Remove a Server</button>
+          <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate('/addserver')}>Add Server</button>
+          <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate('/removeserver')}>Remove Server</button>
+            <br/>
+            <br/>
           <ServerList />
         </div>
       </div>
