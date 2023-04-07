@@ -1,37 +1,33 @@
 import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {getServersByUser} from "../../pages/dashboard/DashboardLogic";
 // @ts-ignore
 import Graph from "react-graph-vis"
 // @ts-ignore
 import {generateEdgesForNetworkGraph, generateNodesForNetworkGraph} from "./NetworkGraphLogic";
+import {getServersByUser} from "../packet-per-ip-graph-sp/PacketPerIPSPLogic";
+import {getNumPacketsSentAndReceivedClient} from "../packet-per-ip-graph-client/PacketPerIPClientLogic";
 
 
 export default function NetworkGraph() {
     const [nodes, setNodes] = useState([] as { id: number; label: string; color: string}[])
     const [edges, setEdges] = useState([] as { to: number; from: number }[])
-    const [userAddresses, setUserAddresses] = useState([] as string[]);   // track user's server addresses
 
     let nodeList: { id: number; label: string; color: string}[]
     let edgeList: { from: number; to: number }[];
     let userInfo: string[]; // user info
 
-    const navigate = useNavigate(); // for screen navigation
-
     useEffect(() => {
-
         const getData = async () => {
-            var email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
+
+            const email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
             userInfo = await getServersByUser(email);
-            setUserAddresses(userInfo);
-            nodeList = await  generateNodesForNetworkGraph(userAddresses);
+            nodeList = await  generateNodesForNetworkGraph(userInfo);
             setNodes(nodeList)
-            edgeList = await generateEdgesForNetworkGraph(nodes, userAddresses.length);
+            edgeList = await generateEdgesForNetworkGraph(nodeList, userInfo.length);
             setEdges(edgeList)
+
         }
         getData()
-    }, [nodes]);
-
+    }, [])
 
 
 
@@ -87,14 +83,13 @@ export default function NetworkGraph() {
 
         const events = {
             select: function ({event}: { event: any }) {
-                var {nodes, edges} = event;
+                const {nodes, edges} = event;
             }
         };
 
         return <Graph graph={graph} options={options} events={events}></Graph>
 
     }
-
 
     return (
         <div >
