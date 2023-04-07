@@ -4,6 +4,10 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.GeoLoc.GeoService;
+import com.maxmind.geoip2.exception.GeoIp2Exception;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,10 +15,12 @@ import java.util.Optional;
 public class ServerService {
 
     private final ServerRepository serverRepository;
+    private final GeoService geoService;
 
     @Autowired
-    public ServerService(ServerRepository serverRepository) {
+    public ServerService(ServerRepository serverRepository, GeoService geoService) {
         this.serverRepository = serverRepository;
+        this.geoService = geoService;
     }
 
     public List<Server> getServers(){
@@ -29,6 +35,11 @@ public class ServerService {
         Optional<Server> serverOptional = serverRepository.findServerByAddress(server.getAddress());
         if(serverOptional.isPresent()){
             throw new IllegalStateException("Server is already added");
+        }
+        try {
+            server.setGeolocation(geoService.getGeo(server.getAddress()));
+        } catch (IOException | GeoIp2Exception e) {
+            e.printStackTrace();
         }
         serverRepository.save(server);
     }

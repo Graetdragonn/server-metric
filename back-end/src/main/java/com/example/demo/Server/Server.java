@@ -1,4 +1,5 @@
 package com.example.demo.Server;
+import com.example.demo.GeoLoc.Geo;
 import com.example.demo.User.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -6,25 +7,24 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import lombok.*;
 
 //Servers stores 2 variables:
 //Integer id: is used as the primary key so a server can be uniquely identified.
 //Integer address: is the ip address of the server, which is used for connecting servers to the traffic table.
 //List users: this list is used as a many-to-many relationship with servers to users
-@Entity
+@Entity @AllArgsConstructor @NoArgsConstructor @Getter @Setter
 public class Server {
 
     @Id
     @Column(name = "address")
     private String address;
+    private String country, city;
+    private double latitude, longitude;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "servers")
     List<User> users = new ArrayList<>();
-
-    //basic Server constructor
-    public Server() {
-    }
 
     //Server constructor with all private variables being assigned
 
@@ -37,26 +37,6 @@ public class Server {
         this.address = address;
     }
 
-    //getAddress() returns a servers address
-    public String getAddress() {
-        return address;
-    }
-
-    //setAddress() sets a servers Address.
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    //getUsers() returns all users connected to a server
-    public List<User> getUsers() {
-        return users;
-    }
-
-    //setUsers() returns all users connected to a server
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
     //addUser() adds a user to the current list of a servers users
     public void addUser(User user){
         this.users.add(user);
@@ -65,6 +45,13 @@ public class Server {
     //removeUser() removes a user from the current list of a servers users
     public void removeUser(User user){
         this.users.remove(user);
+    }
+
+    public void setGeolocation(Geo geo) {
+        this.country = geo.getCountry();
+        this.city = geo.getCity();
+        this.latitude = geo.getLatitude();
+        this.longitude = geo.getLongitude();
     }
 
     @Override
