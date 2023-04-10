@@ -95,6 +95,7 @@ public class UserService {
         } catch (IOException | GeoIp2Exception e) {
             throw new RuntimeException(e);
         }
+        userUpdate.addServer(serverToAdd);
         userRepository.save(userUpdate);
     }
 
