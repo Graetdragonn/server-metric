@@ -1,10 +1,13 @@
 package com.example.demo.User;
+import com.example.demo.GeoLoc.GeoService;
 import com.example.demo.Server.Server;
+import com.maxmind.geoip2.exception.GeoIp2Exception;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,11 +20,13 @@ public class UserService {
 
 
     private final PasswordEncoder passwordEncoder;
+    private final GeoService geoService;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,  GeoService geoService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.geoService = geoService;
     }
 
 
@@ -84,7 +89,12 @@ public class UserService {
 
     public void addServer(String userEmail, Server server){
         User userUpdate = userRepository.findUserByUsername(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
-        userUpdate.addServer(server);
+        Server serverToAdd = new Server(server.getAddress());
+        try {
+            serverToAdd.setGeolocation(geoService.getGeo(server.getAddress()));
+        } catch (IOException | GeoIp2Exception e) {
+            throw new RuntimeException(e);
+        }
         userRepository.save(userUpdate);
     }
 

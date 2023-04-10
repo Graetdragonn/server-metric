@@ -10,7 +10,6 @@ export default function NavBar() {
 
   const location = useLocation(); // for screen navigation
   const pathname = location.pathname; // get props
-  console.log(logo);
 
   // navigation bar items and their corresponding routes
   const menuItems = [
