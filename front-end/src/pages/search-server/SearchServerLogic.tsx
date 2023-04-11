@@ -1,5 +1,3 @@
-import ServerService from "../../requests/ServerService";
-
 /**
  * Check if server is accessible to user
  * @param server server to look for
