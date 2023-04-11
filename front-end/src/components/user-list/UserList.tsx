@@ -48,15 +48,12 @@ export default function UserList() {
     navigate('/spedituser', { state: { userInfo: res } });
   }
 
-
-
-
   // RETURN ALL USERS FOR ADMIN
   if (localStorage.getItem("userType") === "ADMIN") {
     return (
       <div>
         <table className="userTable" style={{ display: localStorage.getItem("userType") === "ADMIN" ? '' : 'none' }}>
-          <caption>All Users</caption>
+          <caption onClick={() => navigate('/adminallusers')}>All Users</caption>
           <thead>
             <tr>
               <th>First Name</th>

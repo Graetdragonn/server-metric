@@ -691,6 +691,16 @@ form>.k-textbox-container,
   padding: 10px;
 }
 
+.userTableAdmin {
+  background-color: white;
+  position: relative;
+  margin-top: 75px;
+  margin-left: 90px;
+  border-radius: 6px;
+  box-shadow: 0px 8px 24px;
+  height: 500px;
+}
+
 table {
   height: 250px;
   width: fit-content;
@@ -800,5 +810,10 @@ caption {
   box-shadow: 0px 8px 24px;
   padding: 10px;
   overflow-y: scroll;
+}
+
+caption:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 

@@ -21,6 +21,7 @@ import AdminDeleteServerPage from "./pages/admin-delete-server/AdminDeleteServer
 import AdminAddServerPage from "./pages/admin-add-server/AdminAddServer";
 import ServiceProviderEditUserPage from "./pages/sp-edit-user/ServiceProviderEditUser";
 import SearchServerPage from "./pages/search-server/SearchServer";
+import AdminAllUsersPage from "./pages/admin-all-users/AdminAllUsers";
 
 const App = () => {
   return (
@@ -45,6 +46,7 @@ const App = () => {
           <Route path="/adminaddserver" element={<AdminAddServerPage />} />
           <Route path="/spedituser" element={<ServiceProviderEditUserPage />} />
           <Route path="/searchserver" element={<SearchServerPage />} />
+          <Route path="/adminallusers" element={<AdminAllUsersPage />} />
         </Routes>
       </BrowserRouter>
     </div>
