@@ -362,6 +362,11 @@ div.row {
   margin: 0px;
   padding: 6px 8px 6px 38px;
   display: block;
+  cursor: pointer;
+}
+
+.server-list-header-sp:hover {
+  color: #24272C;
 }
 
 .server-list-header-client {
@@ -370,6 +375,11 @@ div.row {
   margin: 0px;
   padding: 6px 8px 6px 34px;
   display: block;
+  cursor: pointer;
+}
+
+.server-list-header-client:hover {
+  color: #24272C;
 }
 
 .server-in-list:hover {
