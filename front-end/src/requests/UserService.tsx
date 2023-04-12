@@ -33,14 +33,14 @@ class UserService {
      * @param user  user type
      * @returns bearer token
      */
-    async createUser(email: string, first: string, last: string, pass: string, user: string) {
+    async createUser(email: string, phone: string, first: string, last: string, pass: string, user: string) {
         var res = "";
         var config = {
             method: 'post',
             maxBodyLength: Infinity,
             url: USER_API_BASE_URL + 'api/v1/auth/register',
             headers: {},
-            data: { username: email, password: pass, userType: user, userFirstName: first, userLastName: last }
+            data: { username: email, password: pass, userType: user, userFirstName: first, userLastName: last, phoneNumber: phone, }
         };
 
         await axios(config)
@@ -90,13 +90,13 @@ class UserService {
      * @param user  user type
      * @returns user information
      */
-    async updateUser(email: string, first: string, last: string, pass: string, user: string, servers: string[]) {
+    async updateUser(email: string, phone: string, first: string, last: string, pass: string, user: string, servers: string[]) {
         var res = "";
         var config = {
             method: 'put',
             url: USER_API_BASE_URL + 'api/v1/users/updateUser/' + email,
             headers: { Authorization: 'Bearer ' + localStorage.getItem("token") },
-            data: { password: pass, userType: user, userFirstName: first, userLastName: last, servers: servers }
+            data: { password: pass, userType: user, userFirstName: first, userLastName: last, servers: servers,  phoneNumber: phone }
         };
 
         await axios(config)

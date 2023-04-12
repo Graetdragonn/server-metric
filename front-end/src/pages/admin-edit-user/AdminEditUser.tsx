@@ -6,7 +6,7 @@ import '../../style/Master.css';
 // import { getServiceProviderList, addClientToServerProvider } from "../../pages/add-user/AddUserLogic";
 import { checkServerFormat } from '../add-server/AddServerLogic';
 import { checkIfServerInList } from './AdminEditUserLogic';
-import { checkEmail, isEmpty } from '../create-account/CreateAccountLogic';
+import { checkEmail, checkPhone, isEmpty } from '../create-account/CreateAccountLogic';
 import { submitEdits } from '../settings/SettingsLogic';
 
 /**
@@ -16,11 +16,14 @@ import { submitEdits } from '../settings/SettingsLogic';
 export default function AdminEditUserPage() {
     const navigate = useNavigate(); // for screen navigation
     const { state } = useLocation(); // to get props
+    // checks if phone number is valid format
+    const [phoneCheck, setPhoneCheck] = useState(true);
 
     // set user info from props
     const { userInfo } = state;
     const [info, setInfo] = useState({
         email: userInfo['username'],
+        phone: userInfo['phoneNumber'],
         first: userInfo['userFirstName'],
         last: userInfo['userLastName'],
         pass: userInfo['userPassword'],
@@ -125,11 +128,16 @@ export default function AdminEditUserPage() {
     // submits user changes
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+    
+        // check that phone number is in correct format, show error if not
+        if (!checkPhone(info.phone)) {
+            setPhoneCheck(false);
+        }
 
         // update user account
-        if (checkEmail(info.email) && !isEmpty(info.email) &&
+        else if (checkEmail(info.email) && !isEmpty(info.email) &&
             !isEmpty(info.first) && !isEmpty(info.last)) {
-            if (await submitEdits(info.email, info.first, info.last, state.pass, info.userType, userServersList)) {
+            if (await submitEdits(info.email, info.phone, info.first, info.last, state.pass, info.userType, userServersList)) {
                 setError(false);
             }
             else {
@@ -164,6 +172,9 @@ export default function AdminEditUserPage() {
                         <br />
                         <label>Email</label>
                         <input type="text" name="last" required={true} value={info.email} onChange={handleChange}></input>
+                        <br />
+                        <label>Phone Number (ex: 555-555-5555)</label>
+                        <input type="phone" name="phone" required={true} value={info.phone} onChange={handleChange} autoComplete="phone-number"></input>
                         <br />
                         <label>User Type</label>
                         <div className="center">
@@ -205,6 +216,7 @@ export default function AdminEditUserPage() {
                             </div>
                         </div>
                         <button type='submit'>Submit</button>
+                        <span style={{ visibility: phoneCheck ? 'hidden' : 'visible' }} className='error'>&nbsp; Phone number must be in 555-555-5555 format </span>
                         <br />
                     </form>
                     <form style={{ display: error ? 'none' : '' }}>

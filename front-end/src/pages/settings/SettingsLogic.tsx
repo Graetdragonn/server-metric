@@ -62,8 +62,8 @@ export function checkEmail(email: string): boolean {
  * @param servers user's servers
  * @returns true on success, false otherwise
  */
-export async function submitEdits(email: string, first: string, last: string, pass: string, user: string, servers: string[]) {
-    const res = await UserService.updateUser(email, first, last, pass, user, servers);
+export async function submitEdits(email: string, phone: string, first: string, last: string, pass: string, user: string, servers: string[]) {
+    const res = await UserService.updateUser(email, phone, first, last, pass, user, servers);
     if (res === "") {
         return false;
     }
