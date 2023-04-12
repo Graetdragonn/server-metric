@@ -9,9 +9,9 @@ import UserService from '../../requests/UserService';
  * @param pass  User password
  * @param user  User type
  */
-export async function submit(email: string, first: string, last: string, pass: string, user: string) {
+export async function submit(email: string, phone: string, first: string, last: string, pass: string, user: string) {
 
-    const res = await UserService.createUser(email, first, last, pass, user);
+    const res = await UserService.createUser(email, phone, first, last, pass, user);
     if (res === "") {
         return false;
     }
@@ -67,6 +67,19 @@ export function isTypeDefault(s: string): boolean {
 export function checkEmail(email: string): boolean {
     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (re.test(email)) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Checks phone number format
+ * @param phone phone number
+ * @returns true if is phone format, false otherwise
+ */
+export function checkPhone(phone: string): boolean {
+    let re = /^(1-)?\d{3}-\d{3}-\d{4}$/;
+    if (re.test(phone)) {
         return true;
     }
     return false;

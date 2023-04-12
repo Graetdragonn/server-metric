@@ -28,7 +28,8 @@ export async function deleteUserServers(email: string){
     var userType = userData['userType'];
     var firstName = userData['userFirstName'];
     var lastName = userData['userLastName'];
-    await UserService.updateUser(email, firstName, lastName, password, userType, [])
+    var phone = userData['phoneNumber'];
+    await UserService.updateUser(email, phone, firstName, lastName, password, userType, [])
 }
 
 /**
