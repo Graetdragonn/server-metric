@@ -1,6 +1,12 @@
 import UserService from "../../requests/UserService";
 import TrafficService from "../../requests/TrafficService";
 
+function getSubnetFromFullAddress(fullAddress: string){
+    var regExp = /\b\d{1,3}\.\d{1,3}\.\d{1,3}/;
+    // @ts-ignore
+    return fullAddress.match(regExp).toString()
+}
+
 /**
  * Get list of client's servers
  * @param email user email
@@ -19,6 +25,7 @@ export async function getClientServersByUser(email: string) {
             clientsAndServersList.push({username: clientEmailList[i], servers: serversList[i]})
         }
         return clientsAndServersList;
+
     }
     catch {
         return [];
@@ -29,9 +36,11 @@ export async function getClientServersByUser(email: string) {
 /**
  * Get number of packets sent and received per server
  * @param clientAndClientServers client and their servers
+ * @param clientName
+ * @param subnetAddress
  * @returns list with servers and number of packets sent/received
  */
-export async function getNumPacketsSentAndReceivedSP(clientAndClientServers: any[]) {
+export async function getNumPacketsSentAndReceivedSP(clientAndClientServers: any[], clientName: string, subnetAddress:string) {
     try {
         const res = await TrafficService.getAllTraffic();
         const trafficList = JSON.parse(res);
@@ -71,8 +80,13 @@ export async function getNumPacketsSentAndReceivedSP(clientAndClientServers: any
         const returnList = [] as any[];
         for (let i = 0; i < clientAndServersAndPackets.length; i++) {
             for (let j = 0; j < clientAndServersAndPackets[i]["servers"].length; j++)
-                returnList.push({ userAndAddress: clientAndServersAndPackets[i]["username"] + ": " + clientAndServersAndPackets[i]["servers"][j], sentPackets: clientAndServersAndPackets[i]["sentPackets"][j], receivedPackets: clientAndServersAndPackets[i]["receivedPackets"][j]})
+                if(clientAndServersAndPackets[i]["username"] == clientName){
+                    if(getSubnetFromFullAddress(clientAndServersAndPackets[i]["servers"][j]) == subnetAddress){
+                        returnList.push({ address: clientAndServersAndPackets[i]["servers"][j], sentPackets: clientAndServersAndPackets[i]["sentPackets"][j], receivedPackets: clientAndServersAndPackets[i]["receivedPackets"][j]})
+                    }
+                }
         }
+
         return returnList;
 
 

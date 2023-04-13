@@ -47,7 +47,7 @@ export async function getServiceProviders(clients: any[]) {
     var res = new Array();
     for (let i = 0; i < clients.length; i++) {
         var sp = await getClientServiceProvider(clients[i]["username"]);
-        res.push({client: clients[i], serviceProvider: sp});
+        res.push({clientEmail: clients[i], serviceProvider: sp});
     }
     return res;
 }

@@ -1,13 +1,26 @@
 import TrafficService from "../../requests/TrafficService";
 import UserService from "../../requests/UserService";
 
-export async function getNumPacketsSentAndReceivedClient(userAddresses: string[]){
+function getSubnetFromFullAddress(fullAddress: string){
+    var regExp = /\b\d{1,3}\.\d{1,3}\.\d{1,3}/;
+    // @ts-ignore
+    return fullAddress.match(regExp).toString()
+}
+
+
+export async function getNumPacketsSentAndReceivedClient(userAddresses: string[], subnetAddress: string){
     try{
         const res = await TrafficService.getAllTraffic();
         const trafficList = JSON.parse(res);
         const packetsPerIp = [] as any[];
+
+
         userAddresses.forEach((address: string) => {
-            packetsPerIp.push({ address: address, numPacketsSent: 0, numPacketsReceived: 0 });
+            if(subnetAddress == getSubnetFromFullAddress(address)){
+                packetsPerIp.push({ address: address, numPacketsSent: 0, numPacketsReceived: 0 });
+            }
+
+
         });
 
         for (let i = 0; i < trafficList.length; i++) {
