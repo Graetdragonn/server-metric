@@ -15,74 +15,45 @@ import {useEffect, useState} from "react";
  * @returns dashboard page depending on user type
  */
 export default function DashboardPage() {
-  const navigate = useNavigate(); // for screen navigation
-  const userType = localStorage.getItem('userType'); // get user's type
+    const navigate = useNavigate(); // for screen navigation
+    const userType = localStorage.getItem('userType'); // get user's type
     const [clientSubnetListState, setClientSubnetListState] = useState([] as any[]);
     const [spClientAndSubnetListState, setSPClientAndSubnetListState] = useState([] as any[]);
     let clientSubnetServers: string[]
     let clientAndSubnetList: any[]
 
-
-
     useEffect(() => {
-
         async function getData() {
             const email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
             clientSubnetServers = await getSubnetServersByUser(email)
             setClientSubnetListState(clientSubnetServers);
             clientAndSubnetList = await getClientAndSubnetServersByUser(email)
             setSPClientAndSubnetListState(clientAndSubnetList)
-
         }
         getData()
     }, [])
 
-
     function renderClientGraphs(subnetList: string[]){
         let returning = [];
-        if(subnetList.length > 0 ){
             for(let i = 0; i<subnetList.length; i++){
                 returning.push(<PacketPerIPClient subnetAddress={subnetList[i]}></PacketPerIPClient>)
             }
-            return returning;
-        }else{
-            return [];
-        }
+        return returning;
     }
 
     function renderSPGraphs(clientAndListOfSubnetList: any[]){
         let returning = [];
-        if(clientAndListOfSubnetList.length > 0 ){
             for(let i = 0; i<clientAndListOfSubnetList.length; i++){
                 for(let j = 0; j<clientAndListOfSubnetList[i]["subnets"].length; j++){
                     returning.push(<PacketPerIPSP clientFullName={clientAndListOfSubnetList[i]["clientName"]} clientEmail={clientAndListOfSubnetList[i]["clientEmail"]} subnetAddress={clientAndListOfSubnetList[i]["subnets"][j]}></PacketPerIPSP>)
                 }
             }
             return returning;
-        }else{
-            return [];
-        }
-    }
-
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
-
-    for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function() {
-            // @ts-ignore
-            this.classList.toggle("active");
-            // @ts-ignore
-            var content = this.nextElementSibling;
-            if (!content.style.display || content.style.display === "block") {
-                content.style.display = "none";
-            } else {
-                content.style.display = "block";
-            }
-        });
     }
 
 
-  return (
+
+    return (
     <div className="Dashboard-Page">
       <NavBar />
         <br/>
@@ -117,6 +88,7 @@ export default function DashboardPage() {
       <div className="white-div" style={{ width: 1400, display: userType !== "SERVICE_PROVIDER" ? 'none' : '' }}>
           <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "29%",  textDecoration: "underline" }}> Graphs of Packets Sent/Received through Different Client Servers</h3>
           {renderSPGraphs(spClientAndSubnetListState)}
+
           <br />
       </div>
 

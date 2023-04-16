@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis} from "recharts";
+import {Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import {getClientServersByUser, getNumPacketsSentAndReceivedSP} from "./PacketPerIPSPLogic";
+import Collapsible from 'react-collapsible';
 
 
 interface PacketPerIPSPComponentProps {
@@ -9,7 +10,6 @@ interface PacketPerIPSPComponentProps {
     clientFullName: string;
     subnetAddress: string;
 }
-
 
 export default function PacketPerIPSP({clientEmail, clientFullName, subnetAddress}: PacketPerIPSPComponentProps) {
     // track sent and received packets per IP - service provider
@@ -36,29 +36,13 @@ export default function PacketPerIPSP({clientEmail, clientFullName, subnetAddres
         return clientFullName + ": Subnet: " + subnetAddress
     }
 
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
-
-    for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function() {
-            // @ts-ignore
-            this.classList.toggle("active");
-            // @ts-ignore
-            var content = this.nextElementSibling;
-            if (!content.style.display || content.style.display === "block") {
-                content.style.display = "none";
-            } else {
-                content.style.display = "block";
-            }
-        });
-    }
-
-    const render = () =>{
-
+    function render(){
         return <>
-            <button type="button" className="collapsible">{getGraphName()} Packet Traffic Graph</button>
-            <div className="content">
-                <BarChart height={500} width={1400} data={allPacketsPerIpSP}>
+            <Collapsible trigger={getGraphName()} transitionTime={100}>
+                <div style={{width: "100%", height: 600}}>
+                    <br/>
+                    <ResponsiveContainer className="content">
+                <BarChart margin={{top: 30, right: 100, left: 0, bottom: 30}} height={500} width={1400} data={allPacketsPerIpSP}>
                     <CartesianGrid strokeDasharray="3 3"/>
                     <XAxis name="Address" dataKey="address"/>
                     <YAxis/>
@@ -71,10 +55,12 @@ export default function PacketPerIPSP({clientEmail, clientFullName, subnetAddres
                         navigate("/single-server", {state: data.address});
                     }} name="Number of Packets Received" barSize={30} dataKey="receivedPackets"
                          fill="var(--some_purple)"/>
-                </BarChart></div>
+                </BarChart>
+                        </ResponsiveContainer>
+            </div>
+                </Collapsible>
             <br/>
         </>
-
     }
 
     return (
