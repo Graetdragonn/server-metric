@@ -72,23 +72,16 @@ export default function DashboardPage() {
       <br />
 
       <div className="white-div" style={{ width: 1400, display: userType !== "CLIENT" ? 'none' : '' }}>
-          <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "38%",  textDecoration: "underline" }}> Graph of Overall Network Connections</h3>
-          <div  style={{backgroundColor: "white", marginLeft: "4%", height: "510px", width: "1410 px", borderColor: "black", borderStyle: "solid"}}>
-              <NetworkGraph></NetworkGraph>
-          </div>
-          <p style = {{display: "inline-flex", textAlign: "center", marginLeft: "39%"}}> <img style={{ width:20, height: 20}} src={orangeCircle} alt="Logo" /> <span style={{color:"var(--orange_wheel"}}>: Local Addresses &nbsp;</span> <img style={{ width:20, height: 20}} src={purpleCircle} alt="Logo" /> <span style={{color:"var(--some_purple"}}>: Global Addresses</span></p>
+          <NetworkGraph></NetworkGraph>
           <br/>
           <br/>
-          <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "33%",  textDecoration: "underline" }}> Graph of Packets Sent and Received through each Server</h3>
+          <h3 style={{textAlign: "center", marginLeft: "60px",  textDecoration: "underline" }}> Graph of Packets Sent and Received through each Server</h3>
           {renderClientGraphs(clientSubnetListState)}
-
-
       </div>
 
       <div className="white-div" style={{ width: 1400, display: userType !== "SERVICE_PROVIDER" ? 'none' : '' }}>
-          <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "29%",  textDecoration: "underline" }}> Graphs of Packets Sent/Received through Different Client Servers</h3>
+          <h3 style={{textAlign: "center", marginLeft: "50px",  textDecoration: "underline" }}>Graphs of Packets Sent/Received through Different Client Servers</h3>
           {renderSPGraphs(spClientAndSubnetListState)}
-
           <br />
       </div>
 

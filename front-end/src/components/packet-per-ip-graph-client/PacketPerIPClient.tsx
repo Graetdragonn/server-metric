@@ -43,7 +43,7 @@ export default function PacketPerIPClient({subnetAddress}: PacketPerIPClientComp
                 <div style={{width: "100%", height: 600}}>
                     <br/>
             <ResponsiveContainer className="content">
-                <BarChart margin={{top: 30, right: 100, left: 0, bottom: 30}} height={500} width={1400} data={allPacketsPerIpClient}>
+                <BarChart style={{fontWeight: "10"}} margin={{top: 30, right: 100, left: 0, bottom: 30}} height={500} width={1400} data={allPacketsPerIpClient}>
                     <CartesianGrid strokeDasharray="3 3"/>
                     <XAxis dataKey="address"/>
                     <YAxis/>

@@ -29,7 +29,7 @@ export default function NavBar() {
 
   const checkColor = (title: string) => {
     if(title === pathname){
-      return "black";
+      return "var(--better_black)";
     }
   }
 
