@@ -5,6 +5,9 @@ import Graph from "react-graph-vis"
 import {generateEdgesForNetworkGraph, generateNodesForNetworkGraph} from "./NetworkGraphLogic";
 import {getServersByUser} from "../packet-per-ip-graph-sp/PacketPerIPSPLogic";
 import {getNumPacketsSentAndReceivedClient} from "../packet-per-ip-graph-client/PacketPerIPClientLogic";
+import Collapsible from "react-collapsible";
+import orangeCircle from "../../pages/dashboard/icons8-orange-circle-48.png";
+import purpleCircle from "../../pages/dashboard/icons8-purple-circle-48.png";
 
 
 export default function NetworkGraph() {
@@ -77,8 +80,8 @@ export default function NetworkGraph() {
             layout: {
                 hierarchical: false
             },
-            height: "500px",
-            width: "1340px"
+            height: "600px",
+            width: "100%"
         };
 
         const events = {
@@ -92,8 +95,14 @@ export default function NetworkGraph() {
     }
 
     return (
-        <div >
-            {renderNetGraph(nodes, edges)}
-        </div>
+        <Collapsible trigger={<p style={{fontWeight: "bold"}}> Graph of Overall Network Connections</p>} open={true}>
+            <br/>
+            <div  style={{backgroundColor: "white", height: "600px", width: "1700 px", borderColor: "black", borderStyle: "solid"}}>
+                {renderNetGraph(nodes, edges)}
+            </div>
+                <p style = {{textAlign: "center"}}> <img style={{ width:20, height: 20}} src={orangeCircle} alt="Logo" /> <span style={{color:"var(--orange_wheel"}}>: Local Addresses &nbsp;</span> <img style={{ width:20, height: 20}} src={purpleCircle} alt="Logo" /> <span style={{color:"var(--some_purple"}}>: Global Addresses</span></p>
+
+        </Collapsible>
+
     );
 }

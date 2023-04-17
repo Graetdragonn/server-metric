@@ -10,6 +10,7 @@
   --berkeley_blue: #12355b;
   --orange_wheel: #ee8434;
   --some_purple: #94579E;
+  --better_black: rgba(17, 17, 17, 0.82);
 
 }
 
@@ -93,7 +94,7 @@
 }
 
 .text-for-single-server-header{
-  color: black;
+  color: var(--better_black);
   font-family: 'Lato', sans-serif;
   background-clip: text;
   font-weight: 800;
@@ -126,7 +127,7 @@
   padding: 0.938em;
   border: none;
   background-color: white;
-  color: black;
+  color: var(--better_black);
   font-size: 16px;
   padding: 14px 40px;
   display: inline-block;
@@ -676,7 +677,7 @@ form>.k-textbox-container,
   background-color: white;
   /* Green */
   border: none;
-  color: black;
+  color: var(--better_black);
 }
 
 /* CSS for user table*/
@@ -709,7 +710,7 @@ table {
 }
 
 th {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--better_black);
 }
 
 td {
@@ -736,7 +737,7 @@ caption {
   overflow-y: scroll;
   margin-left: auto;
   margin-right: auto;
-  border: 1px solid rgba(0, 0, 0, 0.196);
+  border: 1px solid var(--better_black);
   cursor: default;
   font-size: smaller;
   width: 150px;
@@ -819,29 +820,26 @@ caption:hover {
 
 /* Style the button that is used to open and close the collapsible content */
 .Collapsible {
-
   cursor: pointer;
   padding: 30px;
   min-width: 100%;
   border: none;
   text-align: center;
   outline: none;
-  background-color:var(--zomp);
-  color: #fefefe;
+  background-color: #cccccc;
+  color: var(--better_black);
   font-size: 20px;
-
+  font-weight: bold;
   border-radius: 12px;
 }
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 .Collapsible:hover {
-  background-color: #ccc;
+  background-color: #f1f1f1;
 }
-
 
 .content {
   padding: 0 18px;
-  display: block;
   background-color: #f1f1f1;
-  color: black;
+  color: var(--better_black);
 }
