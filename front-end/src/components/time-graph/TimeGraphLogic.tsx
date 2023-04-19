@@ -1,17 +1,43 @@
 import React, { PureComponent } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {getUserByEmail } from "../../components/server-list/ServerListLogic";
+
 //https://recharts.org/en-US/examples
 
-type dataProps = {
-    time: string[]
-    values: number[][]
-    server_names: string[]
+
+/**
+ * Get a list of servers for the user.
+ * @param email user email
+ */
+export async function getAllClientServers(email:string){
+    var clientInfo = await getUserByEmail(email);
+    var servers = [];
+    for (let j = 0; j < clientInfo["servers"].length; j++) {
+        servers.push(clientInfo["servers"][j]);
+    }
+    return servers;
 }
 
-export const TimeGraph = ({time, values, server_names}: dataProps)=>{
-    var data : any = [];
-    var servers = server_names;
-    
+/**
+ * Get traffic from all the servers
+ */
+export async function getAllServerTraffic(){
+    var server_traffic = [];
+
+}
+
+
+
+export const TimeGraph = ()=>{
+    //time: string[]
+    //values: number[][]
+    //server_names: string[]
+   // var servers = getAllClientServers(email);
+    //console.log(servers);
+
+
+    /*
+    var data : any = [];    
     var i = 0;
     var j = 0;
     for(i = 0; i < time.length; i++){
@@ -42,5 +68,7 @@ export const TimeGraph = ({time, values, server_names}: dataProps)=>{
         </div>
         </ResponsiveContainer>
 
-    );     
+    );
+    */
+    return(<div> </div>);     
 }
