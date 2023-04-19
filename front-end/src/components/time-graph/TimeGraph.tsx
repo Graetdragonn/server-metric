@@ -1,22 +1,30 @@
-import React from "react";
+import React, {useState} from "react";
 import '../../style/Master.css';
-import { TimeGraph } from "./TimeGraphLogic";
+import { TimeGraph, getAllClientServers} from "./TimeGraphLogic";
 
+const LineGraph = () => {
+    // get user email
+    const email = JSON.parse(localStorage.getItem('email') || '');
+    console.log(email);
+    
+    // server list for user
+    const [serverList, setServerList] = useState([] as any[]);
 
+    // get all servers
+    const getServerList = async () => {
+        var servers = await getAllClientServers(email);
+        setServerList(servers);
+        console.log(servers);
+    }
+    getServerList();
+    
 
-type graph_props = {
-    x_axis: string[],
-    y_axis: number[][],
-    servers: string[]
-}
-
-const Graph = ({x_axis, y_axis, servers}: graph_props) => {
     return (
         <div style={{marginTop: 30, marginBottom: 20}}>
-            <TimeGraph time={x_axis} values={y_axis} server_names={servers}/>
+            <TimeGraph/>
         </div>
     );
 }
 
 
-export default Graph;
+export default LineGraph;
