@@ -45,6 +45,14 @@ const LineGraph = () => {
                     {times: "2", "192.168.0.3": 8, "168.103.11.2": 3},
                     {times: "3", "192.168.0.3": 9, "168.103.11.2": 8}];
 
+    // get all servers
+    const getServerList = async () => {
+        var servers = await getAllClientServers(email);
+        set_servers_name(servers);
+        console.log(servers);
+    }
+    getServerList();
+    
 
 
     var servers_name2 = ["192.168.0.3", "168.103.11.2"];
