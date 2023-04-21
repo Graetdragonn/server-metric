@@ -13,33 +13,54 @@ const LineGraph = () => {
    // const [serverList, setServerList] = useState([] as any[]);
 
     //Array to hold an array of time and address objects
-    const serv_traffic = [] as any[];
 
     // get all servers
     const getServerTraffic = async () => {
         var servers = await getAllClientServers(email);
+        //const serv_traffic = [] as any[];
         //var serverList = JSON.parse(servers);
-        console.log(servers);
+        //console.log(servers);
         //var traffic_times = [];
+        /*
         for(let i = 0; i < servers.length; i++){
             //console.log("Serverlist[i]  " + servers[i]["address"].toString());
             var traffic = getAllSentTraffic(servers[i]["address"]);
             serv_traffic.push(traffic);
         }
-        console.log("Serv_traffic");
-        console.log(serv_traffic);
+        */
+        //console.log("Serv_traffic");
+        //console.log(serv_traffic);
+        //Count the packets sent for each server at specified time.
+        //time_dict{server_address, time{time, count}}
+        var total_dict:any = [];
         for(let i = 0; i < servers.length; i++){
             let current_server = servers[i]["address"];
-            let time_idx = 0;
-            let packet_counter = 0;
-            for(let x = 0; x < serv_traffic.length; x++){
-                if(serv_traffic[x]["time"] == serv_traffic[time_idx]["time"] &&
-                    serv_traffic[x]["address"] == current_server){
-                    packet_counter++;
-                }
-                
+            var traffic = await getAllSentTraffic(current_server);
+            var temp_dict:any = {}
+            for(let x = 0, y = 0; x < traffic.length; x++){
+                if(traffic[x]["address"] == current_server){
+                    var key = traffic[x]["time"];
+                    if(key in temp_dict){
+                        temp_dict[key] = temp_dict[key] + 1;
+                    } else{
+                        temp_dict[key] = 1;
+                    }
+                }       
+            }
+            //console.log("DICTIONARY + " + current_server);
+           // console.log(temp_dict);
+            //console.log("TEMP_DICT[0].key");
+            //console.log(Object.keys(temp_dict)[0]);
+            //console.log(Object.values(temp_dict)[0]);
+            console.log(Object.keys(temp_dict).length);
+            for(let i = 0; i < Object.keys(temp_dict).length; i++){
+                var obj = {address: current_server, time: Object.keys(temp_dict)[i],
+                            count: Object.values(temp_dict)[i]};
+                console.log(obj);
+                total_dict.push(obj);
             }
         }
+        console.log(total_dict);
         //convertTimes(serv_traffic);
     }
     getServerTraffic();
