@@ -31,13 +31,14 @@ export async function getAllSentTraffic(address: string){
     var serverData = JSON.parse(server_traffic);
     //console.log(serverData);
     var sent_traffic = [];
+    //Get all the sent packets for each server
     for (let j = 0; j < serverData.length; j++) {
         const obj = {time: serverData[j]["time"], address: serverData[j]["srcIP"]};
         //console.log(serverData[j]["time"]);
         sent_traffic.push(obj);        
     }
-    console.log("SENT TRAFFIC ARRAY");
-    console.log(sent_traffic);
+    //console.log("SENT TRAFFIC ARRAY");
+    //console.log(sent_traffic);
     return sent_traffic;
 }
 
