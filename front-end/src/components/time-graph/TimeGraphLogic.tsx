@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import {getUserByEmail } from "../../components/server-list/ServerListLogic";
+import TrafficService from "../../requests/TrafficService";
+import UserService from "../../requests/UserService";
 
 //https://recharts.org/en-US/examples
 
@@ -10,20 +11,34 @@ import {getUserByEmail } from "../../components/server-list/ServerListLogic";
  * @param email user email
  */
 export async function getAllClientServers(email:string){
-    var clientInfo = await getUserByEmail(email);
+    var clientInfo = await UserService.getUserByEmail(email);
+    var clientData = JSON.parse(clientInfo);
     var servers = [];
-    for (let j = 0; j < clientInfo["servers"].length; j++) {
-        servers.push(clientInfo["servers"][j]);
+    for (let j = 0; j < clientData["servers"].length; j++) {
+        servers.push(clientData["servers"][j]);
     }
     return servers;
 }
 
 /**
- * Get traffic from all the servers
+ * Get all traffic sent from a server
+ * @param address of server
  */
-export async function getAllServerTraffic(){
-    var server_traffic = [];
-
+export async function getAllSentTraffic(address: string){
+    var server_traffic = await TrafficService.getAllSentTrafficByServer(address);
+    //console.log("SERVERDATA")
+    //console.log(server_traffic);
+    var serverData = JSON.parse(server_traffic);
+    //console.log(serverData);
+    var sent_traffic = [];
+    for (let j = 0; j < serverData.length; j++) {
+        const obj = {time: serverData[j]["time"], address: serverData[j]["srcIP"]};
+        //console.log(serverData[j]["time"]);
+        sent_traffic.push(obj);        
+    }
+    console.log("SENT TRAFFIC ARRAY");
+    console.log(sent_traffic);
+    return sent_traffic;
 }
 
 
