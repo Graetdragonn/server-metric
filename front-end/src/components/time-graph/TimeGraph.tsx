@@ -1,66 +1,54 @@
 import React, {useState} from "react";
 import '../../style/Master.css';
-import { TimeGraph, getAllClientServers} from "./TimeGraphLogic";
+import { TimeGraph, getAllClientServers, getSentPacketCounts} from "./TimeGraphLogic";
 import { getAllSentTraffic } from "./TimeGraphLogic";
 
 //https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript
 
+/*
+type props = {
+    data: any[],
+    servers: string[]
+}
+*/
+
+
+
 const LineGraph = () => {
     // get user email
     const email = JSON.parse(localStorage.getItem('email') || '');
-    
-    // server list for user
-   // const [serverList, setServerList] = useState([] as any[]);
+   // var servers:any = [];
 
-    //Array to hold an array of time and address objects
-
-    // get all servers
+    // Get all servers traffic
     const getServerTraffic = async () => {
+        // Get servers
         var servers = await getAllClientServers(email);
-        //const serv_traffic = [] as any[];
-        //var serverList = JSON.parse(servers);
-        //console.log(servers);
-        //var traffic_times = [];
-        /*
-        for(let i = 0; i < servers.length; i++){
-            //console.log("Serverlist[i]  " + servers[i]["address"].toString());
-            var traffic = getAllSentTraffic(servers[i]["address"]);
-            serv_traffic.push(traffic);
-        }
-        */
-        //console.log("Serv_traffic");
-        //console.log(serv_traffic);
-        //Count the packets sent for each server at specified time.
-        //time_dict{server_address, time{time, count}}
+        // Get traffic for each server
         var total_dict:any = [];
-        for(let i = 0; i < servers.length; i++){
-            let current_server = servers[i]["address"];
-            var traffic = await getAllSentTraffic(current_server);
-            var temp_dict:any = {}
-            for(let x = 0, y = 0; x < traffic.length; x++){
-                if(traffic[x]["address"] == current_server){
-                    var key = traffic[x]["time"];
-                    if(key in temp_dict){
-                        temp_dict[key] = temp_dict[key] + 1;
-                    } else{
-                        temp_dict[key] = 1;
+        var time_vals:any = [];
+        var ret:any = await getSentPacketCounts(servers, total_dict, time_vals);
+        total_dict = ret[0];
+        time_vals = ret[1];
+        // Ensure time data is in sorted order
+        time_vals.sort();
+        //console.log(time_vals);
+        //console.log(total_dict);
+
+        // Sort the data by time and reformat it such that it follows below:
+        // {times: time, server1: packet_count, server2: packet_count... etc.}
+        for(let i = 0; i < time_vals.length; i++){
+            var dict_entry_string = "times: " + time_vals[i];
+            for(let j = 0; j < servers.length; j++){
+                for(let k = 0; k < total_dict.length; k++){
+                    if((total_dict[k]["address"] == servers[j]) &&
+                        (time_vals[i] == total_dict[k]["time"])){
+                        dict_entry_string += ", " + servers[j] + ":" + total_dict[k]["count"];
+                    }else{
+                        dict_entry_string += ", " + servers[j] + ":0";
                     }
-                }       
-            }
-            //console.log("DICTIONARY + " + current_server);
-           // console.log(temp_dict);
-            //console.log("TEMP_DICT[0].key");
-            //console.log(Object.keys(temp_dict)[0]);
-            //console.log(Object.values(temp_dict)[0]);
-            console.log(Object.keys(temp_dict).length);
-            for(let i = 0; i < Object.keys(temp_dict).length; i++){
-                var obj = {address: current_server, time: Object.keys(temp_dict)[i],
-                            count: Object.values(temp_dict)[i]};
-                console.log(obj);
-                total_dict.push(obj);
+                }
             }
         }
-        console.log(total_dict);
         //convertTimes(serv_traffic);
     }
     getServerTraffic();
@@ -76,9 +64,15 @@ const LineGraph = () => {
         return time;
     }
 
+    var data:any = [{times: "1", "192.168.0.3": 5, "168.103.11.2": 2},
+                    {times: "2", "192.168.0.3": 8, "168.103.11.2": 3},
+                    {times: "3", "192.168.0.3": 9, "168.103.11.2": 8}];
+
+    var servers = ["192.168.0.3", "168.103.11.2"];
+
     return (
         <div style={{marginTop: 30, marginBottom: 20}}>
-            <TimeGraph/>
+            <TimeGraph data={data} server_names={servers}/>
         </div>
     );
 }

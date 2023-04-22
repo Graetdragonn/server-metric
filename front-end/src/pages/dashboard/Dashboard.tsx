@@ -33,7 +33,7 @@ export default function DashboardPage() {
         </div>
       </div>
       <br />
-      <LineGraph />
+      <LineGraph/>
 
       <div className="white-div" style={{ width: 1400, display: userType !== "CLIENT" ? 'none' : '' }}>
           <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "33%",  textDecoration: "underline" }}> Graph of Packets Sent and Received through each Server</h3>
