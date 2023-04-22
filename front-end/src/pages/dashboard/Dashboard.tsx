@@ -78,7 +78,7 @@ export default function DashboardPage() {
         </div>
       </div>
       <br />
-      <LineGraph />
+      <LineGraph/>
 
       <div className="white-div" style={{ width: 1400, display: userType !== "CLIENT" ? 'none' : '' }}>
           <NetworkGraph></NetworkGraph>
