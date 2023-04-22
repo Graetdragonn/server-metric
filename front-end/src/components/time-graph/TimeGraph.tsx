@@ -32,12 +32,16 @@ const LineGraph = () => {
         // Ensure time data is in sorted order
         time_vals.sort();
         //console.log(time_vals);
-        //console.log(total_dict);
+        console.log(total_dict);
 
         // Sort the data by time and reformat it such that it follows below:
         // {times: time, server1: packet_count, server2: packet_count... etc.}
+        /*
+        var data1:any = [];
         for(let i = 0; i < time_vals.length; i++){
             var dict_entry_string = "times: " + time_vals[i];
+            console.log("FIRST STR");
+            console.log(dict_entry_string);
             for(let j = 0; j < servers.length; j++){
                 for(let k = 0; k < total_dict.length; k++){
                     if((total_dict[k]["address"] == servers[j]) &&
@@ -48,7 +52,15 @@ const LineGraph = () => {
                     }
                 }
             }
+            console.log("DICT ENTRY STRING");
+            console.log(dict_entry_string);
         }
+        */
+       //'{"content":{"path":"callie/circle","type":"file"},"video":{"videoId":"CvIr-2lMLs‌​k","endSeconds":"30","startSeconds":15}}'
+        var testStr = '{"times": "1", "192.23.11.3":5, "158.32.45.1":6}'
+        console.log(testStr);
+        var obj = JSON.parse(testStr);
+        console.log(obj);
         //convertTimes(serv_traffic);
     }
     getServerTraffic();
@@ -67,6 +79,8 @@ const LineGraph = () => {
     var data:any = [{times: "1", "192.168.0.3": 5, "168.103.11.2": 2},
                     {times: "2", "192.168.0.3": 8, "168.103.11.2": 3},
                     {times: "3", "192.168.0.3": 9, "168.103.11.2": 8}];
+
+
 
     var servers = ["192.168.0.3", "168.103.11.2"];
 
