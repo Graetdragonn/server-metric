@@ -34,27 +34,32 @@ export async function generateNodesForNetworkGraph(userAddresses: string[]){
 
     }
 
-    for(let j = 0; (j + 15) < lengthOfTrafficList; j += 15){
+    for(let j = 0; j < lengthOfUserAddresses; j++){
+        let foundConnections = 0;
+        for(let n = 0; n <lengthOfTrafficList; n++){
+            const addrRec = trafficList[n]["dstIP"];
+            const addrSnt = trafficList[n]["srcIP"];
 
-        const addrRec = trafficList[j]["dstIP"];
-        const addrSnt = trafficList[j]["srcIP"];
+                    if(addressInUserAddress(addrRec, userAddresses)){
 
-            if(addressInUserAddress(addrRec, userAddresses)){
+                        if(!addressInNodeList(addrSnt, nodeList)){
+                            nodeList.push({id: n + lengthOfUserAddresses, label: addrSnt, color: "#94579E"})
+                            foundConnections++
+                        }
+                    }else if(addressInUserAddress(addrSnt, userAddresses)){
 
-                if(!addressInNodeList(addrSnt, nodeList)){
+                        if(!addressInNodeList(addrRec, nodeList)){
+                            nodeList.push({id: n + lengthOfUserAddresses, label: addrRec, color: "#94579E"})
+                            foundConnections++
+                        }
+                    }
 
-                    nodeList.push({id: j + lengthOfUserAddresses, label: addrSnt, color: "#94579E"})
-                }
-            }else if(addressInUserAddress(addrSnt, userAddresses)){
-
-                if(!addressInNodeList(addrRec, nodeList)){
-
-                    nodeList.push({id: j + lengthOfUserAddresses, label: addrRec, color: "#94579E"})
-                }
-            }
-
+                    if(foundConnections == 4){
+                        foundConnections = 0;
+                        break;
+                    }
+        }
     }
-
     return nodeList
 }
 

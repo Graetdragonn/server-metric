@@ -19,8 +19,11 @@ export default function DashboardPage() {
     const userType = localStorage.getItem('userType'); // get user's type
     const [clientSubnetListState, setClientSubnetListState] = useState([] as any[]);
     const [spClientAndSubnetListState, setSPClientAndSubnetListState] = useState([] as any[]);
+    const [currentTime, setCurrentTime] = useState(new Date()) // default value can be anything you want
     let clientSubnetServers: string[]
     let clientAndSubnetList: any[]
+
+
 
     useEffect(() => {
         async function getData() {
@@ -30,8 +33,14 @@ export default function DashboardPage() {
             clientAndSubnetList = await getClientAndSubnetServersByUser(email)
             setSPClientAndSubnetListState(clientAndSubnetList)
         }
+        setTimeout(() => setCurrentTime(new Date()), 10000)
         getData()
-    }, [])
+
+    }, [currentTime])
+
+
+
+
 
     function renderClientGraphs(subnetList: string[]){
         let returning = [];
@@ -50,8 +59,6 @@ export default function DashboardPage() {
             }
             return returning;
     }
-
-
 
     return (
     <div className="Dashboard-Page">

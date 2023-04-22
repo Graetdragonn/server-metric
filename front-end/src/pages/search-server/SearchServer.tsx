@@ -25,6 +25,9 @@ export default function SearchServerPage() {
     const [serverDD, setServerDD] = useState("");
     const [serverI, setServerI] = useState("");
 
+    //used for refreshing page data
+    const [currentTime, setCurrentTime] = useState(new Date()) // default value can be anything you want
+
     // all servers
     const [serverList, setServerList] = useState([] as any[]);
     var servers = [] as any[]; // server list temp variable
@@ -55,8 +58,10 @@ export default function SearchServerPage() {
             setServerList(Array.from(new Set(servers)));
 
         }
+        setTimeout(() => setCurrentTime(new Date()), 10000)
         getServerList();
-    }, []);
+
+    }, [currentTime]);
 
     // go to single server page from dropdown option
     async function handleSubmitDD() {

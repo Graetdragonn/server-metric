@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
  */
 export default function ServerList() {
   const [serverList, setServerList] = useState([] as any[]); // server list to be displayed
+  const [currentTime, setCurrentTime] = useState(new Date()) // default value can be anything you want
   var servers = [] as any[]; // server list temp variable
   var clients = [] as string[]; // list of clients for service provider
   const navigate = useNavigate(); // for screen navigation
@@ -43,8 +44,10 @@ export default function ServerList() {
       setServerList(Array.from(new Set(servers)));
 
     }
+    setTimeout(() => setCurrentTime(new Date()), 10000)
     getServerList();
-  }, []);
+
+  }, [currentTime]);
 
   // navigate to single server page
   const goToSingleServer = async (address: string) => {

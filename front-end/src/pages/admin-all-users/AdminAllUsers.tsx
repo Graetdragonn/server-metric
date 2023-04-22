@@ -13,6 +13,7 @@ import ServerList from "../../components/server-list/ServerList";
  */
 export default function AdminAllUsersPage() {
     const [userList, setUserList] = useState([] as any[]); // user list to render
+    const [currentTime, setCurrentTime] = useState(new Date()) // default value can be anything you want
     var users = new Array(); // temporary user list variable
     const navigate = useNavigate(); // for screen navigation
 
@@ -30,14 +31,14 @@ export default function AdminAllUsersPage() {
             setUserList(users);
 
         }
-
+        setTimeout(() => setCurrentTime(new Date()), 10000)
         if (localStorage.getItem("userType") === "ADMIN") {
             getAllUserList();
         } else if (localStorage.getItem("userType") === "SERVICE_MANAGER") {
             getClients();
         }
 
-    }, [])
+    }, [currentTime])
 
     const goToEdit = async (email: string) => {
         var res = await getUserInfo(email);
