@@ -12,6 +12,7 @@ interface PacketPerIPClientComponentProps {
 export default function PacketPerIPClient({subnetAddress}: PacketPerIPClientComponentProps) {
     // track sent and received packets per IP - client
     const [allPacketsPerIpClient, setAllPacketsPerIpClient] = useState([] as any[]);
+    const [currentTime, setCurrentTime] = useState(new Date()) // default value can be anything you want
     let [posData, setPosData] = useState({} as any);
     let userInfo: string[]; // user info
 
@@ -27,8 +28,9 @@ export default function PacketPerIPClient({subnetAddress}: PacketPerIPClientComp
             allPacketsPerClient = await getNumPacketsSentAndReceivedClient(userInfo, subnetAddress);
             setAllPacketsPerIpClient(allPacketsPerClient);
         }
+        setTimeout(() => setCurrentTime(new Date()), 10000)
         getData()
-    }, [])
+    }, [currentTime])
 
 
     function getGraphName(){

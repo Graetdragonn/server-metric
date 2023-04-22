@@ -11,6 +11,7 @@ export default function SingleServer() {
     const location = useLocation(); // for screen navigation
     const { state } = location; // get props
     const [allPortList, setAllPortList] = useState([] as any[]); // tracks received ports
+    const [currentTime, setCurrentTime] = useState(new Date()) // default value can be anything you want
     let allPorts: string[]; // temporary variable for received ports
 
     useEffect(()=>{
@@ -18,8 +19,10 @@ export default function SingleServer() {
             allPorts = await getPortTrafficForAServer(state);
             setAllPortList(allPorts);
         }
+
+        setTimeout(() => setCurrentTime(new Date()), 10000)
         getData()
-    }, [])
+    }, [currentTime])
 
 
     // get port name

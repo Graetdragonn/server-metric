@@ -27,6 +27,7 @@ export default function AdminSingleServerPage() {
     }
     getUserList();
 
+
     // to update user information when user inputs data
     const handleChange = (e: { target: { name: string; value: any; }; }) => {
         setUserToAddOrDelete(e.target.value);

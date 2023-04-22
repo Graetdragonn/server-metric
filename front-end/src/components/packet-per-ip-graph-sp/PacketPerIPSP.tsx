@@ -14,6 +14,7 @@ interface PacketPerIPSPComponentProps {
 export default function PacketPerIPSP({clientEmail, clientFullName, subnetAddress}: PacketPerIPSPComponentProps) {
     // track sent and received packets per IP - service provider
     const [allPacketsPerIpSP, setAllPacketsPerIpSP] = useState([] as any[]);
+    const [currentTime, setCurrentTime] = useState(new Date()) // default value can be anything you want
     let clientWithServersList: string[]; // user info
 
     // sent and received packets per service provider's clients
@@ -28,8 +29,10 @@ export default function PacketPerIPSP({clientEmail, clientFullName, subnetAddres
             allPacketsPerSP = await getNumPacketsSentAndReceivedSP(clientWithServersList, clientEmail, subnetAddress);
             setAllPacketsPerIpSP(allPacketsPerSP);
         }
+
+        setTimeout(() => setCurrentTime(new Date()), 10000)
         getData()
-    }, [])
+    }, [currentTime])
 
 
     function getGraphName(){
