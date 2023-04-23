@@ -36,8 +36,6 @@ const LineGraph = () => {
             // {times: time, server1: packet_count, server2: packet_count... etc.}
             var data1 = await organizeData(time_vals, servers, total_dict, data);
             setData(data1);
-            //console.log("DATAAAA")
-            //console.log(data1);
         }
         getData();
     }, []);
