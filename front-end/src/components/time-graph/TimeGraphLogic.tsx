@@ -26,19 +26,13 @@ export async function getAllClientServers(email:string){
  */
 export async function getAllSentTraffic(address: string){
     var server_traffic = await TrafficService.getAllSentTrafficByServer(address);
-    //console.log("SERVERDATA")
-    //console.log(server_traffic);
     var serverData = JSON.parse(server_traffic);
-    //console.log(serverData);
     var sent_traffic = [];
     //Get all the sent packets for each server
     for (let j = 0; j < serverData.length; j++) {
         const obj = {time: serverData[j]["time"], address: serverData[j]["srcIP"]};
-        //console.log(serverData[j]["time"]);
         sent_traffic.push(obj);        
     }
-    //console.log("SENT TRAFFIC ARRAY");
-    //console.log(sent_traffic);
     return sent_traffic;
 }
 
@@ -56,12 +50,11 @@ export async function getSentPacketCounts(servers:any, total_dict:any, time_vals
     for(let i = 0; i < servers.length; i++){
         let current_server = servers[i]["address"];
         var traffic = await getAllSentTraffic(current_server);
-
         //Count the number of packets sent for a specific time
         //and a specific server.
         var temp_dict:any = {};
-        for(let x = 0, y = 0; x < traffic.length; x++){
-            if(traffic[x]["address"] == current_server){
+        for(let x = 0; x < traffic.length; x++){
+            if(traffic[x]["address"] === current_server){
                 var key = traffic[x]["time"];
                 if(key in temp_dict){
                     temp_dict[key] = temp_dict[key] + 1;
@@ -69,7 +62,7 @@ export async function getSentPacketCounts(servers:any, total_dict:any, time_vals
                     temp_dict[key] = 1;
                     var time_found = false;
                     for(let y = 0; y < time_vals.length; y++){
-                        if(time_vals[y] == key){
+                        if(time_vals[y] === key){
                             time_found = true;
                         }
                     }
@@ -85,7 +78,6 @@ export async function getSentPacketCounts(servers:any, total_dict:any, time_vals
         for(let i = 0; i < Object.keys(temp_dict).length; i++){
             var obj = {address: current_server, time: Object.keys(temp_dict)[i],
                         count: Object.values(temp_dict)[i]};
-            //console.log(obj);
             total_dict.push(obj);
         }
     }
@@ -93,30 +85,37 @@ export async function getSentPacketCounts(servers:any, total_dict:any, time_vals
     return ret;
 }
 
+export async function organizeData(time_vals:any, servers:any, total_dict:any, data:any ){
+    for(let i = 0; i < time_vals.length; i++){
+        var dict_entry_string = '{"times": "' + time_vals[i].toString() + '"';
+        for(let j = 0; j < servers.length; j++){
+            var time_found = false;
+            for(let k = 0; k < total_dict.length; k++){
+                if((total_dict[k]["address"] === servers[j]["address"]) &&
+                    (time_vals[i] === total_dict[k]["time"])){
+                    dict_entry_string += ', "' + servers[j]["address"] + '":' + total_dict[k]["count"];
+                    time_found = true;
+                    break;
+                }
+            }
+            if(!time_found){
+                dict_entry_string += ', "' + servers[j]["address"] + '":0';
+            }
 
-
-export const TimeGraph = (data:any, server_names:any)=>{
-    //time: string[]
-    //values: number[][]
-    //server_names: string[]
-   // var servers = getAllClientServers(email);
-    //console.log(servers);
-
-
-/*    
-    var data : any = [];    
-    var i = 0;
-    var j = 0;
-    for(i = 0; i < time.length; i++){
-        const obj = {times: time[i], server1: values[i][j], server2: values[i][j+1]};
-        data.push(obj);
+        }
+        dict_entry_string += '}'
+        var data_obj = JSON.parse(dict_entry_string);
+        data.push(data_obj);
     }
-    */
-    
-    //console.log(server_names);
+    return data;
+}
+
+
+
+export const TimeGraph = (data:any, server_names: any)=>{ 
     console.log("Data");
-    console.log(data);
-    console.log(data["server_names"][0]);
+    console.log(data["data"]);
+    console.log(data["server_names"]);
 
     return (
         <ResponsiveContainer width="100%" height="100%">
@@ -133,6 +132,12 @@ export const TimeGraph = (data:any, server_names:any)=>{
                 <Legend />
                 <Line type="monotone" dataKey={data["server_names"][0]} stroke="#8884d8" activeDot={{ r: 8 }} />
                 <Line type="monotone" dataKey={data["server_names"][1]} stroke="#82ca9d" activeDot={{ r: 8 }} />
+                <Line type="monotone" dataKey={data["server_names"][2]} stroke="#82ca9d" activeDot={{ r: 8 }} />
+                <Line type="monotone" dataKey={data["server_names"][3]} stroke="#82ca9d" activeDot={{ r: 8 }} />
+                <Line type="monotone" dataKey={data["server_names"][4]} stroke="#82ca9d" activeDot={{ r: 8 }} />
+                <Line type="monotone" dataKey={data["server_names"][5]} stroke="#82ca9d" activeDot={{ r: 8 }} />
+                <Line type="monotone" dataKey={data["server_names"][6]} stroke="#82ca9d" activeDot={{ r: 8 }} />
+
             </LineChart>
         </div>
         </ResponsiveContainer>
