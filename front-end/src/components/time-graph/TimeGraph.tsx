@@ -61,6 +61,7 @@ const LineGraph = () => {
 
     var servers_name2 = ["192.168.0.3", "168.103.11.2"];
    // var data3 = {data2, servers_name2}
+   //server_names={servers_name}
     return (
         <div style={{marginTop: 30, marginBottom: 20}}>
             <TimeGraph data={data} server_names={servers_name}/>

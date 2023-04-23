@@ -86,6 +86,8 @@ export async function getSentPacketCounts(servers:any, total_dict:any, time_vals
 }
 
 export async function organizeData(time_vals:any, servers:any, total_dict:any, data:any ){
+    console.log("Time Vals");
+    console.log(time_vals);
     for(let i = 0; i < time_vals.length; i++){
         var dict_entry_string = '{"times": "' + time_vals[i].toString() + '"';
         for(let j = 0; j < servers.length; j++){
@@ -112,7 +114,7 @@ export async function organizeData(time_vals:any, servers:any, total_dict:any, d
 
 
 
-export const TimeGraph = (data:any, server_names: any)=>{ 
+export const TimeGraph = (data:any)=>{ 
     console.log("Data");
     console.log(data["data"]);
     console.log(data["server_names"]);
@@ -121,8 +123,8 @@ export const TimeGraph = (data:any, server_names: any)=>{
         <ResponsiveContainer width="100%" height="100%">
         <div>
             <LineChart
-                width={500}
-                height={300}
+                width={800}
+                height={540}
                 data={data["data"]}
                 margin={{top: 5, right: 30, left: 150, bottom: 5,}}>
                 <CartesianGrid strokeDasharray="3 3" />
