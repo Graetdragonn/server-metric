@@ -62,7 +62,7 @@ export async function getSentPacketCounts(servers:any, total_dict:any, time_vals
                     temp_dict[key] = 1;
                     var time_found = false;
                     for(let y = 0; y < time_vals.length; y++){
-                        if(time_vals[y] === key){
+                        if(time_vals[y] == key){
                             time_found = true;
                         }
                     }
@@ -91,8 +91,8 @@ export async function organizeData(time_vals:any, servers:any, total_dict:any, d
         for(let j = 0; j < servers.length; j++){
             var time_found = false;
             for(let k = 0; k < total_dict.length; k++){
-                if((total_dict[k]["address"] === servers[j]["address"]) &&
-                    (time_vals[i] === total_dict[k]["time"])){
+                if((total_dict[k]["address"] == servers[j]["address"]) &&
+                    (time_vals[i] == total_dict[k]["time"])){
                     dict_entry_string += ', "' + servers[j]["address"] + '":' + total_dict[k]["count"];
                     time_found = true;
                     break;
