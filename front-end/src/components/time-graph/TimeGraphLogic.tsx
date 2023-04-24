@@ -85,9 +85,8 @@ export async function getSentPacketCounts(servers:any, total_dict:any, time_vals
     return ret;
 }
 
-export async function organizeData(time_vals:any, servers:any, total_dict:any, data:any ){
-    console.log("Time Vals");
-    console.log(time_vals);
+export async function organizeData(time_vals:any, servers:any, total_dict:any){
+    var data:any = [];
     for(let i = 0; i < time_vals.length; i++){
         var dict_entry_string = '{"times": "' + time_vals[i].toString() + '"';
         for(let j = 0; j < servers.length; j++){
@@ -115,8 +114,8 @@ export async function organizeData(time_vals:any, servers:any, total_dict:any, d
 
 
 export const TimeGraph = (data:any)=>{ 
-    console.log("Data");
-    console.log(data["data"]);
+    //console.log("Data");
+    //console.log(data["data"]);
     console.log(data["server_names"]);
 
     return (
@@ -132,6 +131,17 @@ export const TimeGraph = (data:any)=>{
                 <YAxis />
                 <Tooltip />
                 <Legend />
+                {/*
+                <div>
+                    {data["server_names"].map((server:string) =>{
+                        var server_var = '\"' + server + '\"';
+                        console.log(server_var);
+                        return (
+                            <Line type="monotone" dataKey={server_var} stroke="#8884d8" activeDot={{ r: 8 }} />
+                        )
+                    })}
+                </div>
+                    */}
                 <Line type="monotone" dataKey={data["server_names"][0]} stroke="#8884d8" activeDot={{ r: 8 }} />
                 <Line type="monotone" dataKey={data["server_names"][1]} stroke="#82ca9d" activeDot={{ r: 8 }} />
                 <Line type="monotone" dataKey={data["server_names"][2]} stroke="#82ca9d" activeDot={{ r: 8 }} />

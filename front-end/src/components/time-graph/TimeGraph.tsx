@@ -11,6 +11,7 @@ const LineGraph = () => {
     const email = JSON.parse(localStorage.getItem('email') || '');
     const[data, setData] = useState([] as any);
     const[servers_name, set_servers_name] = useState([] as any);
+    const [currentTime, setCurrentTime] = useState(new Date()) // default value can be anything you want
 
     // Get all servers traffic
     //const getServerTraffic = async () => {
@@ -34,11 +35,12 @@ const LineGraph = () => {
 
             // Sort the data by time and reformat it such that it follows below:
             // {times: time, server1: packet_count, server2: packet_count... etc.}
-            var data1 = await organizeData(time_vals, servers, total_dict, data);
+            var data1 = await organizeData(time_vals, servers, total_dict);
             setData(data1);
         }
         getData();
-    }, []);
+        setTimeout(() => setCurrentTime(new Date()), 10000)
+    }, [currentTime]);
     
     // const obj = {times: time[i], server1: values[i][j], server2: values[i][j+1]};
     /*
