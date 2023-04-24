@@ -23,16 +23,24 @@ public class ServerService {
         this.geoService = geoService;
     }
 
-    public List<Server> getServers(){
+    public List<Server> getAllDevices() {
         return serverRepository.findAll();
     }
 
+    public List<Server> getServers(){
+        return serverRepository.findByDeviceType(DeviceType.SERVER);
+    }
+
+    public List<Server> getRouters(){
+        return serverRepository.findByDeviceType(DeviceType.ROUTER);
+    }
+
     public Optional<Server> getServer(String serverAddress){
-        return serverRepository.findServerByAddress(serverAddress);
+        return serverRepository.findByAddress(serverAddress);
     }
 
     public void addServer(Server server){
-        Optional<Server> serverOptional = serverRepository.findServerByAddress(server.getAddress());
+        Optional<Server> serverOptional = serverRepository.findByAddress(server.getAddress());
         if(serverOptional.isPresent()){
             throw new IllegalStateException("Server is already added");
         }
@@ -41,21 +49,23 @@ public class ServerService {
         } catch (IOException | GeoIp2Exception e) {
             e.printStackTrace();
         }
+        server.setDeviceType(DeviceType.SERVER);
         serverRepository.save(server);
     }
 
     @Transactional
-    public void deleteServer(String serverAddress){
-        Optional<Server> serverOptional = serverRepository.findServerByAddress(serverAddress);
+    public void deleteDevice(String address){
+        Optional<Server> serverOptional = serverRepository.findByAddress(address);
         if(serverOptional.isEmpty()){
             throw new IllegalStateException("No Such Server ID");
         }
-        serverRepository.deleteServerByAddress(serverAddress);
+        serverRepository.deleteByAddress(address);
     }
     @Transactional
-    public void updateServer(String serverAddress, Server server) {
-        Server serverUpdate = serverRepository.findServerByAddress(serverAddress).orElseThrow(()-> new IllegalStateException("Server with address " + serverAddress + " does not exist"));
-        serverUpdate.setAddress(server.getAddress());
+    public void updateDevice(String address, Server device) {
+        Server serverUpdate = serverRepository.findByAddress(address).orElseThrow(()-> new IllegalStateException("Server with address " + address + " does not exist"));
+        serverUpdate.setAddress(device.getAddress());
+        serverUpdate.setDeviceType(device.getDeviceType());
         serverRepository.save(serverUpdate);
 
     }
