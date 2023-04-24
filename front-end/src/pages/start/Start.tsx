@@ -1,6 +1,7 @@
 import logo from '../../images/logo.png';
 import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
+import * as Constants from "../../constants";
 
 /**
  * Renders the start screen
@@ -20,10 +21,10 @@ export default function StartPage() {
           <img src={logo} className="App-logo" alt="logo" />
         </div>
         <div>
-          <button type="button" onClick={() => navigate('/login')}>Sign In</button>
+          <button type="button" onClick={() => navigate(Constants.LOGIN_PAGE)}>Sign In</button>
         </div>
         <div>
-          <button type="button" onClick={() => navigate('/createaccount')}>Create Account</button>
+          <button type="button" onClick={() => navigate(Constants.CREATE_ACCOUNT_PAGE)}>Create Account</button>
         </div>
       </header>
     </div>

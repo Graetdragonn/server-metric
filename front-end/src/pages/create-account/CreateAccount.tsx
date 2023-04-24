@@ -3,6 +3,7 @@ import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
 import { checkEmail, checkPassword, checkPhone, isEmpty, isTypeDefault, submit } from './CreateAccountLogic';
 import BackButton from '../../components/back-button/BackButton';
+import * as Constants from "../../constants";
 
 /**
  * Create Account Screen
@@ -60,7 +61,7 @@ export default function CreateAccountPage() {
             if (await submit(state.email, state.phone, state.first, state.last, state.pass, state.userType)) {
                 localStorage.setItem("email", JSON.stringify(state.email));
                 localStorage.setItem("userType", state.userType);
-                navigate('/dashboard');
+                navigate(Constants.DASHBOARD_PAGE);
             }
             else {
                 setError(true);

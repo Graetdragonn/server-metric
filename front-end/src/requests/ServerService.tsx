@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const USER_API_BASE_URL = "http://coms-402-sd-05.class.las.iastate.edu:8080/";
+import * as Constants from "../constants";
 
 class ServerService {
 
@@ -12,7 +11,7 @@ class ServerService {
         var res = "";
         var config = {
             method: 'get',
-            url: USER_API_BASE_URL + 'api/v1/servers/getAllServers',
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'servers/getAllServers',
             headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}
         };
 
@@ -35,7 +34,7 @@ class ServerService {
         var res = "";
         var config = {
             method: 'get',
-            url: USER_API_BASE_URL + 'api/v1/servers/getServerByAddress/' + address,
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'servers/getServerByAddress/' + address,
             headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}
         };
 
@@ -58,7 +57,7 @@ class ServerService {
         var res = "";
         var config = {
             method: 'post',
-            url: USER_API_BASE_URL + 'api/v1/servers/addServer',
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'servers/addServer',
             headers: {Authorization: 'Bearer ' + localStorage.getItem("token")},
             data: {address: address}
         };
@@ -82,7 +81,7 @@ class ServerService {
         var res = "ERROR";
         var config = {
             method: 'delete',
-            url: USER_API_BASE_URL + 'api/v1/servers/delete/' + address,
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'servers/delete/' + address,
             headers: {Authorization: 'Bearer ' + localStorage.getItem("token")},
             data: {}
         };

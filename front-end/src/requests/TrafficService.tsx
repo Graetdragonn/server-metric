@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const USER_API_BASE_URL = "http://coms-402-sd-05.class.las.iastate.edu:8080/";
+import * as Constants from "../constants";
 
 class TrafficService {
 
@@ -12,7 +11,7 @@ class TrafficService {
         var res = "";
         var config = {
             method: 'get',
-            url: USER_API_BASE_URL + 'api/v1/traffic',
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'traffic',
             headers: {}
         };
 
@@ -35,7 +34,7 @@ class TrafficService {
         var res = "";
         var config = {
             method: 'get',
-            url: USER_API_BASE_URL + 'api/v1/traffic' + '/getMapOfPortsSentByAddress/' + address,
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'traffic' + '/getMapOfPortsSentByAddress/' + address,
             headers: {}
         };
         await axios(config)
@@ -57,7 +56,7 @@ class TrafficService {
         var res = "";
         var config = {
             method: 'get',
-            url: USER_API_BASE_URL + 'api/v1/traffic' + '/getMapOfPortsReceivedByAddress/' + address,
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'traffic' + '/getMapOfPortsReceivedByAddress/' + address,
             headers: {}
         };
         await axios(config)

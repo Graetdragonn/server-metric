@@ -9,6 +9,7 @@ import orangeCircle from './icons8-orange-circle-48.png'
 import purpleCircle from './icons8-purple-circle-48.png'
 import {getClientAndSubnetServersByUser, getSubnetServersByUser} from "./DashboardLogic";
 import {useEffect, useState} from "react";
+import * as Constants from "../../constants";
 
 /**
  * Render dashboard page for each user type
@@ -69,8 +70,8 @@ export default function DashboardPage() {
       <div style={{ display: userType === "CLIENT" || userType === "SERVICE_PROVIDER" ? '' : 'none' }}>
         <br />
         <div className='side-menu'>
-          <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate('/addserver')}>Add Server</button>
-          <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate('/removeserver')}>Remove Server</button>
+          <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate(Constants.ADD_SERVER_PAGE)}>Add Server</button>
+          <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate(Constants.REMOVE_SERVER_PAGE)}>Remove Server</button>
             <br/>
             <br/>
           <ServerList />
@@ -103,10 +104,10 @@ export default function DashboardPage() {
           </div>
           <div className='div-for-admin-services'>
             <h1>Admin Services</h1>
-            <button style={{ width: 150 }} onClick={() => navigate('/adduser')}>Add User</button>
-            <button style={{ width: 150 }} onClick={() => navigate('/deleteuser')}>Delete User</button>
-            <button style={{ width: 150 }} onClick={() => navigate('/adminaddserver')}>Add Server</button>
-            <button style={{ width: 150 }} onClick={() => navigate('/admindeleteserver')}>Delete Server</button>
+            <button style={{ width: 150 }} onClick={() => navigate(Constants.ADD_USER_PAGE)}>Add User</button>
+            <button style={{ width: 150 }} onClick={() => navigate(Constants.DELETE_USER_PAGE)}>Delete User</button>
+            <button style={{ width: 150 }} onClick={() => navigate(Constants.ADMIN_ADD_SERVER_PAGE)}>Add Server</button>
+            <button style={{ width: 150 }} onClick={() => navigate(Constants.ADMIN_DELETE_SERVER_PAGE)}>Delete Server</button>
           </div>
           <div style={{ marginTop: '20px' }}>
             <UserList />

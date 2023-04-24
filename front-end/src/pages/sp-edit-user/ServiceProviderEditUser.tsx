@@ -5,6 +5,7 @@ import NavBar from '../../components/navigation-bar/NavBar';
 import '../../style/Master.css';
 import { getServiceProviderList, addClientToServerProvider } from "../../pages/add-user/AddUserLogic";
 import { deleteServerProviderClientByEmail, getClientServiceProvider } from '../delete-user/DeleteUserLogic';
+import * as Constants from "../../constants";
 
 export default function ServiceProviderEditUserPage() {
     const navigate = useNavigate(); // for screen navigation
@@ -114,7 +115,7 @@ export default function ServiceProviderEditUserPage() {
                     </form>
                     <form style={{ display: error ? 'none' : '' }}>
                         <p style={{ fontSize: 20, textAlign: 'center' }}>User {info.email} was updated</p>
-                        <button onClick={() => navigate('/dashboard')}>Dashboard</button>
+                        <button onClick={() => navigate(Constants.DASHBOARD_PAGE)}>Dashboard</button>
                     </form>
                 </div>
             </div></>

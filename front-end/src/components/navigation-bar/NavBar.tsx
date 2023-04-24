@@ -1,6 +1,7 @@
 import '../../style/Master.css';
 import {NavLink, useLocation} from "react-router-dom";
 import logo from './logo.png'
+import * as Constants from "../../constants";
 
 /**
  * Render the navigation bar
@@ -15,15 +16,15 @@ export default function NavBar() {
   const menuItems = [
     {
       title: 'Dashboard',
-      url: '/dashboard',
+      url: Constants.DASHBOARD_PAGE,
     },
     {
       title: 'Settings',
-      url: '/settings',
+      url: Constants.SETTINGS_PAGE,
     },
     {
       title: 'Log Out',
-      url: '/',
+      url: Constants.START_PAGE,
     },
   ];
 
@@ -46,8 +47,6 @@ export default function NavBar() {
   }
 
 
-
-
   return (
     <header className="nav-area" style={{zIndex:2}}>
       <img style={{ width: 70, height: 70, paddingLeft: 57}} src={logo} alt="Logo" />
@@ -64,7 +63,6 @@ export default function NavBar() {
             )
           })}
         </ul>
-
 
       </nav>
       {/*<img style={{ width: 70, height: 70, paddingLeft: 800}} src={logo} alt="Logo" />*/}

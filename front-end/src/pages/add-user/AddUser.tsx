@@ -4,6 +4,7 @@ import BackButton from "../../components/back-button/BackButton";
 import NavBar from "../../components/navigation-bar/NavBar";
 import { isTypeDefault, checkEmail, isEmpty, checkPhone } from "../create-account/CreateAccountLogic";
 import { submit } from "./AddUserLogic"
+import * as Constants from "../../constants";
 
 /**
  * Render add user page
@@ -114,7 +115,7 @@ export default function AddUserPage() {
                 </div>
                 <form onSubmit={handleSubmit} style={{ display: submitted ? '' : 'none' }}>
                     <p style={{ fontSize: 20, textAlign: 'center' }}>User {state.email} was successfully created</p>
-                    <button onClick={() => navigate('/dashboard')}>Back to dashboard</button>
+                    <button onClick={() => navigate(Constants.DASHBOARD_PAGE)}>Back to dashboard</button>
                 </form>
             </div></>
     );

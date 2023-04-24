@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import { getAllUsers, getUserInfo, getClientList } from "./UserListLogic";
 import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
+import * as Constants from "../../constants";
 
 /**
  * Component to display a list of users
@@ -42,13 +43,13 @@ export default function UserList() {
 
   const goToEdit = async (email: string) => {
     var res = await getUserInfo(email);
-    navigate('/adminedituser', { state: { userInfo: res } });
+    navigate(Constants.ADMIN_EDIT_USER_PAGE, { state: { userInfo: res } });
   }
 
   // go to edit client for service manager
   const goToEditSM = async (email: string) => {
     var res = await getUserInfo(email);
-    navigate('/spedituser', { state: { userInfo: res } });
+    navigate(Constants.SERVICE_PROVIDER_EDIT_USER_PAGE, { state: { userInfo: res } });
   }
 
   // RETURN ALL USERS FOR ADMIN
@@ -56,7 +57,7 @@ export default function UserList() {
     return (
       <div>
         <table className="userTable" style={{ display: localStorage.getItem("userType") === "ADMIN" ? '' : 'none' }}>
-          <caption onClick={() => navigate('/adminallusers')}>All Users</caption>
+          <caption onClick={() => navigate(Constants.ADMIN_ALL_USERS_PAGE)}>All Users</caption>
           <thead>
             <tr>
               <th>First Name</th>

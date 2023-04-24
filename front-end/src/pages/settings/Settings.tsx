@@ -6,6 +6,7 @@ import UserService from '../../requests/UserService';
 import BackButton from '../../components/back-button/BackButton';
 import NavBar from '../../components/navigation-bar/NavBar';
 import { checkPhone } from '../create-account/CreateAccountLogic';
+import * as Constants from "../../constants";
 
 export default function Settings() {
   const navigate = useNavigate();
@@ -108,7 +109,7 @@ export default function Settings() {
         </form>
         <form style={{ display: error ? 'none' : '' }}>
           <p style={{ fontSize: 50, textAlign: 'center' }}>Updated settings were saved to account</p>
-          <button onClick={() => navigate('/Dashboard')}>Dashboard</button>
+          <button onClick={() => navigate(Constants.DASHBOARD_PAGE)}>Dashboard</button>
         </form>
       </div>
     </div></>

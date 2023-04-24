@@ -7,6 +7,7 @@ import NavBar from '../../components/navigation-bar/NavBar';
 import { getAllServers, getClientsByProvider, getClientsServers, getServerInfo, getUserByEmail, sortServers } from '../../components/server-list/ServerListLogic';
 import { getUsersOnServer, removeServerFromUser } from '../admin-single-server/AdminSingleServerLogic';
 import { checkServerInList } from './SearchServerLogic'
+import * as Constants from "../../constants";
 
 /**
  * Search for server page
@@ -91,9 +92,9 @@ export default function SearchServerPage() {
     const goToSingleServer = async (address: string) => {
         var res = await getServerInfo(address);
         if (localStorage.getItem("userType") === "ADMIN") {
-            navigate('/adminsingleserver', { state: { serverInfo: res } });
+            navigate(Constants.ADMIN_SINGLE_SERVER_PAGE, { state: { serverInfo: res } });
         } else {
-            navigate('/single-server', { state: res["address"] });
+            navigate(Constants.SINGLE_SERVER_PAGE, { state: res["address"] });
         }
     }
 

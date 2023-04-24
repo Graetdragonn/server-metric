@@ -8,6 +8,7 @@ import { checkServerFormat } from '../add-server/AddServerLogic';
 import { checkIfServerInList } from './AdminEditUserLogic';
 import { checkEmail, checkPhone, isEmpty } from '../create-account/CreateAccountLogic';
 import { submitEdits } from '../settings/SettingsLogic';
+import * as Constants from "../../constants";
 
 /**
  * Render admin edit user screen
@@ -221,7 +222,7 @@ export default function AdminEditUserPage() {
                     </form>
                     <form style={{ display: error ? 'none' : '' }}>
                         <p style={{ fontSize: 20, textAlign: 'center' }}>User {info.email} was updated</p>
-                        <button onClick={() => navigate('/dashboard')}>Dashboard</button>
+                        <button onClick={() => navigate(Constants.DASHBOARD_PAGE)}>Dashboard</button>
                     </form>
                 </div>
             </div></>

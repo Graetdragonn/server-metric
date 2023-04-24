@@ -6,6 +6,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
+import * as Constants from "../../constants";
 
 /**
  * Render a server list
@@ -53,9 +54,9 @@ export default function ServerList() {
   const goToSingleServer = async (address: string) => {
     var res = await getServerInfo(address);
     if (localStorage.getItem("userType") === "ADMIN") {
-      navigate('/adminsingleserver', { state: { serverInfo: res } });
+      navigate(Constants.ADMIN_SINGLE_SERVER_PAGE, { state: { serverInfo: res } });
     } else {
-      navigate('/single-server', { state: res["address"] });
+      navigate(Constants.SINGLE_SERVER_PAGE, { state: res["address"] });
     }
   }
 
@@ -63,7 +64,7 @@ export default function ServerList() {
   if (localStorage.getItem("userType") === 'SERVICE_PROVIDER') {
     return (
       <div>
-        <h1 className="server-list-header-sp" onClick={()=>navigate('/searchserver', { state: { serverList: serverList } })} style={{ fontSize: 18, textDecoration: 'underline' }}>Clients</h1>
+        <h1 className="server-list-header-sp" onClick={()=>navigate(Constants.SEARCH_SERVER_PAGE, { state: { serverList: serverList } })} style={{ fontSize: 18, textDecoration: 'underline' }}>Clients</h1>
         {serverList.map((client) => {
           return (
             <div>
@@ -101,7 +102,7 @@ export default function ServerList() {
   else if (localStorage.getItem("userType") !== 'SERVICE_MANAGER') {
     return (
       <div>
-        <h1 className="server-list-header-client" onClick={()=>navigate('/searchserver', { state: { serverList: serverList } })} style={{ fontSize: 18, textDecoration: 'underline'}}>Servers</h1>
+        <h1 className="server-list-header-client" onClick={()=>navigate(Constants.SEARCH_SERVER_PAGE, { state: { serverList: serverList } })} style={{ fontSize: 18, textDecoration: 'underline'}}>Servers</h1>
         {serverList.map((server) => {
           return (
             <div>

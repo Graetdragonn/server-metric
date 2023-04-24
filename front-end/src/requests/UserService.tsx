@@ -1,8 +1,8 @@
 import axios from "axios";
-
-const USER_API_BASE_URL = "http://coms-402-sd-05.class.las.iastate.edu:8080/";
+import * as Constants from "../constants";
 
 class UserService {
+    
     /**
      * Get all users
      */
@@ -10,7 +10,7 @@ class UserService {
         var res = "";
         var config = {
             method: 'get',
-            url: USER_API_BASE_URL + 'api/v1/users/getAllUsers',
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'users/getAllUsers',
             headers: { Authorization: 'Bearer ' + localStorage.getItem("token") }
         };
         await axios(config)
@@ -38,7 +38,7 @@ class UserService {
         var config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: USER_API_BASE_URL + 'api/v1/auth/register',
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'auth/register',
             headers: {},
             data: { username: email, password: pass, userType: user, userFirstName: first, userLastName: last, phoneNumber: phone, }
         };
@@ -65,7 +65,7 @@ class UserService {
         var config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: USER_API_BASE_URL + 'api/v1/auth/sign-in',
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'auth/sign-in',
             headers: {},
             data: { username: email, password: pass }
         };
@@ -94,7 +94,7 @@ class UserService {
         var res = "";
         var config = {
             method: 'put',
-            url: USER_API_BASE_URL + 'api/v1/users/updateUser/' + email,
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'users/updateUser/' + email,
             headers: { Authorization: 'Bearer ' + localStorage.getItem("token") },
             data: { password: pass, userType: user, userFirstName: first, userLastName: last, servers: servers,  phoneNumber: phone }
         };
@@ -119,7 +119,7 @@ class UserService {
         var res = "";
         var config = {
             method: 'get',
-            url: USER_API_BASE_URL + 'api/v1/users/getUserByEmail/' + email,
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'users/getUserByEmail/' + email,
             headers: { Authorization: 'Bearer ' + localStorage.getItem("token") }
         };
 
@@ -143,7 +143,7 @@ class UserService {
         var res = "";
         var config = {
             method: 'post',
-            url: USER_API_BASE_URL + 'api/v1/users/' + email + '/addServer',
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'users/' + email + '/addServer',
             headers: { Authorization: 'Bearer ' + localStorage.getItem("token") },
             data: { address: address }
         };
@@ -167,7 +167,7 @@ class UserService {
         var res = "ERROR";
         var config = {
             method: 'delete',
-            url: USER_API_BASE_URL + 'api/v1/users/' + email + '/removeServer',
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'users/' + email + '/removeServer',
             headers: { Authorization: 'Bearer ' + localStorage.getItem("token") },
             data: { address: address }
         };
@@ -190,7 +190,7 @@ class UserService {
         var res = "ERROR";
         var config = {
             method: 'delete',
-            url: USER_API_BASE_URL + 'api/v1/users/deleteUser/' + email,
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'users/deleteUser/' + email,
             headers: { Authorization: 'Bearer ' + localStorage.getItem("token") }
         };
 
@@ -213,7 +213,7 @@ class UserService {
         var res = "ERROR";
         var config = {
             method: 'get',
-            url: USER_API_BASE_URL + 'api/v1/users/getAllUsersConnectedToServer/' + server,
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'users/getAllUsersConnectedToServer/' + server,
             headers: { Authorization: 'Bearer ' + localStorage.getItem("token") }
         };
 
@@ -237,7 +237,7 @@ class UserService {
         var res = "ERROR";
         var config = {
             method: 'put',
-            url: USER_API_BASE_URL + 'api/v1/users/' + serviceProvider + '/addClient/' + client,
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'users/' + serviceProvider + '/addClient/' + client,
             headers: { Authorization: 'Bearer ' + localStorage.getItem("token") }
         };
 
@@ -261,7 +261,7 @@ class UserService {
         var res = "ERROR";
         var config = {
             method: 'delete',
-            url: USER_API_BASE_URL + 'api/v1/users/' + serviceProvider + '/removeClient/' + client,
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'users/' + serviceProvider + '/removeClient/' + client,
             headers: { Authorization: 'Bearer ' + localStorage.getItem("token") }
         };
 
