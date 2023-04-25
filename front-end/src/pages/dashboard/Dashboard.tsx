@@ -11,6 +11,7 @@ import {getClientAndSubnetServersByUser, getSubnetServersByUser} from "./Dashboa
 import {useEffect, useState} from "react";
 import * as Constants from "../../constants";
 
+import LineGraph from "../../components/time-graph/TimeGraph"
 /**
  * Render dashboard page for each user type
  * @returns dashboard page depending on user type
@@ -78,6 +79,7 @@ export default function DashboardPage() {
         </div>
       </div>
       <br />
+      <LineGraph/>
 
       <div className="white-div" style={{ width: 1400, display: userType !== "CLIENT" ? 'none' : '' }}>
           <NetworkGraph></NetworkGraph>

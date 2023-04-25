@@ -26,6 +26,29 @@ class TrafficService {
     }
 
     /**
+     * Get all traffic sent from a server
+     * @param server address
+     */
+    async getAllSentTrafficByServer(address: string) {
+        var res = "";
+        var config = {
+            method: 'get',
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'traffic' + '/getAllSentTrafficByServer/' + address,
+            headers: {}
+        };
+
+        await axios(config)
+            .then(function (response: { data: any; }) {
+                res = JSON.stringify(response.data);
+            })
+            .catch(function (error: any) {
+                //alert(error);
+            });
+        return res;
+    }
+
+
+    /**
      * Get map of ports sent by address
      * @param address server address
      * @returns map of ports sent by address
