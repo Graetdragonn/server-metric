@@ -85,10 +85,32 @@ export async function getSentPacketCounts(servers:any, total_dict:any, time_vals
     return ret;
 }
 
+/**
+ * Function to convert unix timestamp into time format.
+ * @param unix_time 
+ * @returns time
+ */
+function convertTime(unix_time: number){
+    let millisec_time = new Date(unix_time * 1000);
+    let hour_time = millisec_time.getHours();
+    let minutes = "0" + millisec_time.getMinutes();
+    let seconds = "0" + millisec_time.getSeconds();
+    var time = hour_time + ':' + minutes.slice(-2) + ':' + seconds.slice(-2);
+    console.log(time);
+    return time;
+}
+
+/**
+ * Function to format the data into a form that the graph can read
+ * @param time_vals: an array of unix time values
+ * @param servers: an array of servers
+ * @param total_dict: a dictionary of times, time counts, and servers
+ * @returns data: a dictionary of formatted data
+ */
 export async function organizeData(time_vals:any, servers:any, total_dict:any){
     var data:any = [];
     for(let i = 0; i < time_vals.length; i++){
-        var dict_entry_string = '{"times": "' + time_vals[i].toString() + '"';
+        var dict_entry_string = '{"times": "' + convertTime(time_vals[i]) + '"';
         for(let j = 0; j < servers.length; j++){
             var time_found = false;
             for(let k = 0; k < total_dict.length; k++){
@@ -111,18 +133,32 @@ export async function organizeData(time_vals:any, servers:any, total_dict:any){
     return data;
 }
 
+/**
+ * Dynamically rendering lines in the graph
+ * @param serverList: list of servers
+ * @returns An array of graph lines
+ */
+function renderLines(serverList:any){
+    let returnArr = [];
+    for(let i = 0; i < serverList.length; i++){
+        var randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+        returnArr.push(<Line type="monotone" dataKey={serverList[i]} stroke={randomColor} activeDot={{ r: 8 }} />)
+    }
+    return returnArr;
+}
+
 
 
 export const TimeGraph = (data:any)=>{ 
     //console.log("Data");
-    //console.log(data["data"]);
+    console.log(data["data"]);
     console.log(data["server_names"]);
 
     return (
         <ResponsiveContainer width="100%" height="100%">
         <div>
             <LineChart
-                width={800}
+                width={1000}
                 height={540}
                 data={data["data"]}
                 margin={{top: 5, right: 30, left: 150, bottom: 5,}}>
@@ -131,24 +167,17 @@ export const TimeGraph = (data:any)=>{
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                {/*
-                <div>
-                    {data["server_names"].map((server:string) =>{
-                        var server_var = '\"' + server + '\"';
-                        console.log(server_var);
-                        return (
-                            <Line type="monotone" dataKey={server_var} stroke="#8884d8" activeDot={{ r: 8 }} />
-                        )
-                    })}
-                </div>
-                    */}
+                
+                {renderLines(data["server_names"])}
+
+            {/*
                 <Line type="monotone" dataKey={data["server_names"][0]} stroke="#8884d8" activeDot={{ r: 8 }} />
                 <Line type="monotone" dataKey={data["server_names"][1]} stroke="#82ca9d" activeDot={{ r: 8 }} />
                 <Line type="monotone" dataKey={data["server_names"][2]} stroke="#82ca9d" activeDot={{ r: 8 }} />
                 <Line type="monotone" dataKey={data["server_names"][3]} stroke="#82ca9d" activeDot={{ r: 8 }} />
                 <Line type="monotone" dataKey={data["server_names"][4]} stroke="#82ca9d" activeDot={{ r: 8 }} />
                 <Line type="monotone" dataKey={data["server_names"][5]} stroke="#82ca9d" activeDot={{ r: 8 }} />
-                <Line type="monotone" dataKey={data["server_names"][6]} stroke="#82ca9d" activeDot={{ r: 8 }} />
+                <Line type="monotone" dataKey={data["server_names"][6]} stroke="#82ca9d" activeDot={{ r: 8 }} />*/}
 
             </LineChart>
         </div>

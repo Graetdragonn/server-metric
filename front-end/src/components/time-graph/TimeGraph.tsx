@@ -42,18 +42,6 @@ const LineGraph = () => {
         setTimeout(() => setCurrentTime(new Date()), 10000)
     }, [currentTime]);
     
-    // const obj = {times: time[i], server1: values[i][j], server2: values[i][j+1]};
-    /*
-    function convertTime(unix_time: number){
-        let millisec_time = new Date(unix_time * 1000);
-        let hour_time = millisec_time.getHours();
-        let minutes = "0" + millisec_time.getMinutes().toString();
-        let seconds = "0" + millisec_time.getSeconds().toString();
-        var time = hour_time + ':' + minutes + ':' + seconds;
-        console.log(time);
-        return time;
-    }
-    */
 
     var data2:any = [{times: "1", "192.168.0.3": 5, "168.103.11.2": 2},
                     {times: "2", "192.168.0.3": 8, "168.103.11.2": 3},
