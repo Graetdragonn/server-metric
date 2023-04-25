@@ -46,7 +46,8 @@ export async function getAllSentTraffic(address: string){
  * it is initially empty
  * @returns an array of the now filled total_dict and time_val elements
  */
-export async function getSentPacketCounts(servers:any, total_dict:any, time_vals:any){
+export async function getSentPacketCounts(servers:any, total_dict:any){
+    var time_vals = [];
     for(let i = 0; i < servers.length; i++){
         let current_server = servers[i]["address"];
         var traffic = await getAllSentTraffic(current_server);
@@ -81,8 +82,7 @@ export async function getSentPacketCounts(servers:any, total_dict:any, time_vals
             total_dict.push(obj);
         }
     }
-    var ret = [total_dict, time_vals];
-    return ret;
+    return total_dict;
 }
 
 /**
@@ -93,10 +93,7 @@ export async function getSentPacketCounts(servers:any, total_dict:any, time_vals
 function convertTime(unix_time: number){
     let millisec_time = new Date(unix_time * 1000);
     let hour_time = millisec_time.getHours();
-    let minutes = "0" + millisec_time.getMinutes();
-    let seconds = "0" + millisec_time.getSeconds();
-    var time = hour_time + ':' + minutes.slice(-2) + ':' + seconds.slice(-2);
-    console.log(time);
+    var time = hour_time;
     return time;
 }
 
@@ -107,15 +104,31 @@ function convertTime(unix_time: number){
  * @param total_dict: a dictionary of times, time counts, and servers
  * @returns data: a dictionary of formatted data
  */
-export async function organizeData(time_vals:any, servers:any, total_dict:any){
+export async function organizeData(servers:any, total_dict:any){
+    var date = new Date();
+    var afternoon = false;
+    if(date.getHours() > 12){
+        afternoon = true;
+    }
     var data:any = [];
-    for(let i = 0; i < time_vals.length; i++){
-        var dict_entry_string = '{"times": "' + convertTime(time_vals[i]) + '"';
+    var times =["1:00","2:00","3:00","4:00","5:00","6:00","7:00","8:00","9:00",
+                "10:00","11:00","12:00"];
+    for(let i = 0; i < times.length; i++){
+        var dict_entry_string = '{"times": "';
+        if(afternoon){
+            dict_entry_string += times[i] + 'pm"';
+        }if(!afternoon){
+            dict_entry_string += times[i] + 'am"';
+        }
         for(let j = 0; j < servers.length; j++){
             var time_found = false;
             for(let k = 0; k < total_dict.length; k++){
+                var hour = convertTime(total_dict[k]["time"]);
+                if(afternoon){
+                    hour -= 12;
+                }
                 if((total_dict[k]["address"] == servers[j]["address"]) &&
-                    (time_vals[i] == total_dict[k]["time"])){
+                    ((i+1) == hour)){
                     dict_entry_string += ', "' + servers[j]["address"] + '":' + total_dict[k]["count"];
                     time_found = true;
                     break;
@@ -147,18 +160,16 @@ function renderLines(serverList:any){
     return returnArr;
 }
 
-
-
 export const TimeGraph = (data:any)=>{ 
     //console.log("Data");
-    console.log(data["data"]);
-    console.log(data["server_names"]);
+    //console.log(data["data"]);
+    //console.log(data["server_names"]);
 
     return (
         <ResponsiveContainer width="100%" height="100%">
         <div>
             <LineChart
-                width={1000}
+                width={1300}
                 height={540}
                 data={data["data"]}
                 margin={{top: 5, right: 30, left: 150, bottom: 5,}}>
@@ -170,20 +181,10 @@ export const TimeGraph = (data:any)=>{
                 
                 {renderLines(data["server_names"])}
 
-            {/*
-                <Line type="monotone" dataKey={data["server_names"][0]} stroke="#8884d8" activeDot={{ r: 8 }} />
-                <Line type="monotone" dataKey={data["server_names"][1]} stroke="#82ca9d" activeDot={{ r: 8 }} />
-                <Line type="monotone" dataKey={data["server_names"][2]} stroke="#82ca9d" activeDot={{ r: 8 }} />
-                <Line type="monotone" dataKey={data["server_names"][3]} stroke="#82ca9d" activeDot={{ r: 8 }} />
-                <Line type="monotone" dataKey={data["server_names"][4]} stroke="#82ca9d" activeDot={{ r: 8 }} />
-                <Line type="monotone" dataKey={data["server_names"][5]} stroke="#82ca9d" activeDot={{ r: 8 }} />
-                <Line type="monotone" dataKey={data["server_names"][6]} stroke="#82ca9d" activeDot={{ r: 8 }} />*/}
-
             </LineChart>
         </div>
         </ResponsiveContainer>
 
     );
     
-    //return(<div> </div>);     
 }

@@ -26,32 +26,17 @@ const LineGraph = () => {
             set_servers_name(globalServers);
             // Get traffic for each server
             var total_dict:any = [];
-            var time_vals:any = [];
-            var ret:any = await getSentPacketCounts(servers, total_dict, time_vals);
-            total_dict = ret[0];
-            time_vals = ret[1];
-            // Ensure time data is in sorted order
-            time_vals.sort();
+            total_dict = await getSentPacketCounts(servers, total_dict);
 
             // Sort the data by time and reformat it such that it follows below:
             // {times: time, server1: packet_count, server2: packet_count... etc.}
-            var data1 = await organizeData(time_vals, servers, total_dict);
+            var data1 = await organizeData(servers, total_dict);
             setData(data1);
         }
         getData();
         setTimeout(() => setCurrentTime(new Date()), 10000)
     }, [currentTime]);
     
-
-    var data2:any = [{times: "1", "192.168.0.3": 5, "168.103.11.2": 2},
-                    {times: "2", "192.168.0.3": 8, "168.103.11.2": 3},
-                    {times: "3", "192.168.0.3": 9, "168.103.11.2": 8}];
-
-
-
-    var servers_name2 = ["192.168.0.3", "168.103.11.2"];
-   // var data3 = {data2, servers_name2}
-   //server_names={servers_name}
     return (
         <div style={{marginTop: 30, marginBottom: 20}}>
             <TimeGraph data={data} server_names={servers_name}/>
