@@ -62,7 +62,7 @@ export async function getSentPacketCounts(servers:any, total_dict:any, time_vals
                     temp_dict[key] = 1;
                     var time_found = false;
                     for(let y = 0; y < time_vals.length; y++){
-                        if(time_vals[y] === key){
+                        if(time_vals[y] == key){
                             time_found = true;
                         }
                     }
