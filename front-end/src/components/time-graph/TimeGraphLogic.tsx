@@ -58,6 +58,11 @@ export async function getSentPacketCounts(servers:any, total_dict:any){
         for(let x = 0; x < traffic.length; x++){
             if(traffic[x]["address"] === current_server){
                 var key = traffic[x]["time"];
+
+                /* Potentially add an "if" statment here to verify
+                 * the traffic is from the same dat
+                 */
+
                 if(key in temp_dict){
                     temp_dict[key] = temp_dict[key] + 1;
                 } else{
