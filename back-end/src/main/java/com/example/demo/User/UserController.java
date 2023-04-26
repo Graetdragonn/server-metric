@@ -30,10 +30,9 @@ public class UserController {
         return userService.getUser(userEmail);
     }
 
-    //this mapping gets a single user by ID from the database
     @GetMapping("getAllUserEmails")
     @CrossOrigin
-    public List<String> getUser() {
+    public List<String> getAllUserEmails() {
         return userService.getAllUserEmails();
     }
 
