@@ -65,7 +65,7 @@ public class UserController {
     }
 
     //this mapping updates a user using a specific users id
-    @PutMapping("updateUserPassword/{userEmail}")
+    @PutMapping("{userEmail}/updateUserPassword")
     @CrossOrigin
     public void updateUserPassword(@PathVariable("userEmail") String userEmail, @RequestBody User user){
         userService.updateUserPassword(userEmail, user);
