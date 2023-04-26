@@ -9,6 +9,7 @@ import {getClientAndSubnetServersByUser, getSubnetServersByUser} from "./Dashboa
 import {useEffect, useState} from "react";
 import * as Constants from "../../constants";
 import TimeGraph from "../../components/time-graph/TimeGraph";
+import Collapsible from "react-collapsible";
 /**
  * Render dashboard page for each user type
  * @returns dashboard page depending on user type
@@ -78,25 +79,42 @@ export default function DashboardPage() {
         </div>
       </div>
       <br />
-
-
-
-      <div className="white-div" style={{ width: 1400, display: userType !== "CLIENT" ? 'none' : '' }}>
+        
+      <div className="white-div" style={{ width: 1500, display: userType !== "CLIENT" ? 'none' : '' }}>
           <NetworkGraph></NetworkGraph>
+
           <br/>
           <br/>
-          <TimeGraph subnetAddress={""}/>
-          {/*{renderTimeGraphs(clientSubnetListState)}*/}
+
+          <div className={"div-for-collapsible"}>
+              <br/>
+              <h2 style={{textAlign: "center"}}>Time Graphs for each Subnet</h2>
+                  <br/>
+                  {renderTimeGraphs(clientSubnetListState)}
+              <br/>
+          </div>
+
           <br/>
           <br/>
-          <h3 style={{textAlign: "center", marginLeft: "60px",  textDecoration: "underline" }}> Graph of Packets Sent and Received through each Server</h3>
+
+          <div className={"div-for-collapsible"}>
+              <br/>
+              <h2 style={{textAlign: "center"}}> Total Packets Graphs for each Subnet</h2>
+              <br/>
           {renderClientGraphs(clientSubnetListState)}
+              <br/>
+          </div>
+
       </div>
 
-      <div className="white-div" style={{ width: 1400, display: userType !== "SERVICE_PROVIDER" ? 'none' : '' }}>
-          <h3 style={{textAlign: "center", marginLeft: "50px",  textDecoration: "underline" }}>Graphs of Packets Sent/Received through Different Client Servers</h3>
-          {renderSPGraphs(spClientAndSubnetListState)}
-          <br />
+      <div className="white-div" style={{ width: 1500, display: userType !== "SERVICE_PROVIDER" ? 'none' : '' }}>
+         <div className={"div-for-collapsible"}>
+             <br/>
+             <h2 style={{textAlign: "center"}}>Total Packet Graphs for each Client Server</h2>
+             <br/>
+             {renderSPGraphs(spClientAndSubnetListState)}
+             <br/>
+         </div>
       </div>
 
 
