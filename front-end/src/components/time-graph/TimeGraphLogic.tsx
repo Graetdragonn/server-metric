@@ -7,7 +7,6 @@ import * as Constants from "../../constants";
 //https://recharts.org/en-US/examples
 //https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript
 
-
 /**
  * Get a list of servers for the user.
  * @param email user email
