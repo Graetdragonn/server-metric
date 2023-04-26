@@ -2,7 +2,8 @@ import React, { useState, useRef } from 'react';
 import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
 import BackButton from '../../components/back-button/BackButton';
-import { checkEmpty, emailCheck } from '../login/LoginLogic';
+import { checkEmailInDatabase, generatePassword } from './ForgotPasswordLogic';
+import { getAllUsers } from "../../components/user-list/UserListLogic";
 import * as Constants from "../../constants";
 import emailjs from '@emailjs/browser';
 
@@ -16,8 +17,13 @@ export default function ForgotPasswordPage() {
   // user input for email
   const [email, setEmail] = useState("");
 
+  // email found in database
+  const [emailInDatabase, setEmailInDatabase] = useState(true);
+
+  // depends on if emailInDatabase == true, moves user to confirmation step if this variable is true
   const [isValidEmail, setIsValidEmail] = useState(false);
 
+  // true if user confirms that email displayed on screen is correct, triggers email sent if true
   const [isConfirmed, setIsConfirmed] = useState(false);
 
   // to update user information when user inputs data
@@ -26,9 +32,12 @@ export default function ForgotPasswordPage() {
   };
 
   // handles user input of email
-  const handleEmailSubmit = (email: string) => {
-    // verifies fields, lets user confirm if email is correct
-    if (emailCheck(email) && !checkEmpty(email)) {
+  const handleEmailSubmit = async (email: string) => {
+    // checks if email is in database, displays error message if email not found
+    var users = await getAllUsers();
+
+    setEmailInDatabase(checkEmailInDatabase(users, email));
+    if (emailInDatabase) {
       setIsValidEmail(true);
     }
   };
@@ -43,10 +52,15 @@ export default function ForgotPasswordPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    var templateParams = {
+    const password = generatePassword();
+    const templateParams = {
       to_email: email,
-      reset_password_url: "(This is a test, ignore this email.)"
+      new_password: password
     }
+
+    // make call to server to update password for that user using the pass generated.
+    // catch error if it doesn't work, then display that instead of sending the email.
+    // so basically only send email if it works fine.
 
     emailjs.send(Constants.EMAIL_SERVICE_ID, Constants.EMAIL_TEMPLATE_ID, templateParams, Constants.PUBLIC_KEY)
     .then((result) => {
@@ -67,6 +81,8 @@ export default function ForgotPasswordPage() {
             <h1>Forgot Password</h1>
             <p style={{ fontSize: 15, textAlign: 'center' }}>Please submit your email to reset your password</p>
             <input placeholder='Email' type="text" required={true} name="email" value={email} onChange={handleChange}></input>
+            <p style={{ fontSize: 12, textAlign: 'center', color: 'red', display: emailInDatabase ? 'none' : ''}}>Email not found, please try again.</p>
+            <p style={{ fontSize: 12, visibility: 'hidden', display: emailInDatabase ? '' : 'none'}}>.</p>
             <button type="button" onClick={() => handleEmailSubmit(email)}>Submit</button>
           </form>
           <form onSubmit={handleSubmit} style={{ display: (isValidEmail && !isConfirmed) ? '' : 'none' }}>
