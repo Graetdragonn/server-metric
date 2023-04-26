@@ -38,8 +38,8 @@ export default function LineGraph(){
 
     return (
         <Collapsible  trigger={"Packets Sent Over Time"} transitionTime={100}>
-            <ResponsiveContainer className="content">
-        <div style={{marginTop: 30, marginBottom: 20}}>
+            <ResponsiveContainer className={"content"}>
+        <div style={{fontWeight: "normal", marginTop: 30, marginBottom: 20}}>
             <TimeGraph data={data} server_names={serverNames}/>
         </div>
             </ResponsiveContainer>
