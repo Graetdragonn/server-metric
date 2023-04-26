@@ -79,10 +79,14 @@ export default function DashboardPage() {
         </div>
       </div>
       <br />
-      <LineGraph/>
+
+
 
       <div className="white-div" style={{ width: 1400, display: userType !== "CLIENT" ? 'none' : '' }}>
           <NetworkGraph></NetworkGraph>
+          <br/>
+          <br/>
+          <LineGraph/>
           <br/>
           <br/>
           <h3 style={{textAlign: "center", marginLeft: "60px",  textDecoration: "underline" }}> Graph of Packets Sent and Received through each Server</h3>

@@ -1,7 +1,8 @@
-import React, { PureComponent } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import React from 'react';
+import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis} from 'recharts';
 import TrafficService from "../../requests/TrafficService";
 import UserService from "../../requests/UserService";
+import * as Constants from "../../constants";
 
 //https://recharts.org/en-US/examples
 //https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript
@@ -12,9 +13,9 @@ import UserService from "../../requests/UserService";
  * @param email user email
  */
 export async function getAllClientServers(email:string){
-    var clientInfo = await UserService.getUserByEmail(email);
-    var clientData = JSON.parse(clientInfo);
-    var servers = [];
+    const clientInfo = await UserService.getUserByEmail(email);
+    const clientData = JSON.parse(clientInfo);
+    const servers = [];
     for (let j = 0; j < clientData["servers"].length; j++) {
         servers.push(clientData["servers"][j]);
     }
@@ -23,18 +24,21 @@ export async function getAllClientServers(email:string){
 
 /**
  * Get all traffic sent from a server
- * @param address of server
+ *
  */
-export async function getAllSentTraffic(address: string){
-    var server_traffic = await TrafficService.getAllSentTrafficByServer(address);
-    var serverData = JSON.parse(server_traffic);
-    var sent_traffic = [];
-    //Get all the sent packets for each server
-    for (let j = 0; j < serverData.length; j++) {
-        const obj = {time: serverData[j]["time"], address: serverData[j]["srcIP"]};
-        sent_traffic.push(obj);        
+export async function getAllTraffic(server: string){
+    const res = await TrafficService.getAllTraffic();
+    const trafficList = JSON.parse(res);
+    const traffic = [];
+    for(let i = 0; i < trafficList.length; i++){
+        const receivedAddr = trafficList[i]["dstIP"];
+        const sentAddr = trafficList[i]["srcIP"];
+        if (server === sentAddr || server === receivedAddr ) {
+            const obj = {time: trafficList[i]["time"], address: server};
+            traffic.push(obj);
+        }
     }
-    return sent_traffic;
+    return traffic;
 }
 
 /**
@@ -51,7 +55,7 @@ export async function getSentPacketCounts(servers:any, total_dict:any){
     var time_vals = [];
     for(let i = 0; i < servers.length; i++){
         let current_server = servers[i]["address"];
-        var traffic = await getAllSentTraffic(current_server);
+        var traffic = await getAllTraffic(current_server);
         //Count the number of packets sent for a specific time
         //and a specific server.
         var temp_dict:any = {};
@@ -98,8 +102,7 @@ export async function getSentPacketCounts(servers:any, total_dict:any){
  */
 function convertTime(unix_time: number){
     let millisec_time = new Date(unix_time * 1000);
-    let hour_time = millisec_time.getHours();
-    var time = hour_time;
+    var time = millisec_time.getHours();
     return time;
 }
 
@@ -152,6 +155,14 @@ export async function organizeData(servers:any, total_dict:any){
     return data;
 }
 
+function getColor(i: any){
+    let colorArr = ["#EE8434","#7353BA", "#EF476F", "#12355b", "#65a48f", "#bb4430", "#A5FFD6", "#EEFC57", "#D0CFEC", "#9BC53D"]
+    while(i >= colorArr.length){
+        i = i - colorArr.length
+    }
+    return colorArr[i]
+}
+
 /**
  * Dynamically rendering lines in the graph
  * @param serverList: list of servers
@@ -160,37 +171,29 @@ export async function organizeData(servers:any, total_dict:any){
 function renderLines(serverList:any){
     let returnArr = [];
     for(let i = 0; i < serverList.length; i++){
-        var randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
-        returnArr.push(<Line type="monotone" dataKey={serverList[i]} stroke={randomColor} activeDot={{ r: 8 }} />)
+        returnArr.push(<Line type="monotone" dataKey={serverList[i]} stroke={getColor(i)} activeDot={{ r: 8 }} />)
     }
     return returnArr;
 }
 
-export const TimeGraph = (data:any)=>{ 
+export const TimeGraph = (data:any)=>{
     //console.log("Data");
     //console.log(data["data"]);
     //console.log(data["server_names"]);
 
     return (
-        <ResponsiveContainer width="100%" height="100%">
-        <div>
             <LineChart
                 width={1300}
                 height={540}
                 data={data["data"]}
-                margin={{top: 5, right: 30, left: 150, bottom: 5,}}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="times" />
-                <YAxis />
+                margin={{top: 10, right: 50, left: 0, bottom: 10,}}>
+                <CartesianGrid strokeDasharray="3 3"/>
+                <XAxis  dataKey="times" />
+                <YAxis/>
                 <Tooltip />
                 <Legend />
-                
                 {renderLines(data["server_names"])}
-
             </LineChart>
-        </div>
-        </ResponsiveContainer>
-
     );
-    
+
 }
