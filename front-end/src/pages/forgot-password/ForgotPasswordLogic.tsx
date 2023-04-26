@@ -1,17 +1,27 @@
 import UserService from "../../requests/UserService";
 
 /**
+ * Get all users in database (no token needed)
+ * @returns array of all users
+ */
+export async function getAllUserEmails(){
+    var res = await UserService.getAllUserEmails();
+    return JSON.parse(res);
+}
+
+/**
  * Checks if a specific email is registered in the database
  * @param email user email
  * @returns true if email is in database, false otherwise
  */
 export function checkEmailInDatabase(userEmails: string[], inputEmail: string) {
+    var result = false;
     userEmails.forEach((userEmail: string) => {
         if (inputEmail === userEmail) {
-            return true; 
+            result = true; 
         }
     });
-    return false;
+    return result;
 }
 
 /**

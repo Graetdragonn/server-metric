@@ -1,9 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
 import BackButton from '../../components/back-button/BackButton';
-import { checkEmailInDatabase, generatePassword } from './ForgotPasswordLogic';
-import { getAllUsers } from "../../components/user-list/UserListLogic";
+import { getAllUserEmails, checkEmailInDatabase, generatePassword } from './ForgotPasswordLogic';
 import * as Constants from "../../constants";
 import emailjs from '@emailjs/browser';
 
@@ -13,6 +12,9 @@ import emailjs from '@emailjs/browser';
 export default function ForgotPasswordPage() {
   // for screen navigation
   const navigate = useNavigate();
+
+  // list of users in database
+  const [userList, setUserList] = useState([] as string[]);
 
   // user input for email
   const [email, setEmail] = useState("");
@@ -31,13 +33,13 @@ export default function ForgotPasswordPage() {
     setEmail(e.target.value);
   };
 
-  // handles user input of email
+  // handles user input of email, checks if email input is in database
   const handleEmailSubmit = async (email: string) => {
-    // checks if email is in database, displays error message if email not found
-    var users = await getAllUsers();
-
-    setEmailInDatabase(checkEmailInDatabase(users, email));
-    if (emailInDatabase) {
+    var users = await getAllUserEmails();
+    var emailInDB = checkEmailInDatabase(users, email);
+    setEmailInDatabase(emailInDB);
+    
+    if (emailInDB) {
       setIsValidEmail(true);
     }
   };
@@ -64,9 +66,9 @@ export default function ForgotPasswordPage() {
 
     emailjs.send(Constants.EMAIL_SERVICE_ID, Constants.EMAIL_TEMPLATE_ID, templateParams, Constants.PUBLIC_KEY)
     .then((result) => {
-        console.log(result.text);
+        //console.log(result.text);
     }, (error) => {
-        console.log(error.text);
+        //console.log(error.text);
     });
 
     setIsConfirmed(true);
