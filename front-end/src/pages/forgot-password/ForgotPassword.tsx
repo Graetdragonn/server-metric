@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
 import BackButton from '../../components/back-button/BackButton';
 import { checkEmpty, emailCheck } from '../login/LoginLogic';
 import * as Constants from "../../constants";
+import emailjs from '@emailjs/browser';
 
 /**
  * Forgot password screen
@@ -41,7 +42,19 @@ export default function ForgotPasswordPage() {
   // submits form
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // send email here
+
+    var templateParams = {
+      to_email: email,
+      reset_password_url: "(This is a test, ignore this email.)"
+    }
+
+    emailjs.send(Constants.EMAIL_SERVICE_ID, Constants.EMAIL_TEMPLATE_ID, templateParams, Constants.PUBLIC_KEY)
+    .then((result) => {
+        console.log(result.text);
+    }, (error) => {
+        console.log(error.text);
+    });
+
     setIsConfirmed(true);
   };
 
