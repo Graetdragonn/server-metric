@@ -1,11 +1,12 @@
 import React from 'react';
-import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis} from 'recharts';
+import {Line} from 'recharts';
 import TrafficService from "../../requests/TrafficService";
 import UserService from "../../requests/UserService";
-import * as Constants from "../../constants";
 
 //https://recharts.org/en-US/examples
 //https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript
+
+
 
 /**
  * Get a list of servers for the user.
@@ -184,32 +185,10 @@ function getColor(i: any){
  * @param serverList: list of servers
  * @returns An array of graph lines
  */
-function renderLines(serverList:any){
+export function renderLines(serverList:any){
     let returnArr = [];
     for(let i = 0; i < serverList.length; i++){
         returnArr.push(<Line type="monotone" dataKey={serverList[i]} stroke={getColor(i)} activeDot={{ r: 8 }} />)
     }
     return returnArr;
-}
-
-export const TimeGraph = (data:any)=>{
-    //console.log("Data");
-    //console.log(data["data"]);
-    //console.log(data["server_names"]);
-
-    return (
-            <LineChart
-                width={1300}
-                height={540}
-                data={data["data"]}
-                margin={{top: 10, right: 50, left: 0, bottom: 10,}}>
-                <CartesianGrid strokeDasharray="3 3"/>
-                <XAxis  dataKey="times" />
-                <YAxis/>
-                <Tooltip />
-                <Legend />
-                {renderLines(data["server_names"])}
-            </LineChart>
-    );
-
 }

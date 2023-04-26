@@ -5,13 +5,10 @@ import ServerList from '../../components/server-list/ServerList';
 import NetworkGraph from "../../components/network-graph/NetworkGraph";
 import PacketPerIPClient from "../../components/packet-per-ip-graph-client/PacketPerIPClient";
 import PacketPerIPSP from "../../components/packet-per-ip-graph-sp/PacketPerIPSP";
-import orangeCircle from './icons8-orange-circle-48.png'
-import purpleCircle from './icons8-purple-circle-48.png'
 import {getClientAndSubnetServersByUser, getSubnetServersByUser} from "./DashboardLogic";
 import {useEffect, useState} from "react";
 import * as Constants from "../../constants";
-
-import LineGraph from "../../components/time-graph/TimeGraph"
+import TimeGraph from "../../components/time-graph/TimeGraph";
 /**
  * Render dashboard page for each user type
  * @returns dashboard page depending on user type
@@ -25,8 +22,6 @@ export default function DashboardPage() {
     let clientSubnetServers: string[]
     let clientAndSubnetList: any[]
 
-
-
     useEffect(() => {
         async function getData() {
             const email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
@@ -39,10 +34,6 @@ export default function DashboardPage() {
         getData()
 
     }, [currentTime])
-
-
-
-
 
     function renderClientGraphs(subnetList: string[]){
         let returning = [];
@@ -60,6 +51,14 @@ export default function DashboardPage() {
                 }
             }
             return returning;
+    }
+
+    function renderTimeGraphs(subnetList: string[]){
+        let returning = [];
+        for(let i = 0; i<subnetList.length; i++){
+            returning.push(<TimeGraph subnetAddress={subnetList[i]}></TimeGraph>)
+        }
+        return returning;
     }
 
     return (
@@ -86,7 +85,8 @@ export default function DashboardPage() {
           <NetworkGraph></NetworkGraph>
           <br/>
           <br/>
-          <LineGraph/>
+          <TimeGraph subnetAddress={""}/>
+          {/*{renderTimeGraphs(clientSubnetListState)}*/}
           <br/>
           <br/>
           <h3 style={{textAlign: "center", marginLeft: "60px",  textDecoration: "underline" }}> Graph of Packets Sent and Received through each Server</h3>
