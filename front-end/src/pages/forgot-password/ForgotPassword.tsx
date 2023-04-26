@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
 import BackButton from '../../components/back-button/BackButton';
-import { getAllUserEmails, checkEmailInDatabase, generatePassword } from './ForgotPasswordLogic';
+import { getAllUserEmails, checkEmailInDatabase, generatePassword, updatePassword } from './ForgotPasswordLogic';
 import * as Constants from "../../constants";
 import emailjs from '@emailjs/browser';
 
@@ -12,9 +12,6 @@ import emailjs from '@emailjs/browser';
 export default function ForgotPasswordPage() {
   // for screen navigation
   const navigate = useNavigate();
-
-  // list of users in database
-  const [userList, setUserList] = useState([] as string[]);
 
   // user input for email
   const [email, setEmail] = useState("");
@@ -28,6 +25,9 @@ export default function ForgotPasswordPage() {
   // true if user confirms that email displayed on screen is correct, triggers email sent if true
   const [isConfirmed, setIsConfirmed] = useState(false);
 
+  // true if the password reset was successful
+  const [passResetSuccess, setPassResetSuccess] = useState(false);
+
   // to update user information when user inputs data
   const handleChange = (e: { target: { name: string; value: any; }; }) => {
     setEmail(e.target.value);
@@ -38,7 +38,7 @@ export default function ForgotPasswordPage() {
     var users = await getAllUserEmails();
     var emailInDB = checkEmailInDatabase(users, email);
     setEmailInDatabase(emailInDB);
-    
+
     if (emailInDB) {
       setIsValidEmail(true);
     }
@@ -51,8 +51,9 @@ export default function ForgotPasswordPage() {
   };
 
   // submits form
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsConfirmed(true);
 
     const password = generatePassword();
     const templateParams = {
@@ -60,18 +61,18 @@ export default function ForgotPasswordPage() {
       new_password: password
     }
 
-    // make call to server to update password for that user using the pass generated.
-    // catch error if it doesn't work, then display that instead of sending the email.
-    // so basically only send email if it works fine.
-
-    emailjs.send(Constants.EMAIL_SERVICE_ID, Constants.EMAIL_TEMPLATE_ID, templateParams, Constants.PUBLIC_KEY)
-    .then((result) => {
-        //console.log(result.text);
-    }, (error) => {
-        //console.log(error.text);
-    });
-
-    setIsConfirmed(true);
+    // if password update is successful, then send the user an email
+    if (await updatePassword(email, password)) {
+      emailjs.send(Constants.EMAIL_SERVICE_ID, Constants.EMAIL_TEMPLATE_ID, templateParams, Constants.PUBLIC_KEY)
+      .then((result) => {
+          //console.log(result.text);
+      }, (error) => {
+          //console.log(error.text);
+      });
+      setPassResetSuccess(true);
+    } else {
+      setPassResetSuccess(false);
+    }
   };
 
   return (
@@ -93,7 +94,8 @@ export default function ForgotPasswordPage() {
             <button type="button" onClick={() => handleIncorrectEmail()}>No</button>
           </form>
           <form onSubmit={handleSubmit} style={{ display: (isValidEmail && isConfirmed) ? '' : 'none' }}>
-            <p style={{ fontSize: 50, textAlign: 'center' }}>An email was sent to reset your password</p>
+            <p style={{ fontSize: 30, textAlign: 'center', display: passResetSuccess ? '' : 'none' }}>An email was sent to reset your password</p>
+            <p style={{ fontSize: 30, textAlign: 'center', display: passResetSuccess ? 'none' : '' }}>An error occurred while resetting your password.<br /><br />Please try again later.</p>
             <button onClick={() => navigate(Constants.LOGIN_PAGE)}>Go to login</button>
           </form>
 
