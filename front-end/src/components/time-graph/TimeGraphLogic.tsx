@@ -23,7 +23,7 @@ export async function getAllClientServers(email:string){
 }
 
 /**
- * Get all traffic sent from a server
+ * Get all traffic from a server
  *
  */
 export async function getAllTraffic(server: string){
@@ -41,17 +41,33 @@ export async function getAllTraffic(server: string){
     return traffic;
 }
 
+
+/**
+ * Function to check unix date with current date
+ * @param unixTime
+ * @returns boolean
+ */
+function checkCurrentDate(unixTime: number){
+    let currentDate = new Date()
+    let packetDate = new Date(unixTime * 1000);
+    if(currentDate.getDate() == packetDate.getDate() ){
+        return true
+    }
+    return false
+
+}
+
 /**
  * Function to get sent packet data
  * @param servers: list of servers
  * @param total_dict: dictionary of the form:
  * {address: string, time: string, count: number }
  * it is initially empty
- * @param time_vals: list of the time values that have sent packets
+ * @param time_vals: list of the time values that have sent/received packets
  * it is initially empty
  * @returns an array of the now filled total_dict and time_val elements
  */
-export async function getSentPacketCounts(servers:any, total_dict:any){
+export async function getAllPacketCounts(servers:any, total_dict:any){
     var time_vals = [];
     for(let i = 0; i < servers.length; i++){
         let current_server = servers[i]["address"];
@@ -63,24 +79,25 @@ export async function getSentPacketCounts(servers:any, total_dict:any){
             if(traffic[x]["address"] === current_server){
                 var key = traffic[x]["time"];
 
-                /* Potentially add an "if" statment here to verify
-                 * the traffic is from the same dat
-                 */
-
-                if(key in temp_dict){
-                    temp_dict[key] = temp_dict[key] + 1;
-                } else{
-                    temp_dict[key] = 1;
-                    var time_found = false;
-                    for(let y = 0; y < time_vals.length; y++){
-                        if(time_vals[y] == key){
-                            time_found = true;
+                // checks to see if data matches today's date
+                if(checkCurrentDate(key)){
+                    if(key in temp_dict){
+                        temp_dict[key] = temp_dict[key] + 1;
+                    } else{
+                        temp_dict[key] = 1;
+                        var time_found = false;
+                        for(let y = 0; y < time_vals.length; y++){
+                            if(time_vals[y] == key){
+                                time_found = true;
+                            }
+                        }
+                        if(!time_found){
+                            time_vals.push(key);
                         }
                     }
-                    if(!time_found){
-                        time_vals.push(key);
-                    }
                 }
+
+
             }       
         }
 

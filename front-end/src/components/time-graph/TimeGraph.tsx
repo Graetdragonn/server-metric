@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import '../../style/Master.css';
-import { TimeGraph, getAllClientServers, getSentPacketCounts, organizeData} from "./TimeGraphLogic";
+import { TimeGraph, getAllClientServers, getAllPacketCounts, organizeData} from "./TimeGraphLogic";
 import Collapsible from "react-collapsible";
 import {ResponsiveContainer} from "recharts";
 
@@ -25,7 +25,7 @@ export default function LineGraph(){
             setServerNames(globalServers);
             // Get traffic for each server
             let total_dict: any = [];
-            total_dict = await getSentPacketCounts(servers, total_dict);
+            total_dict = await getAllPacketCounts(servers, total_dict);
 
             // Sort the data by time and reformat it such that it follows below:
             // {times: time, server1: packet_count, server2: packet_count... etc.}
