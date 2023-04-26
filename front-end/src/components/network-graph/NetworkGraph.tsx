@@ -88,7 +88,7 @@ export default function NetworkGraph() {
     }
 
     return (
-        <Collapsible trigger={<p style={{fontWeight: "bold"}}> Graph of Overall Network Connections</p>} open={true}>
+        <Collapsible trigger={<p style={{fontWeight: "bold"}}> Graph of Overall Network Connections</p>}>
             <br/>
             <div  style={{backgroundColor: "white", height: "600px", width: "1700 px", borderColor: "black", borderStyle: "solid"}}>
                 {renderNetGraph(nodes, edges)}

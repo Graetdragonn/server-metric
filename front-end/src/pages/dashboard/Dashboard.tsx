@@ -79,7 +79,7 @@ export default function DashboardPage() {
         </div>
       </div>
       <br />
-        
+
       <div className="white-div" style={{ width: 1500, display: userType !== "CLIENT" ? 'none' : '' }}>
           <NetworkGraph></NetworkGraph>
 
