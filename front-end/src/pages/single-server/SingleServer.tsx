@@ -84,7 +84,7 @@ export default function SingleServer() {
         <div className="Single-Server-Page">
             <NavBar />
             <div>
-                <WorldMap />
+                <WorldMap server={state} />
                 <br />
                 <div className="white-div-for-single-server-title" style={{ minWidth: 1000, maxHeight: 80, marginLeft: "19.5%" }}> <h1 className='text-for-single-server-header' style={{ textAlign: "center"}}> Server {state} </h1></div>
                 <div className="white-div" style={{ width: 1200, marginLeft: "10%" }}>
