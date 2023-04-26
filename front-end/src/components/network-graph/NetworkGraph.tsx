@@ -63,15 +63,6 @@ export default function NetworkGraph() {
             },
             physics: {
                 enabled: true,
-                // enabled: false,
-                // solver: "repulsion",
-                // repulsion: {
-                //     nodeDistance:100 // Put more distance between the nodes.
-                // },
-                // stabilization: {
-                //     enabled: true,
-                //     iterations: 5000    // YMMV
-                // },
                 barnesHut: {
                     "springConstant": 0,
                     "avoidOverlap": 0.2
@@ -90,7 +81,9 @@ export default function NetworkGraph() {
             }
         };
 
-        return <Graph graph={graph} options={options} events={events}></Graph>
+
+        return <Graph graph={graph} options={options} events={events}
+        ></Graph>
 
     }
 

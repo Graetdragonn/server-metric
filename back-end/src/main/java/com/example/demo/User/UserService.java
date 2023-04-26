@@ -163,4 +163,13 @@ public class UserService {
         userUpdate.addClientToUser(client);
         userRepository.save(userUpdate);
     }
+
+    public List<String> getAllUserEmails() {
+        List<User> userList =  userRepository.findAll();
+        ArrayList<String> emailList = new ArrayList<>();
+        for (User user : userList) {
+            emailList.add(user.getUsername());
+        }
+        return  emailList;
+    }
 }
