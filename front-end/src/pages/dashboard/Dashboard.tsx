@@ -9,7 +9,7 @@ import {getClientAndSubnetServersByUser, getSubnetServersByUser} from "./Dashboa
 import {useEffect, useState} from "react";
 import * as Constants from "../../constants";
 import TimeGraph from "../../components/time-graph/TimeGraph";
-import Collapsible from "react-collapsible";
+
 /**
  * Render dashboard page for each user type
  * @returns dashboard page depending on user type
