@@ -2,7 +2,7 @@ import axios from "axios";
 import * as Constants from "../constants";
 
 class UserService {
-    
+
     /**
      * Get all users
      */
@@ -22,7 +22,6 @@ class UserService {
             });
         return res;
     }
-
 
     /**
      * Create user
@@ -275,7 +274,24 @@ class UserService {
         return res;
     }
 
-
+    /**
+     * Get all users
+     */
+    async getAllUserEmails() {
+        var res = "";
+        var config = {
+            method: 'get',
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'users/getAllUserEmails'
+        };
+        await axios(config)
+            .then(function (response: { data: any; }) {
+                res = JSON.stringify(response.data);
+            })
+            .catch(function (error: any) {
+                //alert(error);
+            });
+        return res;
+    }
 }
 
 export default new UserService()
