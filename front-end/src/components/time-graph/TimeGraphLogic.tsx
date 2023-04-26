@@ -173,7 +173,7 @@ function renderLines(serverList:any){
     return returnArr;
 }
 
-export const TimeGraph = (data:any)=>{ 
+export const TimeGraph = (data:any)=>{
     //console.log("Data");
     //console.log(data["data"]);
     //console.log(data["server_names"]);
@@ -192,5 +192,5 @@ export const TimeGraph = (data:any)=>{
                 {renderLines(data["server_names"])}
             </LineChart>
     );
-    
+
 }

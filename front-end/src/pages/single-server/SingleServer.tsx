@@ -4,6 +4,7 @@ import NavBar from "../../components/navigation-bar/NavBar";
 import React, {useEffect, useState} from "react";
 import {Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis} from "recharts";
 import {getPortTrafficForAServer,} from "./SingleServerLogic";
+import SingleServerTimeGraph from "../../components/single-server-time-graph/SingleServerTimeGraph";
 const { getService } = require('port-numbers');
 
 export default function SingleServer() {
@@ -83,12 +84,21 @@ export default function SingleServer() {
         <div className="Single-Server-Page">
             <NavBar />
             <div>
+
+            </div>
+            <div>
                 <br />
                 <div className="white-div-for-single-server-title" style={{ minWidth: 1000, maxHeight: 80, marginLeft: "19.5%" }}> <h1 className='text-for-single-server-header' style={{ textAlign: "center"}}> Server {state} </h1></div>
                 <div className="white-div" style={{ width: 1200, marginLeft: "10%" }}>
                         <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "30%",  textDecoration: "underline" }}> Graph of Packets Sent and Received through Specific Ports </h3>
                         {render()}
                 </div>
+                <br/>
+                <br/>
+                <div className="white-div" style={{ width: 1200 }}>
+                    <SingleServerTimeGraph address={state}></SingleServerTimeGraph>
+                </div>
+
             </div>
             <div></div>
         </div>

@@ -5,7 +5,7 @@ import Collapsible from "react-collapsible";
 import {ResponsiveContainer} from "recharts";
 
 
-const LineGraph = () => {
+export default function LineGraph(){
     // get user email
     const email = JSON.parse(localStorage.getItem('email') || '');
     const[data, setData] = useState([] as any[]);
@@ -35,7 +35,7 @@ const LineGraph = () => {
         getData();
         setTimeout(() => setCurrentTime(new Date()), 10000)
     }, [currentTime]);
-    
+
     return (
         <Collapsible  trigger={"Packets Sent Over Time"} transitionTime={100}>
             <ResponsiveContainer className="content">
@@ -48,4 +48,3 @@ const LineGraph = () => {
 }
 
 
-export default LineGraph;

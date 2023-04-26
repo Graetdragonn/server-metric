@@ -14,7 +14,6 @@ export default function PacketPerIPClient({subnetAddress}: PacketPerIPClientComp
     // track sent and received packets per IP - client
     const [allPacketsPerIpClient, setAllPacketsPerIpClient] = useState([] as any[]);
     const [currentTime, setCurrentTime] = useState(new Date()) // default value can be anything you want
-    let [posData, setPosData] = useState({} as any);
     let userInfo: string[]; // user info
 
     const navigate = useNavigate(); // for screen navigation
