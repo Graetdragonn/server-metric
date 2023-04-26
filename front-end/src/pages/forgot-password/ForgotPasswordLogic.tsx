@@ -26,8 +26,7 @@ export function checkEmailInDatabase(userEmails: string[], inputEmail: string) {
 
 /**
  * Generates random password for the password reset.
- * Creates a string of length = 10 using the characters below:
- * 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+ * @returns randomly generated password 10 characters long
  */
 export function generatePassword() {
     var characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -37,4 +36,15 @@ export function generatePassword() {
         password += characters.charAt(Math.floor(Math.random() * characters.length));
     }
     return password;
+}
+
+/**
+ * Sends request to update user's password
+ * @param email user email
+ * @param password updated password
+ * @returns 
+ */
+export async function updatePassword(email: string, password: string) {
+    const res = await UserService.updateUserPassword(email, password);
+    return res;
 }
