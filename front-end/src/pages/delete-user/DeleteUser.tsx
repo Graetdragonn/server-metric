@@ -6,6 +6,7 @@ import { getAllUsers } from "../../components/user-list/UserListLogic";
 import UserService from "../../requests/UserService";
 import { emailCheck, checkEmpty, getUserType } from "../login/LoginLogic";
 import { deleteServerProviderClientByEmail, deleteUser, getClientServiceProvider } from "./DeleteUserLogic";
+import * as Constants from "../../constants";
 
 
 export default function DeleteUserPage() {
@@ -121,7 +122,7 @@ export default function DeleteUserPage() {
           </form>
           <form onSubmit={handleSubmit} style={{ display: isValidEmail ? '' : 'none' }}>
             <p style={{ fontSize: 20, textAlign: 'center' }}>User {email} was successfully deleted</p>
-            <button onClick={() => navigate('/dashboard')}>Back to dashboard</button>
+            <button onClick={() => navigate(Constants.DASHBOARD_PAGE)}>Back to dashboard</button>
           </form>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import BackButton from '../../components/back-button/BackButton';
 import { addServerToList, checkServerFormat } from '../add-server/AddServerLogic';
 import NavBar from '../../components/navigation-bar/NavBar';
+import * as Constants from "../../constants";
 
 /**
  * Add server screen
@@ -82,7 +83,7 @@ export default function AdminAddServerPage() {
 
                         <br />
 
-                        <button onClick={() => navigate('/dashboard')}>Back to dashboard</button>
+                        <button onClick={() => navigate(Constants.DASHBOARD_PAGE)}>Back to dashboard</button>
                         <br />
                     </form>
                 </div>

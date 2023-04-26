@@ -3,6 +3,7 @@ import '../../style/Master.css';
 import { useNavigate } from "react-router-dom";
 import BackButton from '../../components/back-button/BackButton';
 import { checkEmpty, emailCheck } from '../login/LoginLogic';
+import * as Constants from "../../constants";
 
 /**
  * Forgot password screen
@@ -44,7 +45,7 @@ export default function ForgotPasswordPage() {
           </form>
           <form onSubmit={handleSubmit} style={{ display: isValidEmail ? '' : 'none' }}>
             <p style={{ fontSize: 50, textAlign: 'center' }}>An email was sent to reset your password</p>
-            <button onClick={() => navigate('/login')}>Go to login</button>
+            <button onClick={() => navigate(Constants.LOGIN_PAGE)}>Go to login</button>
           </form>
 
         </div>

@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const USER_API_BASE_URL = "http://coms-402-sd-05.class.las.iastate.edu:8080/";
+import * as Constants from "../constants";
 
 class TrafficService {
 
@@ -12,7 +11,7 @@ class TrafficService {
         var res = "";
         var config = {
             method: 'get',
-            url: USER_API_BASE_URL + 'api/v1/traffic',
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'traffic',
             headers: {}
         };
 
@@ -27,6 +26,29 @@ class TrafficService {
     }
 
     /**
+     * Get all traffic sent from a server
+     * @param server address
+     */
+    async getAllSentTrafficByServer(address: string) {
+        var res = "";
+        var config = {
+            method: 'get',
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'traffic' + '/getAllSentTrafficByServer/' + address,
+            headers: {}
+        };
+
+        await axios(config)
+            .then(function (response: { data: any; }) {
+                res = JSON.stringify(response.data);
+            })
+            .catch(function (error: any) {
+                //alert(error);
+            });
+        return res;
+    }
+
+
+    /**
      * Get map of ports sent by address
      * @param address server address
      * @returns map of ports sent by address
@@ -35,7 +57,7 @@ class TrafficService {
         var res = "";
         var config = {
             method: 'get',
-            url: USER_API_BASE_URL + 'api/v1/traffic' + '/getMapOfPortsSentByAddress/' + address,
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'traffic' + '/getMapOfPortsSentByAddress/' + address,
             headers: {}
         };
         await axios(config)
@@ -57,7 +79,7 @@ class TrafficService {
         var res = "";
         var config = {
             method: 'get',
-            url: USER_API_BASE_URL + 'api/v1/traffic' + '/getMapOfPortsReceivedByAddress/' + address,
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'traffic' + '/getMapOfPortsReceivedByAddress/' + address,
             headers: {}
         };
         await axios(config)

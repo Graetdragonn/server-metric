@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import {getNumPacketsSentAndReceivedClient, getServersByUser} from "./PacketPerIPClientLogic";
 import Collapsible from "react-collapsible";
+import * as Constants from "../../constants";
 
 
 interface PacketPerIPClientComponentProps {
@@ -52,10 +53,10 @@ export default function PacketPerIPClient({subnetAddress}: PacketPerIPClientComp
                     <Tooltip/>
                     <Legend/>
                     <Bar onClick={(data) => {
-                        navigate("/single-server", {state: data.address});
+                        navigate(Constants.SINGLE_SERVER_PAGE, {state: data.address});
                     }} name="Number of Packets Sent" barSize={30} dataKey="numPacketsSent" fill="var(--orange_wheel)"/>
                     <Bar onClick={(data) => {
-                        navigate("/single-server", {state: data.address});
+                        navigate(Constants.SINGLE_SERVER_PAGE, {state: data.address});
                     }} name="Number of Packets Received" barSize={30} dataKey="numPacketsReceived"
                          fill="var(--some_purple)"
                     />

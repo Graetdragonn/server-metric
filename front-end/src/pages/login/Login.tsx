@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { checkEmpty, getUserType, submit } from './LoginLogic';
 import { checkEmail } from '../create-account/CreateAccountLogic';
 import BackButton from '../../components/back-button/BackButton';
+import * as Constants from "../../constants";
 
 /**
  * Login screen
@@ -38,7 +39,7 @@ export default function LoginPage() {
       if (await submit(state.email, state.pass)) {
         localStorage.setItem("email", JSON.stringify(state.email));
         localStorage.setItem("userType", await getUserType(JSON.parse(localStorage.getItem('email') || '')));
-        navigate('/dashboard');
+        navigate(Constants.DASHBOARD_PAGE);
       }
       else {
         setError(true);
@@ -49,7 +50,7 @@ export default function LoginPage() {
   // handles forgot password
   const forgotPass = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
-    navigate('/forgotpassword');
+    navigate(Constants.FORGOT_PASSWORD_PAGE);
   };
 
   return (

@@ -6,6 +6,7 @@ import { getAllUsers, getUserInfo } from "../../components/user-list/UserListLog
 import { getClientList } from "../admin-add-server/AdminAddServerLogic";
 import BackButton from "../../components/back-button/BackButton";
 import ServerList from "../../components/server-list/ServerList";
+import * as Constants from "../../constants";
 
 /**
  * Render admin single server screen
@@ -42,13 +43,13 @@ export default function AdminAllUsersPage() {
 
     const goToEdit = async (email: string) => {
         var res = await getUserInfo(email);
-        navigate('/adminedituser', { state: { userInfo: res } });
+        navigate(Constants.ADMIN_EDIT_USER_PAGE, { state: { userInfo: res } });
     }
 
     // go to edit client for service manager
     const goToEditSM = async (email: string) => {
         var res = await getUserInfo(email);
-        navigate('/spedituser', { state: { userInfo: res } });
+        navigate(Constants.SERVICE_PROVIDER_EDIT_USER_PAGE, { state: { userInfo: res } });
     }
 
     return (

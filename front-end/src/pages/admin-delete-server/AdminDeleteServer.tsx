@@ -7,6 +7,7 @@ import NavBar from '../../components/navigation-bar/NavBar';
 import { deleteServer } from './AdminDeleteServerLogic';
 import { getAllServers } from '../../components/server-list/ServerListLogic';
 import { getUsersOnServer, removeServerFromUser } from '../admin-single-server/AdminSingleServerLogic';
+import * as Constants from "../../constants";
 
 /**
  * Delete server screen
@@ -119,7 +120,7 @@ export default function AdminDeleteServerPage() {
 
             <br />
 
-            <button onClick={() => navigate('/dashboard')}>Back to dashboard</button>
+            <button onClick={() => navigate(Constants.DASHBOARD_PAGE)}>Back to dashboard</button>
             <br />
           </form>
         </div>

@@ -5,7 +5,7 @@ import BackButton from '../../components/back-button/BackButton';
 import { checkServerFormat, checkIfExists, removeServerFromList, removeServerFromUser, getAllClientServers } from './RemoveServerLogic';
 //import Header from '../../components/navigation-bar/Header';
 import NavBar from '../../components/navigation-bar/NavBar';
-
+import * as Constants from "../../constants";
 
 /**
  * Remove server screen
@@ -104,7 +104,7 @@ const RemoveServerPage = () => {
 
                 <br />
 
-                <button onClick={() => navigate('/dashboard')}>Back to dashboard</button>
+                <button onClick={() => navigate(Constants.DASHBOARD_PAGE)}>Back to dashboard</button>
                 <br />
             </form>
         </div>
