@@ -4,7 +4,6 @@ import Graph from "react-graph-vis"
 // @ts-ignore
 import {generateEdgesForNetworkGraph, generateNodesForNetworkGraph} from "./NetworkGraphLogic";
 import {getServersByUser} from "../packet-per-ip-graph-sp/PacketPerIPSPLogic";
-import {getNumPacketsSentAndReceivedClient} from "../packet-per-ip-graph-client/PacketPerIPClientLogic";
 import Collapsible from "react-collapsible";
 import orangeCircle from "../../pages/dashboard/icons8-orange-circle-48.png";
 import purpleCircle from "../../pages/dashboard/icons8-purple-circle-48.png";
@@ -88,7 +87,7 @@ export default function NetworkGraph() {
     }
 
     return (
-        <Collapsible trigger={<p style={{fontWeight: "bold"}}> Graph of Overall Network Connections</p>} open={true}>
+        <Collapsible trigger={<p style={{fontWeight: "bold"}}> Graph of Overall Network Connections</p>}>
             <br/>
             <div  style={{backgroundColor: "white", height: "600px", width: "1700 px", borderColor: "black", borderStyle: "solid"}}>
                 {renderNetGraph(nodes, edges)}

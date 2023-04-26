@@ -172,4 +172,12 @@ public class UserService {
         }
         return  emailList;
     }
+
+    public void updateUserPassword(String userEmail, User user) {
+        User userToUpdate = userRepository.findUserByUsername(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
+        if(user.getPassword() != null && !Objects.equals(user.getPassword(), userToUpdate.getPassword())){
+            userToUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        userRepository.save(userToUpdate);
+    }
 }

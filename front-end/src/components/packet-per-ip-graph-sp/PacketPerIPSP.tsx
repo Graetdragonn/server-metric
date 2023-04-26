@@ -37,7 +37,7 @@ export default function PacketPerIPSP({clientEmail, clientFullName, subnetAddres
 
 
     function getGraphName(){
-        return clientFullName + ": Subnet: " + subnetAddress
+        return clientFullName + ", Subnet: " + subnetAddress
     }
 
     function render(){

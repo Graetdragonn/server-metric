@@ -34,7 +34,7 @@ export default function PacketPerIPClient({subnetAddress}: PacketPerIPClientComp
 
 
     function getGraphName(){
-        return "Servers on Subnet: " + subnetAddress
+        return "Subnet: " + subnetAddress
     }
 
     function render(){
