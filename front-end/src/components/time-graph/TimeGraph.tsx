@@ -5,9 +5,8 @@ import Collapsible from "react-collapsible";
 import {CartesianGrid, Legend, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 
 
-export default function TimeGraph(props: {subnetAddress: string}){
+export default function TimeGraph(props: {clientName: string, clientEmail: string, subnetAddress: string}){
     // get user email
-    const email = JSON.parse(localStorage.getItem('email') || '');
     const[data, setData] = useState([] as any[]);
     const[serverNames, setServerNames] = useState([] as any[]);
     const [currentTime, setCurrentTime] = useState(new Date()) // default value can be anything you want
@@ -25,7 +24,7 @@ export default function TimeGraph(props: {subnetAddress: string}){
     useEffect(() => {
         async function getData(){
             // Get servers
-            const servers = await getAllClientServers(email);
+            const servers = await getAllClientServers(props.clientEmail);
             for(let i = 0; i < servers.length; i++){
                 if(checkSubnet(props.subnetAddress, servers[i]["address"])){
                     globalServers.push(servers[i]["address"]);
@@ -46,10 +45,17 @@ export default function TimeGraph(props: {subnetAddress: string}){
         setTimeout(() => setCurrentTime(new Date()), 10000)
     }, [currentTime]);
 
+    function getName(clientName: string, subnetAddress: string){
+        if(clientName != ""){
+            return clientName + ", Subnet: " + subnetAddress
+        }else{
+            return "Subnet: " + subnetAddress
+        }
+    }
 
     return (
         <>
-        <Collapsible  trigger={"Subnet: " + props.subnetAddress} transitionTime={100}>
+        <Collapsible  trigger={getName(props.clientName, props.subnetAddress)} transitionTime={100}>
             <ResponsiveContainer className={"content"}>
         <div style={{fontWeight: "normal", marginTop: 30, marginBottom: 20}}>
                 <LineChart
