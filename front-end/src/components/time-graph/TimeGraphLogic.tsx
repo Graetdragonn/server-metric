@@ -24,18 +24,21 @@ export async function getAllClientServers(email:string){
 
 /**
  * Get all traffic sent from a server
- * @param address of server
+ *
  */
-export async function getAllSentTraffic(address: string){
-    const server_traffic = await TrafficService.getAllSentTrafficByServer(address);
-    const serverData = JSON.parse(server_traffic);
-    const sent_traffic = [];
-    //Get all the sent packets for each server
-    for (let j = 0; j < serverData.length; j++) {
-        const obj = {time: serverData[j]["time"], address: serverData[j]["srcIP"]};
-        sent_traffic.push(obj);        
+export async function getAllTraffic(server: string){
+    const res = await TrafficService.getAllTraffic();
+    const trafficList = JSON.parse(res);
+    const traffic = [];
+    for(let i = 0; i < trafficList.length; i++){
+        const receivedAddr = trafficList[i]["dstIP"];
+        const sentAddr = trafficList[i]["srcIP"];
+        if (server === sentAddr || server === receivedAddr ) {
+            const obj = {time: trafficList[i]["time"], address: server};
+            traffic.push(obj);
+        }
     }
-    return sent_traffic;
+    return traffic;
 }
 
 /**
@@ -52,7 +55,7 @@ export async function getSentPacketCounts(servers:any, total_dict:any){
     var time_vals = [];
     for(let i = 0; i < servers.length; i++){
         let current_server = servers[i]["address"];
-        var traffic = await getAllSentTraffic(current_server);
+        var traffic = await getAllTraffic(current_server);
         //Count the number of packets sent for a specific time
         //and a specific server.
         var temp_dict:any = {};
