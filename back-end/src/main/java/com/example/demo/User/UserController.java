@@ -30,6 +30,13 @@ public class UserController {
         return userService.getUser(userEmail);
     }
 
+    //this mapping gets a single user by ID from the database
+    @GetMapping("getAllUserEmails")
+    @CrossOrigin
+    public List<String> getUser() {
+        return userService.getAllUserEmails();
+    }
+
     //this mapping gets all users connected to a specific server using the servers ID
     @GetMapping("getAllUsersConnectedToServer/{serverAddress}")
     @CrossOrigin
