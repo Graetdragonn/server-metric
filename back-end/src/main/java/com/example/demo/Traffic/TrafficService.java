@@ -1,16 +1,19 @@
 package com.example.demo.Traffic;
 
+import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.demo.Server.Server;
 import com.example.demo.User.User;
 import com.example.demo.User.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 
 @Service
@@ -168,8 +171,8 @@ public class TrafficService {
     }
 
     public boolean checkCurrentDate(long time) {
-        Date packetTime = new Date(time);
-        Date curDate = new Date();
+        LocalDate packetTime = LocalDate.ofEpochDay(1000 * time);
+        LocalDate curDate = LocalDate.now();
         return packetTime.equals(curDate);
     }
 
