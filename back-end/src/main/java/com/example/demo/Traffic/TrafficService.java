@@ -2,10 +2,10 @@ package com.example.demo.Traffic;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import com.example.demo.Server.Server;
 import com.example.demo.User.User;
@@ -169,7 +169,7 @@ public class TrafficService {
     }
 
     public boolean checkCurrentDate(long time) {
-        LocalDate packetTime = LocalDate.ofEpochDay(time);
+        LocalDate packetTime = LocalDate.ofEpochDay(TimeUnit.SECONDS.toDays(time));
         LocalDate curDate = LocalDate.now();
         return packetTime.equals(curDate);
     }
