@@ -7,25 +7,13 @@ import { getUserByEmail } from "../server-list/ServerListLogic";
  * @returns list of servers
  */
 export async function getUserServers(email: string) {
-    var servers = new Array({ address: String });
+    var servers = [];
     var clientInfo = await getUserByEmail(email);
-    for (let j = 0; j < clientInfo["servers"].length; j++) {
-        servers.push(clientInfo["servers"][j]);
+    for (let i = 0; i < clientInfo["servers"].length; i++) {
+        servers.push(clientInfo["servers"][i]["address"]);
     }
     return servers;
 }
-
-export function getServersFromSubnet(servers: any[], subnet: string) {
-    servers.forEach((subnetAndFullIP: {firstThree: string, addresses: [address: string]}) => {
-        if (subnetAndFullIP["firstThree"] === subnet) {
-            console.log("TO RETURN: ", subnetAndFullIP["addresses"]);
-            return subnetAndFullIP["addresses"];
-        }
-    });
-    console.log("HERE");
-    return [];
-}
-
 
 /**
  * Returns name (if available) and subnet (taken from TimeGraph.tsx, function not in logic file)
@@ -41,20 +29,30 @@ export function getName(clientName: string, subnetAddress: string){
     }
 }
 
-export function renderServerList(serverList: any[], subnetAddress: string) {
+export function getServersInSubnet(servers: any[], subnetAddress: string){
+    var serversInSubnet = [] as string[];
+    for (var i = 0; i < servers.length; i++) {
+        if (subnetAddress === getSubnetFromFullAddress(servers[i])) {
+            serversInSubnet.push(servers[i]);
+        }
+    };
+    return serversInSubnet;
+}
+
+export function renderServerList(serverList: any[]) {
     var returning = [] as any[];
-    // serverList.forEach((subnetAndFullIP: {firstThree: string, addresses: string[]}, index: number) => {
-    //     if (subnetAndFullIP["firstThree"] === subnetAddress) {
-    //         subnetAndFullIP["addresses"].map((address: string) => {
-    //             return(
-    //                 returning.push(<div key={index}>Server {address}: {checkServerStatus(address)}</div>)
-    //             )
-    //         });
-    //     }
-    // });
+    serverList.forEach((address: string, index: number) => {
+        returning.push(<div key={index}>Server {address} is {checkServerStatus(address)}</div>)
+    });
     return returning;
 };
 
 function checkServerStatus(address: string) {
     return "UP";
+}
+
+function getSubnetFromFullAddress(fullAddress: string){
+    var regExp = /\b\d{1,3}\.\d{1,3}\.\d{1,3}/;
+    // @ts-ignore
+    return fullAddress.match(regExp).toString()
 }
