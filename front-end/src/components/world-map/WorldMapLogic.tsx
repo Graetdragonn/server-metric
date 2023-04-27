@@ -1,6 +1,5 @@
-import React from "react"; 
+import React from "react";
 import {Line} from "react-simple-maps";
-import GeolocationService from "../../requests/GeolocationService";
 
 export function renderLines(serverGeo: any, geoList: any[], color: any) {
     let retArr: JSX.Element[] = [];

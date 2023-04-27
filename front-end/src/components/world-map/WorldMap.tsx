@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { ComposableMap, Geographies, Geography} from "react-simple-maps";
+import { ComposableMap, Geographies, Geography, Sphere} from "react-simple-maps";
 import GeolocationService from "../../requests/GeolocationService";
 import { renderLines } from "./WorldMapLogic";
 
@@ -24,8 +24,9 @@ export default function WorldMap(props: {server: string}) {
     }, [])
 
     return (
-        <div>
-            <ComposableMap>
+        <div style={{borderStyle: "solid", maxWidth: 1000, maxHeight: 1000, margin: "0 auto"}}>
+            <ComposableMap projectionConfig={{scale: 125}}>
+                <Sphere id="" fill="none" stroke="#000000" strokeWidth={1} />
                 <Geographies 
                     geography={geoURL}
                     fill="#D6D6DA"
