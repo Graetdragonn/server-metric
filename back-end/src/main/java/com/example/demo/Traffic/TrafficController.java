@@ -91,4 +91,11 @@ public class TrafficController {
         trafficService.addTraffic(traffic);
     }
 
+
+    //Get the newest Traffic By address
+    @GetMapping("getLatestTrafficByAddress/{serverAddress}")
+    @CrossOrigin
+    public long getLatestTrafficByAddress(@PathVariable("serverAddress") String serverAddress){
+        return trafficService.getLatestTraffic(serverAddress);
+    }
 }
