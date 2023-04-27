@@ -1,5 +1,6 @@
 package com.example.demo.Traffic;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -168,8 +169,8 @@ public class TrafficService {
     }
 
     public boolean checkCurrentDate(long time) {
-        Date packetTime = new Date(time);
-        Date curDate = new Date();
+        LocalDate packetTime = LocalDate.ofEpochDay(time);
+        LocalDate curDate = LocalDate.now();
         return packetTime.equals(curDate);
     }
 
