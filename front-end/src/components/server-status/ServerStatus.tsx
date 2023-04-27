@@ -1,8 +1,7 @@
 import {useState, useEffect} from "react";
 import '../../style/Master.css';
 import Collapsible from "react-collapsible";
-import { getName, getServersFromSubnet, getUserServers, renderServerList } from "./ServerStatusLogic";
-import {  sortServers } from "../server-list/ServerListLogic";
+import { getName, getUserServers, renderServerList, getServersInSubnet } from "./ServerStatusLogic";
 
 interface ServerStatusComponentProps {
     name: string;
@@ -12,23 +11,18 @@ interface ServerStatusComponentProps {
 
 export default function ServerStatus({name, email, subnetAddress}: ServerStatusComponentProps){
 
-    const [serverList, setServerList] = useState([] as any[]); // server list to be displayed
+    const [serverList, setServerList] = useState([] as string[]); // server list to be displayed
     const [currentTime, setCurrentTime] = useState(new Date()) // default value can be anything you want
 
     // CURRENTLY TRYING TO GET FULL SERVER IP TO RENDER UNDERNEATH EACH SUBNET
+    // TODO: call backend route to check last time stamp for that address, display "DOWN" if longer than certain time specified in constants file
+    // send email for servers that are down
 
     useEffect(() => {
         const getServerList = async () => {
             var servers = await getUserServers(email);
-            //servers = sortServers(servers);
-            var serversInSubnet = [] as string[];
-            for (var i = 0; i < servers.length; i++) {
-                if (subnetAddress === servers[i]["address"].toString().substring(subnetAddress.length)) {
-                    serversInSubnet.push(servers[i]["address"].toString());
-                }
-            };
-            console.log("Subnet: " + subnetAddress + "  Servers: " + serversInSubnet);
-            setServerList(Array.from(new Set(servers)));
+            var serversInSubnet = getServersInSubnet(servers, subnetAddress);            
+            setServerList(Array.from(new Set(serversInSubnet)));
         }
         setTimeout(() => setCurrentTime(new Date()), 10000)
         getServerList();
@@ -37,23 +31,10 @@ export default function ServerStatus({name, email, subnetAddress}: ServerStatusC
     return (
         <>
         <Collapsible trigger={getName(name, subnetAddress)} transitionTime={100}>
-            {renderServerList(serverList, subnetAddress)}
+            <br />
+            {renderServerList(serverList)}
         </Collapsible>
         <br/>
         </>
     );
 }
-
-// within collapsable, need to get list of addresses that fall under the subnet, do this by getting all of a client's servers?
-
-//{serverList.map((subnetAndFullIP: {firstThree: string, addresses: string[]}) => {
-//     console.log()
-//     if (subnetAndFullIP["firstThree"] === subnetAddress) {
-//         subnetAndFullIP["addresses"].map((address: string) => {
-//             return(
-//                 <div>Server {address}: {checkServerStatus(address)}</div>
-//             )
-//         });
-//     }
-// return(<br/>)
-// })}
