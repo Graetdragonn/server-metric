@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import {getClientServersByUser, getNumPacketsSentAndReceivedSP} from "./PacketPerIPSPLogic";
 import Collapsible from 'react-collapsible';
+import * as Constants from "../../constants";
 
 
 interface PacketPerIPSPComponentProps {
@@ -36,7 +37,7 @@ export default function PacketPerIPSP({clientEmail, clientFullName, subnetAddres
 
 
     function getGraphName(){
-        return clientFullName + ": Subnet: " + subnetAddress
+        return clientFullName + ", Subnet: " + subnetAddress
     }
 
     function render(){
@@ -51,11 +52,12 @@ export default function PacketPerIPSP({clientEmail, clientFullName, subnetAddres
                     <YAxis/>
                     <Tooltip/>
                     <Legend/>
+
                     <Bar onClick={(data) => {
-                        navigate("/single-server", {state: data.address});
-                    }} name="Number of Packets Sent" barSize={30} dataKey="sentPackets" fill="var(--orange_wheel)"/>
+                        navigate(Constants.SINGLE_SERVER_PAGE, {state: data.address});
+                        }} name="Number of Packets Sent" barSize={30} dataKey="sentPackets" fill="var(--orange_wheel)"/>
                     <Bar onClick={(data) => {
-                        navigate("/single-server", {state: data.address});
+                        navigate(Constants.SINGLE_SERVER_PAGE, {state: data.address});
                     }} name="Number of Packets Received" barSize={30} dataKey="receivedPackets"
                          fill="var(--some_purple)"/>
                 </BarChart>

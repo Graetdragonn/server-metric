@@ -22,7 +22,7 @@ public class SecurityConfig {
         http
                 .cors().and()
                 .csrf().disable()
-                .authorizeHttpRequests().requestMatchers("/api/v1/auth/**","/api/v1/traffic/**", "/api/v1/traffic", "/api/v1/servers/**", "/api/v1/geolocation/**").permitAll().anyRequest()
+                .authorizeHttpRequests().requestMatchers( "/api/v1/users/*/updateUserPassword","/api/v1/users/getAllUserEmails", "/api/v1/auth/**","/api/v1/traffic/**", "/api/v1/traffic", "/api/v1/servers/**", "/api/v1/geolocation/**").permitAll().anyRequest()
                 .authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -152,4 +152,17 @@ public class TrafficService {
       return map;
 
    }
+
+    public long getLatestTraffic(String serverAddress) {
+       List<Traffic> allTraffic = trafficRepository.findAll();
+       long currentLatestTime = 0 ;
+       for (Traffic currentTraffic : allTraffic) {
+          if (serverAddress.equals(currentTraffic.getSrcIP()) || serverAddress.equals(currentTraffic.getDstIP())) {
+             if (currentTraffic.getTime() > currentLatestTime) {
+                currentLatestTime = currentTraffic.getTime();
+             }
+          }
+       }
+       return currentLatestTime;
+    }
 }

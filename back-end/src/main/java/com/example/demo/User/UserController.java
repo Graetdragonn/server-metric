@@ -30,6 +30,12 @@ public class UserController {
         return userService.getUser(userEmail);
     }
 
+    @GetMapping("getAllUserEmails")
+    @CrossOrigin
+    public List<String> getAllUserEmails() {
+        return userService.getAllUserEmails();
+    }
+
     //this mapping gets all users connected to a specific server using the servers ID
     @GetMapping("getAllUsersConnectedToServer/{serverAddress}")
     @CrossOrigin
@@ -56,6 +62,13 @@ public class UserController {
     @CrossOrigin
     public void updateUser(@PathVariable("userEmail") String userEmail, @RequestBody User user){
         userService.updateUser(userEmail, user);
+    }
+
+    //this mapping updates a user using a specific users id
+    @PutMapping("{userEmail}/updateUserPassword")
+    @CrossOrigin
+    public void updateUserPassword(@PathVariable("userEmail") String userEmail, @RequestBody User user){
+        userService.updateUserPassword(userEmail, user);
     }
 
     //this mapping adds a server to the current user server list using a specific users id

@@ -5,13 +5,11 @@ import ServerList from '../../components/server-list/ServerList';
 import NetworkGraph from "../../components/network-graph/NetworkGraph";
 import PacketPerIPClient from "../../components/packet-per-ip-graph-client/PacketPerIPClient";
 import PacketPerIPSP from "../../components/packet-per-ip-graph-sp/PacketPerIPSP";
-import orangeCircle from './icons8-orange-circle-48.png'
-import purpleCircle from './icons8-purple-circle-48.png'
 import {getClientAndSubnetServersByUser, getSubnetServersByUser} from "./DashboardLogic";
 import {useEffect, useState} from "react";
 import * as Constants from "../../constants";
+import TimeGraph from "../../components/time-graph/TimeGraph";
 
-import LineGraph from "../../components/time-graph/TimeGraph"
 /**
  * Render dashboard page for each user type
  * @returns dashboard page depending on user type
@@ -24,12 +22,10 @@ export default function DashboardPage() {
     const [currentTime, setCurrentTime] = useState(new Date()) // default value can be anything you want
     let clientSubnetServers: string[]
     let clientAndSubnetList: any[]
-
-
+    const email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
 
     useEffect(() => {
         async function getData() {
-            const email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
             clientSubnetServers = await getSubnetServersByUser(email)
             setClientSubnetListState(clientSubnetServers);
             clientAndSubnetList = await getClientAndSubnetServersByUser(email)
@@ -39,10 +35,6 @@ export default function DashboardPage() {
         getData()
 
     }, [currentTime])
-
-
-
-
 
     function renderClientGraphs(subnetList: string[]){
         let returning = [];
@@ -62,6 +54,31 @@ export default function DashboardPage() {
             return returning;
     }
 
+
+
+    function renderClientTimeGraphs(subnetList: any[]){
+        let returning = [];
+        for(let i = 0; i<subnetList.length; i++){
+            returning.push(<TimeGraph clientName={""} clientEmail={email} subnetAddress={subnetList[i]}></TimeGraph>)
+        }
+        return returning;
+    }
+
+    function renderSPTimeGraphs(clientsWithSubnetsList: any[]){
+        let returning = [];
+
+        for(let i = 0; i<clientsWithSubnetsList.length; i++){
+            let clientEmail = clientsWithSubnetsList[i].clientEmail
+            let clientName = clientsWithSubnetsList[i].clientName
+            let clientSubnets = clientsWithSubnetsList[i].subnets
+            for(let j = 0; j < clientSubnets.length; j++){
+                returning.push(<TimeGraph clientName={clientName} clientEmail={clientEmail} subnetAddress={clientSubnets[j]}></TimeGraph>)
+            }
+
+        }
+        return returning;
+    }
+
     return (
     <div className="Dashboard-Page">
       <NavBar />
@@ -79,20 +96,51 @@ export default function DashboardPage() {
         </div>
       </div>
       <br />
-      <LineGraph/>
 
-      <div className="white-div" style={{ width: 1400, display: userType !== "CLIENT" ? 'none' : '' }}>
+      <div className="white-div" style={{ width: 1500, display: userType !== "CLIENT" ? 'none' : '' }}>
           <NetworkGraph></NetworkGraph>
+
           <br/>
           <br/>
-          <h3 style={{textAlign: "center", marginLeft: "60px",  textDecoration: "underline" }}> Graph of Packets Sent and Received through each Server</h3>
+
+          <div className={"div-for-collapsible"}>
+              <br/>
+              <h2 style={{textAlign: "center"}}>Time Graphs for each Subnet</h2>
+                  <br/>
+                  {renderClientTimeGraphs(clientSubnetListState)}
+              <br/>
+          </div>
+
+          <br/>
+          <br/>
+
+          <div className={"div-for-collapsible"}>
+              <br/>
+              <h2 style={{textAlign: "center"}}> Total Packets Graphs for each Subnet</h2>
+              <br/>
           {renderClientGraphs(clientSubnetListState)}
+              <br/>
+          </div>
+
       </div>
 
-      <div className="white-div" style={{ width: 1400, display: userType !== "SERVICE_PROVIDER" ? 'none' : '' }}>
-          <h3 style={{textAlign: "center", marginLeft: "50px",  textDecoration: "underline" }}>Graphs of Packets Sent/Received through Different Client Servers</h3>
-          {renderSPGraphs(spClientAndSubnetListState)}
-          <br />
+      <div className="white-div" style={{ width: 1500, display: userType !== "SERVICE_PROVIDER" ? 'none' : '' }}>
+         <div className={"div-for-collapsible"}>
+             <br/>
+             <h2 style={{textAlign: "center"}}>Total Packet Graphs for each Client Subnet</h2>
+             <br/>
+             {renderSPGraphs(spClientAndSubnetListState)}
+             <br/>
+         </div>
+          <br/>
+
+          <div className={"div-for-collapsible"}>
+              <br/>
+              <h2 style={{textAlign: "center"}}>Time Graphs for each Client Subnet</h2>
+              <br/>
+              {renderSPTimeGraphs(spClientAndSubnetListState)}
+              <br/>
+          </div>
       </div>
 
 
