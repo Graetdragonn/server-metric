@@ -90,11 +90,7 @@ public class UserService {
     public void addServer(String userEmail, Server server){
         User userUpdate = userRepository.findUserByUsername(userEmail).orElseThrow(()-> new IllegalStateException("user with email " + userEmail + " does not exist"));
         Server serverToAdd = new Server(server.getAddress());
-        try {
-            serverToAdd.setGeolocation(geoService.getGeo(server.getAddress()));
-        } catch (IOException | GeoIp2Exception e) {
-            throw new RuntimeException(e);
-        }
+        serverToAdd.setGeolocation(geoService.getGeo(server.getAddress()));
         userUpdate.addServer(serverToAdd);
         userRepository.save(userUpdate);
     }

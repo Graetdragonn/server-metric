@@ -36,11 +36,7 @@ public class ServerService {
         if(serverOptional.isPresent()){
             throw new IllegalStateException("Server is already added");
         }
-        try {
-            server.setGeolocation(geoService.getGeo(server.getAddress()));
-        } catch (IOException | GeoIp2Exception e) {
-            e.printStackTrace();
-        }
+        server.setGeolocation(geoService.getGeo(server.getAddress()));
         serverRepository.save(server);
     }
 

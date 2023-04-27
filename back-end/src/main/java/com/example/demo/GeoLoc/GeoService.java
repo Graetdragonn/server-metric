@@ -3,6 +3,7 @@ package com.example.demo.GeoLoc;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,18 +31,24 @@ public class GeoService {
         this.trafficService = trafficService;
     }
 
-    public Geo getGeo(String IP) throws IOException, GeoIp2Exception{
-        InetAddress IPaddr = InetAddress.getByName(IP);
-        CityResponse response = dbReader.city(IPaddr); 
+    public Geo getGeo(String IP) {
+        InetAddress IPaddr;
+        try {
+            IPaddr = InetAddress.getByName(IP);
+            CityResponse response = dbReader.city(IPaddr);
 
-        Location loc = response.getLocation();
+            Location loc = response.getLocation();
 
-        return new Geo(IP,
-                        response.getCountry().getName(),
-                        response.getCity().getName(),
-                        loc.getLatitude(),
-                        loc.getLongitude()
-                        );
+            return new Geo(IP,
+                    response.getCountry().getName(),
+                    response.getCity().getName(),
+                    loc.getLatitude(),
+                    loc.getLongitude());
+        } catch (IOException | GeoIp2Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Geo[][] getServerGeos(String IP) throws IOException, GeoIp2Exception {
@@ -49,13 +56,18 @@ public class GeoService {
         List<Traffic> receivedList = trafficService.getCurReceivedByServer(IP);
 
         ArrayList<Geo> sentGeos = new ArrayList<>();
+        Geo temp; 
         for (Traffic traffic : sentList) {
-            sentGeos.add(getGeo(traffic.getDstIP()));
+            temp = getGeo(traffic.getDstIP());
+            if (temp != null)
+                sentGeos.add(temp);
         }
 
         ArrayList<Geo> receivedGeos = new ArrayList<>();
         for (Traffic traffic : receivedList) {
-            receivedGeos.add(getGeo(traffic.getSrcIP()));
+            temp = getGeo(traffic.getSrcIP());
+            if (temp != null)
+                receivedGeos.add(temp);
         }
         
         return new Geo[][] {sentGeos.toArray(new Geo[0]), receivedGeos.toArray(new Geo[0])};
