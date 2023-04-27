@@ -1,6 +1,7 @@
 package com.example.demo.Traffic;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -165,4 +166,32 @@ public class TrafficService {
        }
        return currentLatestTime;
     }
+
+    public boolean checkCurrentDate(long time) {
+        Date packetTime = new Date(time);
+        Date curDate = new Date();
+        return packetTime.equals(curDate);
+    }
+
+    public List<Traffic> getCurReceivedByServer(String serverAddress) {
+      List<Traffic> allTraffic = trafficRepository.findAll();
+      List<Traffic> allTrafficFromServer = new ArrayList<>();
+       for (Traffic traffic : allTraffic) {
+          if (traffic.getDstIP().equals(serverAddress) && checkCurrentDate(traffic.getTime())) {
+             allTrafficFromServer.add(traffic);
+          }
+       }
+      return allTrafficFromServer;
+    }
+
+   public List<Traffic> getCurSentByServer(String serverAddress) {
+      List<Traffic> allTraffic = trafficRepository.findAll();
+      List<Traffic> allTrafficFromServer = new ArrayList<>();
+      for (Traffic traffic : allTraffic) {
+         if (traffic.getSrcIP().equals(serverAddress) && checkCurrentDate(traffic.getTime())) {
+            allTrafficFromServer.add(traffic);
+         }
+      }
+      return allTrafficFromServer;
+   }
 }

@@ -45,8 +45,8 @@ public class GeoService {
     }
 
     public Geo[][] getServerGeos(String IP) throws IOException, GeoIp2Exception {
-        List<Traffic> sentList = trafficService.getSentTrafficListByServer(IP);
-        List<Traffic> receivedList = trafficService.getReceivedTrafficListByServer(IP);
+        List<Traffic> sentList = trafficService.getCurSentByServer(IP);
+        List<Traffic> receivedList = trafficService.getCurReceivedByServer(IP);
 
         ArrayList<Geo> sentGeos = new ArrayList<>();
         for (Traffic traffic : sentList) {
