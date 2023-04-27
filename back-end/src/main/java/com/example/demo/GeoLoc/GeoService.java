@@ -57,15 +57,15 @@ public class GeoService {
 
         ArrayList<Geo> sentGeos = new ArrayList<>();
         Geo temp; 
-        for (Traffic traffic : sentList) {
-            temp = getGeo(traffic.getDstIP());
+        for (int i = 0 ; i < sentGeos.size(); i += sentGeos.size()/100) {
+            temp = getGeo(sentList.get(i).getDstIP());
             if (temp != null)
                 sentGeos.add(temp);
         }
 
         ArrayList<Geo> receivedGeos = new ArrayList<>();
-        for (Traffic traffic : receivedList) {
-            temp = getGeo(traffic.getSrcIP());
+        for (int i = 0 ; i < receivedGeos.size(); i += receivedGeos.size()/100) {
+            temp = getGeo(receivedList.get(i).getSrcIP());
             if (temp != null)
                 receivedGeos.add(temp);
         }
