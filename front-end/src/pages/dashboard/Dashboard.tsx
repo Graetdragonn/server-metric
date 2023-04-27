@@ -9,6 +9,7 @@ import {getClientAndSubnetServersByUser, getSubnetServersByUser} from "./Dashboa
 import {useEffect, useState} from "react";
 import * as Constants from "../../constants";
 import TimeGraph from "../../components/time-graph/TimeGraph";
+import ServerStatus from "../../components/server-status/ServerStatus";
 
 /**
  * Render dashboard page for each user type
@@ -54,8 +55,6 @@ export default function DashboardPage() {
             return returning;
     }
 
-
-
     function renderClientTimeGraphs(subnetList: any[]){
         let returning = [];
         for(let i = 0; i<subnetList.length; i++){
@@ -74,7 +73,27 @@ export default function DashboardPage() {
             for(let j = 0; j < clientSubnets.length; j++){
                 returning.push(<TimeGraph clientName={clientName} clientEmail={clientEmail} subnetAddress={clientSubnets[j]}></TimeGraph>)
             }
+        }
+        return returning;
+    }
 
+    function renderClientServerStatus(subnetList: string[]){
+        let returning = [];
+        for (let i = 0; i < subnetList.length; i++){
+            returning.push(<ServerStatus name={""} email={email} subnetAddress={subnetList[i]}></ServerStatus>)
+        }
+        return returning;
+    }
+
+    function renderSPServerStatus(clientsWithSubnetsList: any[]){
+        let returning = [];
+        for (let i = 0; i < clientsWithSubnetsList.length; i++){
+          let clientEmail = clientsWithSubnetsList[i].clientEmail
+            let clientName = clientsWithSubnetsList[i].clientName
+            let clientSubnets = clientsWithSubnetsList[i].subnets
+            for(let j = 0; j < clientSubnets.length; j++){
+                returning.push(<ServerStatus name={clientName} email={clientEmail} subnetAddress={clientSubnets[j]}></ServerStatus>)
+            }
         }
         return returning;
     }
@@ -107,8 +126,8 @@ export default function DashboardPage() {
           <div className={"div-for-collapsible"}>
               <br/>
               <h2 style={{textAlign: "center"}}>Time Graphs for each Subnet</h2>
-                  <br/>
-                  {renderClientTimeGraphs(clientSubnetListState)}
+              <br/>
+              {renderClientTimeGraphs(clientSubnetListState)}
               <br/>
           </div>
 
@@ -117,22 +136,33 @@ export default function DashboardPage() {
 
           <div className={"div-for-collapsible"}>
               <br/>
-              <h2 style={{textAlign: "center"}}> Total Packets Graphs for each Subnet</h2>
+              <h2 style={{textAlign: "center"}}>Total Packets Graphs for each Subnet</h2>
               <br/>
-          {renderClientGraphs(clientSubnetListState)}
+              {renderClientGraphs(clientSubnetListState)}
+              <br/>
+          </div>
+
+          <br/>
+          <br/>
+
+          <div className={"div-for-collapsible"}>
+              <br/>
+              <h2 style={{textAlign: "center"}}>Server Status for each Subnet</h2>
+              <br/>
+              {renderClientServerStatus(clientSubnetListState)}
               <br/>
           </div>
 
       </div>
 
       <div className="white-div" style={{ width: 1500, display: userType !== "SERVICE_PROVIDER" ? 'none' : '' }}>
-         <div className={"div-for-collapsible"}>
+          <div className={"div-for-collapsible"}>
              <br/>
              <h2 style={{textAlign: "center"}}>Total Packet Graphs for each Client Subnet</h2>
              <br/>
              {renderSPGraphs(spClientAndSubnetListState)}
              <br/>
-         </div>
+          </div>
           <br/>
 
           <div className={"div-for-collapsible"}>
@@ -142,6 +172,16 @@ export default function DashboardPage() {
               {renderSPTimeGraphs(spClientAndSubnetListState)}
               <br/>
           </div>
+          <br/>
+
+          <div className={"div-for-collapsible"}>
+             <br/>
+             <h2 style={{textAlign: "center"}}>Server Status for each Client Subnet</h2>
+             <br/>
+             {renderSPServerStatus(spClientAndSubnetListState)}
+             <br/>
+          </div>
+          <br/>
       </div>
 
 
