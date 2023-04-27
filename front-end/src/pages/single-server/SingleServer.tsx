@@ -5,6 +5,7 @@ import React, {useEffect, useState} from "react";
 import {Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis} from "recharts";
 import {getPortTrafficForAServer,} from "./SingleServerLogic";
 import SingleServerTimeGraph from "../../components/single-server-time-graph/SingleServerTimeGraph";
+import WorldMap from "../../components/world-map/WorldMap";
 const { getService } = require('port-numbers');
 
 export default function SingleServer() {
@@ -92,6 +93,8 @@ export default function SingleServer() {
                 <div className="white-div" style={{ width: 1200, marginLeft: "10%" }}>
                         <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "30%",  textDecoration: "underline" }}> Graph of Packets Sent and Received through Specific Ports </h3>
                         {render()}
+                <br />
+                <WorldMap server={state} />
                 </div>
                 <br/>
                 <br/>
