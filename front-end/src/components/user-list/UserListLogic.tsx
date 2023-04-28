@@ -1,4 +1,4 @@
-import { getClientServiceProvider } from "../../pages/delete-user/DeleteUserLogic";
+import {getClientServiceProvider} from "../../pages/delete-user/DeleteUserLogic";
 import UserService from "../../requests/UserService";
 
 /**
@@ -6,7 +6,7 @@ import UserService from "../../requests/UserService";
  * @returns array of all users
  */
 export async function getAllUsers(){
-    var res = await UserService.getUsers();
+    const res = await UserService.getUsers();
     return JSON.parse(res);
 }
 
@@ -17,8 +17,7 @@ export async function getAllUsers(){
  */
 export async function getUserInfo(email: string) {
     const userInfo = await UserService.getUserByEmail(email);
-    var userData = JSON.parse(userInfo);
-    return userData;
+    return JSON.parse(userInfo);
 }
 
 /**
@@ -27,8 +26,8 @@ export async function getUserInfo(email: string) {
  */
 export async function getClientList(): Promise<any[]> {
     const res = await UserService.getUsers();
-    var clientList = JSON.parse(res);
-    var clients = new Array();
+    const clientList = JSON.parse(res);
+    const clients = [];
 
     for (let i = 0; i < clientList.length; i++) {
         if (clientList[i]["userType"] === "CLIENT") {
@@ -44,9 +43,9 @@ export async function getClientList(): Promise<any[]> {
  * @returns list of clients with their service provider
  */
 export async function getServiceProviders(clients: any[]) {
-    var res = new Array();
+    const res = [];
     for (let i = 0; i < clients.length; i++) {
-        var sp = await getClientServiceProvider(clients[i]["username"]);
+        const sp = await getClientServiceProvider(clients[i]["username"]);
         res.push({client: clients[i], serviceProvider: sp});
     }
     return res;

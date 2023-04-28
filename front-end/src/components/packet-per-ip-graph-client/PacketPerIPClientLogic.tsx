@@ -2,7 +2,7 @@ import TrafficService from "../../requests/TrafficService";
 import UserService from "../../requests/UserService";
 
 function getSubnetFromFullAddress(fullAddress: string){
-    var regExp = /\b\d{1,3}\.\d{1,3}\.\d{1,3}/;
+    const regExp = /\b\d{1,3}\.\d{1,3}\.\d{1,3}/;
     // @ts-ignore
     return fullAddress.match(regExp).toString()
 }
@@ -15,10 +15,14 @@ function getSubnetFromFullAddress(fullAddress: string){
 function checkCurrentDate(unixTime: number){
     let currentDate = new Date()
     let packetDate = new Date(unixTime * 1000);
-    return currentDate.getDate() == packetDate.getDate();
+    return currentDate.getDate() === packetDate.getDate();
 }
 
-
+/**
+ * @function to get a list of addresses with number of packets sent and received
+ * @param userAddresses
+ * @param subnetAddress
+ */
 export async function getNumPacketsSentAndReceivedClient(userAddresses: string[], subnetAddress: string){
     try{
         const res = await TrafficService.getAllTraffic();
@@ -27,7 +31,7 @@ export async function getNumPacketsSentAndReceivedClient(userAddresses: string[]
 
 
         userAddresses.forEach((address: string) => {
-            if(subnetAddress == getSubnetFromFullAddress(address)){
+            if(subnetAddress === getSubnetFromFullAddress(address)){
                 packetsPerIp.push({ address: address, numPacketsSent: 0, numPacketsReceived: 0 });
             }
 
@@ -58,9 +62,8 @@ export async function getNumPacketsSentAndReceivedClient(userAddresses: string[]
 }
 
 /**
- * Sends JSON request to get all servers
- *
- * Returns array of strings (server addresses)
+ * @function sends a Json request to get all servers for a specific user
+ * @param email
  */
 export async function getServersByUser(email: string) {
     try {
