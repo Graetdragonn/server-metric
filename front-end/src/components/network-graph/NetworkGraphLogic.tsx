@@ -1,5 +1,10 @@
 import TrafficService from "../../requests/TrafficService";
 
+/**
+ * Function to check if address is in the list of addresses by comparing ip address strings
+ * @param address
+ * @param addresses
+ */
 function addressInNodeList(address: string, addresses: [{id: number; label: string}]){
     for(let i = 0; i < addresses.length; i++){
         // @ts-ignore
@@ -10,7 +15,11 @@ function addressInNodeList(address: string, addresses: [{id: number; label: stri
     return false;
 }
 
-
+/**
+ * @function to check if address is in the list of user addresses by comparing ip address strings
+ * @param address
+ * @param addresses
+ */
 function addressInUserAddress(address: string, addresses: string[]){
     for(let i = 0; i < addresses.length; i++){
         // @ts-ignore
@@ -21,6 +30,9 @@ function addressInUserAddress(address: string, addresses: string[]){
     return false;
 }
 
+/** @function to generate nodes for network graph based on user address list
+ * @param userAddresses
+ */
 export async function generateNodesForNetworkGraph(userAddresses: string[]){
     const res = await TrafficService.getAllTraffic();
     const trafficList = JSON.parse(res);
@@ -54,7 +66,7 @@ export async function generateNodesForNetworkGraph(userAddresses: string[]){
                         }
                     }
 
-                    if(foundConnections == 4){
+                    if(foundConnections === 4){
                         foundConnections = 0;
                         break;
                     }
@@ -63,6 +75,11 @@ export async function generateNodesForNetworkGraph(userAddresses: string[]){
     return nodeList
 }
 
+/**
+ * @function to get ID from a node used for generating edges
+ * @param address
+ * @param nodeList
+ */
 function getIDFromNodeList(address: string, nodeList: any[]){
     for(let i = 0; i < nodeList.length; i++){
         if(nodeList[i]["label"] === address){
@@ -72,6 +89,11 @@ function getIDFromNodeList(address: string, nodeList: any[]){
     return null;
 }
 
+/**
+ * @function to generate edges for network graph based on a list of nodes and length of user address list
+ * @param nodeList
+ * @param userAddressesLength
+ */
 export async function generateEdgesForNetworkGraph(nodeList: any[], userAddressesLength: number){
     const res = await TrafficService.getAllTraffic();
     const trafficList = JSON.parse(res);

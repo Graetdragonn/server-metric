@@ -13,10 +13,10 @@ export default function TimeGraph(props: {clientName: string, clientEmail: strin
     const globalServers: any = [];
 
     function checkSubnet(subnetAddress: string, fullAddress: string){
-        var regExp = /\b\d{1,3}\.\d{1,3}\.\d{1,3}/;
+        const regExp = /\b\d{1,3}\.\d{1,3}\.\d{1,3}/;
         // @ts-ignore
         let str = fullAddress.match(regExp).toString()
-        return (str == subnetAddress)
+        return (str === subnetAddress)
     }
 
     // Get all servers traffic
@@ -46,7 +46,7 @@ export default function TimeGraph(props: {clientName: string, clientEmail: strin
     }, [currentTime]);
 
     function getName(clientName: string, subnetAddress: string){
-        if(clientName != ""){
+        if(clientName !== ""){
             return clientName + ", Subnet: " + subnetAddress
         }else{
             return "Subnet: " + subnetAddress

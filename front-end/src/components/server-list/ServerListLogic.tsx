@@ -22,7 +22,7 @@ interface Client {
  * @returns all servers in database
  */
 export async function getAllServers() {
-    var res = await ServerService.getAllServers();
+    const res = await ServerService.getAllServers();
     return JSON.parse(res);
 }
 
@@ -33,19 +33,17 @@ export async function getAllServers() {
  */
 export async function getServerInfo(server: string) {
     const res = await ServerService.getServerByAddress(server);
-    var serverData = JSON.parse(res);
-    return serverData;
+    return JSON.parse(res);
 }
 
 /**
  * Get user by email
- * @param user email
  * @returns user data
+ * @param email
  */
 export async function getUserByEmail(email: string) {
-    var res = await UserService.getUserByEmail(email);
-    var userData = JSON.parse(res);
-    return userData;
+    const res = await UserService.getUserByEmail(email);
+    return JSON.parse(res);
 }
 
 /**
@@ -53,7 +51,8 @@ export async function getUserByEmail(email: string) {
  * @returns all clients in database belonging to a specified service provider
  */
 export async function getClientsByProvider(userInfo: Client) {
-    var clients = new Array();
+    let clients: any[];
+    clients = [];
 
     if (userInfo["clients"] != null) {
         userInfo["clients"].forEach((client: Client) => {
@@ -70,10 +69,12 @@ export async function getClientsByProvider(userInfo: Client) {
  * @returns list of servers
  */
 export async function getClientsServers(clients: string[]) {
+    let clientInfo;
+    let servers;
     if (localStorage.getItem("userType") === "CLIENT") {
-        var servers = new Array({ address: String });
+        servers = new Array({ address: String });
         for (let i = 0; i < clients.length; i++) {
-            var clientInfo = await getUserByEmail(clients[i]);
+            clientInfo = await getUserByEmail(clients[i]);
             for (let j = 0; j < clientInfo["servers"].length; j++) {
                 servers.push(clientInfo["servers"][j]);
             }
@@ -81,10 +82,10 @@ export async function getClientsServers(clients: string[]) {
         return servers;
     }
     else {
-        var serverWithClient = new Array();
+        const serverWithClient = [];
         for (let i = 0; i < clients.length; i++) {
-            var servers = new Array({ address: String });
-            var clientInfo = await getUserByEmail(clients[i]);
+            servers = new Array({address: String});
+            clientInfo = await getUserByEmail(clients[i]);
             for (let j = 0; j < clientInfo["servers"].length; j++) {
                 servers.push(clientInfo["servers"][j]);
             }
@@ -98,19 +99,20 @@ export async function getClientsServers(clients: string[]) {
 }
 
 export function sortServers(servers: any[]) {
-    var sorted = new Array();
+    const sorted = [];
 
     if (localStorage.getItem("userType") !== "ADMIN") {
         servers = servers.slice(1);
     }
     
     for (let i = 0; i < servers.length; i++) {
-        var serverAddressSplit = servers[i].address.split('.');
-        var firstThree = serverAddressSplit[0] + "." + serverAddressSplit[1] + "." + serverAddressSplit[2];
-        var isIn = false;
+        let j;
+        const serverAddressSplit = servers[i].address.split('.');
+        const firstThree = serverAddressSplit[0] + "." + serverAddressSplit[1] + "." + serverAddressSplit[2];
+        let isIn = false;
 
         // check if we already have a server in that list
-        for (var j = 0; j < sorted.length; j++) {
+        for (j = 0; j < sorted.length; j++) {
             if (JSON.stringify(sorted[j].firstThree) === JSON.stringify(firstThree)) {
                 isIn = true;
                 break;

@@ -48,10 +48,8 @@ export async function getAllTraffic(server: string){
 function checkCurrentDate(unixTime: number){
     let currentDate = new Date()
     let packetDate = new Date(unixTime * 1000);
-    if(currentDate.getDate() == packetDate.getDate() ){
-        return true
-    }
-    return false
+    return currentDate.getDate() === packetDate.getDate();
+
 
 }
 
@@ -61,21 +59,20 @@ function checkCurrentDate(unixTime: number){
  * @param total_dict: dictionary of the form:
  * {address: string, time: string, count: number }
  * it is initially empty
- * @param time_vals: list of the time values that have sent/received packets
  * it is initially empty
  * @returns an array of the now filled total_dict and time_val elements
  */
 export async function getAllPacketCounts(servers:any, total_dict:any){
-    var time_vals = [];
+    const time_vals = [];
     for(let i = 0; i < servers.length; i++){
         let current_server = servers[i]["address"];
-        var traffic = await getAllTraffic(current_server);
+        const traffic = await getAllTraffic(current_server);
         //Count the number of packets sent for a specific time
         //and a specific server.
-        var temp_dict:any = {};
+        const temp_dict: any = {};
         for(let x = 0; x < traffic.length; x++){
             if(traffic[x]["address"] === current_server){
-                var key = traffic[x]["time"];
+                const key = traffic[x]["time"];
 
                 // checks to see if data matches today's date
                 if(checkCurrentDate(key)){
@@ -83,9 +80,9 @@ export async function getAllPacketCounts(servers:any, total_dict:any){
                         temp_dict[key] = temp_dict[key] + 1;
                     } else{
                         temp_dict[key] = 1;
-                        var time_found = false;
+                        let time_found = false;
                         for(let y = 0; y < time_vals.length; y++){
-                            if(time_vals[y] == key){
+                            if(time_vals[y] === key){
                                 time_found = true;
                             }
                         }
@@ -102,8 +99,10 @@ export async function getAllPacketCounts(servers:any, total_dict:any){
         // Add time and packet counts to a dictionary associated with the
         // servers addres.
         for(let i = 0; i < Object.keys(temp_dict).length; i++){
-            var obj = {address: current_server, time: Object.keys(temp_dict)[i],
-                        count: Object.values(temp_dict)[i]};
+            const obj = {
+                address: current_server, time: Object.keys(temp_dict)[i],
+                count: Object.values(temp_dict)[i]
+            };
             total_dict.push(obj);
         }
     }
@@ -116,43 +115,41 @@ export async function getAllPacketCounts(servers:any, total_dict:any){
  * @returns time
  */
 function convertTime(unix_time: number){
-    let millisec_time = new Date(unix_time * 1000);
-    var time = millisec_time.getHours();
-    return time;
+    let time = new Date(unix_time * 1000);
+    return time.getHours();
 }
 
 /**
  * Function to format the data into a form that the graph can read
- * @param time_vals: an array of unix time values
  * @param servers: an array of servers
  * @param total_dict: a dictionary of times, time counts, and servers
  * @returns data: a dictionary of formatted data
  */
 export async function organizeData(servers:any, total_dict:any){
-    var date = new Date();
-    var afternoon = false;
+    const date = new Date();
+    let afternoon = false;
     if(date.getHours() > 12){
         afternoon = true;
     }
-    var data:any = [];
-    var times =["1:00","2:00","3:00","4:00","5:00","6:00","7:00","8:00","9:00",
-                "10:00","11:00","12:00"];
+    const data: any = [];
+    const times = ["1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00",
+        "10:00", "11:00", "12:00"];
     for(let i = 0; i < times.length; i++){
-        var dict_entry_string = '{"times": "';
+        let dict_entry_string = '{"times": "';
         if(afternoon){
             dict_entry_string += times[i] + 'pm"';
         }if(!afternoon){
             dict_entry_string += times[i] + 'am"';
         }
         for(let j = 0; j < servers.length; j++){
-            var time_found = false;
+            let time_found = false;
             for(let k = 0; k < total_dict.length; k++){
-                var hour = convertTime(total_dict[k]["time"]);
+                let hour = convertTime(total_dict[k]["time"]);
                 if(afternoon){
                     hour -= 12;
                 }
-                if((total_dict[k]["address"] == servers[j]["address"]) &&
-                    ((i+1) == hour)){
+                if((total_dict[k]["address"] === servers[j]["address"]) &&
+                    ((i+1) === hour)){
                     dict_entry_string += ', "' + servers[j]["address"] + '":' + total_dict[k]["count"];
                     time_found = true;
                     break;
@@ -164,12 +161,16 @@ export async function organizeData(servers:any, total_dict:any){
 
         }
         dict_entry_string += '}'
-        var data_obj = JSON.parse(dict_entry_string);
+        const data_obj = JSON.parse(dict_entry_string);
         data.push(data_obj);
     }
     return data;
 }
 
+/**
+ * @function to get a color for a line in the graph
+ * @param i
+ */
 function getColor(i: any){
     let colorArr = ["#EE8434","#7353BA", "#EF476F", "#12355b", "#65a48f", "#bb4430", "#A5FFD6", "#EEFC57", "#D0CFEC", "#9BC53D"]
     while(i >= colorArr.length){

@@ -1,17 +1,24 @@
 import UserService from "../../requests/UserService";
 import TrafficService from "../../requests/TrafficService";
 
-
+/**
+ * @function to get subnet address for full ip address
+ * @param fullAddress
+ */
 function getSubnetFromFullAddress(fullAddress: string){
-    var regExp = /\b\d{1,3}\.\d{1,3}\.\d{1,3}/;
+    const regExp = /\b\d{1,3}\.\d{1,3}\.\d{1,3}/;
     // @ts-ignore
     return fullAddress.match(regExp).toString()
 }
 
+/**
+ * @function to compare a unixTime number against the current date
+ * @param unixTime
+ */
 function checkCurrentDate(unixTime: number){
     let currentDate = new Date()
     let packetDate = new Date(unixTime * 1000);
-    return currentDate.getDate() == packetDate.getDate();
+    return currentDate.getDate() === packetDate.getDate();
 }
 
 /**
@@ -89,8 +96,8 @@ export async function getNumPacketsSentAndReceivedSP(clientAndClientServers: any
         const returnList = [] as any[];
         for (let i = 0; i < clientAndServersAndPackets.length; i++) {
             for (let j = 0; j < clientAndServersAndPackets[i]["servers"].length; j++)
-                if(clientAndServersAndPackets[i]["username"] == clientName){
-                    if(getSubnetFromFullAddress(clientAndServersAndPackets[i]["servers"][j]) == subnetAddress){
+                if(clientAndServersAndPackets[i]["username"] === clientName){
+                    if(getSubnetFromFullAddress(clientAndServersAndPackets[i]["servers"][j]) === subnetAddress){
                         returnList.push({ address: clientAndServersAndPackets[i]["servers"][j], sentPackets: clientAndServersAndPackets[i]["sentPackets"][j], receivedPackets: clientAndServersAndPackets[i]["receivedPackets"][j]})
                     }
                 }
@@ -106,9 +113,8 @@ export async function getNumPacketsSentAndReceivedSP(clientAndClientServers: any
 }
 
 /**
- * Sends JSON request to get all servers
- *
- * Returns array of strings (server addresses)
+ * @function that sends JSON request to get all servers for a specific user
+ * @param email
  */
 export async function getServersByUser(email: string) {
     try {

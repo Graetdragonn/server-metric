@@ -15,15 +15,15 @@ import * as Constants from "../../constants";
 export default function ServerList() {
   const [serverList, setServerList] = useState([] as any[]); // server list to be displayed
   const [currentTime, setCurrentTime] = useState(new Date()) // default value can be anything you want
-  var servers = [] as any[]; // server list temp variable
-  var clients = [] as string[]; // list of clients for service provider
+  let servers = [] as any[]; // server list temp variable
+  let clients = [] as string[]; // list of clients for service provider
   const navigate = useNavigate(); // for screen navigation
 
   // get server list
   useEffect(() => {
     // get all servers
     const getServerList = async () => {
-      var email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
+      const email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
 
       // if user is an admin, then get all servers
       if (localStorage.getItem("userType") === "ADMIN") {
@@ -31,7 +31,7 @@ export default function ServerList() {
         servers = sortServers(servers);
       }
       else if (localStorage.getItem("userType") === "SERVICE_PROVIDER") {
-        var userInfo = await getUserByEmail(email);
+        const userInfo = await getUserByEmail(email);
         clients = await getClientsByProvider(userInfo);
         // get list of servers
         servers = await getClientsServers(clients);
@@ -52,7 +52,7 @@ export default function ServerList() {
 
   // navigate to single server page
   const goToSingleServer = async (address: string) => {
-    var res = await getServerInfo(address);
+    const res = await getServerInfo(address);
     if (localStorage.getItem("userType") === "ADMIN") {
       navigate(Constants.ADMIN_SINGLE_SERVER_PAGE, { state: { serverInfo: res } });
     } else {

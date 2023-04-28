@@ -1,7 +1,9 @@
-import React from 'react';
 import TrafficService from "../../requests/TrafficService";
 
-
+/**
+ * @function to get a list of packets with time packet was created, and sent and received counts for number of packets during that time
+ * @param server
+ */
 export async function getPacketsSentAndReceived(server: string) {
         const res = await TrafficService.getAllTraffic();
         const trafficList = JSON.parse(res);
@@ -34,10 +36,10 @@ export async function getPacketsSentAndReceived(server: string) {
 
         }
 
-    var times =["0.00", "1:00","2:00","3:00","4:00","5:00","6:00","7:00","8:00","9:00",
-        "10:00","11:00","12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"];
+    const times = ["0.00", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00",
+        "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"];
 
-        for(let i = 0; i < timesAndPackets.length; i++){
+    for(let i = 0; i < timesAndPackets.length; i++){
             output.push({time: times[i], sentCount: timesAndPackets[i].sentCount, receivedCount: timesAndPackets[i].receivedCount })
         }
         return output;
@@ -56,9 +58,7 @@ function convertTimeToHr(unixTime: number){
 function checkCurrentDate(unixTime: number){
     let currentDate = new Date()
     let packetDate = new Date(unixTime * 1000);
-    if(currentDate.getDate() == packetDate.getDate() ){
-        return true
-    }
-    return false
+    return currentDate.getDate() === packetDate.getDate();
+
 
 }

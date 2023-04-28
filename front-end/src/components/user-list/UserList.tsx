@@ -10,7 +10,7 @@ import * as Constants from "../../constants";
  */
 export default function UserList() {
   const [userList, setUserList] = useState([] as any[]); // user list to render
-  var users = new Array(); // temporary user list variable
+  let users = []; // temporary user list variable
   const navigate = useNavigate(); // for screen navigation
 
 
@@ -40,13 +40,13 @@ export default function UserList() {
   }, [])
 
   const goToEdit = async (email: string) => {
-    var res = await getUserInfo(email);
+    const res = await getUserInfo(email);
     navigate(Constants.ADMIN_EDIT_USER_PAGE, { state: { userInfo: res } });
   }
 
   // go to edit client for service manager
   const goToEditSM = async (email: string) => {
-    var res = await getUserInfo(email);
+    const res = await getUserInfo(email);
     navigate(Constants.SERVICE_PROVIDER_EDIT_USER_PAGE, { state: { userInfo: res } });
   }
 

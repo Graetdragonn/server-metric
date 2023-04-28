@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import '../../style/Master.css';
-import { useLocation, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import BackButton from '../../components/back-button/BackButton';
-import { checkServerFormat } from '../add-server/AddServerLogic';
 import NavBar from '../../components/navigation-bar/NavBar';
-import { getAllServers, getClientsByProvider, getClientsServers, getServerInfo, getUserByEmail, sortServers } from '../../components/server-list/ServerListLogic';
-import { getUsersOnServer, removeServerFromUser } from '../admin-single-server/AdminSingleServerLogic';
+import { getAllServers, getClientsByProvider, getClientsServers, getServerInfo, getUserByEmail} from '../../components/server-list/ServerListLogic';
 import { checkServerInList } from './SearchServerLogic'
 import * as Constants from "../../constants";
 
@@ -31,21 +29,21 @@ export default function SearchServerPage() {
 
     // all servers
     const [serverList, setServerList] = useState([] as any[]);
-    var servers = [] as any[]; // server list temp variable
-    var clients = [] as string[]; // list of clients for service provider
+    let servers = [] as any[]; // server list temp variable
+    let clients = [] as string[]; // list of clients for service provider
 
     // get server list
     useEffect(() => {
         // get all servers
         const getServerList = async () => {
-            var email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
+            const email = localStorage.getItem("email")!.substring(1, localStorage.getItem("email")!.length - 1);
 
             // if user is an admin, then get all servers
             if (localStorage.getItem("userType") === "ADMIN") {
                 servers = await getAllServers();
             }
             else if (localStorage.getItem("userType") === "SERVICE_PROVIDER") {
-                var userInfo = await getUserByEmail(email);
+                const userInfo = await getUserByEmail(email);
                 clients = await getClientsByProvider(userInfo);
                 // get list of servers
                 servers = await getClientsServers(clients);
@@ -90,7 +88,7 @@ export default function SearchServerPage() {
 
     // navigate to single server page
     const goToSingleServer = async (address: string) => {
-        var res = await getServerInfo(address);
+        const res = await getServerInfo(address);
         if (localStorage.getItem("userType") === "ADMIN") {
             navigate(Constants.ADMIN_SINGLE_SERVER_PAGE, { state: { serverInfo: res } });
         } else {
