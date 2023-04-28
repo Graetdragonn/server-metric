@@ -20,7 +20,6 @@ export default function WorldMap(props: {server: string}) {
             setSentGeo(geoData[0]);
             setReceivedGeo(geoData[1]);
             setServerGeo(serverGeo);
-            console.log(geoData[1])
         }
         getData();
     }, [])
