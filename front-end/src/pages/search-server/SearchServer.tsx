@@ -115,9 +115,9 @@ export default function SearchServerPage() {
                         <form>
                             <BackButton />
                             <h1>Go to Server Page</h1>
-                            <div className='center'>
+                            <div >
                                 <div>
-                                    <select onChange={handleChangeDD}>
+                                    <select style={{display: "block", margin: "0 auto"}} onChange={handleChangeDD}>
                                         <option value="default"> - Select Server -</option>
                                         {serverList.map(server => {
                                             return server.servers.map((address: any) => {
@@ -127,14 +127,16 @@ export default function SearchServerPage() {
                                             })
                                         })}
                                     </select>
-                                    <button type="button" onClick={handleSubmitDD}>Go</button>
-                                    <br></br>
+                                    <br/>
+                                    <button style={{display: "block", margin: "0 auto"}}  type="button" onClick={handleSubmitDD}>Go</button>
+                                    <br/>
                                     <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>&nbsp; Please select a server </span>
                                 </div>
-                                <br></br>
+                                <br/>
                                 <div>
-                                    <input type='text' onChange={handleChangeI} placeholder='Enter server address'></input>
-                                    <button type="button" onClick={handleSubmitI}>Go</button>
+                                    <input style={{display: "block", margin: "0 auto", width: 240}} type='text' onChange={handleChangeI} placeholder='Enter server address'></input>
+                                    <br/>
+                                    <button style={{display: "block", margin: "0 auto"}}  type="button" onClick={handleSubmitI}>Go</button>
                                 </div>
                             </div>
                             <span style={{ visibility: serverError ? 'visible' : 'hidden' }} className='error'>&nbsp; Server does not exist in your list of servers  </span>
@@ -153,20 +155,22 @@ export default function SearchServerPage() {
                         <form>
                             <BackButton />
                             <h1>Go to Server Page</h1>
-                            <div className='center'>
+                            <div>
                                 <div>
-                                    <select onChange={handleChangeDD}>
+                                    <select  style={{display: "block", margin: "0 auto"}} onChange={handleChangeDD}>
                                         <option value="default"> - Select Server -</option>
                                         {serverList.map(server => { return <option key={server.address} value={server.address}>{server.address}</option>; })}
                                     </select>
-                                    <button type="button" onClick={handleSubmitDD}>Go</button>
-                                    <br></br>
+                                    <br/>
+                                    <button  style={{display: "block", margin: "0 auto"}} type="button" onClick={handleSubmitDD}>Go</button>
+                                    <br/>
                                     <span style={{ visibility: error ? 'visible' : 'hidden' }} className='error'>&nbsp; Please select a server </span>
                                 </div>
-                                <br></br>
+                                <br/>
                                 <div>
-                                    <input type='text' onChange={handleChangeI} placeholder='Enter server address'></input>
-                                    <button type="button" onClick={handleSubmitI}>Go</button>
+                                    <input  style={{display: "block", margin: "0 auto", maxWidth: "fit-content"}} type='text' onChange={handleChangeI} placeholder='Enter server address'></input>
+                                    <br/>
+                                    <button  style={{display: "block", margin: "0 auto"}} type="button" onClick={handleSubmitI}>Go</button>
                                 </div>
                             </div>
                             <span style={{ visibility: serverError ? 'visible' : 'hidden' }} className='error'>&nbsp; Server does not exist in your list of servers  </span>
