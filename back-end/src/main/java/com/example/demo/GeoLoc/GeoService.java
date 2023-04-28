@@ -44,7 +44,7 @@ public class GeoService {
                     response.getCity().getName(),
                     loc.getLatitude(),
                     loc.getLongitude());
-        } catch (IOException | GeoIp2Exception e) {
+        } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
             return null;
