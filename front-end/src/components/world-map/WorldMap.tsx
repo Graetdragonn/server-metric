@@ -23,9 +23,10 @@ export default function WorldMap(props: {server: string}) {
         getData();
     }, [])
 
-    return (
-        <div style={{borderStyle: "solid", maxWidth: 1000, maxHeight: 1000, margin: "0 auto"}}>
-            <ComposableMap projectionConfig={{scale: 125}}>
+    return (<>
+            <div className={"div-for-graphs"}>
+            <h3 style={{textAlign: "center", color: "var(--better_black)"}}>Geo Map of Packets Sent/Received</h3>
+            <ComposableMap width={1300} height={600} projectionConfig={{scale: 200}}>
                 <Sphere id="" fill="none" stroke="#000000" strokeWidth={1} />
                 <Geographies 
                     geography={geoURL}
@@ -50,5 +51,8 @@ export default function WorldMap(props: {server: string}) {
                 {renderLines(serverGeo, receivedGeo, "var(--some_purple)")}
             </ComposableMap>
         </div>
+        </>
+
+
     );
 }

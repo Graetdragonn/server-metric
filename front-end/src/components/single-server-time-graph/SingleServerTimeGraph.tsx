@@ -30,8 +30,9 @@ export default function SingleServerTimeGraph({address}: SingleServerTimeGraphPr
     },[currentTime]);
 
     return (
-        <div>
-                <AreaChart width={1300} height={540} data={data} margin={{top: 10, right: 50, left: 0, bottom: 10,}}>
+        <div className={"div-for-graphs"}>
+            <h3 style={{textAlign: "center", color: "var(--better_black)"}}>Graph of Overall Packets Sent/Received Today</h3>
+                <AreaChart width={1400} height={500} data={data} margin={{top: 10, right: 50, left: 0, bottom: 10,}}>
                     <CartesianGrid strokeDasharray="3 3"/>
                     <defs>
                         <linearGradient id="color1" x1="0" y1="0" x2="0" y2="1">
