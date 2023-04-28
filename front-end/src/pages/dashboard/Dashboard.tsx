@@ -90,7 +90,7 @@ export default function DashboardPage() {
         <div className='side-menu'>
           <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate(Constants.ADD_SERVER_PAGE)}>Add Server</button>
           <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate(Constants.REMOVE_SERVER_PAGE)}>Remove Server</button>
-            <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={()=>navigate(Constants.SEARCH_SERVER_PAGE)}>Server Lookup</button>
+            <button className="server-list-button" style={{ display: userType === "CLIENT" || "SERVICE_PROVIDER" ? '' : 'none' }} onClick={()=>navigate(Constants.SEARCH_SERVER_PAGE)}>Server Lookup</button>
             <br/>
             <br/>
           <ServerList />
