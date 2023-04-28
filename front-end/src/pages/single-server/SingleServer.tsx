@@ -69,41 +69,54 @@ export default function SingleServer() {
     };
 
     const render = () =>{
-        return <BarChart height={500} width={1200} data={allPortList}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="port" />
-            <YAxis />
-            <Tooltip content={<CustomTooltip />} />
-            <Legend />
-            <Bar name="Number Sent on Port" barSize={30} dataKey="numSent" fill="var(--orange_wheel)"> </Bar>
-            <Bar name="Number Received on Port" barSize={30} dataKey="numReceived" fill="var(--some_purple)" />
-        </BarChart>
+        return <>
+
+            <div className={"div-for-graphs"}>
+                <h3 style={{textAlign: "center", color: "var(--better_black)"}}>Graph of Packets Sent and Received through Specific Ports</h3>
+                <BarChart height={500} width={1400} data={allPortList}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="port" />
+                <YAxis />
+                <Tooltip content={<CustomTooltip />} />
+                <Legend />
+                <Bar name="Number Sent on Port" barSize={30} dataKey="numSent" fill="var(--orange_wheel)"> </Bar>
+                <Bar name="Number Received on Port" barSize={30} dataKey="numReceived" fill="var(--some_purple)" />
+                </BarChart>
+            </div>
+            </>
     }
 
 
     return (
         <div className="Single-Server-Page">
+
             <NavBar />
-            <div>
 
-            </div>
-            <div>
-                <br />
-                <div className="white-div-for-single-server-title" style={{ minWidth: 1000, maxHeight: 80, marginLeft: "19.5%" }}> <h1 className='text-for-single-server-header' style={{ textAlign: "center"}}> Server {state} </h1></div>
-                <div className="white-div" style={{ width: 1200, marginLeft: "10%" }}>
-                        <h3 style={{display: "inline-flex", textAlign: "center", marginLeft: "30%",  textDecoration: "underline" }}> Graph of Packets Sent and Received through Specific Ports </h3>
-                        {render()}
-                <br />
-                <WorldMap server={state} />
-                </div>
-                <br/>
-                <br/>
-                <div className="white-div" style={{ width: 1200 }}>
-                    <SingleServerTimeGraph address={state}></SingleServerTimeGraph>
-                </div>
+            <br/>
+            <br/>
+            <h1 style={{textAlign: "center", color:  "var(--better_black)"}}>Server: {state}</h1>
 
-            </div>
-            <div></div>
+            <br/>
+            <br/>
+
+            {render()}
+
+            <br/>
+            <br/>
+            <br/>
+
+            <WorldMap server={state} />
+
+            <br/>
+            <br/>
+            <br/>
+
+            <SingleServerTimeGraph address={state}></SingleServerTimeGraph>
+
+            <br/>
+            <br/>
+
         </div>
+
     );
 }

@@ -48,8 +48,8 @@ export default function NavBar() {
 
 
   return (
-    <header className="nav-area" style={{zIndex:2}}>
-      <img style={{ width: 70, height: 70, paddingLeft: 57}} src={logo} alt="Logo" />
+    <header className="nav-area" style={{zIndex:2, width: "110%"}}>
+      <img style={{ width: 70, height: 70, paddingLeft: 60}} src={logo} alt="Logo" />
       <nav>
         <ul className="menus">
 

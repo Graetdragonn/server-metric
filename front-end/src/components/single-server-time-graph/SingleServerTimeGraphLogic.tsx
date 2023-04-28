@@ -19,7 +19,6 @@ export async function getPacketsSentAndReceived(server: string) {
             let time = convertTimeToHr(trafficList[i]["time"])
 
             if (server === sentAddr ) {
-                console.log(new Date(1000 * trafficList[i]["time"]).toDateString())
                 if(checkCurrentDate(trafficList[i]["time"])){
                     timesAndPackets[time].sentCount++
                 }

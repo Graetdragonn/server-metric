@@ -7,6 +7,17 @@ function getSubnetFromFullAddress(fullAddress: string){
     return fullAddress.match(regExp).toString()
 }
 
+/**
+ * Function to check unix date with current date
+ * @param unixTime
+ * @returns boolean
+ */
+function checkCurrentDate(unixTime: number){
+    let currentDate = new Date()
+    let packetDate = new Date(unixTime * 1000);
+    return currentDate.getDate() == packetDate.getDate();
+}
+
 
 export async function getNumPacketsSentAndReceivedClient(userAddresses: string[], subnetAddress: string){
     try{
@@ -24,15 +35,17 @@ export async function getNumPacketsSentAndReceivedClient(userAddresses: string[]
         });
 
         for (let i = 0; i < trafficList.length; i++) {
-            const addrRec = trafficList[i]["dstIP"];
-            const addrSnt = trafficList[i]["srcIP"];
-            let idxRec = packetsPerIp.findIndex(obj => obj.address === addrRec);
-            if (idxRec !== -1) {
-                packetsPerIp[idxRec].numPacketsReceived += 1;
-            }
-            let idxSnt = packetsPerIp.findIndex(obj => obj.address === addrSnt);
-            if (idxSnt !== -1) {
-                packetsPerIp[idxSnt].numPacketsSent += 1;
+            if(checkCurrentDate(trafficList[i]["time"])){
+                const addrRec = trafficList[i]["dstIP"];
+                const addrSnt = trafficList[i]["srcIP"];
+                let idxRec = packetsPerIp.findIndex(obj => obj.address === addrRec);
+                if (idxRec !== -1) {
+                    packetsPerIp[idxRec].numPacketsReceived += 1;
+                }
+                let idxSnt = packetsPerIp.findIndex(obj => obj.address === addrSnt);
+                if (idxSnt !== -1) {
+                    packetsPerIp[idxSnt].numPacketsSent += 1;
+                }
             }
         }
         return packetsPerIp;

@@ -8,6 +8,12 @@ function getSubnetFromFullAddress(fullAddress: string){
     return fullAddress.match(regExp).toString()
 }
 
+function checkCurrentDate(unixTime: number){
+    let currentDate = new Date()
+    let packetDate = new Date(unixTime * 1000);
+    return currentDate.getDate() == packetDate.getDate();
+}
+
 /**
  * Get list of client's servers
  * @param email user email
@@ -66,13 +72,15 @@ export async function getNumPacketsSentAndReceivedSP(clientAndClientServers: any
             for (let j = 0; j < clientAndServersAndPackets[i]["servers"].length; j++) {
 
                 for (let k = 0; k < trafficList.length; k++) {
-                    const receivedAddr = trafficList[k]["dstIP"];
-                    const sentAddr = trafficList[k]["srcIP"];
-                    if (clientAndServersAndPackets[i]["servers"][j] === sentAddr) {
-                        clientAndServersAndPackets[i]["sentPackets"][j] += 1;
-                    }
-                    if (clientAndServersAndPackets[i]["servers"][j] === receivedAddr) {
-                        clientAndServersAndPackets[i]["receivedPackets"][j] += 1;
+                    if(checkCurrentDate(trafficList[i]["time"])){
+                        const receivedAddr = trafficList[k]["dstIP"];
+                        const sentAddr = trafficList[k]["srcIP"];
+                        if (clientAndServersAndPackets[i]["servers"][j] === sentAddr) {
+                            clientAndServersAndPackets[i]["sentPackets"][j] += 1;
+                        }
+                        if (clientAndServersAndPackets[i]["servers"][j] === receivedAddr) {
+                            clientAndServersAndPackets[i]["receivedPackets"][j] += 1;
+                        }
                     }
                 }
             }

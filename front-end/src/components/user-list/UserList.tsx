@@ -10,7 +10,6 @@ import * as Constants from "../../constants";
  */
 export default function UserList() {
   const [userList, setUserList] = useState([] as any[]); // user list to render
-  const [currentTime, setCurrentTime] = useState(new Date()) // default value can be anything you want
   var users = new Array(); // temporary user list variable
   const navigate = useNavigate(); // for screen navigation
 
@@ -29,17 +28,16 @@ export default function UserList() {
       users = await getClientList();
       setUserList(users);
 
+
     }
-    setTimeout(() => setCurrentTime(new Date()), 10000)
     if (localStorage.getItem("userType") === "ADMIN") {
       getAllUserList();
     }else if (localStorage.getItem("userType") === "SERVICE_MANAGER") {
       getClients();
+
     }
 
-
-
-  }, [currentTime])
+  }, [])
 
   const goToEdit = async (email: string) => {
     var res = await getUserInfo(email);
@@ -51,6 +49,7 @@ export default function UserList() {
     var res = await getUserInfo(email);
     navigate(Constants.SERVICE_PROVIDER_EDIT_USER_PAGE, { state: { userInfo: res } });
   }
+
 
   // RETURN ALL USERS FOR ADMIN
   if (localStorage.getItem("userType") === "ADMIN") {
@@ -99,6 +98,7 @@ export default function UserList() {
           </thead>
           {userList.map((user) => {
             return (
+
               <tbody key={user.client.username}>
                 <tr  className="userRow" onClick={() => goToEditSM(user.client.username)}>
                   <td>{user.client.userFirstName}</td>
