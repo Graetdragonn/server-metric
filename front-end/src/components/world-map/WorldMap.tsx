@@ -2,6 +2,8 @@ import React, {useState, useEffect} from "react";
 import { ComposableMap, Geographies, Geography, Sphere} from "react-simple-maps";
 import GeolocationService from "../../requests/GeolocationService";
 import { renderLines } from "./WorldMapLogic";
+import orangeCircle from "../../pages/dashboard/icons8-orange-circle-48.png";
+import purpleCircle from "../../pages/dashboard/icons8-purple-circle-48.png";
 
 const geoURL =
   "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json";
@@ -50,6 +52,7 @@ export default function WorldMap(props: {server: string}) {
                 {renderLines(serverGeo, sentGeo, "var(--orange_wheel)")}
                 {renderLines(serverGeo, receivedGeo, "var(--some_purple)")}
             </ComposableMap>
+                <p style = {{textAlign: "center"}}> <img style={{ width:20, height: 20}} src={orangeCircle} alt="Logo" /> <span style={{color:"var(--orange_wheel"}}>: Sent Packets &nbsp;</span> <img style={{ width:20, height: 20}} src={purpleCircle} alt="Logo" /> <span style={{color:"var(--some_purple"}}>: Received Packets</span></p>
         </div>
         </>
 

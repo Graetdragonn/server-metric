@@ -94,16 +94,20 @@ export default function SingleServer() {
 
             <br/>
             <br/>
+            <h1 style={{textAlign: "center", color:  "var(--better_black)"}}>Server: {state}</h1>
+
+            <br/>
+            <br/>
 
             {render()}
 
             <br/>
             <br/>
             <br/>
-            <br/>
 
             <WorldMap server={state} />
 
+            <br/>
             <br/>
             <br/>
 

@@ -102,7 +102,7 @@ export default function ServerList() {
   else if (localStorage.getItem("userType") !== 'SERVICE_MANAGER') {
     return (
       <div>
-        <h1 className="server-list-header-client" onClick={()=>navigate(Constants.SEARCH_SERVER_PAGE, { state: { serverList: serverList } })} style={{ fontSize: 18, textDecoration: 'underline'}}>Servers</h1>
+        <h1 className="server-list-header-client" style={{ fontSize: 18, textDecoration: 'underline'}}>Servers</h1>
         {serverList.map((server) => {
           return (
             <div>

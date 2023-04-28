@@ -90,6 +90,7 @@ export default function DashboardPage() {
         <div className='side-menu'>
           <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate(Constants.ADD_SERVER_PAGE)}>Add Server</button>
           <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={() => navigate(Constants.REMOVE_SERVER_PAGE)}>Remove Server</button>
+            <button className="server-list-button" style={{ display: userType === "CLIENT" ? '' : 'none' }} onClick={()=>navigate(Constants.SEARCH_SERVER_PAGE)}>Server Lookup</button>
             <br/>
             <br/>
           <ServerList />
@@ -158,6 +159,7 @@ export default function DashboardPage() {
             <button style={{ width: 150 }} onClick={() => navigate(Constants.DELETE_USER_PAGE)}>Delete User</button>
             <button style={{ width: 150 }} onClick={() => navigate(Constants.ADMIN_ADD_SERVER_PAGE)}>Add Server</button>
             <button style={{ width: 150 }} onClick={() => navigate(Constants.ADMIN_DELETE_SERVER_PAGE)}>Delete Server</button>
+              <button style={{ width: 150 }} onClick={()=>navigate(Constants.SEARCH_SERVER_PAGE)}>Server Lookup</button>
           </div>
           <div style={{ marginTop: '20px' }}>
             <UserList />
