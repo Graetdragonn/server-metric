@@ -47,6 +47,7 @@ public class GeoService {
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            System.err.println(IP);
             return null;
         }
     }
