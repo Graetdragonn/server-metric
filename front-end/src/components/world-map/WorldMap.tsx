@@ -26,7 +26,7 @@ export default function WorldMap(props: {server: string}) {
 
     return (<>
             <div className={"div-for-graphs"}>
-            <h3 style={{textAlign: "center", color: "var(--better_black)"}}>Geo Map of Packets Sent/Received</h3>
+            <h3 style={{textAlign: "center", color: "var(--better_black)"}}>Geo Map of Packets Sent/Received Today</h3>
             <ComposableMap width={1300} height={600} projectionConfig={{scale: 200}}>
                 <Sphere id="" fill="none" stroke="#000000" strokeWidth={1} />
                 <Geographies 
