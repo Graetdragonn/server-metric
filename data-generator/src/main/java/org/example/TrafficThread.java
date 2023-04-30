@@ -1,6 +1,8 @@
 package org.example;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 
 import lombok.AllArgsConstructor;
@@ -18,6 +20,7 @@ public class TrafficThread extends Thread {
             try {
                 lock.lock();
                 //Automatically generate flow packet data (src & dst IP, src & dst ports etc.)
+                builder.getHeader().setTimestamp(Instant.now().getEpochSecond());
                 sender.generateSingularTraffic(builder.setFlows().build());
                 lock.unlock();
                 Thread.sleep(1000);
