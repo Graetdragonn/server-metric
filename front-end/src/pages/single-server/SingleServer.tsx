@@ -72,7 +72,7 @@ export default function SingleServer() {
         return <>
 
             <div className={"div-for-graphs"}>
-                <h3 style={{textAlign: "center", color: "var(--better_black)"}}>Graph of Packets Sent/Received Through Specific Ports Today</h3>
+                <h3 style={{textAlign: "center", color: "var(--better_black)"}}>Graph of Packets Sent/Received through Specific Ports Today</h3>
                 <BarChart height={500} width={1400} data={allPortList}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="port" />
