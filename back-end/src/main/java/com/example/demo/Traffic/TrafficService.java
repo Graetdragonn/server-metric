@@ -125,15 +125,17 @@ public class TrafficService {
       List<Traffic> allTraffic = trafficRepository.findAll();
       Map<Integer, Integer> map = new HashMap<>();
       for(Traffic traffic: allTraffic){
-         if(checkCurrentDate(traffic.getTime())){
             if(traffic.getSrcIP().equals(serverAdddress)){
-               if(map.containsKey(traffic.getSrcPort())){
+               if(!checkCurrentDate(traffic.getTime())){
+                  map.put(traffic.getSrcPort(), map.getOrDefault(traffic.getSrcPort(), 0));
+               }
+               else if(map.containsKey(traffic.getSrcPort())){
                   map.put(traffic.getSrcPort(), map.get(traffic.getSrcPort()) + 1);
                }else{
                   map.put(traffic.getSrcPort(), 1);
                }
             }
-         }
+
       }
 
       return map;
@@ -144,15 +146,17 @@ public class TrafficService {
       List<Traffic> allTraffic = trafficRepository.findAll();
       Map<Integer, Integer> map = new HashMap<>();
       for(Traffic traffic: allTraffic){
-         if(checkCurrentDate(traffic.getTime())){
             if(traffic.getDstIP().equals(serverAdddress)){
-               if(map.containsKey(traffic.getDstPort())){
+               if(!checkCurrentDate(traffic.getTime())){
+                  map.put(traffic.getDstPort(), map.getOrDefault(traffic.getDstPort(), 0));
+               }
+               else if(map.containsKey(traffic.getDstPort())){
                   map.put(traffic.getDstPort(), map.get(traffic.getDstPort()) + 1);
                }else{
                   map.put(traffic.getDstPort(), 1);
                }
             }
-         }
+
       }
 
       return map;
