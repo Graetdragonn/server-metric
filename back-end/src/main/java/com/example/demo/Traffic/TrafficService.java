@@ -127,7 +127,9 @@ public class TrafficService {
       for(Traffic traffic: allTraffic){
             if(traffic.getSrcIP().equals(serverAdddress)){
                if(!checkCurrentDate(traffic.getTime())){
-                  map.put(traffic.getSrcPort(), map.getOrDefault(traffic.getSrcPort(), 0));
+                  if(!map.containsKey(traffic.getSrcPort())){
+                     map.put(traffic.getSrcPort(), 0);
+                  }
                }
                else if(map.containsKey(traffic.getSrcPort())){
                   map.put(traffic.getSrcPort(), map.get(traffic.getSrcPort()) + 1);
@@ -147,8 +149,8 @@ public class TrafficService {
       Map<Integer, Integer> map = new HashMap<>();
       for(Traffic traffic: allTraffic){
             if(traffic.getDstIP().equals(serverAdddress)){
-               if(!checkCurrentDate(traffic.getTime())){
-                  map.put(traffic.getDstPort(), map.getOrDefault(traffic.getDstPort(), 0));
+               if(!map.containsKey(traffic.getDstPort())){
+                  map.put(traffic.getDstPort(), 0);
                }
                else if(map.containsKey(traffic.getDstPort())){
                   map.put(traffic.getDstPort(), map.get(traffic.getDstPort()) + 1);
