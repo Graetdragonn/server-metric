@@ -32,8 +32,12 @@ export async function getAllTraffic(server: string){
         const receivedAddr = trafficList[i]["dstIP"];
         const sentAddr = trafficList[i]["srcIP"];
         if (server === sentAddr || server === receivedAddr ) {
-            const obj = {time: trafficList[i]["time"], address: server};
-            traffic.push(obj);
+            //consider converting time here to simplify code
+            /*const obj = {time: trafficList[i]["time"], address: server};*/
+            if(checkCurrentDate(trafficList[i]["time"])){
+                const obj = {time: convertTime(trafficList[i]["time"]), address: server};
+                traffic.push(obj);
+            }
         }
     }
     return traffic;
@@ -49,7 +53,6 @@ function checkCurrentDate(unixTime: number){
     let currentDate = new Date()
     let packetDate = new Date(unixTime * 1000);
     return currentDate.getDate() === packetDate.getDate();
-
 
 }
 
@@ -74,8 +77,6 @@ export async function getAllPacketCounts(servers:any, total_dict:any){
             if(traffic[x]["address"] === current_server){
                 const key = traffic[x]["time"];
 
-                // checks to see if data matches today's date
-                if(checkCurrentDate(key)){
                     if(key in temp_dict){
                         temp_dict[key] = temp_dict[key] + 1;
                     } else{
@@ -90,9 +91,6 @@ export async function getAllPacketCounts(servers:any, total_dict:any){
                             time_vals.push(key);
                         }
                     }
-                }
-
-
             }       
         }
 
@@ -144,12 +142,12 @@ export async function organizeData(servers:any, total_dict:any){
         for(let j = 0; j < servers.length; j++){
             let time_found = false;
             for(let k = 0; k < total_dict.length; k++){
-                let hour = convertTime(total_dict[k]["time"]);
+                // let hour = convertTime(total_dict[k]["time"]);
+                let hour = total_dict[k]["time"]
                 if(afternoon){
                     hour -= 12;
                 }
-                if((total_dict[k]["address"] === servers[j]["address"]) &&
-                    ((i+1) === hour)){
+                if((total_dict[k]["address"] == servers[j]["address"]) && ((i+1) == hour)){
                     dict_entry_string += ', "' + servers[j]["address"] + '":' + total_dict[k]["count"];
                     time_found = true;
                     break;
