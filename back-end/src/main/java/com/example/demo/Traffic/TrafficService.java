@@ -122,15 +122,54 @@ public class TrafficService {
 
    }
 
+//   public Map<Integer, Integer> getServerPortsSent(String serverAdddress){
+//      List<Traffic> allTraffic = trafficRepository.findAll();
+//      Map<Integer, Integer> map = new HashMap<>();
+//      for(Traffic traffic: allTraffic){
+//         if(traffic.getSrcIP().equals(serverAdddress)){
+//            if(map.containsKey(traffic.getSrcPort())){
+//               map.put(traffic.getSrcPort(), map.get(traffic.getSrcPort()) + 1);
+//            }else{
+//               map.put(traffic.getSrcPort(), 1);
+//            }
+//         }
+//      }
+//
+//      return map;
+//
+//   }
+//
+//   public Map<Integer, Integer> getServerPortsReceived(String serverAdddress){
+//      List<Traffic> allTraffic = trafficRepository.findAll();
+//      Map<Integer, Integer> map = new HashMap<>();
+//      for(Traffic traffic: allTraffic){
+//         if(traffic.getDstIP().equals(serverAdddress)){
+//            if(map.containsKey(traffic.getDstPort())){
+//               map.put(traffic.getDstPort(), map.get(traffic.getDstPort()) + 1);
+//            }else{
+//               map.put(traffic.getDstPort(), 1);
+//            }
+//         }
+//      }
+//
+//      return map;
+//
+//   }
+
    public Map<Integer, Integer> getServerPortsSent(String serverAdddress){
       List<Traffic> allTraffic = trafficRepository.findAll();
       Map<Integer, Integer> map = new HashMap<>();
       for(Traffic traffic: allTraffic){
          if(traffic.getSrcIP().equals(serverAdddress)){
             if(map.containsKey(traffic.getSrcPort())){
-               map.put(traffic.getSrcPort(), map.get(traffic.getSrcPort()) + 1);
+               if(checkCurrentDate(traffic.getTime())){
+                  map.put(traffic.getSrcPort(), map.get(traffic.getSrcPort()) + 1);
+               }
             }else{
-               map.put(traffic.getSrcPort(), 1);
+               if(checkCurrentDate(traffic.getTime())){
+                  map.put(traffic.getSrcPort(), 1);
+               }
+               map.put(traffic.getSrcPort(), 0);
             }
          }
       }
@@ -145,9 +184,14 @@ public class TrafficService {
       for(Traffic traffic: allTraffic){
          if(traffic.getDstIP().equals(serverAdddress)){
             if(map.containsKey(traffic.getDstPort())){
-               map.put(traffic.getDstPort(), map.get(traffic.getDstPort()) + 1);
+               if(checkCurrentDate(traffic.getTime())){
+                  map.put(traffic.getDstPort(), map.get(traffic.getDstPort()) + 1);
+               }
             }else{
-               map.put(traffic.getDstPort(), 1);
+               if(checkCurrentDate(traffic.getTime())){
+                  map.put(traffic.getDstPort(), 1);
+               }
+               map.put(traffic.getDstPort(), 0);
             }
          }
       }
