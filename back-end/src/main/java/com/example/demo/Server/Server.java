@@ -21,6 +21,7 @@ public class Server {
     private String address;
     private String country, city;
     private double latitude, longitude;
+    private long lastTimeNotified;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "servers")

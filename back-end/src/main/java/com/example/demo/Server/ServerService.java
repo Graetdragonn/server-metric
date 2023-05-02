@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.GeoLoc.GeoService;
-import com.maxmind.geoip2.exception.GeoIp2Exception;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,5 +52,16 @@ public class ServerService {
         serverUpdate.setAddress(server.getAddress());
         serverRepository.save(serverUpdate);
 
+    }
+
+    public void updateServerLastTimeNotified(String serverAddress, Server server) {
+        Server serverUpdate = serverRepository.findServerByAddress(serverAddress).orElseThrow(()-> new IllegalStateException("Server with address " + serverAddress + " does not exist"));
+        serverUpdate.setLastTimeNotified(server.getLastTimeNotified());
+        serverRepository.save(serverUpdate);
+    }
+
+    public long getServerLastTimeNotified(String serverAddress) {
+        Server server = serverRepository.findServerByAddress(serverAddress).orElseThrow(()-> new IllegalStateException("Server with address " + serverAddress + " does not exist"));
+        return server.getLastTimeNotified();
     }
 }
