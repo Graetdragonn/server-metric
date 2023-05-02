@@ -96,6 +96,54 @@ class ServerService {
         return res;
     }
 
+    /**
+     * Sets last time user was sent an email about server being down
+     * @param address  server address
+     * @param lastTimeNotified  last time notified in milliseconds
+     * @returns error if fail
+     */
+    async updateLastTimeNotified(address: string, lastTimeNotified: number) {
+        var res = "";
+        var config = {
+            method: 'put',
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'servers/updateLastTimeNotified/' + address,
+            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")},
+            data: { lastTimeNotified: lastTimeNotified }
+        };
+
+        await axios(config)
+            .then(function (response: { data: any; }) {
+                res = JSON.stringify(response.data);
+            })
+            .catch(function (error: any) {
+                //alert(error);
+            });
+        return res;
+    }
+
+    /**
+     * Gets last time user was sent an email about server being down
+     * @param address  server address
+     * @returns time in milliseconds of last time user was sent an email
+     */
+    async getLastTimeNotified(address: string) {
+        var res = "";
+        var config = {
+            method: 'get',
+            url: Constants.USER_API_BASE_URL + Constants.API_VERSION + 'servers/getLastTimeNotified/' + address,
+            headers: {Authorization: 'Bearer ' + localStorage.getItem("token")}
+        };
+
+        await axios(config)
+            .then(function (response: { data: any; }) {
+                res = JSON.stringify(response.data);
+            })
+            .catch(function (error: any) {
+                //alert(error);
+            });
+        return res;
+    }
+    
 }
 
 export default new ServerService()
