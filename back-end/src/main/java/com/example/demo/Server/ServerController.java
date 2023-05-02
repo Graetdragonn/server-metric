@@ -49,4 +49,18 @@ public class ServerController {
     public void updateServer(@PathVariable("serverAddress") String serverAddress, @RequestBody Server server){
         serverService.updateServer(serverAddress, server);
     }
+
+    //this mapping updates a specific server using a servers id
+    @PutMapping("updateLastTimeNotified/{serverAddress}")
+    @CrossOrigin
+    public void updateLastTimeNotified(@PathVariable("serverAddress") String serverAddress, @RequestBody Server server){
+        serverService.updateServerLastTimeNotified(serverAddress, server);
+    }
+
+    //this mapping updates a specific server using a servers id
+    @GetMapping ("getLastTimeNotified/{serverAddress}")
+    @CrossOrigin
+    public long getLastTimeNotified(@PathVariable("serverAddress") String serverAddress){
+        return serverService.getServerLastTimeNotified(serverAddress);
+    }
 }
