@@ -24,8 +24,9 @@ export const SEARCH_SERVER_PAGE = "/searchserver"
 
 // EMAIL
 export const EMAIL_SERVICE_ID = "service_c6k47p8"
-export const EMAIL_TEMPLATE_ID = "template_yhrp3na"
+export const FORGOT_PASS_EMAIL_TEMPLATE_ID = "template_yhrp3na"
+export const SERVER_DOWN_EMAIL_TEMPLATE_ID = "template_5ie4ak3"
 export const PUBLIC_KEY = "wVAgsDPjNqjXNwi1i"
 
 // TIME ELAPSED IN MILLISECONDS TO MARK A SERVER AS "DOWN"
-export const TIME_UNTIL_SERVER_DOWN = 60000;
+export const TIME_UNTIL_SERVER_DOWN = 86400000; // 24 hours

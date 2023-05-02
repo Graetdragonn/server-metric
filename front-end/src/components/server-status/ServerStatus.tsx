@@ -9,7 +9,7 @@ interface ServerStatusComponentProps {
     subnetAddress: string;
 }
 
-interface ServerAndStatus {
+export interface ServerAndStatus {
     server: string;
     status: string;
 }
@@ -41,7 +41,7 @@ export default function ServerStatus({name, email, subnetAddress}: ServerStatusC
         <>
         <Collapsible trigger={getName(name, subnetAddress)} transitionTime={100}>
             <br />
-            {renderServerList(serversWithStatus)}
+            {renderServerList(serversWithStatus, email)}
         </Collapsible>
         <br/>
         </>
