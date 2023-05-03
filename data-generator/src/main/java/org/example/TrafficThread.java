@@ -24,7 +24,7 @@ public class TrafficThread extends Thread {
                 sender.generateSingularTraffic(builder.setFlows().build());
                 lock.unlock();
 //                Thread.sleep(1000);
-                Thread.sleep(10000);
+                Thread.sleep(5000);
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
                 break;
