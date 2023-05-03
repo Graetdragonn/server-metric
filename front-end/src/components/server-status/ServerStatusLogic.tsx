@@ -14,11 +14,7 @@ export async function getUserServers(email: string) {
     var servers = [];
     var clientInfo = await getUserByEmail(email);
     for (let i = 0; i < clientInfo["servers"].length; i++) {
-        var serverAndStatus = {} as ServerAndStatus;
-        serverAndStatus.server = clientInfo["servers"][i]["address"];
-        serverAndStatus.status = "";
-        serverAndStatus.lastTimeNotified = clientInfo["servers"][i]["lastTimeNotified"];
-        servers.push(serverAndStatus);
+        servers.push(clientInfo["servers"][i]["address"]);
     }
     return servers;
 }
@@ -44,15 +40,11 @@ export function getName(clientName: string, subnetAddress: string){
  * @returns list of servers within the subnetAddress 
  *          (type returned is ServerAndStatus, status and lastTimeNotified fields stay the same)
  */
-export function getServersInSubnet(servers: any[], subnetAddress: string){
-    var serversInSubnet = [] as ServerAndStatus[];
+export function getServersInSubnet(servers: string[], subnetAddress: string){
+    var serversInSubnet = [] as string[];
     for (var i = 0; i < servers.length; i++) {
-        if (subnetAddress === getSubnetFromFullAddress(servers[i].server)) {
-            serversInSubnet.push({
-                server: servers[i].server,
-                status: servers[i].status,
-                lastTimeNotified: servers[i].lastTimeNotified
-            });
+        if (subnetAddress === getSubnetFromFullAddress(servers[i])) {
+            serversInSubnet.push(servers[i]);
         }
     };
     return serversInSubnet;
@@ -66,6 +58,8 @@ export function getServersInSubnet(servers: any[], subnetAddress: string){
 export async function checkServerStatus(address: string) {
     var latestTraffic = parseInt(await TrafficService.getLatestTrafficByAddress(address));
     var currentTime = new Date().getTime();
+
+    console.log("Latest traffic (" + address + "): " + latestTraffic);
 
     if (latestTraffic == null) { 
         return "Error getting most recent traffic." 
@@ -81,18 +75,29 @@ export async function checkServerStatus(address: string) {
 export function renderServerList(serversWithStatus: ServerAndStatus[], email: string) {
     var returning = [] as any[];
     serversWithStatus.forEach((item: ServerAndStatus, index: number) => {
-        console.log("Server: " + item.server + ", Status: " + item.status + ", Last Time Notified: " + item.lastTimeNotified);
         var statusColor = "black";
         if (item["status"] === "UP") {
             statusColor = "green";
         } else if (item["status"] === "DOWN") {
             statusColor = "red";
-            sendServerDownEmail(item["server"], email);
+            checkLastEmailAndSendEmail(item.server, email);
         }
         returning.push(<div key={index}>Server {item["server"]} is <span style={{ color: statusColor }}>{item["status"]}</span></div>)
     });
     return returning;
 };
+
+async function checkLastEmailAndSendEmail(server: string, email: string) {
+    var lastTimeNotified = await ServerService.getLastTimeNotified(server);
+    var currentTime = new Date().valueOf();
+
+    if ((currentTime - parseInt(lastTimeNotified) > Constants.TIME_BETWEEN_EMAILS) || (parseInt(lastTimeNotified) == 0)) {
+        var success = sendServerDownEmail(server, email);
+        if (success) {
+            ServerService.updateLastTimeNotified(server, currentTime);
+        }
+    }
+}
 
 /**
  * Send user an email about their server being down
@@ -105,16 +110,16 @@ function sendServerDownEmail(server: string, email: string) {
         server_down: server,
         elapsed_time: millisecondsToHours(Constants.TIME_UNTIL_SERVER_DOWN) + " hours"
     }
-    // console.log("Sending 'server " + server + " down' email to " + email);
 
     // DO NOT UNCOMMENT THE FOLLOWING LINES. EMAIL WILL SEND.
 
     // emailjs.send(Constants.EMAIL_SERVICE_ID, Constants.SERVER_DOWN_EMAIL_TEMPLATE_ID, templateParams, Constants.PUBLIC_KEY)
     // .then((result) => {
-    //     //console.log(result.text);
+    //     return 1;
     // }, (error) => {
-    //     //console.log(error.text);
+    //     return 0;
     // });
+    return 1; 
 }
 
 /**
