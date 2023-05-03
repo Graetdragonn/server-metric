@@ -12,7 +12,6 @@ interface ServerStatusComponentProps {
 export interface ServerAndStatus {
     server: string;
     status: string;
-    lastTimeNotified: number;
 }
 
 export default function ServerStatus({name, email, subnetAddress}: ServerStatusComponentProps){
@@ -24,12 +23,11 @@ export default function ServerStatus({name, email, subnetAddress}: ServerStatusC
             var servers = await getUserServers(email); // servers has type ServerAndStatus
             var serversInSubnet = getServersInSubnet(servers, subnetAddress);  // serversInSubnet has type ServerAndStatus
             var serversWithStatusLocal = [] as ServerAndStatus[];
-            serversInSubnet.forEach(async (item: ServerAndStatus) => {
-                var serverStatus = await checkServerStatus(item.server);
+            serversInSubnet.forEach(async (server: string) => {
+                var serverStatus = await checkServerStatus(server);
                 serversWithStatusLocal.push({
-                    server: item.server,
-                    status: serverStatus,
-                    lastTimeNotified: item.lastTimeNotified
+                    server: server,
+                    status: serverStatus
                 })
             });
             setServersWithStatus(serversWithStatusLocal);
