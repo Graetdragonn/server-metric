@@ -6,15 +6,19 @@ import * as Constants from "../../constants";
 import emailjs from '@emailjs/browser';
 
 /**
- * Get servers belonging to user email (adapted from getClientsServers in ServerListLogic.tsx)
+ * Get servers belonging to user email, as well as lastTimeNotified (adapted from getClientsServers in ServerListLogic.tsx)
  * @param user email
- * @returns list of servers
+ * @returns list of ServerAndStatus type objects
  */
 export async function getUserServers(email: string) {
     var servers = [];
     var clientInfo = await getUserByEmail(email);
     for (let i = 0; i < clientInfo["servers"].length; i++) {
-        servers.push(clientInfo["servers"][i]["address"]);
+        var serverAndStatus = {} as ServerAndStatus;
+        serverAndStatus.server = clientInfo["servers"][i]["address"];
+        serverAndStatus.status = "";
+        serverAndStatus.lastTimeNotified = clientInfo["servers"][i]["lastTimeNotified"];
+        servers.push(serverAndStatus);
     }
     return servers;
 }
@@ -37,13 +41,18 @@ export function getName(clientName: string, subnetAddress: string){
  * Returns an array of only the servers within the specified subnet
  * @param servers list of all servers
  * @param subnetAddress subnet address to match
- * @returns list of servers within the subnetAddress
+ * @returns list of servers within the subnetAddress 
+ *          (type returned is ServerAndStatus, status and lastTimeNotified fields stay the same)
  */
 export function getServersInSubnet(servers: any[], subnetAddress: string){
-    var serversInSubnet = [] as string[];
+    var serversInSubnet = [] as ServerAndStatus[];
     for (var i = 0; i < servers.length; i++) {
-        if (subnetAddress === getSubnetFromFullAddress(servers[i])) {
-            serversInSubnet.push(servers[i]);
+        if (subnetAddress === getSubnetFromFullAddress(servers[i].server)) {
+            serversInSubnet.push({
+                server: servers[i].server,
+                status: servers[i].status,
+                lastTimeNotified: servers[i].lastTimeNotified
+            });
         }
     };
     return serversInSubnet;
@@ -69,9 +78,10 @@ export async function checkServerStatus(address: string) {
  * @param serversWithStatus array of objects containing the server and its status (see interface on ServerStatus.tsx)
  * @returns 
  */
-export function renderServerList(serversWithStatus: any[], email: string) {
+export function renderServerList(serversWithStatus: ServerAndStatus[], email: string) {
     var returning = [] as any[];
     serversWithStatus.forEach((item: ServerAndStatus, index: number) => {
+        console.log("Server: " + item.server + ", Status: " + item.status + ", Last Time Notified: " + item.lastTimeNotified);
         var statusColor = "black";
         if (item["status"] === "UP") {
             statusColor = "green";

@@ -12,30 +12,30 @@ interface ServerStatusComponentProps {
 export interface ServerAndStatus {
     server: string;
     status: string;
+    lastTimeNotified: number;
 }
 
 export default function ServerStatus({name, email, subnetAddress}: ServerStatusComponentProps){
 
     const [serversWithStatus, setServersWithStatus] = useState([] as ServerAndStatus[]); // list of servers and their status
-    const [currentTime, setCurrentTime] = useState(new Date()) // default value can be anything you want
 
     useEffect(() => {
         const getServersWithStatus = async () => {
-            var servers = await getUserServers(email);
-            var serversInSubnet = Array.from(new Set(getServersInSubnet(servers, subnetAddress)));  
+            var servers = await getUserServers(email); // servers has type ServerAndStatus
+            var serversInSubnet = getServersInSubnet(servers, subnetAddress);  // serversInSubnet has type ServerAndStatus
             var serversWithStatusLocal = [] as ServerAndStatus[];
-            serversInSubnet.forEach(async (server: string) => {
-                var serverStatus = await checkServerStatus(server);
+            serversInSubnet.forEach(async (item: ServerAndStatus) => {
+                var serverStatus = await checkServerStatus(item.server);
                 serversWithStatusLocal.push({
-                    server: server,
-                    status: serverStatus
+                    server: item.server,
+                    status: serverStatus,
+                    lastTimeNotified: item.lastTimeNotified
                 })
             });
             setServersWithStatus(serversWithStatusLocal);
         }
-        setTimeout(() => setCurrentTime(new Date()), 10000)
         getServersWithStatus();
-    }, [currentTime]);
+    }, []);
 
     return (
         <>
