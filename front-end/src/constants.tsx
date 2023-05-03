@@ -28,6 +28,6 @@ export const FORGOT_PASS_EMAIL_TEMPLATE_ID = "template_yhrp3na"
 export const SERVER_DOWN_EMAIL_TEMPLATE_ID = "template_5ie4ak3"
 export const PUBLIC_KEY = "wVAgsDPjNqjXNwi1i"
 
-// TIME ELAPSED IN MILLISECONDS 
-export const TIME_UNTIL_SERVER_DOWN = 86400000; // 24 hours 
-export const TIME_BETWEEN_EMAILS = 43200000; // 12 hours
+// TIME ELAPSED IN SECONDS
+export const SECONDS_UNTIL_SERVER_DOWN = 180; // 3 minutes
+export const SECONDS_BETWEEN_EMAILS = 300; // 5 minutes
