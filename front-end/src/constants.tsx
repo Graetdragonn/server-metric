@@ -24,5 +24,10 @@ export const SEARCH_SERVER_PAGE = "/searchserver"
 
 // EMAIL
 export const EMAIL_SERVICE_ID = "service_c6k47p8"
-export const EMAIL_TEMPLATE_ID = "template_yhrp3na"
+export const FORGOT_PASS_EMAIL_TEMPLATE_ID = "template_yhrp3na"
+export const SERVER_DOWN_EMAIL_TEMPLATE_ID = "template_5ie4ak3"
 export const PUBLIC_KEY = "wVAgsDPjNqjXNwi1i"
+
+// TIME ELAPSED IN SECONDS
+export const SECONDS_UNTIL_SERVER_DOWN = 180; // 3 minutes
+export const SECONDS_BETWEEN_EMAILS = 300; // 5 minutes

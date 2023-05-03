@@ -63,7 +63,7 @@ export default function ForgotPasswordPage() {
 
     // if password update is successful, then send the user an email
     if (await updatePassword(email, password)) {
-      emailjs.send(Constants.EMAIL_SERVICE_ID, Constants.EMAIL_TEMPLATE_ID, templateParams, Constants.PUBLIC_KEY)
+      emailjs.send(Constants.EMAIL_SERVICE_ID, Constants.FORGOT_PASS_EMAIL_TEMPLATE_ID, templateParams, Constants.PUBLIC_KEY)
       .then((result) => {
           //console.log(result.text);
       }, (error) => {
