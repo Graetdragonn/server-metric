@@ -57,14 +57,12 @@ export function getServersInSubnet(servers: string[], subnetAddress: string){
  */
 export async function checkServerStatus(address: string) {
     var latestTraffic = parseInt(await TrafficService.getLatestTrafficByAddress(address));
-    var currentTime = new Date().getTime();
-
-    console.log("Latest traffic (" + address + "): " + latestTraffic);
+    var currentTimeInSeconds = millisecondsToSeconds(new Date().getTime());
 
     if (latestTraffic == null) { 
         return "Error getting most recent traffic." 
     }
-    return ((currentTime - Constants.TIME_UNTIL_SERVER_DOWN) > latestTraffic) ? "DOWN" : "UP";
+    return ((currentTimeInSeconds - Constants.SECONDS_UNTIL_SERVER_DOWN) > latestTraffic) ? "DOWN" : "UP";
 }
 
 /**
@@ -78,6 +76,7 @@ export function renderServerList(serversWithStatus: ServerAndStatus[], email: st
         var statusColor = "black";
         if (item["status"] === "UP") {
             statusColor = "green";
+            ServerService.updateLastTimeNotified(item.server, 0); // server back up, should send email immediately on server down
         } else if (item["status"] === "DOWN") {
             statusColor = "red";
             checkLastEmailAndSendEmail(item.server, email);
@@ -87,14 +86,20 @@ export function renderServerList(serversWithStatus: ServerAndStatus[], email: st
     return returning;
 };
 
+/**
+ * Checks the last time user was notified about server down, and sends email if necessary
+ * Updates the last time notified if an email was sent
+ * @param server  server address
+ * @param email   user email
+ */
 async function checkLastEmailAndSendEmail(server: string, email: string) {
     var lastTimeNotified = await ServerService.getLastTimeNotified(server);
-    var currentTime = new Date().valueOf();
+    var currentTimeInSeconds = millisecondsToSeconds(new Date().valueOf());
 
-    if ((currentTime - parseInt(lastTimeNotified) > Constants.TIME_BETWEEN_EMAILS) || (parseInt(lastTimeNotified) == 0)) {
+    if ((currentTimeInSeconds - parseInt(lastTimeNotified) > Constants.SECONDS_BETWEEN_EMAILS) || (parseInt(lastTimeNotified) == 0)) {
         var success = sendServerDownEmail(server, email);
         if (success) {
-            ServerService.updateLastTimeNotified(server, currentTime);
+            ServerService.updateLastTimeNotified(server, currentTimeInSeconds);
         }
     }
 }
@@ -108,17 +113,15 @@ function sendServerDownEmail(server: string, email: string) {
     const templateParams = {
         to_email: email,
         server_down: server,
-        elapsed_time: millisecondsToHours(Constants.TIME_UNTIL_SERVER_DOWN) + " hours"
+        elapsed_time: (Constants.SECONDS_UNTIL_SERVER_DOWN / 60) + " minutes"
     }
 
-    // DO NOT UNCOMMENT THE FOLLOWING LINES. EMAIL WILL SEND.
-
-    // emailjs.send(Constants.EMAIL_SERVICE_ID, Constants.SERVER_DOWN_EMAIL_TEMPLATE_ID, templateParams, Constants.PUBLIC_KEY)
-    // .then((result) => {
-    //     return 1;
-    // }, (error) => {
-    //     return 0;
-    // });
+    emailjs.send(Constants.EMAIL_SERVICE_ID, Constants.SERVER_DOWN_EMAIL_TEMPLATE_ID, templateParams, Constants.PUBLIC_KEY)
+    .then((result) => {
+        return 1;
+    }, (error) => {
+        return 0;
+    });
     return 1; 
 }
 
@@ -134,10 +137,10 @@ function getSubnetFromFullAddress(fullAddress: string){
 }
 
 /**
- * Converts milliseconds to hours
- * @param time in milliseconds 
- * @returns time in hours
+ * Converts milliseconds to seconds
+ * @param milliseconds 
+ * @returns time in seconds
  */
-function millisecondsToHours(milliseconds: number) {
-    return (milliseconds / 1000 / 60 / 60);
+function millisecondsToSeconds(milliseconds: number) {
+    return milliseconds / 1000;
 }
